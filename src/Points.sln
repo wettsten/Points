@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Api", "Points.Api\Po
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Data", "Points.Data\Points.Data.csproj", "{3E8B9067-10DA-49F7-ABF4-7E800C055ABE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Api2", "Points.Api2\Points.Api2.csproj", "{B1A08830-ED81-4B02-A05C-DCB6C3151293}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3E8B9067-10DA-49F7-ABF4-7E800C055ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E8B9067-10DA-49F7-ABF4-7E800C055ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E8B9067-10DA-49F7-ABF4-7E800C055ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A08830-ED81-4B02-A05C-DCB6C3151293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A08830-ED81-4B02-A05C-DCB6C3151293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A08830-ED81-4B02-A05C-DCB6C3151293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A08830-ED81-4B02-A05C-DCB6C3151293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
