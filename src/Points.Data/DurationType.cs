@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Points.Data
 {
-    public enum FrequencyLimit
+    public enum DurationType
     {
-        Once,
+        None,
         AtLeast,
         AtMost
     }

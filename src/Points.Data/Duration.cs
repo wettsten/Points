@@ -8,7 +8,7 @@ namespace Points.Data
 {
     public class Duration
     {
-        public DurationLimit Limit { get; set; }
+        public DurationType Type { get; set; }
         public int Value { get; set; }
         public DurationUnit Unit { get; set; }
     }

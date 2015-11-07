@@ -45,8 +45,8 @@
     <Compile Include="Frequency.cs" />
     <Compile Include="Duration.cs" />
     <Compile Include="DurationUnit.cs" />
-    <Compile Include="FrequencyLimit.cs" />
-    <Compile Include="DurationLimit.cs" />
+    <Compile Include="FrequencyType.cs" />
+    <Compile Include="DurationType.cs" />
     <Compile Include="RavenObject.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />

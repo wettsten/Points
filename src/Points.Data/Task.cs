@@ -9,6 +9,7 @@ namespace Points.Data
     public class Task : RavenObject
     {
         public Category Category { get; set; }
+        public bool IsPrivate { get; set; }
         public Duration Duration { get; set; }
         public Frequency Frequency { get; set; }
     }
