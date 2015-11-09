@@ -5,31 +5,31 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
-using Points.Api2.Models;
+using User = Points.Data.User;
 
 namespace Points.Api2.Controllers
 {
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private readonly AuthRepository _repo = null;
+        private readonly UserManager<User> _userManager;
 
-        public AccountController()
+        public AccountController(UserManager<User> userManager)
         {
-            _repo = new AuthRepository();
+            _userManager = userManager;
         }
 
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(UserModel userModel)
+        public async Task<IHttpActionResult> Register(User userModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            IdentityResult result = await _userManager.CreateAsync(userModel);//_repo.RegisterUser(userModel));
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -45,7 +45,7 @@ namespace Points.Api2.Controllers
         {
             if (disposing)
             {
-                _repo.Dispose();
+                _userManager.Dispose();
             }
 
             base.Dispose(disposing);
