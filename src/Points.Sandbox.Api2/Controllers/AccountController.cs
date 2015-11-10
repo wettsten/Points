@@ -29,7 +29,7 @@ namespace Points.Api2.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _userManager.CreateAsync(userModel);//_repo.RegisterUser(userModel));
+            IdentityResult result = await _userManager.CreateAsync(userModel);
 
             IHttpActionResult errorResult = GetErrorResult(result);
 
@@ -39,16 +39,6 @@ namespace Points.Api2.Controllers
             }
 
             return Ok();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _userManager.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)

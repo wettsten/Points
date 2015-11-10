@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Web", "Points.Web\Points.Web.csproj", "{EE41204C-C352-491E-8240-2A089763E723}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Sandbox.Web", "Points.Sandbox.Web\Points.Sandbox.Web.csproj", "{EE41204C-C352-491E-8240-2A089763E723}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Api", "Points.Api\Points.Api.csproj", "{8D82458F-9140-4888-823F-8CEC54526DA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Sandbox.Api", "Points.Sandbox.Api\Points.Sandbox.Api.csproj", "{8D82458F-9140-4888-823F-8CEC54526DA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Data", "Points.Data\Points.Data.csproj", "{3E8B9067-10DA-49F7-ABF4-7E800C055ABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Api2", "Points.Api2\Points.Api2.csproj", "{B1A08830-ED81-4B02-A05C-DCB6C3151293}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Sandbox.Api2", "Points.Sandbox.Api2\Points.Sandbox.Api2.csproj", "{B1A08830-ED81-4B02-A05C-DCB6C3151293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
