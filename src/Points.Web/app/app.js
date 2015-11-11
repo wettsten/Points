@@ -43,10 +43,11 @@ app.config(function ($routeProvider) {
 });
 
 //var serviceBase = 'http://localhost:26264/';
-var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
+//var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
+var serviceBase = 'http://api.wettsten.com/points/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: serviceBase,
-    clientId: 'ngAuthApp'
+    clientId: 'pointsprogram'
 });
 
 app.config(function ($httpProvider) {

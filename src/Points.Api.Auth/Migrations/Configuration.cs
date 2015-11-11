@@ -31,13 +31,13 @@ namespace AngularJSAuthentication.API.Migrations
             List<Client> ClientsList = new List<Client> 
             {
                 new Client
-                { Id = "ngAuthApp", 
+                { Id = "pointsprogram", 
                     Secret= Helper.GetHash("abc@123"), 
-                    Name="AngularJS front-end Application", 
+                    Name="Points Program Application", 
                     ApplicationType =  Models.ApplicationTypes.JavaScript, 
                     Active = true, 
                     RefreshTokenLifeTime = 7200, 
-                    AllowedOrigin = "http://ngauthenticationweb.azurewebsites.net"
+                    AllowedOrigin = "http://points.wettsten.com"
                 },
                 new Client
                 { Id = "consoleApp", 
