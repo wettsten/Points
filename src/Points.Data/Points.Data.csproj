@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Category.cs" />
+    <Compile Include="ActiveFrequency.cs" />
     <Compile Include="FrequencyUnit.cs" />
     <Compile Include="Frequency.cs" />
     <Compile Include="Duration.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="FrequencyType.cs" />
     <Compile Include="DurationType.cs" />
     <Compile Include="RavenObject.cs" />
+    <Compile Include="ActiveTask.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

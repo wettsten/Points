@@ -10,7 +10,7 @@ using Raven.Imports.Newtonsoft.Json;
 
 namespace Points.Data
 {
-    public class User : RavenUser
+    public class User : RavenObject//: RavenUser
     {
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
