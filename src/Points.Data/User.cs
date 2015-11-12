@@ -10,19 +10,8 @@ using Raven.Imports.Newtonsoft.Json;
 
 namespace Points.Data
 {
-    public class User : RavenObject//: RavenUser
+    public class User : RavenObject
     {
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-        
         //add user options here
         public bool DefaultTasksToPrivate { get; set; }
         public DayOfWeek WeekStartDay { get; set; }

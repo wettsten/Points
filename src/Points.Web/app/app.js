@@ -54,7 +54,7 @@ app.config(function ($routeProvider) {
 
 //var serviceBase = 'http://localhost:26264/';
 //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
-var authServiceBase = 'http://api.wettsten.com/points/';
+var authServiceBase = 'http://api.wettsten.com/auth/';
 var resourceServiceBase = 'http://api.wettsten.com/resources/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: authServiceBase,
