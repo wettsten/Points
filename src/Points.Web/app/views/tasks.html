@@ -1,0 +1,61 @@
+﻿
+<div class="row">
+    <div class="col-md-2">
+        &nbsp;
+    </div>
+    <div class="col-md-8">
+        <div class="page-header text-center">
+            <h1>Tasks</h1>
+        </div>
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Is Private</th>
+                    <th>Duration Type</th>
+                    <th>Duration Value</th>
+                    <th>Duration Unit</th>
+                    <th>Frequency Type</th>
+                    <th>Frequency Value</th>
+                    <th>Frequency Unit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="task in tasks">
+                    <td>
+                        {{ task.name }}
+                    </td>
+                    <td>
+                        {{ task.category.name }}
+                    </td>
+                    <td>
+                        <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
+                    </td>
+                    <td>
+                        {{ task.duration.type }}
+                    </td>
+                    <td>
+                        {{ task.duration.value }}
+                    </td>
+                    <td>
+                        {{ task.duration.unit }}
+                    </td>
+                    <td>
+                        {{ task.frequency.type }}
+                    </td>
+                    <td>
+                        {{ task.frequency.value }}
+                    </td>
+                    <td>
+                        {{ task.frequency.unit }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-2">
+        &nbsp;
+    </div>
+</div>

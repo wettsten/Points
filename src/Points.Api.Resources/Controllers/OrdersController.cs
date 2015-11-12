@@ -2,10 +2,10 @@
 
 namespace AngularJSAuthentication.ResourceServer.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
-        [Authorize]
         [Route("")]
         public IHttpActionResult Get()
         {
