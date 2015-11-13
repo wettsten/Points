@@ -129,7 +129,6 @@
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="DependencyManagement\DependencyRegistry.cs" />
-    <Compile Include="DependencyManagement\StructureMapControllerFactory.cs" />
     <Compile Include="DependencyManagement\StructureMapHttpDependencyResolver.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
