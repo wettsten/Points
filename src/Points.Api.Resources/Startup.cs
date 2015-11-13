@@ -8,6 +8,7 @@ using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using AngularJSAuthentication.ResourceServer.DependencyManagement;
 
 [assembly: OwinStartup(typeof(AngularJSAuthentication.ResourceServer.Startup))]
 namespace AngularJSAuthentication.ResourceServer
@@ -19,6 +20,7 @@ namespace AngularJSAuthentication.ResourceServer
 
         public void Configuration(IAppBuilder app)
         {
+            var container = DependencyRegistry.Initialise();
             HttpConfiguration config = new HttpConfiguration();
 
             ConfigureOAuth(app);
@@ -26,7 +28,7 @@ namespace AngularJSAuthentication.ResourceServer
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
-            
+            config.DependencyResolver = new StructureMapHttpDependencyResolver(container);
         }
 
         private void ConfigureOAuth(IAppBuilder app)

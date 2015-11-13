@@ -46,7 +46,8 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [Route("")]
         public IHttpActionResult GetForUser(string userid)
         {
-            var tasks = _dataReader.GetAll<ActiveTask>().Where(i => i.User.Id.Equals(userid)).ToList();
+            var allTasks = _dataReader.GetAll<ActiveTask>();
+            var tasks = allTasks.Where(i => i.User.Id.Equals(userid)).ToList();
             if (!tasks.Any())
             {
                 return NotFound();

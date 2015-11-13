@@ -46,7 +46,8 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [Route("")]
         public IHttpActionResult GetByUsername(string username)
         {
-            var user = _dataReader.GetAll<User>().FirstOrDefault(i => i.Name.ToLower().Equals(username.ToLower()));
+            var users = _dataReader.GetAll<User>();
+            var user = users.FirstOrDefault(i => i.Name.ToLower().Equals(username.ToLower()));
             if (user == null)
             {
                 return NotFound();
