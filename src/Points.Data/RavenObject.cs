@@ -8,7 +8,7 @@ namespace Points.Data
 {
     public class RavenObject
     {
-        public long Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
     }
 }

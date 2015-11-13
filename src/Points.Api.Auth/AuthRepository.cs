@@ -34,6 +34,8 @@ namespace AngularJSAuthentication.API
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
 
+            //TODO replicate user in Raven
+
             return result;
         }
 

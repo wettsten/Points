@@ -4,6 +4,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -33,6 +34,11 @@ namespace AngularJSAuthentication.ResourceServer
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
             //Token Consumption
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+        }
+
+        private void ConfigureRaven()
+        {
+            
         }
     }
 }
