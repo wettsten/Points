@@ -7,6 +7,11 @@
         <div class="page-header text-center">
             <h1>Categories</h1>
         </div>
+        <input type="text" class="form-control" placeholder="Name" data-ng-model="catData.name" required autofocus>
+        <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="add()">Add New Category</button>
+        <div data-ng-hide="message == ''" class="alert alert-danger">
+            {{message}}
+        </div>
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>

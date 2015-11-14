@@ -2,13 +2,29 @@
 app.controller('catsController', ['$scope', 'catsService', 'authService', function ($scope, catsService, authService) {
 
     $scope.cats = [];
+    $scope.catData = {
+        name: ""
+    };
+    $scope.message = '';
 
-    catsService.getCats().then(function (results) {
+    var loadCats = function() {
+        catsService.getCats().then(function(results) {
+            $scope.cats = results.data;
+        }, function(error) {
+            //alert(error.data.message);
+        });
+    };
 
-        $scope.cats = results.data;
+    $scope.add = function () {
 
-    }, function (error) {
-        //alert(error.data.message);
-    });
+        catsService.addCat($scope.catData).then(function (response) {
+                $scope.catData.name = '';
+                loadCats();
+            },
+         function (err) {
+             $scope.message = err.error_description;
+         });
+    };
 
+    loadCats();
 }]);

@@ -5,14 +5,18 @@ app.factory('catsService', ['$http', 'ngAuthSettings', function ($http, ngAuthSe
 
     var catsServiceFactory = {};
 
-    var _getCats = function () {
+    catsServiceFactory.getCats = function () {
 
         return $http.get(serviceBase + 'api/categories').then(function (results) {
             return results;
         });
     };
 
-    catsServiceFactory.getCats = _getCats;
+    catsServiceFactory.addCat = function(catData) {
+        return $http.post(serviceBase + 'api/categories', catData).then(function (results) {
+            return results;
+        });
+    }
 
     return catsServiceFactory;
 
