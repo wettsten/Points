@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 
 using Points.Data;
@@ -59,8 +60,15 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [HttpPost]
         public IHttpActionResult AddUser(User user)
         {
-            _dataWriter.Add(user);
-            return Ok();
+            try
+            {
+                _dataWriter.Add(user);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.Created);
         }
 
         [Route("")]
@@ -68,16 +76,30 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [HttpPatch]
         public IHttpActionResult EditUser(User user)
         {
-            _dataWriter.Edit(user);
-            return Ok();
+            try
+            {
+                _dataWriter.Edit(user);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [Route("")]
         [HttpDelete]
         public IHttpActionResult DeleteUser(string id)
         {
-            _dataWriter.Delete(id);
-            return Ok();
+            try
+            {
+                _dataWriter.Delete(id);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         private List<User> StubList()

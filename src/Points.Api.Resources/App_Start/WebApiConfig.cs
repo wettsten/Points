@@ -1,13 +1,9 @@
-﻿using Microsoft.Owin.Security.OAuth;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http.Formatting;
-using System.Web;
 using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
-namespace AngularJSAuthentication.ResourceServer.App_Start
+namespace AngularJSAuthentication.ResourceServer
 {
     public static class WebApiConfig
     {

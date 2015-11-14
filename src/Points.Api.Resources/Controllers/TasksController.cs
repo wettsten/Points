@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 
 using Points.Data;
@@ -59,8 +60,15 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [HttpPost]
         public IHttpActionResult AddTask(Task task)
         {
-            _dataWriter.Add(task);
-            return Ok();
+            try
+            {
+                _dataWriter.Add(task);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.Created);
         }
 
         [Route("")]
@@ -68,16 +76,30 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [HttpPatch]
         public IHttpActionResult EditTask(Task task)
         {
-            _dataWriter.Edit(task);
-            return Ok();
+            try
+            {
+                _dataWriter.Edit(task);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [Route("")]
         [HttpDelete]
         public IHttpActionResult DeleteTask(string id)
         {
-            _dataWriter.Delete(id);
-            return Ok();
+            try
+            {
+                _dataWriter.Delete(id);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         private List<Task> StubList()

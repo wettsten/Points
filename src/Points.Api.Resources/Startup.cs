@@ -1,5 +1,4 @@
-﻿using AngularJSAuthentication.ResourceServer.App_Start;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;

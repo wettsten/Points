@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Points.DataAccess;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 
 using Points.Data;
@@ -47,8 +48,15 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [HttpPost]
         public IHttpActionResult AddCategory(Category cat)
         {
-            _dataWriter.Add(cat);
-            return Ok();
+            try
+            {
+                _dataWriter.Add(cat);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.Created);
         }
 
         [Route("")]
@@ -56,16 +64,30 @@ namespace AngularJSAuthentication.ResourceServer.Controllers
         [HttpPatch]
         public IHttpActionResult EditCategory(Category cat)
         {
-            _dataWriter.Edit(cat);
-            return Ok();
+            try
+            {
+                _dataWriter.Edit(cat);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         [Route("")]
         [HttpDelete]
         public IHttpActionResult DeleteCategory(string id)
         {
-            _dataWriter.Delete(id);
-            return Ok();
+            try
+            {
+                _dataWriter.Delete(id);
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.BadRequest);
+            }
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         private List<Category> StubList()
