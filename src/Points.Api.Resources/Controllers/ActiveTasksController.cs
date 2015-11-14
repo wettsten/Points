@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Http;
 using Points.Data;
 using Points.DataAccess;
@@ -8,57 +9,64 @@ namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/activetasks")]
-    public class ActiveTasksController : ApiController
+    public class ActiveTasksController : ResourceController<ActiveTask>
     {
-        private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
-
-        public ActiveTasksController(IDataReader dataReader, IDataWriter dataWriter)
-        {
-            _dataReader = dataReader;
-            _dataWriter = dataWriter;
-        }
+        public ActiveTasksController(IDataReader dataReader, IDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         [Route("")]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetActiveTask()
         {
-            var tasks = _dataReader.GetAll<ActiveTask>();
-            if (!tasks.Any())
-            {
-                return NotFound();
-            }
-            return Ok(tasks);
+            return Get();
         }
 
         [Route("{id}")]
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult GetActiveTask(string id)
         {
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                return BadRequest(ModelState);
-            }
-            var task = _dataReader.Get<ActiveTask>(id);
-            if(task == null)
-            {
-                return NotFound();
-            }
-            return Ok(task);
+            return Get(id);
         }
 
         [Route("")]
-        public IHttpActionResult GetForUser(string userid)
+        public IHttpActionResult GetActiveTaskByName(string name)
         {
-            if (!string.IsNullOrWhiteSpace(userid))
+            return GetByName(name);
+        }
+
+        [Route("")]
+        public IHttpActionResult GetActiveTasksForUser(string userid)
+        {
+            if (string.IsNullOrWhiteSpace(userid))
             {
                 return BadRequest(ModelState);
             }
-            var allTasks = _dataReader.GetAll<ActiveTask>();
+            var allTasks = DataReader.GetAll<ActiveTask>();
             var tasks = allTasks.Where(i => i.User.Id.Equals(userid)).ToList();
             if (!tasks.Any())
             {
                 return NotFound();
             }
             return Ok(tasks);
+        }
+
+        [Route("")]
+        [HttpPost]
+        public IHttpActionResult AddActiveTask(ActiveTask activeTask)
+        {
+            return StatusCode(HttpStatusCode.NotImplemented);
+        }
+
+        [Route("")]
+        [HttpPut]
+        //[HttpPatch]
+        public IHttpActionResult EditActiveTask(ActiveTask activeTask)
+        {
+            return StatusCode(HttpStatusCode.NotImplemented);
+        }
+
+        [Route("")]
+        [HttpDelete]
+        public IHttpActionResult DeleteActiveTask(string id)
+        {
+            return StatusCode(HttpStatusCode.NotImplemented);
         }
 
         private List<ActiveTask> StubList()

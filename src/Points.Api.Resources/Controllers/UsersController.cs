@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Web.Http;
 using Points.Data;
 using Points.DataAccess;
@@ -9,115 +7,48 @@ namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/users")]
-    public class UsersController : ApiController
+    public class UsersController : ResourceController<User>
     {
-        private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
-
-        public UsersController(IDataReader dataReader, IDataWriter dataWriter)
-        {
-            _dataReader = dataReader;
-            _dataWriter = dataWriter;
-        }
+        public UsersController(IDataReader dataReader, IDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         [Route("")]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetUser()
         {
-            var users = _dataReader.GetAll<User>();
-            if (!users.Any())
-            {
-                return NotFound();
-            }
-            return Ok(users);
+            return Get();
         }
 
         [Route("{id}")]
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult GetUser(string id)
         {
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                return BadRequest(ModelState);
-            }
-            var user = _dataReader.Get<User>(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
+            return Get(id);
         }
 
         [Route("")]
-        public IHttpActionResult GetByUsername(string username)
+        public IHttpActionResult GetUserByName(string name)
         {
-            if (!string.IsNullOrWhiteSpace(username))
-            {
-                return BadRequest(ModelState);
-            }
-            var users = _dataReader.GetAll<User>();
-            var user = users.FirstOrDefault(i => i.Name.ToLower().Equals(username.ToLower()));
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return Ok(user);
+            return GetByName(name);
         }
 
         [Route("")]
         [HttpPost]
         public IHttpActionResult AddUser(User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                _dataWriter.Add(user);
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.BadRequest);
-            }
-            return StatusCode(HttpStatusCode.Created);
+            return Add(user);
         }
 
         [Route("")]
         [HttpPut]
-        [HttpPatch]
+        //[HttpPatch]
         public IHttpActionResult EditUser(User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                _dataWriter.Edit(user);
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.BadRequest);
-            }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Edit(user);
         }
 
         [Route("")]
         [HttpDelete]
         public IHttpActionResult DeleteUser(string id)
         {
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                _dataWriter.Delete(id);
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.BadRequest);
-            }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Delete(id);
         }
 
         private List<User> StubList()

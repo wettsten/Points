@@ -9,99 +9,48 @@ namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/categories")]
-    public class CategoriesController : ApiController
+    public class CategoriesController : ResourceController<Category>
     {
-        private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
-
-        public CategoriesController(IDataReader dataReader, IDataWriter dataWriter)
-        {
-            _dataReader = dataReader;
-            _dataWriter = dataWriter;
-        }
+        public CategoriesController(IDataReader dataReader, IDataWriter dataWriter) : base(dataReader, dataWriter) { }
 
         [Route("")]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetCategory()
         {
-            var cats = _dataReader.GetAll<Category>();
-            if (!cats.Any())
-            {
-                return NotFound();
-            }
-            return Ok(cats);
+            return Get();
         }
 
         [Route("{id}")]
-        public IHttpActionResult Get(string id)
+        public IHttpActionResult GetCategory(string id)
         {
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                return BadRequest(ModelState);
-            }
-            var cat = _dataReader.Get<Category>(id);
-            if (cat == null)
-            {
-                return NotFound();
-            }
-            return Ok(cat);
+            return Get(id);
+        }
+
+        [Route("")]
+        public IHttpActionResult GetCategoryByName(string name)
+        {
+            return GetByName(name);
         }
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddCategory(Category cat)
+        public IHttpActionResult AddCategory(Category category)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                _dataWriter.Add(cat);
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.BadRequest);
-            }
-            return StatusCode(HttpStatusCode.Created);
+            return Add(category);
         }
 
         [Route("")]
         [HttpPut]
-        [HttpPatch]
-        public IHttpActionResult EditCategory(Category cat)
+        //[HttpPatch]
+        public IHttpActionResult EditCategory(Category category)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                _dataWriter.Edit(cat);
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.BadRequest);
-            }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Edit(category);
         }
 
         [Route("")]
         [HttpDelete]
         public IHttpActionResult DeleteCategory(string id)
         {
-            if (!string.IsNullOrWhiteSpace(id))
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                _dataWriter.Delete(id);
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.BadRequest);
-            }
-            return StatusCode(HttpStatusCode.NoContent);
+            return Delete(id);
         }
 
         private List<Category> StubList()

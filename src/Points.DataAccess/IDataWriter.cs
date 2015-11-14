@@ -5,8 +5,8 @@ namespace Points.DataAccess
 {
     public interface IDataWriter
     {
-        void Add<TN>(TN obj) where TN : RavenObject;
-        void Edit<TU>(TU obj) where TU : RavenObject;
-        void Delete(string id);
+        bool Add<TN>(TN obj) where TN : RavenObject;
+        bool Edit<TU>(TU obj) where TU : RavenObject;
+        bool Delete<TD>(string id) where TD : RavenObject;
     }
 }
