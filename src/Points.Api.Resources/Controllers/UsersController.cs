@@ -34,6 +34,10 @@ namespace Points.Api.Resources.Controllers
         [Route("{id}")]
         public IHttpActionResult Get(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             var user = _dataReader.Get<User>(id);
             if (user == null)
             {
@@ -45,6 +49,10 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetByUsername(string username)
         {
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                return BadRequest(ModelState);
+            }
             var users = _dataReader.GetAll<User>();
             var user = users.FirstOrDefault(i => i.Name.ToLower().Equals(username.ToLower()));
             if (user == null)
@@ -58,6 +66,10 @@ namespace Points.Api.Resources.Controllers
         [HttpPost]
         public IHttpActionResult AddUser(User user)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Add(user);
@@ -74,6 +86,10 @@ namespace Points.Api.Resources.Controllers
         [HttpPatch]
         public IHttpActionResult EditUser(User user)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Edit(user);
@@ -89,6 +105,10 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteUser(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Delete(id);

@@ -34,6 +34,10 @@ namespace Points.Api.Resources.Controllers
         [Route("{id}")]
         public IHttpActionResult Get(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             var task = _dataReader.Get<Task>(id);
             if (task == null)
             {
@@ -45,6 +49,10 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetForUser(string userid)
         {
+            if (!string.IsNullOrWhiteSpace(userid))
+            {
+                return BadRequest(ModelState);
+            }
             var allTasks = _dataReader.GetAll<Task>();
             var tasks = allTasks.Where(i => i.User.Id.Equals(userid) || !i.IsPrivate).ToList();
             if (!tasks.Any())
@@ -58,6 +66,10 @@ namespace Points.Api.Resources.Controllers
         [HttpPost]
         public IHttpActionResult AddTask(Task task)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Add(task);
@@ -74,6 +86,10 @@ namespace Points.Api.Resources.Controllers
         [HttpPatch]
         public IHttpActionResult EditTask(Task task)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Edit(task);
@@ -89,6 +105,10 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteTask(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Delete(id);

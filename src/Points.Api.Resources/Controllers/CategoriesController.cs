@@ -34,6 +34,10 @@ namespace Points.Api.Resources.Controllers
         [Route("{id}")]
         public IHttpActionResult Get(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             var cat = _dataReader.Get<Category>(id);
             if (cat == null)
             {
@@ -46,6 +50,10 @@ namespace Points.Api.Resources.Controllers
         [HttpPost]
         public IHttpActionResult AddCategory(Category cat)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Add(cat);
@@ -62,6 +70,10 @@ namespace Points.Api.Resources.Controllers
         [HttpPatch]
         public IHttpActionResult EditCategory(Category cat)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Edit(cat);
@@ -77,6 +89,10 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteCategory(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 _dataWriter.Delete(id);
