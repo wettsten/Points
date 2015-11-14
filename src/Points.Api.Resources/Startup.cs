@@ -1,16 +1,12 @@
-﻿using Microsoft.Owin;
+﻿using System.Web.Http;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.EnterpriseServices;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using AngularJSAuthentication.ResourceServer.DependencyManagement;
+using Points.Api.Resources;
+using Points.Api.Resources.DependencyManagement;
 
-[assembly: OwinStartup(typeof(AngularJSAuthentication.ResourceServer.Startup))]
-namespace AngularJSAuthentication.ResourceServer
+[assembly: OwinStartup(typeof(Startup))]
+namespace Points.Api.Resources
 {
     public class Startup
     {

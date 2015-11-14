@@ -1,10 +1,8 @@
 ﻿using Raven.Client;
 using Raven.Client.Document;
-using StructureMap;
 using StructureMap.Configuration.DSL;
-using StructureMap.Graph;
 
-namespace AngularJSAuthentication.ResourceServer.DependencyManagement
+namespace Points.DataAccess.DependencyManagement
 {
     public class DependencyRegistry : Registry
     {

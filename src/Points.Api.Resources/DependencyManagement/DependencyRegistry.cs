@@ -2,7 +2,7 @@
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
-namespace AngularJSAuthentication.ResourceServer.DependencyManagement
+namespace Points.Api.Resources.DependencyManagement
 {
     public class DependencyRegistry : Registry
     {

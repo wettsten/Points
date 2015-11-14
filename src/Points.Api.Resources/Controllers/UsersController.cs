@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
-
 using Points.Data;
 using Points.DataAccess;
 
-namespace AngularJSAuthentication.ResourceServer.Controllers
+namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/users")]

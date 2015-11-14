@@ -1,8 +1,7 @@
-namespace AngularJSAuthentication.API.Migrations
+using System.Data.Entity.Migrations;
+
+namespace Points.Api.Auth.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class AddClientsAndRefreshTokenTables : DbMigration
     {
         public override void Up()

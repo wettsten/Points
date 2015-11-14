@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace AngularJSAuthentication.ResourceServer.Controllers
+namespace Points.Api.Resources.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Orders")]

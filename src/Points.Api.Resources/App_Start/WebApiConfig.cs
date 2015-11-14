@@ -3,7 +3,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 
-namespace AngularJSAuthentication.ResourceServer
+namespace Points.Api.Resources
 {
     public static class WebApiConfig
     {
