@@ -12,6 +12,7 @@
         <div data-ng-hide="message == ''" class="alert alert-danger">
             {{message}}
         </div>
+        <div>&nbsp;</div>
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
@@ -20,8 +21,15 @@
             </thead>
             <tbody>
                 <tr data-ng-repeat="cat in cats">
+                    <td ng-hide="true">
+                        {{ cat.id }}
+                    </td>
                     <td>
                         {{ cat.name }}
+                        <img ng-src="{{deleteIconSrc}}" ng-mouseover="setDeleteIcon(true)" ng-mouseout="setDeleteIcon(false)" ng-click="delete(cat.id)" 
+                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                        <img ng-src="{{editIconSrc}}" ng-mouseover="setEditIcon(true)" ng-mouseout="setEditIcon(false)" ng-click="edit(cat.id)"
+                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
                     </td>
                 </tr>
             </tbody>

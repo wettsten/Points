@@ -18,6 +18,18 @@ app.factory('catsService', ['$http', 'ngAuthSettings', function ($http, ngAuthSe
         });
     }
 
+    catsServiceFactory.editCat = function (catData) {
+        return $http.put(serviceBase + 'api/categories', catData).then(function (results) {
+            return results;
+        });
+    }
+
+    catsServiceFactory.deleteCat = function (catId) {
+        return $http.delete(serviceBase + 'api/categories', catId).then(function (results) {
+            return results;
+        });
+    }
+
     return catsServiceFactory;
 
 }]);
