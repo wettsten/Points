@@ -33,6 +33,10 @@ namespace Points.Api.Resources.Controllers
         [Route("{id}")]
         public IHttpActionResult Get(string id)
         {
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                return BadRequest(ModelState);
+            }
             var task = _dataReader.Get<ActiveTask>(id);
             if(task == null)
             {
@@ -44,6 +48,10 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetForUser(string userid)
         {
+            if (!string.IsNullOrWhiteSpace(userid))
+            {
+                return BadRequest(ModelState);
+            }
             var allTasks = _dataReader.GetAll<ActiveTask>();
             var tasks = allTasks.Where(i => i.User.Id.Equals(userid)).ToList();
             if (!tasks.Any())
