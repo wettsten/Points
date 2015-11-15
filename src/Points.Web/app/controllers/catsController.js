@@ -1,15 +1,12 @@
 ﻿'use strict';
 app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAuthSettings', function ($scope, catsService, authService, ngAuthSettings) {
-
-    $scope.editIconSrc = ngAuthSettings.icons.editIcon;
-    $scope.deleteIconSrc = ngAuthSettings.icons.deleteIcon;
-
-    $scope.setDeleteIcon = function(isActive) {
-        $scope.deleteIconSrc = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
+    
+    $scope.setDeleteIcon = function(cat,isActive) {
+        cat.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
     }
 
-    $scope.setEditIcon = function (isActive) {
-        $scope.editIconSrc = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
+    $scope.setEditIcon = function (cat,isActive) {
+        cat.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
     }
 
     $scope.selectedCat = {};

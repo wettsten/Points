@@ -26,9 +26,11 @@
                     </td>
                     <td>
                         {{ cat.name }}
-                        <img ng-src="{{deleteIconSrc}}" ng-mouseover="setDeleteIcon(true)" ng-mouseout="setDeleteIcon(false)" ng-click="delete(cat.id)" 
+                        <img ng-init="setDeleteIcon(cat,false)" ng-src="{{cat.deleteIcon}}" ng-mouseover="setDeleteIcon(cat,true)"
+                             ng-mouseout="setDeleteIcon(cat,false)" ng-click="delete(cat.id)" 
                              style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                        <img ng-src="{{editIconSrc}}" ng-mouseover="setEditIcon(true)" ng-mouseout="setEditIcon(false)" ng-click="edit(cat.id)"
+                        <img ng-init="setEditIcon(cat,false)" ng-src="{{cat.editIcon}}" ng-mouseover="setEditIcon(cat,true)"
+                             ng-mouseout="setEditIcon(cat,false)" ng-click="edit(cat.id)"
                              style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
                     </td>
                 </tr>
