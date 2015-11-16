@@ -19,10 +19,14 @@
                     <th>Frequency Type</th>
                     <th>Frequency Value</th>
                     <th>Frequency Unit</th>
+                    <th style="width:52px"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr data-ng-repeat="task in tasks">
+                    <td ng-hide="true">
+                        {{ cat.id }}
+                    </td>
                     <td>
                         {{ task.name }}
                     </td>
@@ -49,6 +53,20 @@
                     </td>
                     <td>
                         {{ task.frequency.unit }}
+                    </td>
+                    <td>
+                        <img ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
+                             ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" ng-hide="hideEditCancel()"
+                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                        <img ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
+                             ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" ng-hide="hideEditCancel()"
+                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                        <img ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
+                             ng-mouseout="setCancelIcon(task,false)" ng-click="cancelEdit()" ng-show="showSaveCancel(task.id)"
+                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                        <img ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
+                             ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" ng-show="showSaveCancel(task.id)"
+                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
                     </td>
                 </tr>
             </tbody>
