@@ -25,7 +25,7 @@ app.factory('catsService', ['$http', 'ngAuthSettings', function ($http, ngAuthSe
     }
 
     catsServiceFactory.deleteCat = function (catId) {
-        return $http.delete(serviceBase + 'api/categories', catId).then(function (results) {
+        return $http.delete(serviceBase + 'api/categories?id=' + catId).then(function (results) {
             return results;
         });
     }

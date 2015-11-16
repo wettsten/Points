@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'xeditable']);
 
 app.config(function ($routeProvider) {
 
@@ -63,8 +63,12 @@ app.constant('ngAuthSettings', {
     icons: {
         editIcon: 'Icons/edit.png',
         deleteIcon: 'Icons/delete.png',
+        saveIcon: 'Icons/save.png',
+        cancelIcon: 'Icons/cancel.png',
         editActiveIcon: 'Icons/editactive.png',
-        deleteActiveIcon: 'Icons/deleteactive.png'
+        deleteActiveIcon: 'Icons/deleteactive.png',
+        saveActiveIcon: 'Icons/saveActive.png',
+        cancelActiveIcon: 'Icons/cancelActive.png',
     }
 });
 
@@ -72,8 +76,9 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 });
 
-app.run(['authService', function (authService) {
+app.run(['authService', 'editableOptions', function (authService, editableOptions) {
     authService.fillAuthData();
+    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 }]);
 
 

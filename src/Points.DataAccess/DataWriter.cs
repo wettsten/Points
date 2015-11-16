@@ -57,7 +57,7 @@ namespace Points.DataAccess
         {
             using (var session = _store.OpenSession())
             {
-                var existingObj = session.Query<TD>().FirstOrDefault(i => i.Id.Equals(id));
+                var existingObj = session.Load<TD>(id);
                 if (existingObj == null)
                 {
                     // object does not exist

@@ -1,15 +1,25 @@
 ﻿'use strict';
 app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAuthSettings', function ($scope, catsService, authService, ngAuthSettings) {
-    
-    $scope.setDeleteIcon = function(cat,isActive) {
+
+    $scope.setDeleteIcon = function(cat, isActive) {
         cat.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
-    }
+    };
 
-    $scope.setEditIcon = function (cat,isActive) {
+    $scope.setEditIcon = function(cat, isActive) {
         cat.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
-    }
+    };
 
-    $scope.selectedCat = {};
+    $scope.setCancelIcon = function(cat, isActive) {
+        cat.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
+    };
+
+    $scope.setSaveIcon = function(cat, isActive) {
+        cat.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
+    };
+
+    $scope.editCat = {
+        id: ""
+    };
     $scope.cats = [];
     $scope.catData = {
         id: "",
@@ -17,14 +27,29 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
     };
     $scope.message = '';
 
-    $scope.clearData = function() {
+    $scope.hideData = function(catId) {
+        return $scope.editCat.id === catId;
+    };
+
+    $scope.hideEditCancel = function() {
+        return $scope.editCat.id.length > 0;
+    };
+
+    $scope.showSaveCancel = function(catId) {
+        return $scope.editCat.id === catId;
+    };
+
+    $scope.clearData = function () {
         $scope.catData = {
             id: "",
             name: ""
-        }
+        };
+        $scope.editCat = {
+            id: ""
+        };
     };
 
-    var loadCats = function() {
+    $scope.loadCats = function() {
         catsService.getCats().then(function(results) {
             $scope.cats = results.data;
             $scope.clearData();
@@ -33,12 +58,12 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
         });
     };
 
-    $scope.add = function () {
+    $scope.addCat = function () {
         catsService.addCat($scope.catData).then(function (response) {
-                loadCats();
+            $scope.loadCats();
             },
          function (err) {
-             if (err.status == 409) {
+             if (err.status === 409) {
                  $scope.message = 'Category already exists';
              } else {
                  $scope.message = err.status + ' ' + err.data;
@@ -46,12 +71,12 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
          });
     };
 
-    $scope.edit = function (catId) {
-        catsService.editCat($scope.selectedCat).then(function (response) {
-            loadCats();
+    $scope.saveEdit = function () {
+        catsService.editCat($scope.editCat).then(function (response) {
+            $scope.loadCats();
         },
          function (err) {
-             if (err.status == 409) {
+             if (err.status === 409) {
                  $scope.message = 'Category already exists';
              } else {
                  $scope.message = err.status + ' ' + err.data;
@@ -59,12 +84,30 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
          });
     };
 
-    $scope.delete = function (catId) {
+    $scope.startEdit = function (catId) {
+        for (var i = 0; i < $scope.cats.length; i++) {
+            if ($scope.cats[i].id === catId) {
+                $scope.editCat = {
+                    id: $scope.cats[i].id,
+                    name: $scope.cats[i].name
+                };
+                break;
+            }
+        }
+    };
+
+    $scope.cancelEdit = function () {
+        $scope.editCat = {
+            id: ""
+        };
+    };
+
+    $scope.deleteCat = function (catId) {
         catsService.deleteCat(catId).then(function (response) {
-            loadCats();
+            $scope.loadCats();
         },
          function (err) {
-             if (err.status == 409) {
+             if (err.status === 409) {
                  $scope.message = 'Category already exists';
              } else {
                  $scope.message = err.status + ' ' + err.data;
@@ -72,5 +115,5 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
          });
     };
 
-    loadCats();
+    $scope.loadCats();
 }]);
