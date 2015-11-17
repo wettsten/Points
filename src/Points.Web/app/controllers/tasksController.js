@@ -1,48 +1,63 @@
 ﻿'use strict';
-app.controller('tasksController', ['$scope', 'tasksService', 'catsService', 'authService', 'ngAuthSettings', function ($scope, tasksService, catsService, authService, ngAuthSettings) {
+app.controller('tasksController', [
+    '$scope', 'tasksService', 'catsService', 'authService', 'ngAuthSettings', function($scope, tasksService, catsService, authService, ngAuthSettings) {
 
-    $scope.setDeleteIcon = function (task, isActive) {
-        task.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
-    };
+        $scope.setDeleteIcon = function(task, isActive) {
+            task.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
+        };
 
-    $scope.setEditIcon = function (task, isActive) {
-        task.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
-    };
+        $scope.setEditIcon = function(task, isActive) {
+            task.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
+        };
 
-    $scope.setCancelIcon = function (task, isActive) {
-        task.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
-    };
+        $scope.setCancelIcon = function(task, isActive) {
+            task.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
+        };
 
-    $scope.setSaveIcon = function (task, isActive) {
-        task.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
-    };
+        $scope.setSaveIcon = function(task, isActive) {
+            task.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
+        };
 
-    $scope.editTask = {
-        id: ""
-    };
-    $scope.tasks = [];
-    $scope.taskData = {
-        id: "",
-        name: "",
-        user: {},
-        category: {
+        $scope.editTask = {
+            id: ""
+        };
+        $scope.tasks = [];
+        $scope.addTaskData = {
             id: "",
-            name: ""
-        },
-        isPrivate: false,
-        duration: {
-            type: "",
-            value: 0,
-            unit: ""
-        },
-        frequency: {
-            type: "",
-            value: 0,
-            unit: ""
-        }
+            name: "",
+            userId: "",
+            categoryId: "",
+            isPrivate: false,
+            duration: {
+                type: "",
+                value: 0,
+                unit: ""
+            },
+            frequency: {
+                type: "",
+                value: 0,
+                unit: ""
+            }
+        };
+        $scope.message = "";
+
+    $scope.enums = {
+        dTypes: [],
+        dUnits: [],
+        fTypes: [],
+        fUnits: []
     };
-    $scope.cats = [];
-    $scope.message = "";
+
+    $scope.getEnums = function() {
+        tasksService.getEnums().then(function(results) {
+            $scope.enums.dTypes = results.data.dTypes;
+            $scope.enums.dUnits = results.data.dUnits;
+            $scope.enums.fTypes = results.data.fTypes;
+            $scope.enums.fUnits = results.data.fUnits;
+        }, function(error) {
+            //alert(error.data.message);
+        });
+    };
 
     $scope.hideData = function (taskId) {
         return $scope.editTask.id === taskId;
@@ -75,7 +90,7 @@ app.controller('tasksController', ['$scope', 'tasksService', 'catsService', 'aut
     };
 
     $scope.addTask = function () {
-        tasksService.addtask($scope.taskData).then(function (response) {
+        tasksService.addtask($scope.addTaskData).then(function (response) {
             $scope.loadTasks();
         },
          function (err) {
@@ -147,9 +162,5 @@ app.controller('tasksController', ['$scope', 'tasksService', 'catsService', 'aut
     };
 
     $scope.loadTasks();
-    catsService.getCats().then(function (results) {
-        $scope.cats = results.data;
-    }, function (error) {
-        //alert(error.data.message);
-    });
+    $scope.getEnums();
 }]);

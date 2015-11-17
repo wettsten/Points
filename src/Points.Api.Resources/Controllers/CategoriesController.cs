@@ -50,29 +50,12 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteCategory(string id)
         {
-            return Delete(id);
-        }
-
-        private List<Category> StubList()
-        {
-            return new List<Category>
+            var tasks = DataReader.GetAll<Task>().Where(i => i.CategoryId.Equals(id));
+            if (tasks.Any())
             {
-                new Category
-                {
-                    Id = "1",
-                    Name = "Housekeeping"
-                },
-                new Category
-                {
-                    Id = "2",
-                    Name = "Fitness"
-                },
-                new Category
-                {
-                    Id = "3",
-                    Name = "Hygiene"
-                }
-            };
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+            return Delete(id);
         }
     }
 }

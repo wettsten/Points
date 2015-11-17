@@ -39,7 +39,7 @@ namespace Points.Api.Resources.Controllers
                 return BadRequest(ModelState);
             }
             var allTasks = DataReader.GetAll<ActiveTask>();
-            var tasks = allTasks.Where(i => i.User.Id.Equals(userid)).ToList();
+            var tasks = allTasks.Where(i => i.UserId.Equals(userid)).ToList();
             if (!tasks.Any())
             {
                 return NotFound();
@@ -67,94 +67,6 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult DeleteActiveTask(string id)
         {
             return StatusCode(HttpStatusCode.NotImplemented);
-        }
-
-        private List<ActiveTask> StubList()
-        {
-            return new List<ActiveTask>
-            {
-                new ActiveTask
-                {
-                    Id = "1",
-                    Name = "Do dishes",
-                    User = new User
-                    {
-                        Id = "1",
-                        Name = "wettsten"
-                    },
-                    IsPrivate = false,
-                    Category = new Category
-                    {
-                        Id = "1",
-                        Name = "Housekeeping"
-                    },
-                    Duration = new Duration
-                    {
-                        Type = DurationType.None
-                    },
-                    Frequency = new ActiveFrequency
-                    {
-                        Type = FrequencyType.AtLeast,
-                        Value = 3,
-                        Unit = FrequencyUnit.Days,
-                        Completed = 1
-                    }
-                },
-                new ActiveTask
-                {
-                    Id = "2",
-                    Name = "Clean bathroom",
-                    User = new User
-                    {
-                        Id = "1",
-                        Name = "wettsten"
-                    },
-                    IsPrivate = true,
-                    Category = new Category
-                    {
-                        Id = "1",
-                        Name = "Housekeeping"
-                    },
-                    Duration = new Duration
-                    {
-                        Type = DurationType.None
-                    },
-                    Frequency = new ActiveFrequency
-                    {
-                        Type = FrequencyType.Once,
-                        Completed = 1
-                    }
-                },
-                new ActiveTask
-                {
-                    Id = "3",
-                    Name = "Go to gym",
-                    User = new User
-                    {
-                        Id = "2",
-                        Name = "scott"
-                    },
-                    IsPrivate = false,
-                    Category = new Category
-                    {
-                        Id = "2",
-                        Name = "Fitness"
-                    },
-                    Duration = new Duration
-                    {
-                        Type = DurationType.AtLeast,
-                        Value = 30,
-                        Unit = DurationUnit.Minutes
-                    },
-                    Frequency = new ActiveFrequency
-                    {
-                        Type = FrequencyType.AtLeast,
-                        Value = 4,
-                        Unit = FrequencyUnit.Days,
-                        Completed = 2
-                    }
-                }
-            };
         }
     }
 }

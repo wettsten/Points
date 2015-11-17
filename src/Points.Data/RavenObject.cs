@@ -12,5 +12,7 @@ namespace Points.Data
         public string Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public bool IsPrivate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

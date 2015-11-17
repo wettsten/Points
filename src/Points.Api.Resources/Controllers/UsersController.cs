@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Web.Http;
 using Points.Data;
 using Points.DataAccess;
@@ -48,29 +50,12 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteUser(string id)
         {
-            return Delete(id);
-        }
-
-        private List<User> StubList()
-        {
-            return new List<User>
+            var tasks = DataReader.GetAll<Task>().Where(i => i.CategoryId.Equals(id));
+            if (tasks.Any())
             {
-                new User
-                {
-                    Id = "1",
-                    Name = "wettsten"
-                },
-                new User
-                {
-                    Id = "2",
-                    Name = "Scott"
-                },
-                new User
-                {
-                    Id = "3",
-                    Name = "Traci"
-                }
-            };
+                return StatusCode(HttpStatusCode.Conflict);
+            }
+            return Delete(id);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Points.Api.Resources.Controllers
         
         protected IHttpActionResult Get()
         {
-            var objs = DataReader.GetAll<T>();
+            var objs = DataReader.GetAll<T>().Where(i => !i.IsDeleted);
             if (!objs.Any())
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace Points.Api.Resources.Controllers
                 return BadRequest(ModelState);
             }
             var obj = DataReader.Get<T>(id);
-            if (obj == null)
+            if (obj == null || obj.IsDeleted)
             {
                 return NotFound();
             }
@@ -51,7 +51,7 @@ namespace Points.Api.Resources.Controllers
                 return BadRequest(ModelState);
             }
             var objs = DataReader.GetAll<T>();
-            var obj = objs.FirstOrDefault(i => i.Name.ToLower().Equals(name.ToLower()));
+            var obj = objs.FirstOrDefault(i => i.Name.ToLower().Equals(name.ToLower()) && !i.IsDeleted);
             if (obj == null)
             {
                 return NotFound();
@@ -65,17 +65,15 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest(ModelState);
             }
-            bool ok;
             try
             {
                 obj.Id = string.Empty;
-                ok = DataWriter.Add(obj);
+                return StatusCode(DataWriter.Add(obj));
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
-            return ok ? StatusCode(HttpStatusCode.Created) : StatusCode(HttpStatusCode.Conflict);
         }
         
         protected IHttpActionResult Edit(T obj)
@@ -84,16 +82,14 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest(ModelState);
             }
-            bool ok;
             try
             {
-                ok = DataWriter.Edit(obj);
+                return StatusCode(DataWriter.Edit(obj));
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
-            return StatusCode(ok ? HttpStatusCode.NoContent : HttpStatusCode.Created);
         }
         
         protected IHttpActionResult Delete(string id)
@@ -102,16 +98,14 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest(ModelState);
             }
-            bool ok;
             try
             {
-                ok = DataWriter.Delete<T>(id);
+                return StatusCode(DataWriter.Delete<T>(id));
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
-            return ok ? StatusCode(HttpStatusCode.NoContent) : StatusCode(HttpStatusCode.NotFound);
         }
     }
 }

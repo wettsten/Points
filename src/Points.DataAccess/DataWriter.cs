@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Points.Data;
 using Raven.Abstractions.Exceptions;
@@ -19,41 +20,46 @@ namespace Points.DataAccess
             _store = store;
         }
 
-        public bool Add<TN>(TN obj) where TN : RavenObject
+        public HttpStatusCode Add<TN>(TN obj) where TN : RavenObject
         {
             using (var session = _store.OpenSession())
             {
-                var existingObj = session.Query<TN>().FirstOrDefault(i => i.Name.Equals(obj.Name));
+                var existingObj = session.Query<TN>();
+                if (existingObj.Any(i => i.Name.Equals(obj.Name) && !i.IsPrivate))
+                {
+                    // object exists
+                    return HttpStatusCode.Conflict;
+                }
+                session.Store(obj);
+                session.SaveChanges();
+                //var id = session.Advanced.GetDocumentId(obj);
+            }
+            return HttpStatusCode.Created;
+        }
+
+        public HttpStatusCode Edit<TU>(TU obj) where TU : RavenObject
+        {
+            using (var session = _store.OpenSession())
+            {
+                var sameName = session.Query<TU>();
+                if (sameName.Any(i => i.Name.Equals(obj.Name) && !i.IsDeleted))
+                {
+                    return HttpStatusCode.Conflict;
+                }
+
+                session.Store(obj);
+                session.SaveChanges();
+                var existingObj = session.Load<TU>(obj.Id);
                 if (existingObj != null)
                 {
                     // object exists
-                    return false;
+                    return HttpStatusCode.NoContent;
                 }
-                session.Store(obj);
-                session.SaveChanges();
-                var id = session.Advanced.GetDocumentId(obj);
+                return HttpStatusCode.Created;
             }
-            return true;
         }
 
-        public bool Edit<TU>(TU obj) where TU : RavenObject
-        {
-            bool exists = true;
-            using (var session = _store.OpenSession())
-            {
-                var existingObj = session.Query<TU>().FirstOrDefault(i => i.Name.Equals(obj.Name));
-                if (existingObj == null)
-                {
-                    // object does not exist
-                    exists = false;
-                }
-                session.Store(obj);
-                session.SaveChanges();
-            }
-            return exists;
-        }
-
-        public bool Delete<TD>(string id) where TD : RavenObject
+        public HttpStatusCode Delete<TD>(string id) where TD : RavenObject
         {
             using (var session = _store.OpenSession())
             {
@@ -61,12 +67,13 @@ namespace Points.DataAccess
                 if (existingObj == null)
                 {
                     // object does not exist
-                    return false;
+                    return HttpStatusCode.NotFound;
                 }
-                session.Delete(id);
+                //session.Delete(id);
+                existingObj.IsDeleted = true;
                 session.SaveChanges();
+                return HttpStatusCode.NoContent;
             }
-            return true;
         }
     }
 }

@@ -21,7 +21,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
         id: ""
     };
     $scope.cats = [];
-    $scope.catData = {
+    $scope.addCatData = {
         id: "",
         name: ""
     };
@@ -59,7 +59,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
     };
 
     $scope.addCat = function () {
-        catsService.addCat($scope.catData).then(function (response) {
+        catsService.addCat($scope.addCatData).then(function (response) {
             $scope.loadCats();
             },
          function (err) {

@@ -19,6 +19,13 @@ app.factory('tasksService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         });
     };
 
+    tasksServiceFactory.getEnums = function () {
+
+        return $http.get(serviceBase + 'api/tasks/enums').then(function (results) {
+            return results;
+        });
+    };
+
     tasksServiceFactory.addTask = function (taskData) {
         return $http.post(serviceBase + 'api/tasks', taskData).then(function (results) {
             return results;
