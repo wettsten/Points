@@ -3,32 +3,46 @@
     <div class="col-md-2">
         &nbsp;
     </div>
-    <div class="col-md-8">
-        <div class="page-header text-center">
-            <h1>Tasks</h1>
-        </div>
-        <div class="col-md-2">
-            <input type="text" class="form-control" placeholder="Name" data-ng-model="addTaskData.name" required autofocus/>
-            <input type="checkbox" class="form-control" data-ng-model="addTaskData.isPrivate" />
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" ng-model="addTaskData.duration.type">
-                <option ng-repeat="option in enums.dTypes" value="{{option.id}}">{{option.name}}</option>
-            </select>
-            <input type="text" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="addTaskData.duration.type === 'AtLeast'" />
-            <select class="form-control" ng-model="addTaskData.duration.unit" ng-show="addTaskData.duration.type === 'AtLeast'">
-                <option ng-repeat="option in enums.dUnits" value="{{option.id}}">{{option.name}}</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <select class="form-control" ng-model="addTaskData.frequency.type">
-                <option ng-repeat="option in enums.fTypes" value="{{option.id}}">{{option.name}}</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <input type="text" class="form-control" placeholder="Name" data-ng-model="addTaskData.name" required autofocus>
-        </div>
-            <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="addTask()">Add New Category</button>
+    <div class="col-md-12">
+        <div class="col-md-12">
+            <div class="page-header text-center">
+                <h1>Tasks</h1>
+            </div>
+            <div class="col-md-2">
+                <p>Name</p>
+                <input type="text" class="form-control" placeholder="Name" data-ng-model="addTaskData.name" required autofocus />
+            </div>
+            <div class="col-md-2">
+                <p>Private Task</p>
+                <input type="checkbox" class="form-control" data-ng-model="addTaskData.isPrivate" />
+            </div>
+            <div class="col-md-2">
+                <p>Category</p>
+                <select class="form-control" ng-model="selectedAdd.cat" ng-options="option.name for option in cats" required></select>
+            </div>
+            <div class="col-md-2">
+                <p>Duration</p>
+                <select class="form-control" ng-model="selectedAdd.dType" ng-options="option.name for option in enums.dTypes" required></select>
+                <div>&nbsp;</div>
+                <input type="text" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="selectedAdd.dUnit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits" ng-required="showAddDuration()"></select>
+                <div>&nbsp;</div>
+            </div>
+            <div class="col-md-2">
+                <p>Frequency</p>
+                <select class="form-control" ng-model="selectedAdd.fType" ng-options="option.name for option in enums.fTypes" required></select>
+                <div>&nbsp;</div>
+                <input type="text" class="form-control" placeholder="Value" data-ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="selectedAdd.fUnit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits" ng-required="showAddDuration()"></select>
+                <div>&nbsp;</div>
+            </div>
+            <div class="col-md-2">
+                <div>&nbsp;</div>
+                <button class="btn btn-md btn-info" type="submit" data-ng-click="addTask()">Add New Task</button>
+            </div>
+            </div>
             <div data-ng-hide="message == ''" class="alert alert-danger">
                 {{message}}
             </div>

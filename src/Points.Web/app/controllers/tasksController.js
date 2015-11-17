@@ -2,44 +2,66 @@
 app.controller('tasksController', [
     '$scope', 'tasksService', 'catsService', 'authService', 'ngAuthSettings', function($scope, tasksService, catsService, authService, ngAuthSettings) {
 
-        $scope.setDeleteIcon = function(task, isActive) {
-            task.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
-        };
+    $scope.setDeleteIcon = function(task, isActive) {
+        task.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
+    };
 
-        $scope.setEditIcon = function(task, isActive) {
-            task.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
-        };
+    $scope.setEditIcon = function(task, isActive) {
+        task.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
+    };
 
-        $scope.setCancelIcon = function(task, isActive) {
-            task.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
-        };
+    $scope.setCancelIcon = function(task, isActive) {
+        task.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
+    };
 
-        $scope.setSaveIcon = function(task, isActive) {
-            task.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
-        };
-
-        $scope.editTask = {
-            id: ""
-        };
-        $scope.tasks = [];
-        $scope.addTaskData = {
+    $scope.setSaveIcon = function(task, isActive) {
+        task.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
+    };
+        
+    $scope.selectedAdd = {
+        cat: {
             id: "",
-            name: "",
-            userId: "",
-            categoryId: "",
-            isPrivate: false,
-            duration: {
-                type: "",
-                value: 0,
-                unit: ""
-            },
-            frequency: {
-                type: "",
-                value: 0,
-                unit: ""
-            }
-        };
-        $scope.message = "";
+            name: ""
+        },
+        dType: {
+            id: "",
+            name: ""
+        },
+        dUnit: {
+            id: "",
+            name: ""
+        },
+        fType: {
+            id: "",
+            name: ""
+        },
+        fUnit: {
+            id: "",
+            name: ""
+        }
+    };
+    $scope.editTask = {
+        id: ""
+    };
+    $scope.tasks = [];
+    $scope.addTaskData = {
+        id: "",
+        name: "",
+        userId: "",
+        categoryId: $scope.selectedAdd.cat.id,
+        isPrivate: false,
+        duration: {
+            type: $scope.selectedAdd.dType.id,
+            value: 0,
+            unit: $scope.selectedAdd.dUnit.id
+        },
+        frequency: {
+            type: $scope.selectedAdd.fType.id,
+            value: 0,
+            unit: $scope.selectedAdd.fUnit.id
+        }
+    };
+    $scope.message = "";
 
     $scope.enums = {
         dTypes: [],
@@ -47,6 +69,7 @@ app.controller('tasksController', [
         fTypes: [],
         fUnits: []
     };
+    $scope.cats = [];
 
     $scope.getEnums = function() {
         tasksService.getEnums().then(function(results) {
@@ -54,12 +77,24 @@ app.controller('tasksController', [
             $scope.enums.dUnits = results.data.dUnits;
             $scope.enums.fTypes = results.data.fTypes;
             $scope.enums.fUnits = results.data.fUnits;
+            $scope.selectedAdd.dType = $scope.enums.dTypes[0];
+            $scope.selectedAdd.dUnit = $scope.enums.dUnits[0];
+            $scope.selectedAdd.fType = $scope.enums.fTypes[0];
+            $scope.selectedAdd.fUnit = $scope.enums.fUnits[0];
         }, function(error) {
             //alert(error.data.message);
         });
     };
 
-    $scope.hideData = function (taskId) {
+    $scope.showAddDuration = function() {
+        return $scope.selectedAdd.dType.id !== 'None';
+    };
+
+    $scope.showAddFrequency = function () {
+        return $scope.selectedAdd.fType.id !== 'Once';
+    };
+
+    $scope.hideEditData = function (taskId) {
         return $scope.editTask.id === taskId;
     };
 
@@ -72,13 +107,35 @@ app.controller('tasksController', [
     };
 
     $scope.clearData = function () {
-        $scope.taskData = {
+        $scope.addTaskData = {
             id: "",
-            name: ""
+            name: "",
+            userId: "",
+            categoryId: $scope.selectedAdd.cat.id,
+            isPrivate: false,
+            duration: {
+                type: $scope.selectedAdd.dType.id,
+                value: 0,
+                unit: $scope.selectedAdd.dUnit.id
+            },
+            frequency: {
+                type: $scope.selectedAdd.fType.id,
+                value: 0,
+                unit: $scope.selectedAdd.fUnit.id
+            }
         };
         $scope.editTask = {
             id: ""
         };
+    };
+
+    $scope.loadCats = function () {
+        catsService.getCats().then(function (results) {
+            $scope.cats = results.data;
+            $scope.selectedAdd.cat = $scope.cats[0];
+        }, function (error) {
+            //alert(error.data.message);
+        });
     };
 
     $scope.loadTasks = function () {
@@ -90,7 +147,12 @@ app.controller('tasksController', [
     };
 
     $scope.addTask = function () {
-        tasksService.addtask($scope.addTaskData).then(function (response) {
+        $scope.addTaskData.categoryId = $scope.selectedAdd.cat.id;
+        $scope.addTaskData.duration.type = $scope.selectedAdd.dType.id;
+        $scope.addTaskData.duration.unit = $scope.selectedAdd.dUnit.id;
+        $scope.addTaskData.frequency.type = $scope.selectedAdd.fType.id;
+        $scope.addTaskData.frequency.unit = $scope.selectedAdd.fUnit.id;
+        tasksService.addTask($scope.addTaskData).then(function (response) {
             $scope.loadTasks();
         },
          function (err) {
@@ -161,6 +223,7 @@ app.controller('tasksController', [
          });
     };
 
-    $scope.loadTasks();
+    $scope.loadCats();
     $scope.getEnums();
+    $scope.loadTasks();
 }]);

@@ -3,50 +3,61 @@
     <div class="col-md-2">
         &nbsp;
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="page-header text-center">
             <h1>Categories</h1>
         </div>
-        <input type="text" class="form-control" placeholder="Name" data-ng-model="addCatData.name" required autofocus>
-        <button class="btn btn-md btn-info btn-block" type="submit" data-ng-click="addCat()">Add New Category</button>
-        <div data-ng-hide="message == ''" class="alert alert-danger">
-            {{message}}
+
+        <div class="col-md-8">
+            <p>Name</p>
+            <input type="text" class="form-control" placeholder="Name" data-ng-model="addCatData.name" required autofocus>
+        </div>
+        <div class="col-md-2">
+            <div>&nbsp;</div>
+            <button class="btn btn-md btn-info" type="submit" data-ng-click="addCat()">Add New Category</button>
+            <div>&nbsp;</div>
         </div>
         <div>&nbsp;</div>
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th style="width:52px"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="cat in cats">
-                    <td ng-hide="true">
-                        {{ cat.id }}
-                    </td>
-                    <td ng-hide="hideData(cat.id)">{{ cat.name }}
-                    </td>
-                    <td ng-if="hideData(cat.id)" editable-text="editCat.name">{{editCat.name}}
-                    </td>
-                    <td>
-                        <img ng-init="setDeleteIcon(cat,false)" ng-src="{{cat.deleteIcon}}" ng-mouseover="setDeleteIcon(cat,true)"
-                             ng-mouseout="setDeleteIcon(cat,false)" ng-click="deleteCat(cat.id)" ng-hide="hideEditCancel()"
-                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                        <img ng-init="setEditIcon(cat,false)" ng-src="{{cat.editIcon}}" ng-mouseover="setEditIcon(cat,true)"
-                             ng-mouseout="setEditIcon(cat,false)" ng-click="startEdit(cat.id)" ng-hide="hideEditCancel()"
-                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                        <img ng-init="setCancelIcon(cat,false)" ng-src="{{cat.cancelIcon}}" ng-mouseover="setCancelIcon(cat,true)"
-                             ng-mouseout="setCancelIcon(cat,false)" ng-click="cancelEdit()" ng-show="showSaveCancel(cat.id)"
-                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                        <img ng-init="setSaveIcon(cat,false)" ng-src="{{cat.saveIcon}}" ng-mouseover="setSaveIcon(cat,true)"
-                             ng-mouseout="setSaveIcon(cat,false)" ng-click="saveEdit()" ng-show="showSaveCancel(cat.id)"
-                             style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <div data-ng-hide="message == ''" class="alert alert-danger">
+                {{message}}
+            </div>
+            <div>&nbsp;</div>
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th style="width:52px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="cat in cats">
+                        <td ng-hide="true">
+                            {{ cat.id }}
+                        </td>
+                        <td ng-hide="hideData(cat.id)">
+                            {{ cat.name }}
+                        </td>
+                        <td ng-if="hideData(cat.id)" editable-text="editCat.name">
+                            {{editCat.name}}
+                        </td>
+                        <td>
+                            <img ng-init="setDeleteIcon(cat,false)" ng-src="{{cat.deleteIcon}}" ng-mouseover="setDeleteIcon(cat,true)"
+                                 ng-mouseout="setDeleteIcon(cat,false)" ng-click="deleteCat(cat.id)" ng-hide="hideEditCancel()"
+                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                            <img ng-init="setEditIcon(cat,false)" ng-src="{{cat.editIcon}}" ng-mouseover="setEditIcon(cat,true)"
+                                 ng-mouseout="setEditIcon(cat,false)" ng-click="startEdit(cat.id)" ng-hide="hideEditCancel()"
+                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                            <img ng-init="setCancelIcon(cat,false)" ng-src="{{cat.cancelIcon}}" ng-mouseover="setCancelIcon(cat,true)"
+                                 ng-mouseout="setCancelIcon(cat,false)" ng-click="cancelEdit()" ng-show="showSaveCancel(cat.id)"
+                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                            <img ng-init="setSaveIcon(cat,false)" ng-src="{{cat.saveIcon}}" ng-mouseover="setSaveIcon(cat,true)"
+                                 ng-mouseout="setSaveIcon(cat,false)" ng-click="saveEdit()" ng-show="showSaveCancel(cat.id)"
+                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     <div class="col-md-2">
         &nbsp;

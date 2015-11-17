@@ -83,7 +83,7 @@ namespace Points.Api.Resources.Controllers
                 dTypes = durationTypes,
                 dUnits = durationUnits,
                 fTypes = frequencyTypes,
-                fUnites = frequencyUnits
+                fUnits = frequencyUnits
             });
         }
 
