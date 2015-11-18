@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Web.Http;
 using Points.Data;
+using Points.Data.EnumExtensions;
 using Points.DataAccess;
 
 namespace Points.Api.Resources.Controllers
@@ -95,28 +96,10 @@ namespace Points.Api.Resources.Controllers
                 output.Add(new
                 {
                     id = item.ToString(),
-                    name = Spacify(item.ToString())
+                    name = item.Spacify()
                 });
             }
             return output;
-        } 
-
-        private string Spacify(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return string.Empty;
-            }
-            StringBuilder output = new StringBuilder(input.Substring(0,1));
-            for (int i = 1; i < input.Length; i++)
-            {
-                if (char.IsUpper(input[i]))
-                {
-                    output.Append(' ');
-                }
-                output.Append(input[i]);
-            }
-            return output.ToString();
         }
     }
 }
