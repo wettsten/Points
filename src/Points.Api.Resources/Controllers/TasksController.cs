@@ -4,6 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Http;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 using Points.Data;
 using Points.Data.EnumExtensions;
 using Points.DataAccess;
@@ -39,10 +43,10 @@ namespace Points.Api.Resources.Controllers
         {
             if (string.IsNullOrWhiteSpace(userid))
             {
-                return BadRequest(ModelState);
+                return BadRequest("User id is required");
             }
             var allTasks = DataReader.GetAll<Task>();
-            var tasks = allTasks.Where(i => i.UserId.Equals(userid)).ToList();
+            var tasks = allTasks.Where(i => i.UserId.Equals(userid) || !i.IsPrivate).ToList();
             if (!tasks.Any())
             {
                 return NotFound();
@@ -54,6 +58,14 @@ namespace Points.Api.Resources.Controllers
         [HttpPost]
         public IHttpActionResult AddTask(Task task)
         {
+            if(!ValidateUserIdExists(task.UserId))
+            {
+                return BadRequest("User id does not exist");
+            }
+            if (!ValidateCategoryIdExists(task.CategoryId))
+            {
+                return BadRequest("Category id does not exist");
+            }
             return Add(task);
         }
 
@@ -62,6 +74,14 @@ namespace Points.Api.Resources.Controllers
         //[HttpPatch]
         public IHttpActionResult EditTask(Task task)
         {
+            if (!ValidateUserIdExists(task.UserId))
+            {
+                return BadRequest("User id does not exist");
+            }
+            if (!ValidateCategoryIdExists(task.CategoryId))
+            {
+                return BadRequest("Category id does not exist");
+            }
             return Edit(task);
         }
 
@@ -70,6 +90,18 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult DeleteTask(string id)
         {
             return Delete(id);
+        }
+
+        private bool ValidateUserIdExists(string userId)
+        {
+            var user = DataReader.Get<User>(userId);
+            return user != null;
+        }
+
+        private bool ValidateCategoryIdExists(string catId)
+        {
+            var user = DataReader.Get<Category>(catId);
+            return user != null;
         }
 
         [Route("enums")]

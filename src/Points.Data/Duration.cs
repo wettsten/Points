@@ -5,13 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace Points.Data
 {
     public class Duration : IValidatableObject
     {
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public DurationType Type { get; set; }
         public int? Value { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public DurationUnit? Unit { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

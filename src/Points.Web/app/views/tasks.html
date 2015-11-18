@@ -24,7 +24,7 @@
                 <p>Duration</p>
                 <select class="form-control" ng-model="selectedAdd.dType" ng-options="option.name for option in enums.dTypes" required></select>
                 <div>&nbsp;</div>
-                <input type="text" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
+                <input type="number" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
                 <div>&nbsp;</div>
                 <select class="form-control" ng-model="selectedAdd.dUnit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits" ng-required="showAddDuration()"></select>
                 <div>&nbsp;</div>
@@ -33,7 +33,7 @@
                 <p>Frequency</p>
                 <select class="form-control" ng-model="selectedAdd.fType" ng-options="option.name for option in enums.fTypes" required></select>
                 <div>&nbsp;</div>
-                <input type="text" class="form-control" placeholder="Value" data-ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
+                <input type="number" class="form-control" placeholder="Value" data-ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
                 <div>&nbsp;</div>
                 <select class="form-control" ng-model="selectedAdd.fUnit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits" ng-required="showAddDuration()"></select>
                 <div>&nbsp;</div>
@@ -65,34 +65,58 @@
                 <tbody>
                     <tr data-ng-repeat="task in tasks">
                         <td ng-hide="true">
-                            {{ cat.id }}
+                            {{ task.id }}
                         </td>
-                        <td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.name }}
                         </td>
-                        <td>
+                        <td ng-if="hideEditData(task.id)" editable-text="editTask.name">
+                            {{ editTask.name }}
+                        </td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.category.name }}
+                        </td>
+                        <td ng-if="hideEditData(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats">
+                            {{ editTask.category.name }}
                         </td>
                         <td>
                             <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
                         </td>
-                        <td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.duration.type }}
                         </td>
-                        <td>
+                        <td ng-if="hideEditData(task.id)" editable-select="editTask.duration.dType" e-ng-options="option.name for option in enums.dTypes">
+                            {{ editTask.duration.dType.name }}
+                        </td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.duration.value }}
                         </td>
-                        <td>
+                        <td ng-if="hideEditData(task.id)" editable-number="editTask.duration.value">
+                            {{ editTask.duration.value }}
+                        </td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.duration.unit }}
                         </td>
-                        <td>
+                        <td ng-if="hideEditData(task.id)" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits">
+                            {{ editTask.duration.dUnit.name }}
+                        </td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.frequency.type }}
                         </td>
-                        <td>
+                        <td ng-if="hideEditData(task.id)" editable-select="editTask.frequency.fType" e-ng-options="option.name for option in enums.fTypes">
+                            {{ editTask.frequency.fType.name }}
+                        </td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.frequency.value }}
                         </td>
-                        <td>
+                        <td ng-if="hideEditData(task.id)" editable-number="editTask.frequency.value">
+                            {{ editTask.frequency.value }}
+                        </td>
+                        <td ng-hide="hideEditData(task.id)">
                             {{ task.frequency.unit }}
+                        </td>
+                        <td ng-if="hideEditData(task.id)" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits">
+                            {{ editTask.frequency.fUnit.name }}
                         </td>
                         <td>
                             <img ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"

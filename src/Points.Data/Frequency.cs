@@ -5,13 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace Points.Data
 {
     public class Frequency : IValidatableObject
     {
         [Required]
+        [JsonConverter(typeof(StringEnumConverter))]
         public FrequencyType Type { get; set; }
         public int? Value { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
         public FrequencyUnit? Unit { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

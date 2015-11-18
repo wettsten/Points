@@ -50,10 +50,10 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteCategory(string id)
         {
-            var tasks = DataReader.GetAll<Task>().Where(i => i.CategoryId.Equals(id));
-            if (tasks.Any())
+            var tasks = DataReader.GetAll<Task>();
+            if (tasks.Any(i => i.CategoryId.Equals(id)))
             {
-                return StatusCode(HttpStatusCode.Conflict);
+                return BadRequest("Category is in use");
             }
             return Delete(id);
         }

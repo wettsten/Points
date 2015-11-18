@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
@@ -34,7 +35,7 @@ namespace Points.Api.Resources.Controllers
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Id is required");
             }
             var obj = DataReader.Get<T>(id);
             if (obj == null || obj.IsDeleted)
@@ -48,7 +49,7 @@ namespace Points.Api.Resources.Controllers
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Name is required");
             }
             var objs = DataReader.GetAll<T>();
             var obj = objs.FirstOrDefault(i => i.Name.ToLower().Equals(name.ToLower()) && !i.IsDeleted);
@@ -70,6 +71,10 @@ namespace Points.Api.Resources.Controllers
                 obj.Id = string.Empty;
                 return StatusCode(DataWriter.Add(obj));
             }
+            catch(InvalidDataException ide)
+            {
+                return BadRequest(ide.Message);
+            }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
@@ -86,6 +91,10 @@ namespace Points.Api.Resources.Controllers
             {
                 return StatusCode(DataWriter.Edit(obj));
             }
+            catch (InvalidDataException ide)
+            {
+                return BadRequest(ide.Message);
+            }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
@@ -96,7 +105,7 @@ namespace Points.Api.Resources.Controllers
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Id is required");
             }
             try
             {

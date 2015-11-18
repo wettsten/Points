@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -25,10 +26,21 @@ namespace Points.DataAccess
             using (var session = _store.OpenSession())
             {
                 var existingObj = session.Query<TN>();
-                if (existingObj.Any(i => i.Name.Equals(obj.Name) && !i.IsPrivate))
+                // check if public object has same name
+                if (existingObj.Any(i => i.Name.Equals(obj.Name) && !i.IsPrivate && !i.IsDeleted))
                 {
                     // object exists
-                    return HttpStatusCode.Conflict;
+                    throw new InvalidDataException("This name is already in use");
+                }
+                // object is a task
+                if (obj is Task)
+                {
+                    var task = obj as Task;
+                    // check if user already has a private object with same name
+                    if (existingObj.Any(i => (i as Task).UserId.Equals(task.UserId) && i.Name.Equals(obj.Name) && i.IsPrivate && !i.IsDeleted))
+                    {
+                        throw new InvalidDataException("You already have a private task with this name");
+                    }
                 }
                 session.Store(obj);
                 session.SaveChanges();
@@ -41,21 +53,25 @@ namespace Points.DataAccess
         {
             using (var session = _store.OpenSession())
             {
-                var sameName = session.Query<TU>();
-                if (sameName.Any(i => i.Name.Equals(obj.Name) && !i.IsDeleted))
+                var existingObj = session.Query<TU>();
+                if (existingObj.Any(i => i.Name.Equals(obj.Name) && !i.IsPrivate && !i.IsDeleted && !i.Id.Equals(obj.Id)))
                 {
-                    return HttpStatusCode.Conflict;
+                    throw new InvalidDataException("This name is already in use");
+                }
+                // object is a task
+                if (obj is Task)
+                {
+                    var task = obj as Task;
+                    // check if user already has a private object with same name
+                    if (existingObj.Any(i => (i as Task).UserId.Equals(task.UserId) && i.Name.Equals(obj.Name) && i.IsPrivate && !i.IsDeleted && !i.Id.Equals(obj.Id)))
+                    {
+                        throw new InvalidDataException("You already have a private task with this name");
+                    }
                 }
 
                 session.Store(obj);
                 session.SaveChanges();
-                var existingObj = session.Load<TU>(obj.Id);
-                if (existingObj != null)
-                {
-                    // object exists
-                    return HttpStatusCode.NoContent;
-                }
-                return HttpStatusCode.Created;
+                return HttpStatusCode.NoContent;
             }
         }
 

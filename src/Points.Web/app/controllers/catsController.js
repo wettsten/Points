@@ -63,11 +63,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
             $scope.loadCats();
             },
          function (err) {
-             if (err.status === 409) {
-                 $scope.message = 'Category already exists';
-             } else {
-                 $scope.message = err.status + ' ' + err.data;
-             }
+             $scope.message = err.status + ' ' + err.data.message;
          });
     };
 
@@ -76,11 +72,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
             $scope.loadCats();
         },
          function (err) {
-             if (err.status === 409) {
-                 $scope.message = 'Category already exists';
-             } else {
-                 $scope.message = err.status + ' ' + err.data;
-             }
+             $scope.message = err.status + ' ' + err.data.message;
          });
     };
 
@@ -107,11 +99,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'ngAut
             $scope.loadCats();
         },
          function (err) {
-             if (err.status === 409) {
-                 $scope.message = 'Category already exists';
-             } else {
-                 $scope.message = err.status + ' ' + err.data;
-             }
+             $scope.message = err.status + ' ' + err.data.message;
          });
     };
 
