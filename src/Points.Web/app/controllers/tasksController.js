@@ -18,49 +18,12 @@ app.controller('tasksController', [
         task.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
     };
         
-    $scope.selectedAdd = {
-        cat: {
-            id: "",
-            name: ""
-        },
-        dType: {
-            id: "",
-            name: ""
-        },
-        dUnit: {
-            id: "",
-            name: ""
-        },
-        fType: {
-            id: "",
-            name: ""
-        },
-        fUnit: {
-            id: "",
-            name: ""
-        }
-    };
+    $scope.selectedAdd = {};
     $scope.editTask = {
         id: ""
     };
     $scope.tasks = [];
-    $scope.addTaskData = {
-        id: "",
-        name: "",
-        userId: "",
-        categoryId: $scope.selectedAdd.cat.id,
-        isPrivate: false,
-        duration: {
-            type: $scope.selectedAdd.dType.id,
-            value: 0,
-            unit: $scope.selectedAdd.dUnit.id
-        },
-        frequency: {
-            type: $scope.selectedAdd.fType.id,
-            value: 0,
-            unit: $scope.selectedAdd.fUnit.id
-        }
-    };
+    $scope.addTaskData = {};
     $scope.message = "";
 
     $scope.enums = {
@@ -70,6 +33,22 @@ app.controller('tasksController', [
         fUnits: []
     };
     $scope.cats = [];
+
+    $scope.getDurationValueAddMin = function () {
+        if ($scope.selectedAdd.dType.id !== 'None' || $scope.selectedAdd.dType.id === '') {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+
+    $scope.getFrequencyValueAddMin = function () {
+        if ($scope.selectedAdd.fType.id !== 'Once' || $scope.selectedAdd.fType.id === '') {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
 
     $scope.getEnums = function() {
         tasksService.getEnums().then(function(results) {
@@ -101,6 +80,14 @@ app.controller('tasksController', [
 
     $scope.hideEditCancel = function () {
         return $scope.editTask.id.length > 0;
+    };
+
+    $scope.hideEditDuration = function() {
+        return $scope.editTask.duration.dType.id !== 'None' || $scope.editTask.duration.dType.id === '';
+    };
+
+    $scope.hideEditFrequency = function () {
+        return $scope.editTask.frequency.fType.id !== 'Once' || $scope.editTask.frequency.fType.id === '';
     };
 
     $scope.showSaveCancel = function (taskId) {

@@ -24,7 +24,7 @@
                 <p>Duration</p>
                 <select class="form-control" ng-model="selectedAdd.dType" ng-options="option.name for option in enums.dTypes" required></select>
                 <div>&nbsp;</div>
-                <input type="number" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
+                <input type="number" min="getDurationValueAddMin()" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
                 <div>&nbsp;</div>
                 <select class="form-control" ng-model="selectedAdd.dUnit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits" ng-required="showAddDuration()"></select>
                 <div>&nbsp;</div>
@@ -33,7 +33,7 @@
                 <p>Frequency</p>
                 <select class="form-control" ng-model="selectedAdd.fType" ng-options="option.name for option in enums.fTypes" required></select>
                 <div>&nbsp;</div>
-                <input type="number" class="form-control" placeholder="Value" data-ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
+                <input type="number" min="getFrequencyValueAddMin()" class="form-control" placeholder="Value" data-ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
                 <div>&nbsp;</div>
                 <select class="form-control" ng-model="selectedAdd.fUnit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits" ng-required="showAddDuration()"></select>
                 <div>&nbsp;</div>
@@ -88,16 +88,16 @@
                         <td ng-if="hideEditData(task.id)" editable-select="editTask.duration.dType" e-ng-options="option.name for option in enums.dTypes">
                             {{ editTask.duration.dType.name }}
                         </td>
-                        <td ng-hide="hideEditData(task.id)">
+                        <td ng-hide="hideEditData(task.id) && hideEditDuration()">
                             {{ task.duration.value }}
                         </td>
-                        <td ng-if="hideEditData(task.id)" editable-number="editTask.duration.value">
+                        <td ng-if="hideEditData(task.id) && hideEditDuration()" editable-number="editTask.duration.value">
                             {{ editTask.duration.value }}
                         </td>
-                        <td ng-hide="hideEditData(task.id)">
+                        <td ng-hide="hideEditData(task.id) && hideEditDuration()">
                             {{ task.duration.unit }}
                         </td>
-                        <td ng-if="hideEditData(task.id)" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits">
+                        <td ng-if="hideEditData(task.id) && hideEditDuration()" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits">
                             {{ editTask.duration.dUnit.name }}
                         </td>
                         <td ng-hide="hideEditData(task.id)">
@@ -106,16 +106,16 @@
                         <td ng-if="hideEditData(task.id)" editable-select="editTask.frequency.fType" e-ng-options="option.name for option in enums.fTypes">
                             {{ editTask.frequency.fType.name }}
                         </td>
-                        <td ng-hide="hideEditData(task.id)">
+                        <td ng-hide="hideEditData(task.id) && hideEditFrequency()">
                             {{ task.frequency.value }}
                         </td>
-                        <td ng-if="hideEditData(task.id)" editable-number="editTask.frequency.value">
+                        <td ng-if="hideEditData(task.id) && hideEditFrequency()" editable-number="editTask.frequency.value">
                             {{ editTask.frequency.value }}
                         </td>
-                        <td ng-hide="hideEditData(task.id)">
+                        <td ng-hide="hideEditData(task.id) && hideEditFrequency()">
                             {{ task.frequency.unit }}
                         </td>
-                        <td ng-if="hideEditData(task.id)" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits">
+                        <td ng-if="hideEditData(task.id) && hideEditFrequency()" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits">
                             {{ editTask.frequency.fUnit.name }}
                         </td>
                         <td>
