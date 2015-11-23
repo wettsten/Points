@@ -28,7 +28,7 @@ namespace Points.Api.Resources.Controllers
             {
                 return NotFound();
             }
-            return Ok(objs);
+            return Ok(objs.OrderBy(i => i.Name));
         }
         
         protected IHttpActionResult Get(string id)

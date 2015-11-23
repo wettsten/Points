@@ -51,7 +51,7 @@ namespace Points.Api.Resources.Controllers
             {
                 return NotFound();
             }
-            return Ok(tasks);
+            return Ok(tasks.OrderBy(i => i.Name));
         }
 
         [Route("")]
