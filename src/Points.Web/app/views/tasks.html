@@ -4,17 +4,17 @@
         &nbsp;
     </div>
     <div class="col-md-12">
-        <div class="col-md-12">
-            <div class="page-header text-center">
-                <h1>Tasks</h1>
-            </div>
+        <div class="page-header text-center">
+            <h1>Tasks</h1>
+        </div>
+        <div class="row" ng-controller="newTaskController">
             <div class="col-md-2">
                 <p>Name</p>
-                <input type="text" class="form-control" placeholder="Name" data-ng-model="addTaskData.name" required autofocus />
+                <input type="text" class="form-control" placeholder="Name" ng-model="addTaskData.name" required autofocus />
             </div>
             <div class="col-md-2">
                 <p>Private Task</p>
-                <input type="checkbox" class="form-control" data-ng-model="addTaskData.isPrivate" />
+                <input type="checkbox" class="form-control" ng-model="addTaskData.isPrivate" />
             </div>
             <div class="col-md-2">
                 <p>Category</p>
@@ -24,7 +24,7 @@
                 <p>Duration</p>
                 <select class="form-control" ng-model="selectedAdd.dType" ng-options="option.name for option in enums.dTypes" required></select>
                 <div>&nbsp;</div>
-                <input type="number" min="getDurationValueAddMin()" class="form-control" placeholder="Value" data-ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
+                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
                 <div>&nbsp;</div>
                 <select class="form-control" ng-model="selectedAdd.dUnit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits" ng-required="showAddDuration()"></select>
                 <div>&nbsp;</div>
@@ -33,109 +33,109 @@
                 <p>Frequency</p>
                 <select class="form-control" ng-model="selectedAdd.fType" ng-options="option.name for option in enums.fTypes" required></select>
                 <div>&nbsp;</div>
-                <input type="number" min="getFrequencyValueAddMin()" class="form-control" placeholder="Value" data-ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
+                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
                 <div>&nbsp;</div>
                 <select class="form-control" ng-model="selectedAdd.fUnit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits" ng-required="showAddDuration()"></select>
                 <div>&nbsp;</div>
             </div>
             <div class="col-md-2">
                 <div>&nbsp;</div>
-                <button class="btn btn-md btn-info" type="submit" data-ng-click="addTask()">Add New Task</button>
+                <button class="btn btn-md btn-info" type="submit" ng-click="addTask()">Add New Task</button>
             </div>
-            </div>
-            <div data-ng-hide="message == ''" class="alert alert-danger">
-                {{message}}
-            </div>
-            <div>&nbsp;</div>
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Is Private</th>
-                        <th>Duration Type</th>
-                        <th>Duration Value</th>
-                        <th>Duration Unit</th>
-                        <th>Frequency Type</th>
-                        <th>Frequency Value</th>
-                        <th>Frequency Unit</th>
-                        <th style="width:52px"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-ng-repeat="task in tasks">
-                        <td ng-hide="true">
-                            {{ task.id }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id)">
-                            {{ task.name }}
-                        </td>
-                        <td ng-if="hideEditData(task.id)" editable-text="editTask.name">
-                            {{ editTask.name }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id)">
-                            {{ task.category.name }}
-                        </td>
-                        <td ng-if="hideEditData(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats">
-                            {{ editTask.category.name }}
-                        </td>
-                        <td>
-                            <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
-                        </td>
-                        <td ng-hide="hideEditData(task.id)">
-                            {{ task.duration.type }}
-                        </td>
-                        <td ng-if="hideEditData(task.id)" editable-select="editTask.duration.dType" e-ng-options="option.name for option in enums.dTypes">
-                            {{ editTask.duration.dType.name }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id) && hideEditDuration()">
-                            {{ task.duration.value }}
-                        </td>
-                        <td ng-if="hideEditData(task.id) && hideEditDuration()" editable-number="editTask.duration.value">
-                            {{ editTask.duration.value }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id) && hideEditDuration()">
-                            {{ task.duration.unit }}
-                        </td>
-                        <td ng-if="hideEditData(task.id) && hideEditDuration()" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits">
-                            {{ editTask.duration.dUnit.name }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id)">
-                            {{ task.frequency.type }}
-                        </td>
-                        <td ng-if="hideEditData(task.id)" editable-select="editTask.frequency.fType" e-ng-options="option.name for option in enums.fTypes">
-                            {{ editTask.frequency.fType.name }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id) && hideEditFrequency()">
-                            {{ task.frequency.value }}
-                        </td>
-                        <td ng-if="hideEditData(task.id) && hideEditFrequency()" editable-number="editTask.frequency.value">
-                            {{ editTask.frequency.value }}
-                        </td>
-                        <td ng-hide="hideEditData(task.id) && hideEditFrequency()">
-                            {{ task.frequency.unit }}
-                        </td>
-                        <td ng-if="hideEditData(task.id) && hideEditFrequency()" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits">
-                            {{ editTask.frequency.fUnit.name }}
-                        </td>
-                        <td>
-                            <img ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
-                                 ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" ng-hide="hideEditCancel()"
-                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                            <img ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
-                                 ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" ng-hide="hideEditCancel()"
-                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                            <img ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
-                                 ng-mouseout="setCancelIcon(task,false)" ng-click="cancelEdit()" ng-show="showSaveCancel(task.id)"
-                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                            <img ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
-                                 ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" ng-show="showSaveCancel(task.id)"
-                                 style="display: inline; float: right; width: 16px; height: 16px; cursor: pointer" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+        <div data-ng-hide="message == ''" class="row alert alert-danger">
+            {{message}}
+        </div>
+        <div>&nbsp;</div>
+        <table class="row table table-striped table-bordered table-hover" ng-controller="editTaskController">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Is Private</th>
+                    <th>Duration Type</th>
+                    <th>Duration Value</th>
+                    <th>Duration Unit</th>
+                    <th>Frequency Type</th>
+                    <th>Frequency Value</th>
+                    <th>Frequency Unit</th>
+                    <th style="width:60px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="task in tasks">
+                    <td ng-hide="true">
+                        {{ task.id }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id)">
+                        {{ task.name }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id)" editable-text="editTask.name">
+                        {{ editTask.name }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id)">
+                        {{ task.category.name }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id">
+                        {{ editTask.category.name }}
+                    </td>
+                    <td>
+                        <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id)">
+                        {{ task.duration.dType.name }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id)" editable-select="editTask.duration.dType" e-ng-options="option.name for option in enums.dTypes track by option.id">
+                        {{ editTask.duration.dType.name }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id) && hideEditDuration()">
+                        {{ task.duration.value }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id) && hideEditDuration()" editable-number="editTask.duration.value">
+                        {{ editTask.duration.value }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id) && hideEditDuration()">
+                        {{ task.duration.dUnit.name }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id) && hideEditDuration()" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id">
+                        {{ editTask.duration.dUnit.name }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id)">
+                        {{ task.frequency.fType.name }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id)" editable-select="editTask.frequency.fType" e-ng-options="option.name for option in enums.fTypes track by option.id">
+                        {{ editTask.frequency.fType.name }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id) && hideEditFrequency()">
+                        {{ task.frequency.value }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency()" editable-number="editTask.frequency.value">
+                        {{ editTask.frequency.value }}
+                    </td>
+                    <td ng-hide="amIInEditMode(task.id) && hideEditFrequency()">
+                        {{ task.frequency.fUnit.name }}
+                    </td>
+                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency()" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id">
+                        {{ editTask.frequency.fUnit.name }}
+                    </td>
+                    <td>
+                        <img ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
+                             ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" ng-hide="isInEditMode()"
+                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
+                        <img ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
+                             ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" ng-hide="isInEditMode()"
+                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
+                        <img ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
+                             ng-mouseout="setCancelIcon(task,false)" ng-click="clearEditData()" ng-show="amIInEditMode(task.id)"
+                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
+                        <img ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
+                             ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" ng-show="amIInEditMode(task.id)"
+                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="col-md-2">
         &nbsp;

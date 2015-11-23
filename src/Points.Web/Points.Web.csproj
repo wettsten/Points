@@ -61,6 +61,8 @@
     <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\editCatController.js" />
     <Content Include="app\controllers\newCatController.js" />
+    <Content Include="app\controllers\newTaskController.js" />
+    <Content Include="app\controllers\editTaskController.js" />
     <Content Include="app\controllers\tasksController.js" />
     <Content Include="app\controllers\homeController.js" />
     <Content Include="app\controllers\indexController.js" />

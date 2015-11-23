@@ -7,7 +7,7 @@ app.controller('catsController', ['$scope', 'catsService', function ($scope, cat
     $scope.loadCats = function() {
         catsService.getCats().then(function(results) {
             $scope.cats = results.data;
-            $scope.apply();
+            //$scope.$apply();
         }, function(error) {
             //alert(error.data.message);
         });
