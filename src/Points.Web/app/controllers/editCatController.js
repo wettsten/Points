@@ -32,6 +32,7 @@ app.controller('editCatController', ['$scope', 'catsService', 'authService', 'ng
     };
 
     $scope.saveEdit = function () {
+        $scope.editCat.userId = authService.authentication.userId;
         catsService.editCat($scope.editCat).then(function (response) {
             $scope.clearEditData();
             $scope.loadCats();

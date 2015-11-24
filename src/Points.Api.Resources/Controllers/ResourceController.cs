@@ -60,11 +60,30 @@ namespace Points.Api.Resources.Controllers
             return Ok(obj);
         }
         
+        protected IHttpActionResult GetForUser(string userid)
+        {
+            if (string.IsNullOrWhiteSpace(userid))
+            {
+                return BadRequest("User id is required");
+            }
+            var allObjs = DataReader.GetAll<T>();
+            var objs = allObjs.Where(i => i.UserId.Equals(userid) || !i.IsPrivate).ToList();
+            if (!objs.Any())
+            {
+                return NotFound();
+            }
+            return Ok(objs.OrderBy(i => i.Name));
+        }
+
         protected IHttpActionResult Add(T obj)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            if (!ValidateUserIdExists(obj.UserId))
+            {
+                return BadRequest("User id does not exist");
             }
             try
             {
@@ -83,6 +102,10 @@ namespace Points.Api.Resources.Controllers
         
         protected IHttpActionResult Edit(T obj)
         {
+            if (!ValidateUserIdExists(obj.UserId))
+            {
+                return BadRequest("User id does not exist");
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -115,6 +138,12 @@ namespace Points.Api.Resources.Controllers
             {
                 return InternalServerError(ex);
             }
+        }
+
+        private bool ValidateUserIdExists(string userId)
+        {
+            var user = DataReader.Get<User>(userId);
+            return user != null;
         }
     }
 }

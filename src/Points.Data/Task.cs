@@ -10,8 +10,6 @@ namespace Points.Data
     public class Task : RavenObject
     {
         [Required]
-        public string UserId { get; set; }
-        [Required]
         public string CategoryId { get; set; }
         [Required]
         public Duration Duration { get; set; }

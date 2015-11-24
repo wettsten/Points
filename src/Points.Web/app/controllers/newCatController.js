@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('newCatController', ['$scope', 'catsService', function ($scope, catsService) {
+app.controller('newCatController', ['$scope', 'catsService', 'authService', function ($scope, catsService, authService) {
 
     $scope.addCatData = {};
 
@@ -8,6 +8,7 @@ app.controller('newCatController', ['$scope', 'catsService', function ($scope, c
     };
 
     $scope.addCat = function () {
+        $scope.addCatData.userId = authService.authentication.userId;
         catsService.addCat($scope.addCatData).then(function (response) {
             $scope.clearAddData();
             $scope.loadCats();

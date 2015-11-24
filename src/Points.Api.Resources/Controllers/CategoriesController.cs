@@ -32,6 +32,12 @@ namespace Points.Api.Resources.Controllers
         }
 
         [Route("")]
+        public IHttpActionResult GetCategoriesForUser(string userid)
+        {
+            return GetForUser(userid);
+        }
+
+        [Route("")]
         [HttpPost]
         public IHttpActionResult AddCategory(Category category)
         {

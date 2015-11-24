@@ -8,7 +8,7 @@ app.controller('tasksController', [
     $scope.cats = [];
 
     $scope.loadCats = function () {
-        catsService.getCats().then(function (results) {
+        catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
             $scope.cats = results.data;
             $scope.$broadcast("catsLoaded", $scope.cats);
             $scope.getEnums();

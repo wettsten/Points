@@ -9,9 +9,13 @@
         </div>
 
         <div class="row" ng-controller="newCatController">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <p>Name</p>
                 <input type="text" class="form-control" placeholder="Name" ng-model="addCatData.name" required autofocus>
+            </div>
+            <div class="col-md-3">
+                <p>Private Category</p>
+                <input type="checkbox" class="form-control" ng-model="addCatData.isPrivate" />
             </div>
             <div class="col-md-2">
                 <div>&nbsp;</div>
@@ -26,6 +30,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Is Private</th>
                     <th style="width:60px"></th>
                 </tr>
             </thead>
@@ -39,6 +44,9 @@
                     </td>
                     <td ng-if="amIInEditMode(cat.id)" editable-text="editCat.name" required>
                         {{editCat.name}}
+                    </td>
+                    <td>
+                        <input type="checkbox" data-ng-model="cat.isPrivate" disabled="disabled">
                     </td>
                     <td>
                         <img ng-init="setDeleteIcon(cat,false)" ng-src="{{cat.deleteIcon}}" ng-mouseover="setDeleteIcon(cat,true)"

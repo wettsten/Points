@@ -41,27 +41,13 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetTasksForUser(string userid)
         {
-            if (string.IsNullOrWhiteSpace(userid))
-            {
-                return BadRequest("User id is required");
-            }
-            var allTasks = DataReader.GetAll<Task>();
-            var tasks = allTasks.Where(i => i.UserId.Equals(userid) || !i.IsPrivate).ToList();
-            if (!tasks.Any())
-            {
-                return NotFound();
-            }
-            return Ok(tasks.OrderBy(i => i.Name));
+            return GetForUser(userid);
         }
 
         [Route("")]
         [HttpPost]
         public IHttpActionResult AddTask(Task task)
         {
-            if(!ValidateUserIdExists(task.UserId))
-            {
-                return BadRequest("User id does not exist");
-            }
             if (!ValidateCategoryIdExists(task.CategoryId))
             {
                 return BadRequest("Category id does not exist");
@@ -74,10 +60,6 @@ namespace Points.Api.Resources.Controllers
         //[HttpPatch]
         public IHttpActionResult EditTask(Task task)
         {
-            if (!ValidateUserIdExists(task.UserId))
-            {
-                return BadRequest("User id does not exist");
-            }
             if (!ValidateCategoryIdExists(task.CategoryId))
             {
                 return BadRequest("Category id does not exist");
@@ -90,12 +72,6 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult DeleteTask(string id)
         {
             return Delete(id);
-        }
-
-        private bool ValidateUserIdExists(string userId)
-        {
-            var user = DataReader.Get<User>(userId);
-            return user != null;
         }
 
         private bool ValidateCategoryIdExists(string catId)
