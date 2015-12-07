@@ -45,7 +45,7 @@ app.controller('newTaskController', [
                 $scope.clearAddData();
             },
          function (err) {
-             $scope.$parent.message = err.status + ' ' + err.data.message;
+             $scope.$parent.message = err.data.message;
          });
     };
 

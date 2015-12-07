@@ -56,7 +56,7 @@ app.controller('editTaskController', [
             $scope.loadTasks();
         },
          function (err) {
-             $scope.message = err.status + ' ' + err.data.message;
+             $scope.message = err.data.message;
          });
     };
 
@@ -74,7 +74,7 @@ app.controller('editTaskController', [
             $scope.loadTasks();
         },
          function (err) {
-             $scope.message = err.status + ' ' + err.data.message;
+             $scope.message = err.data.message;
          });
     };
 }]);

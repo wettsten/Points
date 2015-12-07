@@ -38,7 +38,7 @@ app.controller('editCatController', ['$scope', 'catsService', 'authService', 'ng
             $scope.loadCats();
             },
          function (err) {
-             $scope.$parent.message = err.status + ' ' + err.data.message;
+             $scope.$parent.message = err.data.message;
          });
     };
 
@@ -56,7 +56,7 @@ app.controller('editCatController', ['$scope', 'catsService', 'authService', 'ng
             $scope.loadCats();
         },
          function (err) {
-             $scope.$parent.message = err.status + ' ' + err.data.message;
+             $scope.$parent.message = err.data.message;
          });
     };
 }]);

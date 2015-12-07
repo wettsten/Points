@@ -14,7 +14,7 @@ app.controller('newCatController', ['$scope', 'catsService', 'authService', func
             $scope.loadCats();
             },
          function (err) {
-             $scope.$parent.message = err.status + ' ' + err.data.message;
+             $scope.$parent.message = err.data.message;
          });
     };
 }]);
