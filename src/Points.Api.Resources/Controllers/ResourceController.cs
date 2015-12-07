@@ -79,7 +79,7 @@ namespace Points.Api.Resources.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(GetModelStateErrors());
             }
             if (!ValidateUserIdExists(obj.UserId))
             {
@@ -108,7 +108,7 @@ namespace Points.Api.Resources.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(GetModelStateErrors());
             }
             if (!ValidateUserIdExists(obj.UserId))
             {
@@ -164,6 +164,12 @@ namespace Points.Api.Resources.Controllers
                         && (!i.IsPrivate || i.UserId.Equals(obj.UserId)) // object is public or was made by same user
                         && !i.IsDeleted // is not deleted
                         && !i.Id.Equals(obj.Id))); // not the input object
+        }
+
+        private string GetModelStateErrors()
+        {
+            var errors = ModelState.Where(i => i.Value.Errors.Count > 0).SelectMany(i => i.Value.Errors).Select(i => i.ErrorMessage);
+            return string.Join("\r\n", errors);
         }
     }
 }
