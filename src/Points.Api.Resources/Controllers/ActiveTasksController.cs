@@ -34,17 +34,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetActiveTasksForUser(string userid)
         {
-            if (string.IsNullOrWhiteSpace(userid))
-            {
-                return BadRequest(ModelState);
-            }
-            var allTasks = DataReader.GetAll<ActiveTask>();
-            var tasks = allTasks.Where(i => i.UserId.Equals(userid)).ToList();
-            if (!tasks.Any())
-            {
-                return NotFound();
-            }
-            return Ok(tasks);
+            return GetForUser(userid);
         }
 
         [Route("")]

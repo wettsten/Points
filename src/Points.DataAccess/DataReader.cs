@@ -10,31 +10,21 @@ namespace Points.DataAccess
 {
     public class DataReader : IDataReader
     {
-        private readonly IDocumentStore _store;
+        private readonly IDocumentSession _session;
 
-        public DataReader(IDocumentStore store)
+        public DataReader(IDocumentSession session)
         {
-            _store = store;
+            _session = session;
         }
 
         public TS Get<TS>(string id) where TS : RavenObject
         {
-            TS result;
-            using (var session = _store.OpenSession())
-            {
-                result = session.Query<TS>().FirstOrDefault();
-            }
-            return result;
+            return _session.Query<TS>().FirstOrDefault();
         }
 
         public IList<TA> GetAll<TA>() where TA : RavenObject
         {
-            IList<TA> result;
-            using (var session = _store.OpenSession())
-            {
-                result = session.Query<TA>().ToList();
-            }
-            return result;
+            return _session.Query<TA>().ToList();
         }
     }
 }

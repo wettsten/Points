@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web.DynamicData;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Data;
@@ -21,9 +21,9 @@ namespace Points.Api.Resources.Controllers
             DataWriter = dataWriter;
         }
         
-        protected IHttpActionResult Get()
+        protected IHttpActionResult Get(bool getDeleted = false)
         {
-            var objs = DataReader.GetAll<T>().Where(i => !i.IsDeleted);
+            var objs = DataReader.GetAll<T>().Where(i => !i.IsDeleted || getDeleted);
             if (!objs.Any())
             {
                 return NotFound();
@@ -31,28 +31,28 @@ namespace Points.Api.Resources.Controllers
             return Ok(objs.OrderBy(i => i.Name));
         }
         
-        protected IHttpActionResult Get(string id)
+        protected IHttpActionResult Get(string id, bool getDeleted = false)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
                 return BadRequest("Id is required");
             }
             var obj = DataReader.Get<T>(id);
-            if (obj == null || obj.IsDeleted)
+            if (obj == null || (obj.IsDeleted || !getDeleted))
             {
                 return NotFound();
             }
             return Ok(obj);
         }
         
-        protected IHttpActionResult GetByName(string name)
+        protected IHttpActionResult GetByName(string name, bool getDeleted = false)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 return BadRequest("Name is required");
             }
             var objs = DataReader.GetAll<T>();
-            var obj = objs.FirstOrDefault(i => i.Name.ToLower().Equals(name.ToLower()) && !i.IsDeleted);
+            var obj = objs.FirstOrDefault(i => i.Name.ToLower().Equals(name.ToLower()) && (!i.IsDeleted || getDeleted));
             if (obj == null)
             {
                 return NotFound();
@@ -60,14 +60,14 @@ namespace Points.Api.Resources.Controllers
             return Ok(obj);
         }
         
-        protected IHttpActionResult GetForUser(string userid)
+        protected IHttpActionResult GetForUser(string userid, bool getDeleted = false)
         {
             if (string.IsNullOrWhiteSpace(userid))
             {
                 return BadRequest("User id is required");
             }
             var allObjs = DataReader.GetAll<T>();
-            var objs = allObjs.Where(i => i.UserId.Equals(userid) || !i.IsPrivate).ToList();
+            var objs = allObjs.Where(i => (i.UserId.Equals(userid) || !i.IsPrivate) && (!i.IsDeleted || getDeleted)).ToList();
             if (!objs.Any())
             {
                 return NotFound();
@@ -85,10 +85,14 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("User id does not exist");
             }
+            if (!ValidateObjectNameIsUnique(obj))
+            {
+                return BadRequest("The name already exists");
+            }
             try
             {
                 obj.Id = string.Empty;
-                return StatusCode(DataWriter.Add(obj));
+                return StatusCode(DataWriter.Upsert(obj));
             }
             catch(InvalidDataException ide)
             {
@@ -102,17 +106,21 @@ namespace Points.Api.Resources.Controllers
         
         protected IHttpActionResult Edit(T obj)
         {
-            if (!ValidateUserIdExists(obj.UserId))
-            {
-                return BadRequest("User id does not exist");
-            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            if (!ValidateUserIdExists(obj.UserId))
+            {
+                return BadRequest("User id does not exist");
+            }
+            if (!ValidateObjectNameIsUnique(obj))
+            {
+                return BadRequest("The name already exists");
+            }
             try
             {
-                return StatusCode(DataWriter.Edit(obj));
+                return StatusCode(DataWriter.Upsert(obj));
             }
             catch (InvalidDataException ide)
             {
@@ -144,6 +152,18 @@ namespace Points.Api.Resources.Controllers
         {
             var user = DataReader.Get<User>(userId);
             return user != null;
+        }
+
+        private bool ValidateObjectNameIsUnique(T obj)
+        {
+            var existingObj = DataReader.GetAll<T>();
+            return
+                !(existingObj.Any(
+                    i =>
+                        i.Name.Equals(obj.Name) // same name
+                        && (!i.IsPrivate || i.UserId.Equals(obj.UserId)) // object is public or was made by same user
+                        && !i.IsDeleted // is not deleted
+                        && !i.Id.Equals(obj.Id))); // not the input object
         }
     }
 }
