@@ -36,6 +36,30 @@ app.controller('editTaskController', [
         return $scope.editTask.frequency.fType.id !== 'Once' || $scope.editTask.frequency.fType.id === '';
     };
 
+    $scope.ignoreDurationValueAndUnit = function(taskId) {
+        if ($scope.amIInEditMode(taskId)) {
+            return $scope.editTask.duration.dType.id === 'None';
+        } else {
+            for (var i = 0; i < $scope.tasks.length; i++) {
+                if ($scope.tasks[i].id === taskId) {
+                    return $scope.tasks[i].duration.type === 'None';
+                }
+            }
+        }
+    };
+
+    $scope.ignoreFrequencyValueAndUnit = function (taskId) {
+        if ($scope.amIInEditMode(taskId)) {
+            return $scope.editTask.frequency.fType.id === 'Once';
+        } else {
+            for (var i = 0; i < $scope.tasks.length; i++) {
+                if ($scope.tasks[i].id === taskId) {
+                    return $scope.tasks[i].frequency.type === 'Once';
+                }
+            }
+        }
+    };
+
     $scope.showSaveCancel = function (taskId) {
         return $scope.editTask.id === taskId;
     };

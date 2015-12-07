@@ -88,17 +88,23 @@
                     <td ng-if="amIInEditMode(task.id)" editable-select="editTask.duration.dType" e-ng-options="option.name for option in enums.dTypes track by option.id">
                         {{ editTask.duration.dType.name }}
                     </td>
-                    <td ng-hide="amIInEditMode(task.id) && hideEditDuration()">
+                    <td ng-hide="(amIInEditMode(task.id) && hideEditDuration()) || ignoreDurationValueAndUnit(task.id)">
                         {{ task.duration.value }}
                     </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditDuration()" editable-number="editTask.duration.value">
+                    <td ng-if="amIInEditMode(task.id) && hideEditDuration() && !ignoreDurationValueAndUnit(task.id)" editable-number="editTask.duration.value">
                         {{ editTask.duration.value }}
                     </td>
-                    <td ng-hide="amIInEditMode(task.id) && hideEditDuration()">
+                    <td ng-show="ignoreDurationValueAndUnit(task.id)">
+                        -
+                    </td>
+                    <td ng-hide="(amIInEditMode(task.id) && hideEditDuration()) || ignoreDurationValueAndUnit(task.id)">
                         {{ task.duration.dUnit.name }}
                     </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditDuration()" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id">
+                    <td ng-if="amIInEditMode(task.id) && hideEditDuration() && !ignoreDurationValueAndUnit(task.id)" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id">
                         {{ editTask.duration.dUnit.name }}
+                    </td>
+                    <td ng-show="ignoreDurationValueAndUnit(task.id)">
+                        -
                     </td>
                     <td ng-hide="amIInEditMode(task.id)">
                         {{ task.frequency.fType.name }}
@@ -106,17 +112,23 @@
                     <td ng-if="amIInEditMode(task.id)" editable-select="editTask.frequency.fType" e-ng-options="option.name for option in enums.fTypes track by option.id">
                         {{ editTask.frequency.fType.name }}
                     </td>
-                    <td ng-hide="amIInEditMode(task.id) && hideEditFrequency()">
+                    <td ng-hide="(amIInEditMode(task.id) && hideEditFrequency()) || ignoreFrequencyValueAndUnit(task.id)">
                         {{ task.frequency.value }}
                     </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency()" editable-number="editTask.frequency.value">
+                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency() && !ignoreFrequencyValueAndUnit(task.id)" editable-number="editTask.frequency.value">
                         {{ editTask.frequency.value }}
                     </td>
-                    <td ng-hide="amIInEditMode(task.id) && hideEditFrequency()">
+                    <td ng-show="ignoreFrequencyValueAndUnit(task.id)">
+                        -
+                    </td>
+                    <td ng-hide="(amIInEditMode(task.id) && hideEditFrequency()) || ignoreFrequencyValueAndUnit(task.id)">
                         {{ task.frequency.fUnit.name }}
                     </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency()" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id">
+                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency() && !ignoreFrequencyValueAndUnit(task.id)" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id">
                         {{ editTask.frequency.fUnit.name }}
+                    </td>
+                    <td ng-show="ignoreFrequencyValueAndUnit(task.id)">
+                        -
                     </td>
                     <td>
                         <img ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
