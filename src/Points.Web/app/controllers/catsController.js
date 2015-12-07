@@ -7,9 +7,8 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', functi
     $scope.loadCats = function() {
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
             $scope.cats = results.data;
-            //$scope.$apply();
-        }, function(error) {
-            //alert(error.data.message);
+        }, function (error) {
+            $scope.message = 'Error loading data';
         });
     };
 

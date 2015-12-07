@@ -13,7 +13,7 @@ app.controller('tasksController', [
             $scope.$broadcast("catsLoaded", $scope.cats);
             $scope.getEnums();
         }, function (error) {
-            //alert(error.data.message);
+            $scope.message = 'Error loading data';
         });
     };
 
@@ -22,8 +22,8 @@ app.controller('tasksController', [
             $scope.enums = results.data;
             $scope.$broadcast("enumsLoaded", $scope.enums);
             $scope.loadTasks();
-        }, function(error) {
-            //alert(error.data.message);
+        }, function (error) {
+            $scope.message = 'Error loading data';
         });
     };
 
@@ -37,9 +37,8 @@ app.controller('tasksController', [
                 $scope.lookupFType($scope.tasks[i]);
                 $scope.lookupFUnit($scope.tasks[i]);
             }
-            //$scope.$apply();
         }, function (error) {
-            //alert(error.data.message);
+            $scope.message = 'Error loading data';
         });
     };
 
