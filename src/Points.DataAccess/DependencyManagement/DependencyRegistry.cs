@@ -1,6 +1,6 @@
 ﻿using Raven.Client;
 using Raven.Client.Document;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 
 namespace Points.DataAccess.DependencyManagement
 {
@@ -16,12 +16,14 @@ namespace Points.DataAccess.DependencyManagement
                 Url = "http://localhost:8080",
                 DefaultDatabase = "Points"
             }.Initialize();
+
             Scan(
                 scan =>
                 {
                     scan.WithDefaultConventions();
                 });
             For<IDocumentStore>().Use(docStore);
+            For<IDocumentSession>().Use(ctx => ctx.GetInstance<IDocumentStore>().OpenSession());
         }
     }
 }

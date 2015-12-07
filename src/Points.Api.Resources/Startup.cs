@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Points.Api.Resources;
-using Points.Api.Resources.DependencyManagement;
+using Points.Api.Resources.DependencyResolution;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace Points.Api.Resources
@@ -15,7 +15,7 @@ namespace Points.Api.Resources
 
         public void Configuration(IAppBuilder app)
         {
-            var container = DependencyRegistry.Initialise();
+            var container = IoC.Initialize();
             HttpConfiguration config = new HttpConfiguration();
 
             ConfigureOAuth(app);
@@ -23,7 +23,7 @@ namespace Points.Api.Resources
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
-            config.DependencyResolver = new StructureMapHttpDependencyResolver(container);
+            config.DependencyResolver = new StructureMapWebApiDependencyResolver(container);
         }
 
         private void ConfigureOAuth(IAppBuilder app)
