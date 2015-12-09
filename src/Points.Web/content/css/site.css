@@ -60,8 +60,35 @@ body {
 
 .img-button {
     display: inline;
-    float: left;
     width: 20px;
     height: 20px;
     cursor: pointer;
+}
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 10px;
+}
+.editable-wrap
+{
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+table tr td.checkbox-td
+{
+    padding-left: 20px;
+    vertical-align: middle;
+}
+table tr td.buttons-td
+{
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
 }

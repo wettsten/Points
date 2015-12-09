@@ -1,13 +1,15 @@
 ﻿<tr>
     <td ng-hide="true">
     </td>
-    <td editable-text="addCatData.name" e-name="addName" e-form="addForm" e-required onbeforesave="validateName($data)">
-            {{ addCatData.name }}
-    </td>
     <td>
+        <span editable-text="addCatData.name" buttons="no" e-name="addName" e-form="addForm" e-required onbeforesave="validateName($data)">
+            {{ addCatData.name }}
+        </span>
+    </td>
+    <td class="checkbox-td">
         <input type="checkbox" ng-model="addCatData.isPrivate">
     </td>
-    <td>
+    <td class="buttons-td">
         <form editable-form name="addForm" shown="true">
             <div img-button btn-type="'new'" ng-click="addCat()"></div>
         </form>

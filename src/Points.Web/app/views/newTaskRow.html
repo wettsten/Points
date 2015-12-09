@@ -1,7 +1,7 @@
 ﻿<tr>
     <td ng-hide="true"></td>
     <td>
-        <span editable-text="addTaskData.name" e-name="addName" e-form="addForm" e-required onbeforesave="validateName($data)">
+        <span editable-text="addTaskData.name" buttons="no" e-name="addName" e-form="addForm" e-required onbeforesave="validateName($data)">
             {{ addTaskData.name }}
         </span>
     </td>
@@ -10,10 +10,10 @@
             {{ addTaskData.category.name }}
         </span>
     </td>
-    <td>
+    <td class="checkbox-td">
         <input type="checkbox" ng-model="addTaskData.isPrivate">
     </td>
-    <td>
+    <td class="buttons-td">
         <form editable-form name="addForm">
             <div img-button btn-type="'new'" ng-click="addTask()"></div>
         </form>

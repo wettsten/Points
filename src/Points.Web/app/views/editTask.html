@@ -6,7 +6,7 @@
         <span ng-hide="isInEditMode(task.id)">
             {{ task.name }}
         </span>
-        <span ng-show="isInEditMode(task.id)" editable-text="editTask.name" e-name="editName" e-form="editForm" e-required>
+        <span ng-show="isInEditMode(task.id)" editable-text="editTask.name" buttons="no" e-name="editName" e-form="editForm" e-required>
             {{ editTask.name }}
         </span>
     </td>
@@ -18,10 +18,10 @@
             {{ editTask.category.name }}
         </span>
     </td>
-    <td>
+    <td class="checkbox-td">
         <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
     </td>
-    <td>
+    <td class="buttons-td">
         <div ng-hide="isInEditMode(cat.id) || isSomeoneElseInEditMode(cat.id)">
             <div img-button btn-type="'edit'" ng-click="startEdit(task.id)"></div>
             <div img-button btn-type="'delete'" ng-click="deleteCat(task.id)"></div>
@@ -30,5 +30,5 @@
             <div img-button btn-type="'save'" ng-click="saveEdit()"></div>
             <div img-button btn-type="'cancel'" ng-click="clearEditData()"></div>
         </form>
-</td>
+    </td>
 </tr>
