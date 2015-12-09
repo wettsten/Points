@@ -61,6 +61,7 @@
     <Content Include="app\controllers\associateController.js" />
     <Content Include="app\directives\imgButton.js" />
     <Content Include="app\directives\editCat.js" />
+    <Content Include="app\directives\newCatRow.js" />
     <Content Include="app\directives\newCat.js" />
     <Content Include="app\directives\newTask.js" />
     <Content Include="app\directives\editTask.js" />
@@ -82,6 +83,7 @@
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\imgButton.html" />
     <Content Include="app\views\editCat.html" />
+    <Content Include="app\views\newCatRow.html" />
     <Content Include="app\views\newCat.html" />
     <Content Include="app\views\newTask.html" />
     <Content Include="app\views\editTask.html" />
@@ -126,6 +128,8 @@
     <Content Include="Icons\deleteactive.png" />
     <Content Include="Icons\edit.png" />
     <Content Include="Icons\editactive.png" />
+    <Content Include="Icons\new.png" />
+    <Content Include="Icons\newActive.png" />
     <Content Include="Icons\save.png" />
     <Content Include="Icons\saveActive.png" />
     <Content Include="index.html" />

@@ -1,0 +1,15 @@
+﻿<tr>
+    <td ng-hide="true">
+    </td>
+    <td editable-text="addCatData.name" e-name="editName" e-required>
+        {{ addCatData.name }}
+    </td>
+    <td>
+        <input type="checkbox" ng-model="addCatData.isPrivate">
+    </td>
+    <td>
+        <form editable-form name="addForm">
+            <div img-button btn-type="'new'" ng-click="addCat()"></div>
+        </form>
+    </td>
+</tr>
