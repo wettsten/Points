@@ -60,7 +60,7 @@ body {
 
 .img-button {
     display: inline;
-    float: right;
+    float: left;
     width: 20px;
     height: 20px;
     cursor: pointer;

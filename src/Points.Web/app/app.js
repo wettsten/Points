@@ -59,17 +59,7 @@ var resourceServiceBase = 'http://points.wettsten.com/resources/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: authServiceBase,
     apiResourceBaseUri: resourceServiceBase,
-    clientId: 'pointsprogram',
-    icons: {
-        editIcon: 'Icons/edit.png',
-        deleteIcon: 'Icons/delete.png',
-        saveIcon: 'Icons/save.png',
-        cancelIcon: 'Icons/cancel.png',
-        editActiveIcon: 'Icons/editactive.png',
-        deleteActiveIcon: 'Icons/deleteactive.png',
-        saveActiveIcon: 'Icons/saveActive.png',
-        cancelActiveIcon: 'Icons/cancelActive.png',
-    }
+    clientId: 'pointsprogram'
 });
 
 app.config(function ($httpProvider) {

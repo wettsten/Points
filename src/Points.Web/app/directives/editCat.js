@@ -8,23 +8,7 @@ app.directive('editCat', function () {
         replace: true,
         controller: 'editCatController'
     };
-}).controller('editCatController', ['$scope', 'catsService', 'authService', 'ngAuthSettings', function ($scope, catsService, authService, ngAuthSettings) {
-
-    $scope.setDeleteIcon = function(cat, isActive) {
-        cat.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
-    };
-
-    $scope.setEditIcon = function(cat, isActive) {
-        cat.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
-    };
-
-    $scope.setCancelIcon = function(cat, isActive) {
-        cat.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
-    };
-
-    $scope.setSaveIcon = function(cat, isActive) {
-        cat.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
-    };
+}).controller('editCatController', ['$scope', 'catsService', 'authService', function ($scope, catsService, authService) {
 
     $scope.editCat = {};
 

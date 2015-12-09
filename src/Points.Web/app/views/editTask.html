@@ -19,16 +19,12 @@
     </td>
     <td>
         <div ng-hide="isInEditMode(cat.id) || isSomeoneElseInEditMode(cat.id)">
-            <img class="img-button" ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
-                 ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" />
-            <img class="img-button" ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
-                 ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" />
+            <div img-button btn-type="'edit'" ng-click="startEdit(task.id)"></div>
+            <div img-button btn-type="'delete'" ng-click="deleteCat(task.id)"></div>
         </div>
         <form editable-form name="editForm" ng-show="isInEditMode(task.id)">
-            <img class="img-button" ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
-                 ng-mouseout="setCancelIcon(task,false)" ng-click="clearEditData()" />
-            <img class="img-button" ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
-                 ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" />
+            <div img-button btn-type="'save'" ng-click="saveEdit()"></div>
+            <div img-button btn-type="'cancel'" ng-click="clearEditData()"></div>
         </form>
 </td>
 </tr>

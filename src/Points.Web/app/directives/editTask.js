@@ -10,25 +10,9 @@ app.directive('editTask', function () {
         controller: 'editTaskController'
     };
 }).controller('editTaskController', [
-    '$scope', 'tasksService', 'catsService', 'authService', 'ngAuthSettings', function($scope, tasksService, catsService, authService, ngAuthSettings) {
+    '$scope', 'tasksService', 'catsService', 'authService', function($scope, tasksService, catsService, authService) {
 
-    $scope.setDeleteIcon = function(task, isActive) {
-        task.deleteIcon = isActive ? ngAuthSettings.icons.deleteActiveIcon : ngAuthSettings.icons.deleteIcon;
-    };
-
-    $scope.setEditIcon = function(task, isActive) {
-        task.editIcon = isActive ? ngAuthSettings.icons.editActiveIcon : ngAuthSettings.icons.editIcon;
-    };
-
-    $scope.setCancelIcon = function(task, isActive) {
-        task.cancelIcon = isActive ? ngAuthSettings.icons.cancelActiveIcon : ngAuthSettings.icons.cancelIcon;
-    };
-
-    $scope.setSaveIcon = function(task, isActive) {
-        task.saveIcon = isActive ? ngAuthSettings.icons.saveActiveIcon : ngAuthSettings.icons.saveIcon;
-    };
-        
-    $scope.editTask = {};
+   $scope.editTask = {};
 
     $scope.isInEditMode = function (taskId) {
         return $scope.$parent.$parent.editTaskId === taskId;
