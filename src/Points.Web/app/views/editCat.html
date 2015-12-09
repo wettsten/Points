@@ -2,11 +2,13 @@
     <td ng-hide="true">
         {{ cat.id }}
     </td>
-    <td ng-hide="isInEditMode(cat.id)">
+    <td>
+        <span ng-hide="isInEditMode(cat.id)">
             {{ cat.name }}
-    </td>
-    <td ng-show="isInEditMode(cat.id)" editable-text="editCat.name" e-name="editName" e-required>
+        </span>
+        <span ng-show="isInEditMode(cat.id)" editable-text="editCat.name" e-name="editName" e-form="editForm" e-required>
             {{editCat.name}}
+        </span>
     </td>
     <td>
         <input type="checkbox" ng-model="cat.isPrivate" disabled="disabled">

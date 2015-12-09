@@ -3,8 +3,6 @@
         <h1>Categories</h1>
     </div>
 
-    <div class="row" new-cat>
-    </div>
     <div data-ng-hide="message == ''" class="row alert alert-danger">
         {{message}}
     </div>
@@ -17,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <!--<tr new-cat-row></tr>-->
+            <tr new-cat-row></tr>
             <tr ng-repeat="cat in cats" edit-cat the-cat="cat">
         </tr>
         </tbody>

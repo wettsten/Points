@@ -63,6 +63,7 @@
     <Content Include="app\directives\editCat.js" />
     <Content Include="app\directives\newCatRow.js" />
     <Content Include="app\directives\newCat.js" />
+    <Content Include="app\directives\newTaskRow.js" />
     <Content Include="app\directives\newTask.js" />
     <Content Include="app\directives\editTask.js" />
     <Content Include="app\controllers\tasksController.js" />
@@ -85,6 +86,7 @@
     <Content Include="app\views\editCat.html" />
     <Content Include="app\views\newCatRow.html" />
     <Content Include="app\views\newCat.html" />
+    <Content Include="app\views\newTaskRow.html" />
     <Content Include="app\views\newTask.html" />
     <Content Include="app\views\editTask.html" />
     <Content Include="app\views\tasks.html" />

@@ -2,17 +2,21 @@
     <td ng-hide="true">
         {{ task.id }}
     </td>
-    <td ng-hide="isInEditMode(task.id)">
-        {{ task.name }}
+    <td>
+        <span ng-hide="isInEditMode(task.id)">
+            {{ task.name }}
+        </span>
+        <span ng-show="isInEditMode(task.id)" editable-text="editTask.name" e-name="editName" e-form="editForm" e-required>
+            {{ editTask.name }}
+        </span>
     </td>
-    <td ng-show="isInEditMode(task.id)" editable-text="editTask.name" e-name="editName" e-required>
-        {{ editTask.name }}
-    </td>
-    <td ng-hide="isInEditMode(task.id)">
-        {{ task.category.name }}
-    </td>
-    <td ng-show="isInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id" e-name="editCategory" e-required>
-        {{ editTask.category.name }}
+    <td>
+        <span ng-hide="isInEditMode(task.id)">
+            {{ task.category.name }}
+        </span>
+        <span ng-show="isInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id" e-name="editCategory" e-form="editForm" e-required>
+            {{ editTask.category.name }}
+        </span>
     </td>
     <td>
         <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">

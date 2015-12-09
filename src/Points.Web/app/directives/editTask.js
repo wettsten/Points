@@ -25,6 +25,7 @@ app.directive('editTask', function () {
     $scope.clearEditData = function () {
         $scope.editTask = {};
         $scope.$parent.$parent.editTaskId = '';
+        $scope.editForm.$hide();
     };
 
     $scope.saveEdit = function () {
@@ -44,6 +45,7 @@ app.directive('editTask', function () {
             if ($scope.$parent.tasks[i].id === taskId) {
                 $scope.editTask = angular.copy($scope.$parent.tasks[i]);
                 $scope.$parent.$parent.editTaskId = taskId;
+                $scope.editForm.$show();
                 break;
             }
         }

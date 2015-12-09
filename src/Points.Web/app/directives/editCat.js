@@ -23,6 +23,7 @@ app.directive('editCat', function () {
     $scope.clearEditData = function () {
         $scope.editCat = {};
         $scope.$parent.$parent.editCatId = '';
+        $scope.editForm.$hide();
     };
 
     $scope.saveEdit = function () {
@@ -45,6 +46,7 @@ app.directive('editCat', function () {
             if ($scope.$parent.cats[i].id === catId) {
                 $scope.editCat = angular.copy($scope.$parent.cats[i]);
                 $scope.$parent.$parent.editCatId = catId;
+                $scope.editForm.$show();
                 break;
             }
         }

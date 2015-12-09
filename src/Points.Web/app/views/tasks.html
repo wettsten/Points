@@ -2,8 +2,7 @@
     <div class="page-header text-center">
         <h1>Tasks</h1>
     </div>
-    <div class="row" new-task>
-    </div>
+
     <div data-ng-hide="message == ''" class="row alert alert-danger">
         {{message}}
     </div>
@@ -18,6 +17,7 @@
             </tr>
         </thead>
         <tbody>
+            <tr new-task-row></tr>
             <tr data-ng-repeat="task in tasks" edit-task the-task="task" cats="cats">
             </tr>
         </tbody>
