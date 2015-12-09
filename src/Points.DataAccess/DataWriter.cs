@@ -21,11 +21,19 @@ namespace Points.DataAccess
             _session = session;
         }
 
-        public HttpStatusCode Upsert<TN>(TN obj) where TN : RavenObject
+        public HttpStatusCode Add<TN>(TN obj) where TN : RavenObject
         {
             _session.Store(obj);
             _session.SaveChanges();
             //var id = session.Advanced.GetDocumentId(obj);
+            return HttpStatusCode.Created;
+        }
+
+        public HttpStatusCode Update<TN>(TN obj) where TN : RavenObject
+        {
+            var existingObj = _session.Load<TN>(obj.Id);
+            existingObj.Copy(obj);
+            _session.SaveChanges();
             return HttpStatusCode.Created;
         }
 

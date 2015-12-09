@@ -15,5 +15,14 @@ namespace Points.Data
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
         public string UserId { get; set; }
+
+        public virtual void Copy(RavenObject obj)
+        {
+            Id = obj.Id;
+            Name = obj.Name;
+            IsPrivate = obj.IsPrivate;
+            IsDeleted = obj.IsDeleted;
+            UserId = obj.UserId;
+        }
     }
 }

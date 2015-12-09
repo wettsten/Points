@@ -92,7 +92,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.Id = string.Empty;
-                return StatusCode(DataWriter.Upsert(obj));
+                return StatusCode(DataWriter.Add(obj));
             }
             catch(InvalidDataException ide)
             {
@@ -120,7 +120,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                return StatusCode(DataWriter.Upsert(obj));
+                return StatusCode(DataWriter.Update(obj));
             }
             catch (InvalidDataException ide)
             {
