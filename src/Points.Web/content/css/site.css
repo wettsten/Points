@@ -58,3 +58,10 @@ body {
         border-top-right-radius: 0;
     }
 
+.img-button {
+    display: inline;
+    float: right;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

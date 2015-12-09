@@ -1,0 +1,15 @@
+﻿<form name="addForm">
+    <div class="col-md-5">
+        <p>Name</p>
+        <input type="text" name="addName" class="form-control" placeholder="Name" ng-model="addCatData.name" required autofocus>
+    </div>
+    <div class="col-md-3">
+        <p>Private Category</p>
+        <input type="checkbox" class="form-control" ng-model="addCatData.isPrivate" />
+    </div>
+    <div class="col-md-2">
+        <div>&nbsp;</div>
+        <button class="btn btn-info" type="submit" ng-click="addCat()">Add New Category</button>
+        <div>&nbsp;</div>
+    </div>
+</form>

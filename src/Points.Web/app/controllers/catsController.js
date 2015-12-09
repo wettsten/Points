@@ -3,6 +3,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', functi
 
     $scope.cats = [];
     $scope.message = '';
+    $scope.editCatId = '';
 
     $scope.loadCats = function() {
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {

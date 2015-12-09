@@ -131,18 +131,14 @@
                         -
                     </td>
                     <td>
-                        <img ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
-                             ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" ng-hide="isInEditMode()"
-                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
-                        <img ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
-                             ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" ng-hide="isInEditMode()"
-                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
-                        <img ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
-                             ng-mouseout="setCancelIcon(task,false)" ng-click="clearEditData()" ng-show="amIInEditMode(task.id)"
-                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
-                        <img ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
-                             ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" ng-show="amIInEditMode(task.id)"
-                             style="display: inline; float: right; width: 20px; height: 20px; cursor: pointer" />
+                        <img class="img-button" ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
+                             ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" ng-hide="isInEditMode()" />
+                        <img class="img-button" ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
+                             ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" ng-hide="isInEditMode()" />
+                        <img class="img-button" ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
+                             ng-mouseout="setCancelIcon(task,false)" ng-click="clearEditData()" ng-show="amIInEditMode(task.id)" />
+                        <img class="img-button" ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
+                             ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" ng-show="amIInEditMode(task.id)" />
                     </td>
                 </tr>
             </tbody>

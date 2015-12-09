@@ -1,0 +1,28 @@
+﻿<tr>
+    <td ng-hide="true">
+        {{ cat.id }}
+    </td>
+    <td ng-hide="isInEditMode(cat.id)">
+            {{ cat.name }}
+    </td>
+    <td ng-show="isInEditMode(cat.id)" editable-text="editCat.name" e-name="editName" e-required>
+            {{editCat.name}}
+    </td>
+    <td>
+        <input type="checkbox" ng-model="cat.isPrivate" disabled="disabled">
+    </td>
+    <td>
+        <div ng-hide="isInEditMode(cat.id) || isSomeoneElseInEditMode(cat.id)">
+            <img class="img-button" ng-init="setDeleteIcon(cat,false)" ng-src="{{cat.deleteIcon}}" ng-mouseover="setDeleteIcon(cat,true)"
+                    ng-mouseout="setDeleteIcon(cat,false)" ng-click="deleteCat(cat.id)" />
+            <img class="img-button" ng-init="setEditIcon(cat,false)" ng-src="{{cat.editIcon}}" ng-mouseover="setEditIcon(cat,true)"
+                    ng-mouseout="setEditIcon(cat,false)" ng-click="startEdit(cat.id)" />
+        </div>
+        <form editable-form name="editForm" ng-show="isInEditMode(cat.id)">
+            <img class="img-button" ng-init="setCancelIcon(cat,false)" ng-src="{{cat.cancelIcon}}" ng-mouseover="setCancelIcon(cat,true)"
+                    ng-mouseout="setCancelIcon(cat,false)" ng-click="clearEditData()" />
+            <img class="img-button" ng-init="setSaveIcon(cat,false)" ng-src="{{cat.saveIcon}}" ng-mouseover="setSaveIcon(cat,true)"
+                    ng-mouseout="setSaveIcon(cat,false)" ng-click="saveEdit()" />
+        </form>
+    </td>
+</tr>
