@@ -1,0 +1,18 @@
+﻿<form name="addForm">
+    <div class="col-md-2">
+        <p>Name</p>
+        <input type="text" class="form-control" placeholder="Name" ng-model="addTaskData.name" required autofocus />
+    </div>
+    <div class="col-md-2">
+        <p>Category</p>
+        <select class="form-control" ng-model="addTaskData.cat" ng-options="option.name for option in cats" required></select>
+    </div>
+    <div class="col-md-2">
+        <p>Private Task</p>
+        <input type="checkbox" class="form-control" ng-model="addTaskData.isPrivate" />
+    </div>
+    <div class="col-md-2">
+        <div>&nbsp;</div>
+        <button class="btn btn-info" type="submit" ng-click="addTask()">Add New Task</button>
+    </div>
+</form>

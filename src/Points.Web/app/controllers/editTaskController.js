@@ -1,5 +1,14 @@
 ﻿'use strict';
-app.controller('editTaskController', [
+app.directive('editTask', function () {
+    return {
+        scope: {
+            task: '=theTask'
+        },
+        templateUrl: '/app/views/editTask.html',
+        replace: true,
+        controller: 'editTaskController'
+    };
+}).controller('editTaskController', [
     '$scope', 'tasksService', 'catsService', 'authService', 'ngAuthSettings', function($scope, tasksService, catsService, authService, ngAuthSettings) {
 
     $scope.setDeleteIcon = function(task, isActive) {
@@ -19,75 +28,46 @@ app.controller('editTaskController', [
     };
         
     $scope.editTask = {};
+    $scope.cats = [];
 
-    $scope.isInEditMode = function () {
-        return $scope.editTask.id ? true : false;
+    $scope.isInEditMode = function (taskId) {
+        return $scope.$parent.$parent.editTaskId === taskId;
     };
 
-    $scope.amIInEditMode = function (taskId) {
-        return $scope.editTask.id === taskId;
-    };
-
-    $scope.hideEditDuration = function () {
-        return $scope.editTask.duration.dType.id !== 'None' || $scope.editTask.duration.dType.id === '';
-    };
-
-    $scope.hideEditFrequency = function () {
-        return $scope.editTask.frequency.fType.id !== 'Once' || $scope.editTask.frequency.fType.id === '';
-    };
-
-    $scope.ignoreDurationValueAndUnit = function(taskId) {
-        if ($scope.amIInEditMode(taskId)) {
-            return $scope.editTask.duration.dType.id === 'None';
-        } else {
-            for (var i = 0; i < $scope.tasks.length; i++) {
-                if ($scope.tasks[i].id === taskId) {
-                    return $scope.tasks[i].duration.type === 'None';
-                }
-            }
-        }
-    };
-
-    $scope.ignoreFrequencyValueAndUnit = function (taskId) {
-        if ($scope.amIInEditMode(taskId)) {
-            return $scope.editTask.frequency.fType.id === 'Once';
-        } else {
-            for (var i = 0; i < $scope.tasks.length; i++) {
-                if ($scope.tasks[i].id === taskId) {
-                    return $scope.tasks[i].frequency.type === 'Once';
-                }
-            }
-        }
-    };
-
-    $scope.showSaveCancel = function (taskId) {
-        return $scope.editTask.id === taskId;
+    $scope.isSomeoneElseInEditMode = function (taskId) {
+        return $scope.$parent.$parent.editTaskId !== '' && $scope.$parent.$parent.editTaskId !== taskId;
     };
 
     $scope.clearEditData = function () {
         $scope.editTask = {};
+        $scope.$parent.$parent.editTaskId = '';
+    };
+
+    $scope.loadCats = function () {
+        catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
+            $scope.cats = results.data;
+        }, function (error) {
+            $scope.$parent.message = 'Error loading data';
+        });
     };
 
     $scope.saveEdit = function () {
         $scope.editTask.categoryId = $scope.editTask.category.id;
-        $scope.editTask.duration.type = $scope.editTask.duration.dType.id;
-        $scope.editTask.duration.unit = $scope.editTask.duration.dUnit.id;
-        $scope.editTask.frequency.type = $scope.editTask.frequency.fType.id;
-        $scope.editTask.frequency.unit = $scope.editTask.frequency.fUnit.id;
         $scope.editTask.userId = authService.authentication.userId;
         tasksService.editTask($scope.editTask).then(function (response) {
                 $scope.clearEditData();
-            $scope.loadTasks();
+            $scope.$parent.loadTasks();
         },
          function (err) {
-             $scope.message = err.data.message;
+             $scope.$parent.message = err.data.message;
          });
     };
 
     $scope.startEdit = function (taskId) {
-        for (var i = 0; i < $scope.tasks.length; i++) {
-            if ($scope.tasks[i].id === taskId) {
-                $scope.editTask = angular.copy($scope.tasks[i]);
+        for (var i = 0; i < $scope.$parent.tasks.length; i++) {
+            if ($scope.$parent.tasks[i].id === taskId) {
+                $scope.editTask = angular.copy($scope.$parent.tasks[i]);
+                $scope.$parent.$parent.editTaskId = taskId;
                 break;
             }
         }
@@ -95,10 +75,12 @@ app.controller('editTaskController', [
 
     $scope.deleteTask = function (taskId) {
         tasksService.deleteTask(taskId).then(function (response) {
-            $scope.loadTasks();
+            $scope.$parent.loadTasks();
         },
          function (err) {
-             $scope.message = err.data.message;
+             $scope.$parent.message = err.data.message;
          });
     };
+
+    $scope.loadCats();
 }]);

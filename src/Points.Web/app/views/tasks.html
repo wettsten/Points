@@ -7,41 +7,7 @@
         <div class="page-header text-center">
             <h1>Tasks</h1>
         </div>
-        <div class="row" ng-controller="newTaskController">
-            <div class="col-md-2">
-                <p>Name</p>
-                <input type="text" class="form-control" placeholder="Name" ng-model="addTaskData.name" required autofocus />
-            </div>
-            <div class="col-md-2">
-                <p>Private Task</p>
-                <input type="checkbox" class="form-control" ng-model="addTaskData.isPrivate" />
-            </div>
-            <div class="col-md-2">
-                <p>Category</p>
-                <select class="form-control" ng-model="selectedAdd.cat" ng-options="option.name for option in cats" required></select>
-            </div>
-            <div class="col-md-2">
-                <p>Duration</p>
-                <select class="form-control" ng-model="selectedAdd.dType" ng-options="option.name for option in enums.dTypes" required></select>
-                <div>&nbsp;</div>
-                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.duration.value" ng-show="showAddDuration()" ng-required="showAddDuration()" />
-                <div>&nbsp;</div>
-                <select class="form-control" ng-model="selectedAdd.dUnit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits" ng-required="showAddDuration()"></select>
-                <div>&nbsp;</div>
-            </div>
-            <div class="col-md-2">
-                <p>Frequency</p>
-                <select class="form-control" ng-model="selectedAdd.fType" ng-options="option.name for option in enums.fTypes" required></select>
-                <div>&nbsp;</div>
-                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" ng-required="showAddDuration()" />
-                <div>&nbsp;</div>
-                <select class="form-control" ng-model="selectedAdd.fUnit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits" ng-required="showAddDuration()"></select>
-                <div>&nbsp;</div>
-            </div>
-            <div class="col-md-2">
-                <div>&nbsp;</div>
-                <button class="btn btn-md btn-info" type="submit" ng-click="addTask()">Add New Task</button>
-            </div>
+        <div class="row" new-task>
         </div>
         <div data-ng-hide="message == ''" class="row alert alert-danger">
             {{message}}
@@ -53,93 +19,11 @@
                     <th>Name</th>
                     <th>Category</th>
                     <th>Is Private</th>
-                    <th>Duration Type</th>
-                    <th>Duration Value</th>
-                    <th>Duration Unit</th>
-                    <th>Frequency Type</th>
-                    <th>Frequency Value</th>
-                    <th>Frequency Unit</th>
                     <th style="width:60px"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="task in tasks">
-                    <td ng-hide="true">
-                        {{ task.id }}
-                    </td>
-                    <td ng-hide="amIInEditMode(task.id)">
-                        {{ task.name }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id)" editable-text="editTask.name">
-                        {{ editTask.name }}
-                    </td>
-                    <td ng-hide="amIInEditMode(task.id)">
-                        {{ task.category.name }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id">
-                        {{ editTask.category.name }}
-                    </td>
-                    <td>
-                        <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
-                    </td>
-                    <td ng-hide="amIInEditMode(task.id)">
-                        {{ task.duration.dType.name }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id)" editable-select="editTask.duration.dType" e-ng-options="option.name for option in enums.dTypes track by option.id">
-                        {{ editTask.duration.dType.name }}
-                    </td>
-                    <td ng-hide="(amIInEditMode(task.id) && hideEditDuration()) || ignoreDurationValueAndUnit(task.id)">
-                        {{ task.duration.value }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditDuration() && !ignoreDurationValueAndUnit(task.id)" editable-number="editTask.duration.value">
-                        {{ editTask.duration.value }}
-                    </td>
-                    <td ng-show="ignoreDurationValueAndUnit(task.id)">
-                        -
-                    </td>
-                    <td ng-hide="(amIInEditMode(task.id) && hideEditDuration()) || ignoreDurationValueAndUnit(task.id)">
-                        {{ task.duration.dUnit.name }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditDuration() && !ignoreDurationValueAndUnit(task.id)" editable-select="editTask.duration.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id">
-                        {{ editTask.duration.dUnit.name }}
-                    </td>
-                    <td ng-show="ignoreDurationValueAndUnit(task.id)">
-                        -
-                    </td>
-                    <td ng-hide="amIInEditMode(task.id)">
-                        {{ task.frequency.fType.name }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id)" editable-select="editTask.frequency.fType" e-ng-options="option.name for option in enums.fTypes track by option.id">
-                        {{ editTask.frequency.fType.name }}
-                    </td>
-                    <td ng-hide="(amIInEditMode(task.id) && hideEditFrequency()) || ignoreFrequencyValueAndUnit(task.id)">
-                        {{ task.frequency.value }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency() && !ignoreFrequencyValueAndUnit(task.id)" editable-number="editTask.frequency.value">
-                        {{ editTask.frequency.value }}
-                    </td>
-                    <td ng-show="ignoreFrequencyValueAndUnit(task.id)">
-                        -
-                    </td>
-                    <td ng-hide="(amIInEditMode(task.id) && hideEditFrequency()) || ignoreFrequencyValueAndUnit(task.id)">
-                        {{ task.frequency.fUnit.name }}
-                    </td>
-                    <td ng-if="amIInEditMode(task.id) && hideEditFrequency() && !ignoreFrequencyValueAndUnit(task.id)" editable-select="editTask.frequency.fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id">
-                        {{ editTask.frequency.fUnit.name }}
-                    </td>
-                    <td ng-show="ignoreFrequencyValueAndUnit(task.id)">
-                        -
-                    </td>
-                    <td>
-                        <img class="img-button" ng-init="setDeleteIcon(task,false)" ng-src="{{task.deleteIcon}}" ng-mouseover="setDeleteIcon(task,true)"
-                             ng-mouseout="setDeleteIcon(task,false)" ng-click="deleteCat(task.id)" ng-hide="isInEditMode()" />
-                        <img class="img-button" ng-init="setEditIcon(task,false)" ng-src="{{task.editIcon}}" ng-mouseover="setEditIcon(task,true)"
-                             ng-mouseout="setEditIcon(task,false)" ng-click="startEdit(task.id)" ng-hide="isInEditMode()" />
-                        <img class="img-button" ng-init="setCancelIcon(task,false)" ng-src="{{task.cancelIcon}}" ng-mouseover="setCancelIcon(task,true)"
-                             ng-mouseout="setCancelIcon(task,false)" ng-click="clearEditData()" ng-show="amIInEditMode(task.id)" />
-                        <img class="img-button" ng-init="setSaveIcon(task,false)" ng-src="{{task.saveIcon}}" ng-mouseover="setSaveIcon(task,true)"
-                             ng-mouseout="setSaveIcon(task,false)" ng-click="saveEdit()" ng-show="amIInEditMode(task.id)" />
-                    </td>
+                <tr data-ng-repeat="task in tasks" edit-task the-task="task">
                 </tr>
             </tbody>
         </table>

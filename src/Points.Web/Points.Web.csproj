@@ -81,6 +81,8 @@
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\editCat.html" />
     <Content Include="app\views\newCat.html" />
+    <Content Include="app\views\newTask.html" />
+    <Content Include="app\views\editTask.html" />
     <Content Include="app\views\tasks.html" />
     <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
