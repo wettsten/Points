@@ -1,25 +1,30 @@
 ﻿<div class="row">
-    <div class="page-header text-center">
-        <h1>Tasks</h1>
-    </div>
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
+        <div class="row">
+            <h1>Tasks</h1>
+            <hr/>
+        </div>
 
-    <div data-ng-hide="message == ''" class="row alert alert-danger">
-        {{message}}
+        <div data-ng-hide="message == ''" class="row alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="message = ''">&times;</button>
+            {{message}}
+        </div>
+
+            <table class="row table table-striped table-bordered table-hover" ng-controller="editTaskController">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th style="width: 75px">Is Private</th>
+                        <th style="width: 60px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr new-task-row></tr>
+                    <tr ng-repeat="task in tasks" edit-task the-task="task" cats="cats"></tr>
+                </tbody>
+            </table>
     </div>
-    <div>&nbsp;</div>
-    <table class="row table table-striped table-bordered table-hover" ng-controller="editTaskController">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Is Private</th>
-                <th style="width:60px"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr new-task-row></tr>
-            <tr data-ng-repeat="task in tasks" edit-task the-task="task" cats="cats">
-            </tr>
-        </tbody>
-    </table>
+    <div class="col-md-2">&nbsp;</div>
 </div>

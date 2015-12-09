@@ -1,23 +1,29 @@
 ﻿<div class="row">
-    <div class="page-header text-center">
-        <h1>Categories</h1>
-    </div>
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6">
+        <div class="row">
+            <h1>Categories</h1>
+            <hr />
+        </div>
 
-    <div data-ng-hide="message == ''" class="row alert alert-danger">
-        {{message}}
+        <div data-ng-hide="message == ''" class="row alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="message = ''">&times;</button>
+            {{message}}
+        </div>
+    
+        <table class="row table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th style="width: 75px">Is Private</th>
+                        <th style="width: 60px"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr new-cat-row></tr>
+                    <tr ng-repeat="cat in cats" edit-cat the-cat="cat"></tr>
+                </tbody>
+            </table>
     </div>
-    <table class="row table table-striped table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Is Private</th>
-                <th style="width:60px"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr new-cat-row></tr>
-            <tr ng-repeat="cat in cats" edit-cat the-cat="cat">
-        </tr>
-        </tbody>
-        </table>
+    <div class="col-md-3">&nbsp;</div>
 </div>

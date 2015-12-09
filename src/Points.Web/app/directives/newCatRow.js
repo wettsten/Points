@@ -27,6 +27,7 @@ app.directive('newCatRow', function() {
             },
          function (err) {
              $scope.$parent.message = err.data.message;
+             $scope.addForm.$show();
          });
     };
 

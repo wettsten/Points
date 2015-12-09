@@ -39,6 +39,7 @@ app.directive('newTaskRow', function () {
             },
          function (err) {
              $scope.$parent.message = err.data.message;
+             $scope.addForm.$show();
          });
     };
 
