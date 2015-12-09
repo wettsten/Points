@@ -2,7 +2,8 @@
 app.directive('editTask', function () {
     return {
         scope: {
-            task: '=theTask'
+            task: '=theTask',
+            cats: '='
         },
         templateUrl: '/app/views/editTask.html',
         replace: true,
@@ -28,7 +29,6 @@ app.directive('editTask', function () {
     };
         
     $scope.editTask = {};
-    $scope.cats = [];
 
     $scope.isInEditMode = function (taskId) {
         return $scope.$parent.$parent.editTaskId === taskId;
@@ -41,14 +41,6 @@ app.directive('editTask', function () {
     $scope.clearEditData = function () {
         $scope.editTask = {};
         $scope.$parent.$parent.editTaskId = '';
-    };
-
-    $scope.loadCats = function () {
-        catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
-            $scope.cats = results.data;
-        }, function (error) {
-            $scope.$parent.message = 'Error loading data';
-        });
     };
 
     $scope.saveEdit = function () {
@@ -81,6 +73,4 @@ app.directive('editTask', function () {
              $scope.$parent.message = err.data.message;
          });
     };
-
-    $scope.loadCats();
 }]);

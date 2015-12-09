@@ -1,35 +1,25 @@
-﻿
-<div class="row">
-    <div class="col-md-2">
-        &nbsp;
+﻿<div class="row">
+    <div class="page-header text-center">
+        <h1>Tasks</h1>
     </div>
-    <div class="col-md-12">
-        <div class="page-header text-center">
-            <h1>Tasks</h1>
-        </div>
-        <div class="row" new-task>
-        </div>
-        <div data-ng-hide="message == ''" class="row alert alert-danger">
-            {{message}}
-        </div>
-        <div>&nbsp;</div>
-        <table class="row table table-striped table-bordered table-hover" ng-controller="editTaskController">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Is Private</th>
-                    <th style="width:60px"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr data-ng-repeat="task in tasks" edit-task the-task="task">
-                </tr>
-            </tbody>
-        </table>
+    <div class="row" new-task>
     </div>
-
-    <div class="col-md-2">
-        &nbsp;
+    <div data-ng-hide="message == ''" class="row alert alert-danger">
+        {{message}}
     </div>
+    <div>&nbsp;</div>
+    <table class="row table table-striped table-bordered table-hover" ng-controller="editTaskController">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Is Private</th>
+                <th style="width:60px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="task in tasks" edit-task the-task="task" cats="cats">
+            </tr>
+        </tbody>
+    </table>
 </div>

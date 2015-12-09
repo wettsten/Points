@@ -11,7 +11,7 @@
     <td ng-hide="isInEditMode(task.id)">
         {{ task.category.name }}
     </td>
-    <td ng-show="isInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id">
+    <td ng-show="isInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id" e-name="editCategory" e-required>
         {{ editTask.category.name }}
     </td>
     <td>
