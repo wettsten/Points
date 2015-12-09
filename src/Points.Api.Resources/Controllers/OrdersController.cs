@@ -2,7 +2,6 @@
 
 namespace Points.Api.Resources.Controllers
 {
-    [Authorize]
     [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
