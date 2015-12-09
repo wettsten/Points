@@ -11,10 +11,6 @@ namespace Points.Data
     {
         [Required]
         public string CategoryId { get; set; }
-        [Required]
-        public Duration Duration { get; set; }
-        [Required]
-        public Frequency Frequency { get; set; }
 
         public override void Copy(RavenObject obj)
         {
@@ -23,8 +19,6 @@ namespace Points.Data
             if (task != null)
             {
                 CategoryId = task.CategoryId;
-                Duration = task.Duration;
-                Frequency = task.Frequency;
             }
         }
     }

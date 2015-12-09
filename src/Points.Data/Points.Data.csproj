@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Category.cs" />
-    <Compile Include="ActiveFrequency.cs" />
     <Compile Include="EnumExtensions\EnumExtensions.cs" />
     <Compile Include="FrequencyUnit.cs" />
     <Compile Include="Frequency.cs" />
