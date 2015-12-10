@@ -27,8 +27,9 @@ app.directive('editCat', function () {
     };
 
     $scope.saveEdit = function () {
-        if ($scope.editHasError('editName')) {
-            $scope.$parent.message = 'Name is required!';
+        $scope.editForm.$submit();
+        if ($scope.editForm.$dirty) {
+            $scope.editForm.$show();
             return;
         }
         $scope.editCat.userId = authService.authentication.userId;
@@ -37,7 +38,7 @@ app.directive('editCat', function () {
             $scope.$parent.loadCats();
             },
          function (err) {
-             $scope.$parent.message = err.data.message;
+             $scope.$parent.$parent.$parent.message = err.data.message;
          });
     };
 
@@ -57,14 +58,15 @@ app.directive('editCat', function () {
             $scope.$parent.loadCats();
         },
          function (err) {
-             $scope.$parent.message = err.data.message;
+             $scope.$parent.$parent.$parent.message = err.data.message;
          });
     };
 
-    $scope.editHasError = function (field, validation) {
-        if (validation) {
-            return false;//$scope.editForm[field].$error[validation];
+    $scope.validateName = function (data) {
+        if (!data) {
+            $scope.editForm.$setDirty();
+            return "Name is required!";
         }
-        return false;//$scope.editForm[field].$invalid;
+        $scope.editForm.$setPristine();
     };
 }]);

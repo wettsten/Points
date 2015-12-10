@@ -6,7 +6,7 @@
         <span ng-hide="isInEditMode(cat.id)">
             {{ cat.name }}
         </span>
-        <span ng-show="isInEditMode(cat.id)" editable-text="editCat.name" buttons="no" e-name="editName" e-form="editForm" e-required>
+        <span ng-show="isInEditMode(cat.id)" editable-text="editCat.name" buttons="no" e-name="editName" e-form="editForm" e-required onbeforesave="validateName($data)">
             {{editCat.name}}
         </span>
     </td>

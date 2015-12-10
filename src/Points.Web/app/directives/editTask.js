@@ -29,6 +29,11 @@ app.directive('editTask', function () {
     };
 
     $scope.saveEdit = function () {
+        $scope.editForm.$submit();
+        if ($scope.editForm.$dirty) {
+            $scope.editForm.$show();
+            return;
+        }
         $scope.editTask.categoryId = $scope.editTask.category.id;
         $scope.editTask.userId = authService.authentication.userId;
         tasksService.editTask($scope.editTask).then(function (response) {
@@ -36,7 +41,8 @@ app.directive('editTask', function () {
             $scope.$parent.loadTasks();
         },
          function (err) {
-             $scope.$parent.message = err.data.message;
+             $scope.$parent.$parent.$parent.message = err.data.message;
+             $scope.editForm.$show();
          });
     };
 
@@ -56,7 +62,15 @@ app.directive('editTask', function () {
             $scope.$parent.loadTasks();
         },
          function (err) {
-             $scope.$parent.message = err.data.message;
+             $scope.$parent.$parent.$parent.message = err.data.message;
          });
+    };
+
+    $scope.validateName = function (data) {
+        if (!data) {
+            $scope.editForm.$setDirty();
+            return "Name is required!";
+        }
+        $scope.editForm.$setPristine();
     };
 }]);
