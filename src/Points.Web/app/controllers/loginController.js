@@ -3,8 +3,7 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
 
     $scope.loginData = {
         userName: "",
-        password: "",
-        useRefreshTokens: false
+        password: ""
     };
 
     $scope.message = "";
@@ -13,7 +12,7 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
 
         authService.login($scope.loginData).then(function (response) {
 
-            $location.path('/home');
+            $location.path('/active');
 
         },
          function (err) {
@@ -51,11 +50,11 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
 
             }
             else {
-                //Obtain access token and redirect to orders
+                //Obtain access token and redirect to active week
                 var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
                 authService.obtainAccessToken(externalData).then(function (response) {
 
-                    $location.path('/orders');
+                    $location.path('/active');
 
                 },
              function (err) {

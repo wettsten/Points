@@ -18,9 +18,14 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/signup.html"
     });
 
-    $routeProvider.when("/orders", {
-        controller: "ordersController",
-        templateUrl: "/app/views/orders.html"
+    $routeProvider.when("/active", {
+        controller: "activeController",
+        templateUrl: "/app/views/active.html"
+    });
+
+    $routeProvider.when("/planning", {
+        controller: "planningController",
+        templateUrl: "/app/views/planning.html"
     });
 
     $routeProvider.when("/cats", {
@@ -33,9 +38,9 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/tasks.html"
     });
 
-    $routeProvider.when("/refresh", {
-        controller: "refreshController",
-        templateUrl: "/app/views/refresh.html"
+    $routeProvider.when("/options", {
+        controller: "optionsController",
+        templateUrl: "/app/views/options.html"
     });
 
     $routeProvider.when("/tokens", {
