@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Points.Data;
 using Points.DataAccess;
 
@@ -28,7 +30,20 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetUserByName(string name)
         {
-            return GetByName(name);
+            var user = GetByName(name);
+            if (user is NotFoundResult)
+            {
+                var usr = new User
+                {
+                    Name = name,
+                    Email = string.Empty,
+                    WeekStartDay = DayOfWeek.Sunday,
+                    WeekStartHour = 20
+                };
+                Add(usr);
+                return Ok(usr);
+            }
+            return user;
         }
 
         [Route("")]
