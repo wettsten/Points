@@ -5,7 +5,7 @@ app.directive('editTask', function () {
             task: '=theTask',
             cats: '='
         },
-        templateUrl: '/app/views/editTask.html',
+        templateUrl: '/app/views/directives/editTask.html',
         replace: true,
         controller: 'editTaskController'
     };

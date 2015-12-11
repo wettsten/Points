@@ -4,7 +4,7 @@ app.directive('imgButton', function() {
         scope: {
             type: '=btnType'
         },
-        templateUrl: '/app/views/imgButton.html',
+        templateUrl: '/app/views/directives/imgButton.html',
         replace: true,
         controller: 'imgButtonController'
     };

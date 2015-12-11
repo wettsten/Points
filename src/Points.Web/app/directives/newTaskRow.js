@@ -2,7 +2,7 @@
 app.directive('newTaskRow', function () {
     return {
         scope: {},
-        templateUrl: '/app/views/newTaskRow.html',
+        templateUrl: '/app/views/directives/newTaskRow.html',
         replace: true,
         controller: 'newTaskRowController'
     };

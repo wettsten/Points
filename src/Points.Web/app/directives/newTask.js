@@ -2,7 +2,7 @@
 app.directive('newTask', function () {
     return {
         scope: {},
-        templateUrl: '/app/views/newTask.html',
+        templateUrl: '/app/views/directives/newTask.html',
         replace: true,
         controller: 'newTaskController'
     };

@@ -2,7 +2,7 @@
 app.directive('newCat', function() {
     return {
         scope: {},
-        templateUrl: '/app/views/newCat.html',
+        templateUrl: '/app/views/directives/newCat.html',
         replace: true,
         controller: 'newCatController'
     };

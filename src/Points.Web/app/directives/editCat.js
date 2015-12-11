@@ -4,7 +4,7 @@ app.directive('editCat', function () {
         scope: {
             cat: '=theCat'
         },
-        templateUrl: '/app/views/editCat.html',
+        templateUrl: '/app/views/directives/editCat.html',
         replace: true,
         controller: 'editCatController'
     };
