@@ -3,7 +3,52 @@
     <div class="col-md-6">
         <div class="row">
             <h1>User Options</h1>
-            <hr />
+            <hr/>
+        </div>
+        <div class="row">
+            Email (required for notifications):
+            <a href="#" editable-email="user.email">
+                {{ user.email }}
+            </a>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            Notification on week start (8 hours before start):
+            <a href="#" editable-checkbox="user.notifyWeekStarting" e-title="Notify week starting?">
+                {{ user.notifyWeekStarting && "yes" || "no" }}
+            </a>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            Notification on week end (8 hours before end):
+            <a href="#" editable-checkbox="user.notifyWeekEnding" e-title="Notify week ending?">
+                {{ user.notifyWeekEnding && "yes" || "no" }}
+            </a>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            Week starts on:
+            <a href="#" editable-select="user.weekStartDay" e-ng-options="option for option in days">
+                {{ user.weekStartDay }}
+            </a>
+            &nbsp;
+            <a href="#" editable-select="user.startHour" e-ng-options="option.text for option in hours">
+                {{ user.startHour.text }}
+            </a>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div data-ng-hide="message == ''" class="row alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="message = ''">&times;</button>
+            {{message}}
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" ng-disabled="areNoChanges()" ng-click="saveChanges()">
+                Save
+            </button>
+            <button type="button" class="btn btn-default" ng-disabled="areNoChanges()" ng-click="cancelChanges()">
+                Cancel
+            </button>
         </div>
     </div>
     <div class="col-md-3">&nbsp;</div>
