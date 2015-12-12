@@ -1,9 +1,10 @@
 ﻿'use strict';
-app.controller('catsController', ['$scope', 'catsService', 'authService', function ($scope, catsService, authService) {
+app.controller('catsController', ['$scope', 'catsService', 'authService', 'filterFactory', function ($scope, catsService, authService, filterFactory) {
 
     $scope.cats = [];
     $scope.message = '';
     $scope.editCatId = '';
+    $scope.catFilter = filterFactory.getCatFilter();
 
     $scope.loadCats = function() {
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
@@ -12,6 +13,10 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', functi
             $scope.message = 'Error loading data';
         });
     };
+
+    filterFactory.subscribe($scope, 'catFilter', function catFilterChanged() {
+        $scope.catFilter = filterFactory.getCatFilter();
+    });
 
     $scope.loadCats();
 }]);

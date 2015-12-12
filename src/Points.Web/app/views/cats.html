@@ -10,7 +10,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="message = ''">&times;</button>
             {{message}}
         </div>
-    
+
+        <div class="row" filter-cat></div>
+        <div class="row">&nbsp;</div>
+
         <table class="row table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
@@ -21,7 +24,7 @@
                 </thead>
                 <tbody>
                     <tr new-cat-row></tr>
-                    <tr ng-repeat="cat in cats" edit-cat the-cat="cat"></tr>
+                    <tr ng-repeat="cat in cats | filter:catFilter" edit-cat the-cat="cat"></tr>
                 </tbody>
             </table>
     </div>

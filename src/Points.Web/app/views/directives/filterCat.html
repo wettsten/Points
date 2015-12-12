@@ -1,0 +1,9 @@
+﻿<div>
+    <div img-button btn-type="'collapse'" ng-show="isExpanded" ng-click="collapse()"></div>
+    <div img-button btn-type="'expand'" ng-hide="isExpanded" ng-click="expand()"></div>
+    <div ng-show="isExpanded">
+        <input type="text" style="width: 50%" ng-model="searchText" />
+        &nbsp;
+        <button type="button" class="btn btn-primary" ng-click="search()">Search</button>
+    </div>
+</div>
