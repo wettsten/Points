@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', function ($http, $q, localStorageService, ngAuthSettings) {
+app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', 'usersService', function ($http, $q, localStorageService, ngAuthSettings, usersService) {
 
     var serviceBase = ngAuthSettings.apiServiceBaseUri;
     var resourceBase = ngAuthSettings.apiResourceBaseUri;
@@ -27,13 +27,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
     };
 
-    var _getUser = function (userName) {
-        return $http.get(resourceBase + 'api/users?username=' + userName)
-            .success(function (results) {
-                _authentication.userId = results.id;
-        });
-    };
-
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
@@ -46,7 +39,9 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
-            _getUser(loginData.userName);
+            usersService.getUserByName(loginData.userName).then(function (results) {
+                _authentication.userId = results.data.id;
+            });
 
             deferred.resolve(response);
 
