@@ -1,10 +1,11 @@
 ﻿'use strict';
 app.controller('tasksController', [
-    '$scope', 'tasksService', 'catsService', 'authService', function($scope, tasksService, catsService, authService) {
+    '$scope', 'tasksService', 'catsService', 'authService', 'filterFactory', function ($scope, tasksService, catsService, authService, filterFactory) {
 
     $scope.tasks = [];
     $scope.message = '';
     $scope.editTaskId = '';
+    $scope.taskFilter = filterFactory.getTaskFilter();
 
     $scope.loadCats = function () {
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
@@ -34,6 +35,10 @@ app.controller('tasksController', [
             }
         }
     };
+
+    filterFactory.subscribe($scope, 'taskFilter', function taskFilterChanged() {
+        $scope.taskFilter = filterFactory.getTaskFilter();
+    });
 
     $scope.loadCats();
 }]);

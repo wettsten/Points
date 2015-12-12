@@ -4,12 +4,15 @@
     <div class="row">&nbsp;</div>
     <div ng-show="isExpanded" class="row">
         <div class="col-md-4">
-            <input class="form-control" ng-model="searchText" />
+            <input class="form-control" type="text" ng-model="searchText"/>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control" ng-model="searchCat" ng-options="option.name for option in cats">
+                <option></option>
+            </select>
         </div>
         <div class="col-md-2">
             <button type="button" class="btn btn-primary" ng-click="search()">Search</button>
-        </div>
-        <div class="col-md-1">
         </div>
         <div class="col-md-2">
             <button type="button" class="btn btn-default" ng-click="clear()">Clear</button>

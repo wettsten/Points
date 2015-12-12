@@ -22,4 +22,9 @@ app.directive('filterCat', function () {
     $scope.search = function() {
         filterFactory.setCatFilter({name:$scope.searchText});
     };
+
+    $scope.clear = function () {
+        $scope.searchText = '';
+        $scope.search();
+    };
 }]);
