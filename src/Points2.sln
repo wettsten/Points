@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Data", "Points.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.DataAccess", "Points.DataAccess\Points.DataAccess.csproj", "{0B230498-D658-4BE6-A41F-241A5D69BAB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Common", "Points.Common\Points.Common.csproj", "{846D3D22-2ECB-4E01-9FBF-BAE697CDE539}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0B230498-D658-4BE6-A41F-241A5D69BAB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B230498-D658-4BE6-A41F-241A5D69BAB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B230498-D658-4BE6-A41F-241A5D69BAB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846D3D22-2ECB-4E01-9FBF-BAE697CDE539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846D3D22-2ECB-4E01-9FBF-BAE697CDE539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846D3D22-2ECB-4E01-9FBF-BAE697CDE539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846D3D22-2ECB-4E01-9FBF-BAE697CDE539}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
