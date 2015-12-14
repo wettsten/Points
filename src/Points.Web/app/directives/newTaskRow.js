@@ -31,7 +31,7 @@ app.directive('newTaskRow', function () {
         if ($scope.addForm.$dirty) {
             return;
         }
-        $scope.addTaskData.categoryId = $scope.selectedAdd.cat.id;
+        $scope.addTaskData.categoryId = $scope.addTaskData.category.id;
         $scope.addTaskData.userId = authService.authentication.userId;
         tasksService.addTask($scope.addTaskData).then(function (response) {
             $scope.$parent.loadTasks();
