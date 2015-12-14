@@ -1,4 +1,5 @@
-﻿using Points.Common.Validators;
+﻿using System.Collections.Generic;
+using Points.Common.Validators;
 using StructureMap;
 
 namespace Points.Common.DependencyManagement
@@ -14,6 +15,7 @@ namespace Points.Common.DependencyManagement
                 scan =>
                 {
                     scan.WithDefaultConventions();
+                    scan.LookForRegistries();
                     scan.AddAllTypesOf<IObjectValidator>();
                 });
         }

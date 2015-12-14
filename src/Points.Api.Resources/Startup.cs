@@ -10,7 +10,6 @@ namespace Points.Api.Resources
 {
     public class Startup
     {
-
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
 
         public void Configuration(IAppBuilder app)

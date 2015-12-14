@@ -15,23 +15,28 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Points.Api.Resources.DependencyResolution {
-    using StructureMap;
-    using StructureMap.Graph;
-	
-    public class DefaultRegistry : Registry {
-        #region Constructors and Destructors
+using Points.Common.Validators;
+using Points.DataAccess;
+using StructureMap;
+using StructureMap.Graph;
 
-        public DefaultRegistry() {
+namespace Points.Api.Resources.DependencyResolution
+{
+	
+    public class DefaultRegistry : Registry
+    {
+        public DefaultRegistry()
+        {
             Scan(
                 scan => {
                     scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
                     scan.AssembliesFromApplicationBaseDirectory(assembly => !assembly.FullName.StartsWith("System.Web"));
                     scan.LookForRegistries();
+                    scan.AssemblyContainingType<IObjectValidator>();
+                    scan.AssemblyContainingType<IDataReader>();
+                    scan.AddAllTypesOf<IObjectValidator>();
                 });
         }
-
-        #endregion
     }
 }

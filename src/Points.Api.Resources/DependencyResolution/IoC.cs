@@ -16,12 +16,20 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
-namespace Points.Api.Resources.DependencyResolution {
-    using StructureMap;
-	
-    public static class IoC {
-        public static IContainer Initialize() {
-            return new Container(c => c.AddRegistry<DefaultRegistry>());
+using StructureMap;
+
+namespace Points.Api.Resources.DependencyResolution
+{
+    public static class IoC
+    {
+        public static IContainer Initialize()
+        {
+            return new Container(c =>
+            {
+                c.AddRegistry<DefaultRegistry>();
+                c.AddRegistry<Common.DependencyManagement.DependencyRegistry>();
+                c.AddRegistry<DataAccess.DependencyManagement.DependencyRegistry>();
+            });
         }
     }
 }
