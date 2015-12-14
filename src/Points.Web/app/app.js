@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'xeditable']);
+var app = angular.module('PointsApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'xeditable', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
 
@@ -41,11 +41,6 @@ app.config(function ($routeProvider) {
     $routeProvider.when("/options", {
         controller: "optionsController",
         templateUrl: "/app/views/options.html"
-    });
-
-    $routeProvider.when("/tokens", {
-        controller: "tokensManagerController",
-        templateUrl: "/app/views/tokens.html"
     });
 
     $routeProvider.when("/associate", {

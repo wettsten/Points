@@ -92,3 +92,4 @@ table tr td.buttons-td
     text-align: center;
     white-space: nowrap;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

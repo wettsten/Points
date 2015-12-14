@@ -6,7 +6,9 @@ app.factory('filterFactory', function ($rootScope) {
         },
         task: {
             name: '',
-            category: ''
+            category: {
+                name: ''
+            }
         }
     };
 

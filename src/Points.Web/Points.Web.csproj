@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\controllers\optionsController.js" />
+    <Content Include="app\controllers\partials\confirmDeleteController.js" />
     <Content Include="app\controllers\planningController.js" />
     <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\activeController.js" />
@@ -94,6 +95,7 @@
     <Content Include="app\views\directives\newTask.html" />
     <Content Include="app\views\directives\editTask.html" />
     <Content Include="app\views\active.html" />
+    <Content Include="app\views\partials\confirmDelete.html" />
     <Content Include="app\views\planning.html" />
     <Content Include="app\views\options.html" />
     <Content Include="app\views\tasks.html" />
@@ -145,7 +147,7 @@
     <Content Include="index.html" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\authComplete.js" />
-    <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\ui-bootstrap-tpls-0.14.3.min.js" />
     <Content Include="scripts\xeditable.js" />
     <Content Include="scripts\xeditable.min.js" />
     <Content Include="Web.config" />

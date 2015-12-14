@@ -8,16 +8,16 @@ app.directive('editCat', function () {
         replace: true,
         controller: 'editCatController'
     };
-}).controller('editCatController', ['$scope', 'catsService', 'authService', function ($scope, catsService, authService) {
+}).controller('editCatController', ['$scope', 'catsService', 'authService', '$uibModal', function ($scope, catsService, authService, $uibModal) {
 
     $scope.editCat = {};
 
-    $scope.isInEditMode = function(catId) {
-        return $scope.$parent.$parent.editCatId === catId;
+    $scope.isInEditMode = function() {
+        return $scope.$parent.$parent.editCatId === $scope.cat.id;
     };
 
-    $scope.isSomeoneElseInEditMode = function (catId) {
-        return $scope.$parent.$parent.editCatId !== '' && $scope.$parent.$parent.editCatId !== catId;
+    $scope.isSomeoneElseInEditMode = function () {
+        return $scope.$parent.$parent.editCatId !== '' && $scope.$parent.$parent.editCatId !== $scope.cat.id;
     };
 
     $scope.clearEditData = function () {
@@ -42,24 +42,15 @@ app.directive('editCat', function () {
          });
     };
 
-    $scope.startEdit = function (catId) {
+    $scope.startEdit = function () {
         for (var i = 0; i < $scope.$parent.cats.length; i++) {
-            if ($scope.$parent.cats[i].id === catId) {
+            if ($scope.$parent.cats[i].id === $scope.cat.id) {
                 $scope.editCat = angular.copy($scope.$parent.cats[i]);
-                $scope.$parent.$parent.editCatId = catId;
+                $scope.$parent.$parent.editCatId = $scope.cat.id;
                 $scope.editForm.$show();
                 break;
             }
         }
-    };
-
-    $scope.deleteCat = function (catId) {
-        catsService.deleteCat(catId).then(function (response) {
-            $scope.$parent.loadCats();
-        },
-         function (err) {
-             $scope.$parent.$parent.$parent.message = err.data.message;
-         });
     };
 
     $scope.validateName = function (data) {
@@ -68,5 +59,34 @@ app.directive('editCat', function () {
             return "Name is required!";
         }
         $scope.editForm.$setPristine();
+    };
+
+    $scope.delete = function () {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/app/views/partials/confirmDelete.html',
+            controller: 'confirmDeleteController',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return {
+                        name: $scope.cat.name,
+                        id: $scope.cat.id
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (result) {
+            if (result !== 'cancel') {
+                catsService.deleteCat($scope.cat.id).then(
+                    function (response) {
+                        $scope.$parent.loadCats();
+                    },
+                    function(err) {
+                        $scope.$parent.$parent.$parent.message = err.data.message;
+                    });
+            }
+        });
     };
 }]);

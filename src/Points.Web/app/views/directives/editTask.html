@@ -3,18 +3,18 @@
         {{ task.id }}
     </td>
     <td>
-        <span ng-hide="isInEditMode(task.id)">
+        <span ng-hide="isInEditMode()">
             {{ task.name }}
         </span>
-        <span ng-show="isInEditMode(task.id)" editable-text="editTask.name" buttons="no" e-name="editName" e-form="editForm" e-required onbeforesave="validateName($data)">
+        <span ng-show="isInEditMode()" editable-text="editTask.name" buttons="no" e-name="editName" e-form="editForm" e-required onbeforesave="validateName($data)">
             {{ editTask.name }}
         </span>
     </td>
     <td>
-        <span ng-hide="isInEditMode(task.id)">
+        <span ng-hide="isInEditMode()">
             {{ task.category.name }}
         </span>
-        <span ng-show="isInEditMode(task.id)" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id" e-name="editCategory" e-form="editForm" e-required>
+        <span ng-show="isInEditMode()" editable-select="editTask.category" e-ng-options="option.name for option in cats track by option.id" e-name="editCategory" e-form="editForm" e-required>
             {{ editTask.category.name }}
         </span>
     </td>
@@ -22,11 +22,11 @@
         <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
     </td>
     <td class="buttons-td">
-        <div ng-hide="isInEditMode(cat.id) || isSomeoneElseInEditMode(cat.id)">
-            <div img-button btn-type="'edit'" ng-click="startEdit(task.id)"></div>
-            <div img-button btn-type="'delete'" ng-click="deleteCat(task.id)"></div>
+        <div ng-hide="isInEditMode() || isSomeoneElseInEditMode()">
+            <div img-button btn-type="'edit'" ng-click="startEdit()"></div>
+            <div img-button btn-type="'delete'" ng-click="delete()"></div>
         </div>
-        <form editable-form name="editForm" ng-show="isInEditMode(task.id)">
+        <form editable-form name="editForm" ng-show="isInEditMode()">
             <div img-button btn-type="'save'" ng-click="saveEdit()"></div>
             <div img-button btn-type="'cancel'" ng-click="clearEditData()"></div>
         </form>

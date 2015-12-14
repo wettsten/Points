@@ -9,17 +9,16 @@ app.directive('editTask', function () {
         replace: true,
         controller: 'editTaskController'
     };
-}).controller('editTaskController', [
-    '$scope', 'tasksService', 'catsService', 'authService', function($scope, tasksService, catsService, authService) {
+}).controller('editTaskController', ['$scope', 'tasksService', 'authService', '$uibModal', function ($scope, tasksService, authService, $uibModal) {
 
    $scope.editTask = {};
 
-    $scope.isInEditMode = function (taskId) {
-        return $scope.$parent.$parent.editTaskId === taskId;
+    $scope.isInEditMode = function () {
+        return $scope.$parent.$parent.editTaskId === $scope.task.id;
     };
 
-    $scope.isSomeoneElseInEditMode = function (taskId) {
-        return $scope.$parent.$parent.editTaskId !== '' && $scope.$parent.$parent.editTaskId !== taskId;
+    $scope.isSomeoneElseInEditMode = function () {
+        return $scope.$parent.$parent.editTaskId !== '' && $scope.$parent.$parent.editTaskId !== $scope.task.id;
     };
 
     $scope.clearEditData = function () {
@@ -46,24 +45,15 @@ app.directive('editTask', function () {
          });
     };
 
-    $scope.startEdit = function (taskId) {
+    $scope.startEdit = function () {
         for (var i = 0; i < $scope.$parent.tasks.length; i++) {
-            if ($scope.$parent.tasks[i].id === taskId) {
+            if ($scope.$parent.tasks[i].id === $scope.task.id) {
                 $scope.editTask = angular.copy($scope.$parent.tasks[i]);
-                $scope.$parent.$parent.editTaskId = taskId;
+                $scope.$parent.$parent.editTaskId = $scope.task.id;
                 $scope.editForm.$show();
                 break;
             }
         }
-    };
-
-    $scope.deleteTask = function (taskId) {
-        tasksService.deleteTask(taskId).then(function (response) {
-            $scope.$parent.loadTasks();
-        },
-         function (err) {
-             $scope.$parent.$parent.$parent.message = err.data.message;
-         });
     };
 
     $scope.validateName = function (data) {
@@ -72,5 +62,34 @@ app.directive('editTask', function () {
             return "Name is required!";
         }
         $scope.editForm.$setPristine();
+    };
+
+    $scope.delete = function () {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/app/views/partials/confirmDelete.html',
+            controller: 'confirmDeleteController',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return {
+                        name: $scope.task.name,
+                        id: $scope.task.id
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (result) {
+            if (result !== 'cancel') {
+                tasksService.deleteTask($scope.task.id).then(
+                    function (response) {
+                        $scope.$parent.loadTasks();
+                    },
+                    function (err) {
+                        $scope.$parent.$parent.$parent.message = err.data.message;
+                    });
+            }
+        });
     };
 }]);
