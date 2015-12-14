@@ -120,26 +120,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
                 $scope.originalUser = angular.copy($scope.user);
             },
             function (err) {
-                if (err.status === 404) {
-                    var newUser = {
-                        name: authService.authentication.userName,
-                        email: '',
-                        weekStartDay: 'Sunday',
-                        weekStartHour: 20,
-                        notifyWeekStarting: false,
-                        notifyWeekEnding: false
-                    };
-                    usersService.addUser(newUser).then(
-                        function(response) {
-                            $scope.loadUser();
-                        },
-                        function (err) {
-                            $scope.message = err.data.message;
-                        });
-                }
-                else {
-                    $scope.message = err.data.message;
-                }
+                $scope.message = err.data.message;
             });
     };
 

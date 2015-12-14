@@ -39,12 +39,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
-            usersService.getUserByName(loginData.userName).then(function (results) {
-                _authentication.userId = results.data.id;
+            usersService.getUserByName(loginData.userName).then(
+                function (results) {
+                    _authentication.userId = results.data[0].id;
+                    deferred.resolve(response);
             });
-
-            deferred.resolve(response);
-
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);
@@ -60,6 +59,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
         _authentication.isAuth = false;
         _authentication.userName = "";
+        _authentication.userId = 0;
 
     };
 
@@ -69,6 +69,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
         if (authData) {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
+            _authentication.userId = authData.userId;
         }
 
     };
@@ -84,11 +85,9 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             usersService.getUserByName(response.userName).then(function (results) {
-                _authentication.userId = results.data.id;
+                _authentication.userId = results.data[0].id;
+                deferred.resolve(response);
             });
-
-            deferred.resolve(response);
-
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);
@@ -109,11 +108,9 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             usersService.getUserByName(response.userName).then(function (results) {
-                _authentication.userId = results.data.id;
+                _authentication.userId = results.data[0].id;
+                deferred.resolve(response);
             });
-
-            deferred.resolve(response);
-
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);

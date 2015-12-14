@@ -19,21 +19,22 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetUserByName(string name)
         {
-            return GetByName(name);
-            //var user = GetByName(name);
-            //if (user is NotFoundResult)
-            //{
-            //    var usr = new User
-            //    {
-            //        Name = name,
-            //        Email = string.Empty,
-            //        WeekStartDay = DayOfWeek.Sunday,
-            //        WeekStartHour = 20
-            //    };
-            //    Add(usr);
-            //    return Ok(usr);
-            //}
-            //return user;
+            var user = GetByName(name);
+            if (user is NotFoundResult)
+            {
+                var usr = new User
+                {
+                    Name = name,
+                    Email = string.Empty,
+                    WeekStartDay = DayOfWeek.Sunday,
+                    WeekStartHour = 20,
+                    NotifyWeekStarting = false,
+                    NotifyWeekEnding = false
+                };
+                Add(usr);
+                user = GetByName(name);
+            }
+            return user;
         }
 
         [Route("")]

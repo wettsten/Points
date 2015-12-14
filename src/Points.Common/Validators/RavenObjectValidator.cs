@@ -26,10 +26,13 @@ namespace Points.Common.Validators
             {
                 throw new InvalidDataException("This name is already in use");
             }
-            var user = DataReader.Get<User>(obj.UserId);
-            if (user == null)
+            if (!(obj is User))
             {
-                throw new InvalidDataException("User id is invalid");
+                var user = DataReader.Get<User>(obj.UserId);
+                if (user == null)
+                {
+                    throw new InvalidDataException("User id is invalid");
+                }
             }
         }
 
