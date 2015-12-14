@@ -19,23 +19,23 @@ app.factory('tasksService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         });
     };
 
-    tasksServiceFactory.addTask = function (taskData) {
-        return $http.post(serviceBase + 'api/tasks', taskData).then(function (results) {
+    tasksServiceFactory.addTask = function(taskData) {
+        return $http.post(serviceBase + 'api/tasks', taskData).then(function(results) {
             return results;
         });
-    }
+    };
 
-    tasksServiceFactory.editTask = function (taskData) {
-        return $http.put(serviceBase + 'api/tasks', taskData).then(function (results) {
+    tasksServiceFactory.editTask = function(taskData) {
+        return $http.put(serviceBase + 'api/tasks', taskData).then(function(results) {
             return results;
         });
-    }
+    };
 
-    tasksServiceFactory.deleteTask = function (taskId) {
-        return $http.delete(serviceBase + 'api/tasks?id=' + taskId).then(function (results) {
+    tasksServiceFactory.deleteTask = function(taskId) {
+        return $http.delete(serviceBase + 'api/tasks?id=' + taskId).then(function(results) {
             return results;
         });
-    }
+    };
 
     return tasksServiceFactory;
 

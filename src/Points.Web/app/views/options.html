@@ -8,7 +8,7 @@
         <div class="row">
             Email (required for notifications):
             <a href="#" editable-email="user.email">
-                {{ user.email }}
+                {{ user.email || 'not set' }}
             </a>
         </div>
         <div class="row">&nbsp;</div>

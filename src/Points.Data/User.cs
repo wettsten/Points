@@ -11,16 +11,13 @@ namespace Points.Data
 {
     public class User : RavenObject
     {
-        [Required]
         public string Email { get; set; }
         [Required]
         [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek WeekStartDay { get; set; }
         [Required]
         public int WeekStartHour { get; set; }
-        [Required]
         public bool NotifyWeekStarting { get; set; }
-        [Required]
         public bool NotifyWeekEnding { get; set; }
 
         public override void Copy(RavenObject obj)

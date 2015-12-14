@@ -26,7 +26,7 @@ namespace Points.Common.Validators
         {
             ValidateDelete<Category>(data);
             var obj = data as Category;
-            var tasks = DataReader.GetAll<Task>().Where(i => !i.IsDeleted && i.CategoryId.Equals(obj.Id));
+            var tasks = DataReader.GetAll<Task>().Where(i => !i.IsDeleted && i.CategoryId.Equals(obj.Id, StringComparison.InvariantCultureIgnoreCase));
             if (tasks.Any())
             {
                 throw new InvalidDataException("Category is currently in use");
