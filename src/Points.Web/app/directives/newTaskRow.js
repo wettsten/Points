@@ -7,13 +7,16 @@ app.directive('newTaskRow', function () {
         controller: 'newTaskRowController'
     };
 }).controller('newTaskRowController', [
-    '$scope', 'tasksService', 'catsService', 'authService', function($scope, tasksService, catsService, authService) {
+    '$scope', 'tasksService', 'catsService', 'authService', '$timeout', function ($scope, tasksService, catsService, authService, $timeout) {
         
         $scope.addTaskData = {};
     $scope.cats = [];
 
     $scope.clearAddData = function () {
-        $scope.addTaskData = {};
+        $scope.addTaskData = {
+            category: $scope.cats[0]
+        };
+        $scope.addForm.$show();
     };
 
     $scope.loadCats = function () {
@@ -34,8 +37,10 @@ app.directive('newTaskRow', function () {
         $scope.addTaskData.categoryId = $scope.addTaskData.category.id;
         $scope.addTaskData.userId = authService.authentication.userId;
         tasksService.addTask($scope.addTaskData).then(function (response) {
-            $scope.$parent.loadTasks();
-                $scope.clearAddData();
+            $scope.clearAddData();
+            $timeout(function () {
+                $scope.$parent.loadTasks();
+            }, 100);
             },
          function (err) {
              $scope.$parent.message = err.data.message;
