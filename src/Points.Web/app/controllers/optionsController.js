@@ -161,15 +161,25 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
     };
 
     $scope.saveChanges = function () {
-        $scope.user.weekStartHour = $scope.user.startHour.hour;
-        usersService.editUser($scope.user).then(
-                function (response) {
+        if ($scope.validateEmail()) {
+            $scope.user.weekStartHour = $scope.user.startHour.hour;
+            usersService.editUser($scope.user).then(
+                function(response) {
                     $scope.originalUser = angular.copy($scope.user);
                 },
-                function (err) {
+                function(err) {
                     $scope.message = err.data.message;
                 });
+        }
     };
+
+    $scope.validateEmail = function () {
+        if (($scope.user.notifyWeekStarting || $scope.user.notifyWeekEnding) && !$scope.user.email) {
+            $scope.message = 'Email is required if notifications are desired';
+            return false;
+        }
+        return true;
+    }
 
     $scope.loadUser();
 }]);
