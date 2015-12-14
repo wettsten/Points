@@ -12,13 +12,6 @@ app.factory('catsService', ['$http', 'ngAuthSettings', function ($http, ngAuthSe
         });
     };
 
-    catsServiceFactory.getCats = function () {
-
-        return $http.get(serviceBase + 'api/categories').then(function (results) {
-            return results;
-        });
-    };
-
     catsServiceFactory.addCat = function(catData) {
         return $http.post(serviceBase + 'api/categories', catData).then(function (results) {
             return results;

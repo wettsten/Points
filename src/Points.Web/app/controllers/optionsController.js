@@ -115,7 +115,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
     $scope.loadUser = function() {
         usersService.getUserByName(authService.authentication.userName).then(
             function (response) {
-                $scope.user = response.data;
+                $scope.user = response.data[0];
                 $scope.lookupHour();
                 $scope.originalUser = angular.copy($scope.user);
             },
