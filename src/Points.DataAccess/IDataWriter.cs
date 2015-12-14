@@ -6,8 +6,8 @@ namespace Points.DataAccess
 {
     public interface IDataWriter
     {
-        HttpStatusCode Add<TN>(TN obj) where TN : RavenObject;
-        HttpStatusCode Update<TU>(TU obj) where TU : RavenObject;
-        HttpStatusCode Delete<TD>(string id) where TD : RavenObject;
+        void Add<TN>(TN obj) where TN : RavenObject;
+        void Edit<TU>(TU obj) where TU : RavenObject;
+        void Delete<TD>(string id, bool hardDelete = false) where TD : RavenObject;
     }
 }

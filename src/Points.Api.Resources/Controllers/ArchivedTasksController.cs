@@ -8,27 +8,27 @@ using Points.Data;
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
-    [RoutePrefix("api/activetasks")]
-    public class ActiveTasksController : ResourceController<ActiveTask>
+    [RoutePrefix("api/archivedtasks")]
+    public class ArchivedTasksController : ResourceController<ArchivedTask>
     {
-        public ActiveTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
+        public ArchivedTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }
 
         [Route("")]
-        public IHttpActionResult GetActiveTaskByName(string name)
+        public IHttpActionResult GetArchivedTaskByName(string name)
         {
             return GetByName(name);
         }
 
         [Route("")]
-        public IHttpActionResult GetActiveTasksForUser(string userid)
+        public IHttpActionResult GetArchivedTasksForUser(string userid)
         {
             return GetForUser(userid);
         }
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddActiveTask(ActiveTask activeTask)
+        public IHttpActionResult AddArchivedTask(ArchivedTask archivedTask)
         {
             return StatusCode(HttpStatusCode.NotImplemented);
         }
@@ -36,14 +36,14 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditActiveTask(ActiveTask activeTask)
+        public IHttpActionResult EditArchivedTask(ArchivedTask archivedTask)
         {
             return StatusCode(HttpStatusCode.NotImplemented);
         }
 
         [Route("")]
         [HttpDelete]
-        public IHttpActionResult DeleteActiveTask(string id)
+        public IHttpActionResult DeleteArchivedTask(string id)
         {
             return StatusCode(HttpStatusCode.NotImplemented);
         }

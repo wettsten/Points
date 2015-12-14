@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArchivedTask.cs" />
+    <Compile Include="PlanningTask.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="EnumExtensions\EnumExtensions.cs" />
     <Compile Include="FrequencyUnit.cs" />

@@ -19,7 +19,7 @@ namespace Points.DataAccess
 
         public TS Get<TS>(string id) where TS : RavenObject
         {
-            return _session.Query<TS>().FirstOrDefault();
+            return _session.Load<TS>(id);
         }
 
         public IList<TA> GetAll<TA>() where TA : RavenObject

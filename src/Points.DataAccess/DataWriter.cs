@@ -21,34 +21,36 @@ namespace Points.DataAccess
             _session = session;
         }
 
-        public HttpStatusCode Add<TN>(TN obj) where TN : RavenObject
+        public void Add<TN>(TN obj) where TN : RavenObject
         {
             _session.Store(obj);
             _session.SaveChanges();
             //var id = session.Advanced.GetDocumentId(obj);
-            return HttpStatusCode.Created;
         }
 
-        public HttpStatusCode Update<TN>(TN obj) where TN : RavenObject
+        public void Edit<TN>(TN obj) where TN : RavenObject
         {
             var existingObj = _session.Load<TN>(obj.Id);
             existingObj.Copy(obj);
             _session.SaveChanges();
-            return HttpStatusCode.Created;
         }
 
-        public HttpStatusCode Delete<TD>(string id) where TD : RavenObject
+        public void Delete<TD>(string id, bool hardDelete = false) where TD : RavenObject
         {
             var existingObj = _session.Load<TD>(id);
-            if (existingObj == null)
+            if (existingObj != null)
             {
-                // object does not exist
-                return HttpStatusCode.NotFound;
+                // object exists
+                if (hardDelete)
+                {
+                    _session.Delete(id);
+                }
+                else
+                {
+                    existingObj.IsDeleted = true;
+                }
+                _session.SaveChanges();
             }
-            //session.Delete(id);
-            existingObj.IsDeleted = true;
-            _session.SaveChanges();
-            return HttpStatusCode.NoContent;
         }
     }
 }

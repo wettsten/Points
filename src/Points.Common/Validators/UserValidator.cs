@@ -1,0 +1,28 @@
+using System;
+using Points.Data;
+using Points.DataAccess;
+
+namespace Points.Common.Validators
+{
+    public class UserValidator : RavenObjectValidator, IObjectValidator
+    {
+        public UserValidator(DataReader dataReader) : base(dataReader) { }
+
+        public Type SupportsType => typeof(User);
+
+        public void ValidateAdd(object data)
+        {
+            ValidateAdd<User>(data);
+        }
+
+        public void ValidateEdit(object data)
+        {
+            ValidateEdit<User>(data);
+        }
+
+        public void ValidateDelete(object data)
+        {
+            ValidateDelete<User>(data);
+        }
+    }
+}

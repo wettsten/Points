@@ -7,10 +7,9 @@ using System.Web.Http;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-
+using Points.Common.Processors;
 using Points.Data;
 using Points.Data.EnumExtensions;
-using Points.DataAccess;
 
 namespace Points.Api.Resources.Controllers
 {
@@ -18,19 +17,8 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/tasks")]
     public class TasksController : ResourceController<Task>
     {
-        public TasksController(IDataReader dataReader, IDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
-        [Route("")]
-        public IHttpActionResult GetTask()
-        {
-            return Get();
-        }
-
-        [Route("{id}")]
-        public IHttpActionResult GetTask(string id)
-        {
-            return Get(id);
-        }
+        public TasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
+        { }
 
         [Route("")]
         public IHttpActionResult GetTaskByName(string name)
@@ -48,10 +36,6 @@ namespace Points.Api.Resources.Controllers
         [HttpPost]
         public IHttpActionResult AddTask(Task task)
         {
-            if (!ValidateCategoryIdExists(task.CategoryId))
-            {
-                return BadRequest("Category id does not exist");
-            }
             return Add(task);
         }
 
@@ -60,10 +44,6 @@ namespace Points.Api.Resources.Controllers
         //[HttpPatch]
         public IHttpActionResult EditTask(Task task)
         {
-            if (!ValidateCategoryIdExists(task.CategoryId))
-            {
-                return BadRequest("Category id does not exist");
-            }
             return Edit(task);
         }
 
@@ -72,12 +52,6 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult DeleteTask(string id)
         {
             return Delete(id);
-        }
-
-        private bool ValidateCategoryIdExists(string catId)
-        {
-            var user = DataReader.Get<Category>(catId);
-            return user != null;
         }
 
         [Route("enums")]

@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace Points.Data
 {
-    public class ActiveTask : PlanningTask
+    public class ArchivedTask : ActiveTask
     {
-        public int TimesCompleted { get; set; }
-        public bool IsCompleted => TimesCompleted >= Frequency.Value;
     }
 }

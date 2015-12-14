@@ -5,69 +5,42 @@ using System.Net;
 using System.Web.DynamicData;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Points.Common.Factories;
+using Points.Common.Processors;
 using Points.Data;
-using Points.DataAccess;
 
 namespace Points.Api.Resources.Controllers
 {
-    public class ResourceController<T> : ApiController where T : RavenObject
+    public class ResourceController<T> : ApiController where T : RavenObject, new()
     {
-        protected readonly IDataReader DataReader;
-        protected readonly IDataWriter DataWriter;
+        private readonly IRequestProcessor _requestProcessor;
 
-        protected ResourceController(IDataReader dataReader, IDataWriter dataWriter)
+        protected ResourceController(IRequestProcessor requestProcessor)
         {
-            DataReader = dataReader;
-            DataWriter = dataWriter;
+            _requestProcessor = requestProcessor;
         }
         
-        protected IHttpActionResult Get(bool getDeleted = false)
-        {
-            var objs = DataReader.GetAll<T>().Where(i => !i.IsDeleted || getDeleted);
-            if (!objs.Any())
-            {
-                return NotFound();
-            }
-            return Ok(objs.OrderBy(i => i.Name));
-        }
-        
-        protected IHttpActionResult Get(string id, bool getDeleted = false)
-        {
-            if (string.IsNullOrWhiteSpace(id))
-            {
-                return BadRequest("Id is required");
-            }
-            var obj = DataReader.Get<T>(id);
-            if (obj == null || (obj.IsDeleted || !getDeleted))
-            {
-                return NotFound();
-            }
-            return Ok(obj);
-        }
-        
-        protected IHttpActionResult GetByName(string name, bool getDeleted = false)
+        protected IHttpActionResult GetByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 return BadRequest("Name is required");
             }
-            var objs = DataReader.GetAll<T>();
-            var obj = objs.FirstOrDefault(i => i.Name.ToLower().Equals(name.ToLower()) && (!i.IsDeleted || getDeleted));
-            if (obj == null)
+            var objs = _requestProcessor.LookupByName<T>(name);
+            if (!objs.Any())
             {
                 return NotFound();
             }
-            return Ok(obj);
+            return Ok(objs);
         }
         
-        protected IHttpActionResult GetForUser(string userid, bool getDeleted = false)
+        protected IHttpActionResult GetForUser(string userid)
         {
             if (string.IsNullOrWhiteSpace(userid))
             {
                 return BadRequest("User id is required");
             }
-            var allObjs = DataReader.GetAll<T>();
-            var objs = allObjs.Where(i => (i.UserId.Equals(userid) || !i.IsPrivate) && (!i.IsDeleted || getDeleted)).ToList();
+            var objs = _requestProcessor.GetListForUser<T>(userid);
             if (!objs.Any())
             {
                 return NotFound();
@@ -81,18 +54,11 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest(GetModelStateErrors());
             }
-            if (!ValidateUserIdExists(obj.UserId))
-            {
-                return BadRequest("User id does not exist");
-            }
-            if (!ValidateObjectNameIsUnique(obj))
-            {
-                return BadRequest("The name already exists");
-            }
             try
             {
                 obj.Id = string.Empty;
-                return StatusCode(DataWriter.Add(obj));
+                _requestProcessor.AddData(obj);
+                return Ok();
             }
             catch(InvalidDataException ide)
             {
@@ -110,17 +76,10 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest(GetModelStateErrors());
             }
-            if (!ValidateUserIdExists(obj.UserId))
-            {
-                return BadRequest("User id does not exist");
-            }
-            if (!ValidateObjectNameIsUnique(obj))
-            {
-                return BadRequest("The name already exists");
-            }
             try
             {
-                return StatusCode(DataWriter.Update(obj));
+                _requestProcessor.EditData(obj);
+                return Ok();
             }
             catch (InvalidDataException ide)
             {
@@ -140,30 +99,17 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                return StatusCode(DataWriter.Delete<T>(id));
+                _requestProcessor.DeleteData(new T {Id = id});
+                return Ok();
+            }
+            catch (InvalidDataException ide)
+            {
+                return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
-        }
-
-        private bool ValidateUserIdExists(string userId)
-        {
-            var user = DataReader.Get<User>(userId);
-            return user != null;
-        }
-
-        private bool ValidateObjectNameIsUnique(T obj)
-        {
-            var existingObj = DataReader.GetAll<T>();
-            return
-                !(existingObj.Any(
-                    i =>
-                        i.Name.Equals(obj.Name) // same name
-                        && (!i.IsPrivate || i.UserId.Equals(obj.UserId)) // object is public or was made by same user
-                        && !i.IsDeleted // is not deleted
-                        && !i.Id.Equals(obj.Id))); // not the input object
         }
 
         private string GetModelStateErrors()

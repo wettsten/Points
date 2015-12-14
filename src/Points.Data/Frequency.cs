@@ -18,7 +18,6 @@ namespace Points.Data
         public int? Value { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public FrequencyUnit? Unit { get; set; }
-        public int Completed { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

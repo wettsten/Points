@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using Points.Common.Factories;
+using Points.Common.Processors;
 using Points.Data;
-using Points.DataAccess;
 
 namespace Points.Api.Resources.Controllers
 {
@@ -11,19 +12,8 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/categories")]
     public class CategoriesController : ResourceController<Category>
     {
-        public CategoriesController(IDataReader dataReader, IDataWriter dataWriter) : base(dataReader, dataWriter) { }
-
-        [Route("")]
-        public IHttpActionResult GetCategory()
-        {
-            return Get();
-        }
-
-        [Route("{id}")]
-        public IHttpActionResult GetCategory(string id)
-        {
-            return Get(id);
-        }
+        public CategoriesController(IRequestProcessor requestProcessor) : base(requestProcessor)
+        {}
 
         [Route("")]
         public IHttpActionResult GetCategoryByName(string name)
@@ -56,11 +46,6 @@ namespace Points.Api.Resources.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteCategory(string id)
         {
-            var tasks = DataReader.GetAll<Task>();
-            if (tasks.Any(i => i.CategoryId.Equals(id)))
-            {
-                return BadRequest("Category is in use");
-            }
             return Delete(id);
         }
     }

@@ -4,12 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Points.Data
 {
-    public class ActiveTask : PlanningTask
+    public class PlanningTask : Task
     {
-        public int TimesCompleted { get; set; }
-        public bool IsCompleted => TimesCompleted >= Frequency.Value;
+        [Required]
+        public Duration Duration { get; set; }
+        [Required]
+        public Frequency Frequency { get; set; }
     }
 }

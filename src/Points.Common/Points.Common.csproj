@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Points.Common</RootNamespace>
     <AssemblyName>Points.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StructureMap, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.4.0.0.315\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.4.0.0.315\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,10 +49,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyManagement\DependencyRegistry.cs" />
+    <Compile Include="Factories\IObjectValidatorFactory.cs" />
+    <Compile Include="Factories\ObjectValidatorFactory.cs" />
+    <Compile Include="Processors\IRequestProcessor.cs" />
+    <Compile Include="Processors\RequestProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\ActiveTaskValidator.cs" />
+    <Compile Include="Validators\ArchivedTaskValidator.cs" />
+    <Compile Include="Validators\CategoryValidator.cs" />
+    <Compile Include="Validators\PlanningTaskValidator.cs" />
+    <Compile Include="Validators\RavenObjectValidator.cs" />
+    <Compile Include="Validators\IObjectValidator.cs" />
+    <Compile Include="Validators\TaskValidator.cs" />
+    <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Processors\" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Points.DataAccess\Points.DataAccess.csproj">
+      <Project>{0b230498-d658-4be6-a41f-241a5d69bab5}</Project>
+      <Name>Points.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Points.Data\Points.Data.csproj">
+      <Project>{3e8b9067-10da-49f7-abf4-7e800c055abe}</Project>
+      <Name>Points.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

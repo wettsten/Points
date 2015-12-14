@@ -147,6 +147,8 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ArchivedTasksController.cs" />
+    <Compile Include="Controllers\PlanningTasksController.cs" />
     <Compile Include="Controllers\ActiveTasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
@@ -162,9 +164,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Points.DataAccess\Points.DataAccess.csproj">
-      <Project>{0b230498-d658-4be6-a41f-241a5d69bab5}</Project>
-      <Name>Points.DataAccess</Name>
+    <ProjectReference Include="..\Points.Common\Points.Common.csproj">
+      <Project>{846d3d22-2ecb-4e01-9fbf-bae697cde539}</Project>
+      <Name>Points.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Points.Data\Points.Data.csproj">
       <Project>{3e8b9067-10da-49f7-abf4-7e800c055abe}</Project>
