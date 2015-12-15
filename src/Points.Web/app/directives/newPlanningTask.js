@@ -1,7 +1,9 @@
 ﻿'use strict';
 app.directive('newPlanningTask', function () {
     return {
-        scope: {},
+        scope: {
+            planningTasks: '=tasks'
+        },
         templateUrl: '/app/views/directives/newPlanningTask.html',
         replace: true,
         controller: 'newPlanningTaskController'
@@ -38,7 +40,15 @@ app.directive('newPlanningTask', function () {
     $scope.loadTasks = function () {
         tasksService.getTasksByUser(authService.authentication.userId).then(
             function (results) {
-                $scope.tasks = results.data;
+                $scope.tasks = results.data.filter(
+                    function (task) {
+                        for (var i = 0; i < $scope.planningTasks.length; i++) {
+                            if ($scope.planningTasks[i].name === task.name) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
                 $scope.resetAddData();
             }, function (error) {
                 //$scope.$parent.message = 'Error loading data';
