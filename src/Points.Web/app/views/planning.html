@@ -1,10 +1,23 @@
 ﻿<div class="row">
-    <div class="col-md-3">&nbsp;</div>
-    <div class="col-md-6">
-        <div class="row">
-            <h1>Week Planning</h1>
-            <hr />
+    <div class="row">
+        <h1>Week Planning</h1>
+        <hr/>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div new-planning-task></div>
+            </div>
         </div>
     </div>
-    <div class="col-md-3">&nbsp;</div>
+    <div class="row">
+        <uib-accordion close-others="false">
+            <uib-accordion-group ng-repeat="cat in filteredCats" is-open="cat.isOpen">
+                <uib-accordion-heading>
+                    {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
+                </uib-accordion-heading>
+                <div planning-cat the-cat="cat"></div>
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
 </div>

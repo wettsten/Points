@@ -1,0 +1,19 @@
+﻿<div>
+    <table class="row table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Task Name</th>
+            <th>Duration Type</th>
+            <th>Duration Value</th>
+            <th>Duration Unit</th>
+            <th>Frequency Type</th>
+            <th>Frequency Value</th>
+            <th>Frequency Unit</th>
+            <th style="width: 60px"></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="task in cat.tasks" planning-task the-task="task"></tr>
+        </tbody>
+    </table>
+</div>

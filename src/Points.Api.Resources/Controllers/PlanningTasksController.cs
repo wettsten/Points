@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Points.Common.Processors;
 using Points.Data;
+using Points.Data.EnumExtensions;
 
 namespace Points.Api.Resources.Controllers
 {
@@ -23,7 +26,12 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetPlanningTasksForUser(string userid)
         {
-            return GetForUser(userid);
+            var tasks = GetForUser(userid);
+            //if (tasks is OkResult)
+            //{
+            //    var content = (tasks as OkResult).Request.Content;
+            //}
+            return tasks;
         }
 
         [Route("")]
@@ -46,6 +54,36 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult DeletePlanningTask(string id)
         {
             return Delete(id);
+        }
+
+        [Route("enums")]
+        public IHttpActionResult GetEnums()
+        {
+            var durationTypes = GetEnumsList(typeof(DurationType));
+            var durationUnits = GetEnumsList(typeof(DurationUnit));
+            var frequencyTypes = GetEnumsList(typeof(FrequencyType));
+            var frequencyUnits = GetEnumsList(typeof(FrequencyUnit));
+            return Ok(new
+            {
+                dTypes = durationTypes,
+                dUnits = durationUnits,
+                fTypes = frequencyTypes,
+                fUnits = frequencyUnits
+            });
+        }
+
+        private List<object> GetEnumsList(Type enumType)
+        {
+            var output = new List<object>();
+            foreach (var item in Enum.GetValues(enumType))
+            {
+                output.Add(new
+                {
+                    id = item.ToString(),
+                    name = item.Spacify()
+                });
+            }
+            return output;
         }
     }
 }
