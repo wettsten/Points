@@ -55,7 +55,7 @@ app.directive('newPlanningTask', function () {
 
     $scope.resetAddData = function () {
         $scope.addTaskData.duration = {value:0};
-        $scope.addTaskData.frequency = {value:0};
+        $scope.addTaskData.frequency = {value:1};
         $scope.addTaskData.cat = $scope.cats[0];
         $scope.addTaskData.dType = $scope.enums.dTypes[0];
         $scope.addTaskData.dUnit = $scope.enums.dUnits[0];
