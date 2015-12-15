@@ -1,21 +1,17 @@
 ﻿<tr>
     <td ng-hide="true"></td>
     <td>
-        <span editable-text="addTaskData.name" buttons="no" e-name="addName" e-form="addForm" e-required onbeforesave="validateName($data)">
-            {{ addTaskData.name }}
-        </span>
+        <input type="text" class="form-control" ng-model="addTaskData.name">
     </td>
     <td>
-        <span editable-select="addTaskData.category" e-ng-options="option.name for option in cats track by option.id" e-name="editCategory" e-form="addForm" e-required>
+        <select class="form-control" ng-model="addTaskData.category" ng-options="option.name for option in cats track by option.id">
             {{ addTaskData.category.name }}
-        </span>
+        </select>
     </td>
     <td class="checkbox-td">
         <input type="checkbox" ng-model="addTaskData.isPrivate">
     </td>
     <td class="buttons-td">
-        <form editable-form name="addForm">
-            <div img-button btn-type="'new'" ng-click="addTask()"></div>
-        </form>
+        <div img-button btn-type="new" ng-disabled="!addTaskData.name" ng-click="addTask()"></div>
     </td>
 </tr>

@@ -6,21 +6,19 @@
         <span ng-hide="isInEditMode()">
             {{ cat.name }}
         </span>
-        <span ng-show="isInEditMode()" editable-text="editCat.name" buttons="no" e-name="editName" e-form="editForm" e-required onbeforesave="validateName($data)">
-            {{editCat.name}}
-        </span>
+        <input type="text" class="form-control" ng-show="isInEditMode()" ng-model="editCat.name">
     </td>
     <td class="checkbox-td">
         <input type="checkbox" ng-model="cat.isPrivate" disabled="disabled">
     </td>
     <td class="buttons-td">
         <div ng-hide="isInEditMode()">
-            <div img-button btn-type="'edit'" ng-click="startEdit()"></div>
-            <div img-button btn-type="'delete'" ng-click="delete()"></div>
+            <div img-button btn-type="edit" ng-click="startEdit()"></div>
+            <div img-button btn-type="delete" ng-click="delete()"></div>
         </div>
-        <form editable-form name="editForm" ng-show="isInEditMode()">
-            <div img-button btn-type="'save'" ng-click="saveEdit()"></div>
-            <div img-button btn-type="'cancel'" ng-click="clearEditData()"></div>
-        </form>
+        <div ng-show="isInEditMode()">
+            <div img-button btn-type="save" ng-disabled="!editCat.name" ng-click="saveEdit()"></div>
+            <div img-button btn-type="cancel" ng-click="clearEditData()"></div>
+        </div>
     </td>
 </tr>

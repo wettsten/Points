@@ -2,16 +2,12 @@
     <td ng-hide="true">
     </td>
     <td>
-        <span editable-text="addCatData.name" buttons="no" e-name="addName" e-form="addForm" e-required onbeforesave="validateName($data)">
-            {{ addCatData.name }}
-        </span>
+        <input type="text" class="form-control" ng-model="addCatData.name">
     </td>
     <td class="checkbox-td">
         <input type="checkbox" ng-model="addCatData.isPrivate">
     </td>
     <td class="buttons-td">
-        <form editable-form name="addForm" shown="true">
-            <div img-button btn-type="'new'" ng-click="addCat()"></div>
-        </form>
+        <div img-button btn-type="new" ng-disabled="!addCatData.name" ng-click="addCat()"></div>
     </td>
 </tr>

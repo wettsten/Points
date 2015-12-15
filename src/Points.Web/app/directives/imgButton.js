@@ -2,7 +2,8 @@
 app.directive('imgButton', function() {
     return {
         scope: {
-            type: '=btnType'
+            type: '@btnType',
+            disabled: '=ngDisabled'
         },
         templateUrl: '/app/views/directives/imgButton.html',
         replace: true,
@@ -12,7 +13,7 @@ app.directive('imgButton', function() {
 
     $scope.icon = '';
     $scope.setIcon = function (isActive) {
-        $scope.icon = isActive ? 'Icons/' + $scope.type + 'active.png' : 'Icons/' + $scope.type + '.png';
+        $scope.icon = isActive && !$scope.disabled ? 'Icons/' + $scope.type + 'active.png' : 'Icons/' + $scope.type + '.png';
     };
     $scope.setIcon(false);
 }]);

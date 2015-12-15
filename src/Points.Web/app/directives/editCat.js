@@ -20,28 +20,20 @@ app.directive('editCat', function () {
     $scope.$watch('catInEdit.id', function () {
         if ($scope.catInEdit.id !== '' && $scope.catInEdit.id !== $scope.cat.id) {
             $scope.editCat = {};
-            $scope.editForm.$hide();
         }
     });
 
     $scope.clearEditData = function () {
         $scope.editCat = {};
         $scope.catInEdit.id = '';
-        $scope.editForm.$hide();
     };
 
     $scope.startEdit = function () {
         $scope.editCat = angular.copy($scope.cat);
         $scope.catInEdit.id = $scope.cat.id;
-        $scope.editForm.$show();
     };
 
     $scope.saveEdit = function () {
-        $scope.editForm.$submit();
-        if ($scope.editForm.$dirty) {
-            $scope.editForm.$show();
-            return;
-        }
         $scope.editCat.userId = authService.authentication.userId;
         catsService.editCat($scope.editCat).then(function (response) {
             $scope.clearEditData();
@@ -50,14 +42,6 @@ app.directive('editCat', function () {
          function (err) {
              $scope.$parent.$parent.$parent.message = err.data.message;
          });
-    };
-
-    $scope.validateName = function (data) {
-        if (!data) {
-            $scope.editForm.$setDirty();
-            return "Name is required!";
-        }
-        $scope.editForm.$setPristine();
     };
 
     $scope.delete = function () {

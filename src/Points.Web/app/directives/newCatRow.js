@@ -12,14 +12,9 @@ app.directive('newCatRow', function() {
 
     $scope.clearAddData = function () {
         $scope.addCatData = {};
-        $scope.addForm.$show();
     };
 
     $scope.addCat = function () {
-        $scope.addForm.$submit();
-        if ($scope.addForm.$dirty) {
-            return;
-        }
         $scope.addCatData.userId = authService.authentication.userId;
         catsService.addCat($scope.addCatData).then(function (response) {
             $scope.clearAddData();
@@ -29,15 +24,6 @@ app.directive('newCatRow', function() {
             },
          function (err) {
              $scope.$parent.message = err.data.message;
-             $scope.addForm.$show();
          });
-    };
-
-    $scope.validateName = function (data) {
-        if (!data) {
-            $scope.addForm.$setDirty();
-            return "Name is required!";
-        }
-        $scope.addForm.$setPristine();
     };
 }]);
