@@ -14,5 +14,16 @@ namespace Points.Data
         public Duration Duration { get; set; }
         [Required]
         public Frequency Frequency { get; set; }
+
+        public override void Copy(RavenObject obj)
+        {
+            base.Copy(obj);
+            var task = obj as PlanningTask;
+            if (task != null)
+            {
+                Duration = task.Duration;
+                Frequency = task.Frequency;
+            }
+        }
     }
 }
