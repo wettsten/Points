@@ -3,7 +3,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'filte
 
     $scope.cats = [];
     $scope.message = '';
-    $scope.editCatId = '';
+    $scope.catInEdit = {id: ''};
     $scope.catFilter = filterFactory.getCatFilter();
 
     $scope.loadCats = function() {

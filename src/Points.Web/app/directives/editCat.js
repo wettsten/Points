@@ -2,7 +2,8 @@
 app.directive('editCat', function () {
     return {
         scope: {
-            cat: '=theCat'
+            cat: '=theCat',
+            catInEdit: '='
         },
         templateUrl: '/app/views/directives/editCat.html',
         replace: true,
@@ -13,17 +14,26 @@ app.directive('editCat', function () {
     $scope.editCat = {};
 
     $scope.isInEditMode = function() {
-        return $scope.$parent.$parent.editCatId === $scope.cat.id;
+        return $scope.catInEdit.id === $scope.cat.id;
     };
 
-    $scope.isSomeoneElseInEditMode = function () {
-        return $scope.$parent.$parent.editCatId !== '' && $scope.$parent.$parent.editCatId !== $scope.cat.id;
-    };
+    $scope.$watch('catInEdit.id', function () {
+        if ($scope.catInEdit.id !== '' && $scope.catInEdit.id !== $scope.cat.id) {
+            $scope.editCat = {};
+            $scope.editForm.$hide();
+        }
+    });
 
     $scope.clearEditData = function () {
         $scope.editCat = {};
-        $scope.$parent.$parent.editCatId = '';
+        $scope.catInEdit.id = '';
         $scope.editForm.$hide();
+    };
+
+    $scope.startEdit = function () {
+        $scope.editCat = angular.copy($scope.cat);
+        $scope.catInEdit.id = $scope.cat.id;
+        $scope.editForm.$show();
     };
 
     $scope.saveEdit = function () {
@@ -40,17 +50,6 @@ app.directive('editCat', function () {
          function (err) {
              $scope.$parent.$parent.$parent.message = err.data.message;
          });
-    };
-
-    $scope.startEdit = function () {
-        for (var i = 0; i < $scope.$parent.cats.length; i++) {
-            if ($scope.$parent.cats[i].id === $scope.cat.id) {
-                $scope.editCat = angular.copy($scope.$parent.cats[i]);
-                $scope.$parent.$parent.editCatId = $scope.cat.id;
-                $scope.editForm.$show();
-                break;
-            }
-        }
     };
 
     $scope.validateName = function (data) {

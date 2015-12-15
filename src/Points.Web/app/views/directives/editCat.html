@@ -14,7 +14,7 @@
         <input type="checkbox" ng-model="cat.isPrivate" disabled="disabled">
     </td>
     <td class="buttons-td">
-        <div ng-hide="isInEditMode() || isSomeoneElseInEditMode()">
+        <div ng-hide="isInEditMode()">
             <div img-button btn-type="'edit'" ng-click="startEdit()"></div>
             <div img-button btn-type="'delete'" ng-click="delete()"></div>
         </div>

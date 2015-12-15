@@ -3,7 +3,8 @@ app.directive('editTask', function () {
     return {
         scope: {
             task: '=theTask',
-            cats: '='
+            cats: '=',
+            taskInEdit: '='
         },
         templateUrl: '/app/views/directives/editTask.html',
         replace: true,
@@ -14,17 +15,26 @@ app.directive('editTask', function () {
    $scope.editTask = {};
 
     $scope.isInEditMode = function () {
-        return $scope.$parent.$parent.editTaskId === $scope.task.id;
+        return $scope.taskInEdit.id === $scope.task.id;
     };
 
-    $scope.isSomeoneElseInEditMode = function () {
-        return $scope.$parent.$parent.editTaskId !== '' && $scope.$parent.$parent.editTaskId !== $scope.task.id;
-    };
+    $scope.$watch('taskInEdit.id', function () {
+        if ($scope.taskInEdit.id !== '' && $scope.taskInEdit.id !== $scope.task.id) {
+            $scope.editTask = {};
+            $scope.editForm.$hide();
+        }
+    });
 
     $scope.clearEditData = function () {
         $scope.editTask = {};
-        $scope.$parent.$parent.editTaskId = '';
+        $scope.taskInEdit.id = '';
         $scope.editForm.$hide();
+    };
+
+    $scope.startEdit = function () {
+        $scope.editTask = angular.copy($scope.task);
+        $scope.taskInEdit.id = $scope.task.id;
+        $scope.editForm.$show();
     };
 
     $scope.saveEdit = function () {
@@ -43,17 +53,6 @@ app.directive('editTask', function () {
              $scope.$parent.$parent.$parent.message = err.data.message;
              $scope.editForm.$show();
          });
-    };
-
-    $scope.startEdit = function () {
-        for (var i = 0; i < $scope.$parent.tasks.length; i++) {
-            if ($scope.$parent.tasks[i].id === $scope.task.id) {
-                $scope.editTask = angular.copy($scope.$parent.tasks[i]);
-                $scope.$parent.$parent.editTaskId = $scope.task.id;
-                $scope.editForm.$show();
-                break;
-            }
-        }
     };
 
     $scope.validateName = function (data) {

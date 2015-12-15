@@ -4,7 +4,7 @@ app.controller('tasksController', [
 
     $scope.tasks = [];
     $scope.message = '';
-    $scope.editTaskId = '';
+    $scope.taskInEdit = { id: '' };
     $scope.taskFilter = filterFactory.getTaskFilter();
 
     $scope.loadCats = function () {
