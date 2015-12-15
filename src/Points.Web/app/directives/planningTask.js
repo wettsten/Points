@@ -38,12 +38,26 @@ app.directive('planningTask', function () {
         }
     });
 
-    $scope.hideEditDuration = function () {
-        return $scope.editTask.dType.id !== 'None' || $scope.editTask.dType.id === '';
+    $scope.dChanged = function(data) {
+        if (data.id === 'None') {
+            $scope.editForm.$editables[1].hide();
+            $scope.editForm.$editables[2].hide();
+        } else if ($scope.editTask.dType.id === 'None') {
+            $scope.editForm.$editables[1].show();
+            $scope.editForm.$editables[2].show();
+        }
+        $scope.editTask.dType = data;
     };
 
-    $scope.hideEditFrequency = function () {
-        return $scope.editTask.fType.id !== 'Once' || $scope.editTask.fType.id === '';
+    $scope.fChanged = function (data) {
+        if (data.id === 'Once') {
+            $scope.editForm.$editables[4].hide();
+            $scope.editForm.$editables[5].hide();
+        } else if ($scope.editTask.fType.id === 'Once') {
+            $scope.editForm.$editables[4].show();
+            $scope.editForm.$editables[5].show();
+        }
+        $scope.editTask.fType = data;
     };
 
     $scope.ignoreDurationValueAndUnit = function () {
@@ -72,6 +86,8 @@ app.directive('planningTask', function () {
         $scope.editTask = angular.copy($scope.task);
         $scope.taskInEdit.id = $scope.task.id;
         $scope.editForm.$show();
+        $scope.dChanged($scope.editTask.dType);
+        $scope.fChanged($scope.editTask.fType);
     };
 
     $scope.saveEdit = function () {

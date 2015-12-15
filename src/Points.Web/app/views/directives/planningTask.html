@@ -8,29 +8,29 @@
         <span ng-hide="isInEditMode()">
             {{ task.dType.name }}
         </span>
-        <span ng-show="isInEditMode()" editable-select="editTask.dType" e-ng-options="option.name for option in enums.dTypes track by option.id" e-form="editForm">
+        <span ng-show="isInEditMode()" editable-select="editTask.dType" name="dType" e-ng-model="editTask.dType" e-ng-options="option.name for option in enums.dTypes track by option.id" e-form="editForm" e-ng-change="dChanged($data)">
             {{ editTask.dType.name }}
         </span>
     </td>
     <td>
-        <span ng-hide="(isInEditMode() && hideEditDuration()) || ignoreDurationValueAndUnit()">
+        <span ng-hide="isInEditMode() || ignoreDurationValueAndUnit()">
             {{ task.duration.value }}
         </span>
-        <span ng-show="isInEditMode() && hideEditDuration() && !ignoreDurationValueAndUnit()" editable-number="editTask.duration.value" e-form="editForm">
+        <span ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" editable-number="editTask.duration.value" name="dValue" e-ng-model="editTask.duration.value" e-form="editForm">
             {{ editTask.duration.value }}
         </span>
-        <span ng-show="ignoreDurationValueAndUnit(task.id)">
+        <span ng-show="ignoreDurationValueAndUnit()">
             -
         </span>
     </td>
     <td>
-        <span ng-hide="(isInEditMode() && hideEditDuration()) || ignoreDurationValueAndUnit()">
+        <span ng-hide="isInEditMode() || ignoreDurationValueAndUnit()">
             {{ task.dUnit.name }}
         </span>
-        <span ng-show="isInEditMode() && hideEditDuration() && !ignoreDurationValueAndUnit()" editable-select="editTask.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id" e-form="editForm">
+        <span ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" editable-select="editTask.dUnit" name="dUnit" e-ng-model="editTask.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id" e-form="editForm">
             {{ editTask.dUnit.name }}
         </span>
-        <span ng-show="ignoreDurationValueAndUnit(task.id)">
+        <span ng-show="ignoreDurationValueAndUnit()">
             -
         </span>
     </td>
@@ -38,29 +38,29 @@
         <span ng-hide="isInEditMode()">
             {{ task.fType.name }}
         </span>
-        <span ng-show="isInEditMode()" editable-select="editTask.fType" e-ng-options="option.name for option in enums.fTypes track by option.id" e-form="editForm">
+        <span ng-show="isInEditMode()" editable-select="editTask.fType" name="fType" e-ng-model="editTask.fType" e-ng-options="option.name for option in enums.fTypes track by option.id" e-form="editForm" e-ng-change="fChanged($data)">
             {{ editTask.fType.name }}
         </span>
     </td>
     <td>
-        <span ng-hide="(isInEditMode() && hideEditFrequency()) || ignoreFrequencyValueAndUnit()">
+        <span ng-hide="isInEditMode() || ignoreFrequencyValueAndUnit()">
             {{ task.frequency.value }}
         </span>
-        <span ng-show="isInEditMode() && hideEditFrequency() && !ignoreFrequencyValueAndUnit()" editable-number="editTask.frequency.value" e-form="editForm">
+        <span ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" editable-number="editTask.frequency.value" name="fValue" e-form="editForm">
             {{ editTask.frequency.value }}
         </span>
-        <span ng-show="ignoreFrequencyValueAndUnit(task.id)">
+        <span ng-show="ignoreFrequencyValueAndUnit()">
             -
         </span>
     </td>
     <td>
-        <span ng-hide="(isInEditMode() && hideEditFrequency()) || ignoreFrequencyValueAndUnit()">
+        <span ng-hide="isInEditMode() || ignoreFrequencyValueAndUnit()">
             {{ task.fUnit.name }}
         </span>
-        <span ng-show="isInEditMode() && hideEditFrequency() && !ignoreFrequencyValueAndUnit()" editable-select="editTask.fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id" e-form="editForm">
+        <span ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" editable-select="editTask.fUnit" name="fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id" e-form="editForm">
             {{ editTask.fUnit.name }}
         </span>
-        <span ng-show="ignoreFrequencyValueAndUnit(task.id)">
+        <span ng-show="ignoreFrequencyValueAndUnit()">
             -
         </span>
     </td>
