@@ -16,7 +16,7 @@
                 <uib-accordion-heading>
                     {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
                 </uib-accordion-heading>
-                <div planning-cat the-cat="cat"></div>
+                <div planning-cat the-cat="cat" task-in-edit="taskInEdit"></div>
             </uib-accordion-group>
         </uib-accordion>
     </div>

@@ -2,7 +2,8 @@
 app.directive('planningCat', function () {
     return {
         scope: {
-            cat: '=theCat'
+            cat: '=theCat',
+            taskInEdit: '='
         },
         templateUrl: '/app/views/directives/planningCat.html',
         replace: true,

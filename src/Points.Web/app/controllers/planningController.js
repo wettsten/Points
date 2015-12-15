@@ -4,6 +4,7 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
     $scope.tasks = [];
     $scope.cats = [];
     $scope.filteredCats = [];
+    $scope.taskInEdit = { id: '' };
 
     $scope.loadCats = function () {
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
