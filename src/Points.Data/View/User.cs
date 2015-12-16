@@ -2,9 +2,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Points.Data.Raven
+namespace Points.Data.View
 {
-    public class User : RavenObject
+    public class User : ViewObject
     {
         public string Email { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
@@ -13,7 +13,7 @@ namespace Points.Data.Raven
         public bool NotifyWeekStarting { get; set; }
         public bool NotifyWeekEnding { get; set; }
 
-        public override void Copy(RavenObject obj)
+        public override void Copy(ViewObject obj)
         {
             base.Copy(obj);
             var user = obj as User;

@@ -23,7 +23,8 @@ namespace Points.Common.Mappers
 
         public ViewPlanningTask Map(RavenPlanningTask obj)
         {
-            var viewTask = (ViewPlanningTask)_baseMapper.Map(obj);
+            var viewTask = new ViewPlanningTask();
+            viewTask.Copy(_baseMapper.Map(obj));
             var task = _dataReader.Get<RavenTask>(obj.TaskId);
             viewTask.Task = _taskMapper.Map(task);
             viewTask.Duration = obj.Duration;

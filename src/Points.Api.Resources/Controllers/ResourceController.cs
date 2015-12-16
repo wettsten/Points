@@ -9,10 +9,11 @@ using Points.Common.Factories;
 using Points.Common.Processors;
 using Points.Data;
 using Points.Data.Raven;
+using Points.Data.View;
 
 namespace Points.Api.Resources.Controllers
 {
-    public class ResourceController<T> : ApiController where T : RavenObject, new()
+    public class ResourceController<TIn, TOut> : ApiController where TIn : RavenObject, new() where TOut : ViewObject
     {
         private readonly IRequestProcessor _requestProcessor;
 
@@ -27,7 +28,7 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("Name is required");
             }
-            var objs = _requestProcessor.LookupByName<T>(name);
+            var objs = _requestProcessor.LookupByName<TIn,TOut>(name);
             if (!objs.Any())
             {
                 return NotFound();
@@ -41,7 +42,7 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("User id is required");
             }
-            var objs = _requestProcessor.GetListForUser<T>(userid);
+            var objs = _requestProcessor.GetListForUser<TIn,TOut>(userid);
             if (!objs.Any())
             {
                 return NotFound();
@@ -49,7 +50,7 @@ namespace Points.Api.Resources.Controllers
             return Ok(objs.OrderBy(i => i.Name));
         }
 
-        protected IHttpActionResult Add(T obj)
+        protected IHttpActionResult Add(TIn obj)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +72,7 @@ namespace Points.Api.Resources.Controllers
             }
         }
         
-        protected IHttpActionResult Edit(T obj)
+        protected IHttpActionResult Edit(TIn obj)
         {
             if (!ModelState.IsValid)
             {
@@ -100,7 +101,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData(new T {Id = id});
+                _requestProcessor.DeleteData(new TIn { Id = id});
                 return Ok();
             }
             catch (InvalidDataException ide)

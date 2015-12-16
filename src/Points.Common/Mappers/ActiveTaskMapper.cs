@@ -16,7 +16,8 @@ namespace Points.Common.Mappers
 
         public ViewActiveTask Map(RavenActiveTask obj)
         {
-            var viewTask = (ViewActiveTask)_taskMapper.Map(obj);
+            var viewTask = new ViewActiveTask();
+            viewTask.Copy(_taskMapper.Map(obj));
             viewTask.TimesCompleted = obj.TimesCompleted;
             return viewTask;
         }

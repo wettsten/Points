@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web.Http;
-using Points.Common.Factories;
+﻿using System.Web.Http;
 using Points.Common.Processors;
-using Points.Data;
-using Points.Data.Raven;
+using RavenCategory = Points.Data.Raven.Category;
+using ViewCategory = Points.Data.View.Category;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/categories")]
-    public class CategoriesController : ResourceController<Category>
+    public class CategoriesController : ResourceController<RavenCategory,ViewCategory>
     {
         public CategoriesController(IRequestProcessor requestProcessor) : base(requestProcessor)
         {}
@@ -30,7 +26,7 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddCategory(Category category)
+        public IHttpActionResult AddCategory(RavenCategory category)
         {
             return Add(category);
         }
@@ -38,7 +34,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditCategory(Category category)
+        public IHttpActionResult EditCategory(RavenCategory category)
         {
             return Edit(category);
         }

@@ -16,7 +16,8 @@ namespace Points.Common.Mappers
 
         public ViewCategory Map(RavenCategory obj)
         {
-            var viewCat = (ViewCategory)_baseMapper.Map(obj);
+            var viewCat = new ViewCategory();
+            viewCat.Copy(_baseMapper.Map(obj));
             return viewCat;
         }
     }

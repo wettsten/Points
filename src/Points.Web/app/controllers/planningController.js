@@ -41,7 +41,7 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
 
     $scope.lookupCategory = function (task) {
         for (var i = 0; i < $scope.cats.length; i++) {
-            if ($scope.cats[i].id === task.categoryId) {
+            if ($scope.cats[i].id === task.task.category.id) {
                 $scope.cats[i].tasks.push(task);
                 break;
             }

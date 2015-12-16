@@ -15,11 +15,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
 using StructureMap;
 using StructureMap.Graph;
+using StructureMap.Graph.Scanning;
 
 namespace Points.Api.Resources.DependencyResolution
 {
@@ -39,6 +41,12 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.AddAllTypesOf<IObjectValidator>();
                     scan.ConnectImplementationsToTypesClosing(typeof(IObjectMapper <,>));
                 });
+            For<IObjectMapper<Data.Raven.RavenObject, Data.View.ViewObject>>().Use<ObjectMapper>();
+            For<IObjectMapper<Data.Raven.Category, Data.View.Category>>().Use<CategoryMapper>();
+            For<IObjectMapper<Data.Raven.Task, Data.View.Task>>().Use<TaskMapper>();
+            For<IObjectMapper<Data.Raven.PlanningTask, Data.View.PlanningTask>>().Use<PlanningTaskMapper>();
+            For<IObjectMapper<Data.Raven.ActiveTask, Data.View.ActiveTask>>().Use<ActiveTaskMapper>();
+            For<IObjectMapper<Data.Raven.ArchivedTask, Data.View.ArchivedTask>>().Use<ArchivedTaskMapper>();
         }
     }
 }

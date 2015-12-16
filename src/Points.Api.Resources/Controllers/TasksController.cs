@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Web.Http;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Web.Http;
 using Points.Common.Processors;
-using Points.Data;
-using Points.Data.EnumExtensions;
-using Points.Data.Raven;
+using RavenTask = Points.Data.Raven.Task;
+using ViewTask = Points.Data.View.Task;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/tasks")]
-    public class TasksController : ResourceController<Task>
+    public class TasksController : ResourceController<RavenTask,ViewTask>
     {
         public TasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }
@@ -35,7 +26,7 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddTask(Task task)
+        public IHttpActionResult AddTask(RavenTask task)
         {
             return Add(task);
         }
@@ -43,7 +34,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditTask(Task task)
+        public IHttpActionResult EditTask(RavenTask task)
         {
             return Edit(task);
         }

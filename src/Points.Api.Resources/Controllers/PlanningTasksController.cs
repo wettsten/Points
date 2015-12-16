@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Web.Http;
-using System.Web.Http.Results;
 using Points.Common.Processors;
-using Points.Data;
 using Points.Data.Common;
 using Points.Data.EnumExtensions;
-using Points.Data.Raven;
+using RavenTask = Points.Data.Raven.PlanningTask;
+using ViewTask = Points.Data.View.PlanningTask;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/planningtasks")]
-    public class PlanningTasksController : ResourceController<PlanningTask>
+    public class PlanningTasksController : ResourceController<RavenTask,ViewTask>
     {
         public PlanningTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }
@@ -38,7 +35,7 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddPlanningTask(PlanningTask planningTask)
+        public IHttpActionResult AddPlanningTask(RavenTask planningTask)
         {
             return Add(planningTask);
         }
@@ -46,7 +43,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditPlanningTask(PlanningTask planningTask)
+        public IHttpActionResult EditPlanningTask(RavenTask planningTask)
         {
             return Edit(planningTask);
         }

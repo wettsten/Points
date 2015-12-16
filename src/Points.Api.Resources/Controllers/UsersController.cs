@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Common.Processors;
-using Points.Data;
-using Points.Data.Raven;
+using RavenUser = Points.Data.Raven.User;
+using ViewUser = Points.Data.View.User;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/users")]
-    public class UsersController : ResourceController<User>
+    public class UsersController : ResourceController<RavenUser,ViewUser>
     {
         public UsersController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }
@@ -23,7 +21,7 @@ namespace Points.Api.Resources.Controllers
             var user = GetByName(name);
             if (user is NotFoundResult)
             {
-                var usr = new User
+                var usr = new RavenUser
                 {
                     Name = name,
                     Email = string.Empty,
@@ -40,7 +38,7 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddUser(User user)
+        public IHttpActionResult AddUser(RavenUser user)
         {
             return Add(user);
         }
@@ -48,7 +46,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditUser(User user)
+        public IHttpActionResult EditUser(RavenUser user)
         {
             return Edit(user);
         }

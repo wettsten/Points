@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Points.Common.Factories;
+using Points.Common.Mappers;
 using Points.Data;
 using Points.Data.Raven;
+using Points.Data.View;
 using Points.DataAccess;
+using StructureMap;
 
 namespace Points.Common.Processors
 {
@@ -13,12 +16,14 @@ namespace Points.Common.Processors
         private readonly IDataReader _dataReader;
         private readonly IDataWriter _dataWriter;
         private readonly IObjectValidatorFactory _objectValidatorFactory;
+        private readonly IContainer _container;
 
-        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory)
+        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IContainer container)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _objectValidatorFactory = objectValidatorFactory;
+            _container = container;
         }
 
         public void AddData<T>(T data) where T : RavenObject
@@ -42,14 +47,18 @@ namespace Points.Common.Processors
             _dataWriter.Delete<T>(data.Id);
         }
 
-        public IList<T> GetListForUser<T>(string userId) where T : RavenObject
+        public IList<TOut> GetListForUser<TIn,TOut>(string userId) where TIn : RavenObject where TOut : ViewObject
         {
-            return _dataReader.GetAll<T>().Where(i => (i.UserId.Equals(userId) || !i.IsPrivate) && !i.IsDeleted).ToList();
+            var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
+            var objs = _dataReader.GetAll<TIn>().Where(i => (i.UserId.Equals(userId) || !i.IsPrivate) && !i.IsDeleted).ToList();
+            return objs.Select(i => mapper.Map(i)).ToList();
         }
 
-        public IList<T> LookupByName<T>(string name) where T : RavenObject
+        public IList<TOut> LookupByName<TIn,TOut>(string name) where TIn : RavenObject where TOut : ViewObject
         {
-            return _dataReader.GetAll<T>().Where(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted).ToList();
+            var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
+            var objs = _dataReader.GetAll<TIn>().Where(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted).ToList();
+            return objs.Select(i => mapper.Map(i)).ToList();
         }
     }
 }

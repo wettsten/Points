@@ -23,7 +23,8 @@ namespace Points.Common.Mappers
 
         public ViewTask Map(RavenTask obj)
         {
-            var viewTask = (ViewTask)_baseMapper.Map(obj);
+            var viewTask = new ViewTask();
+            viewTask.Copy(_baseMapper.Map(obj));
             var cat = _dataReader.Get<RavenCategory>(obj.CategoryId);
             viewTask.Category = _catMapper.Map(cat);
             return viewTask;
