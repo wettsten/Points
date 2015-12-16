@@ -3,7 +3,7 @@
     <div class="col-md-8">
         <div class="row">
             <h1>Tasks</h1>
-            <hr/>
+            <hr />
         </div>
 
         <div class="row">
@@ -13,22 +13,24 @@
         <div class="row" filter-task cats="cats"></div>
         <div class="row">&nbsp;</div>
 
-            <table class="row table table-striped table-bordered table-hover" ng-controller="editTaskController">
+        <div class="row">
+            <table class="table table-striped table-bordered table-hover" style="width: 100%">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th style="width: 75px">Is Private</th>
-                        <th style="width: 60px; text-align: right">
-                            <div img-button btn-type="refresh" ng-click="loadCats()"></div>
-                        </th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th style="width: 75px">Is Private</th>
+                    <th style="width: 60px; text-align: right">
+                        <div img-button btn-type="refresh" ng-click="loadCats()"></div>
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr new-task-row add-alert="addAlert(type,msg)"></tr>
-                    <tr ng-repeat="task in tasks | filter:taskFilter" edit-task the-task="task" cats="cats" task-in-edit="taskInEdit" add-alert="addAlert(type,msg)"></tr>
+                <tr new-task-row add-alert="addAlert(type,msg)"></tr>
+                <tr ng-repeat="task in tasks | filter:taskFilter" edit-task the-task="task" cats="cats" task-in-edit="taskInEdit" add-alert="addAlert(type,msg)"></tr>
                 </tbody>
             </table>
+        </div>
     </div>
     <div class="col-md-2">&nbsp;</div>
 </div>
