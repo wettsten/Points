@@ -11,7 +11,7 @@ app.directive('filterTask', function () {
 }).controller('filterTaskController', ['$scope', 'filterFactory', function ($scope, filterFactory) {
 
     $scope.filter = {
-        isOpen: true,
+        isOpen: false,
         text: '',
         cat: {}
     };
