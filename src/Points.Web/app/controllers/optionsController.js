@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('optionsController', ['$scope', 'authService', 'usersService', function ($scope, authService, usersService) {
+app.controller('optionsController', ['$scope', 'authService', 'usersService', '$timeout', function ($scope, authService, usersService, $timeout) {
 
     $scope.originalUser = {};
     $scope.user = {};
@@ -164,11 +164,19 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
     };
 
     $scope.addAlert = function (type, msg) {
-        $scope.alerts.push({ type: type, msg: msg });
+        var alert = { type: type, msg: msg };
+        $scope.alerts.push(alert);
+        $timeout(function () {
+            if ($scope.alerts.indexOf(alert) > -1) {
+                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+            }
+        }, 5000);
     };
 
-    $scope.closeAlert = function (index) {
-        $scope.alerts.splice(index, 1);
+    $scope.closeAlert = function (alert) {
+        if ($scope.alerts.indexOf(alert) > -1) {
+            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+        }
     };
 
     $scope.loadUser();

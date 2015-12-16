@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('catsController', ['$scope', 'catsService', 'authService', 'filterFactory', function ($scope, catsService, authService, filterFactory) {
+app.controller('catsController', ['$scope', 'catsService', 'authService', 'filterFactory', '$timeout', function ($scope, catsService, authService, filterFactory, $timeout) {
 
     $scope.cats = [];
     $scope.alerts = [];
@@ -18,12 +18,20 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'filte
         $scope.catFilter = filterFactory.getCatFilter();
     });
 
-    $scope.addAlert = function (type,msg) {
-        $scope.alerts.push({ type: type, msg: msg });
+    $scope.addAlert = function (type, msg) {
+        var alert = { type: type, msg: msg };
+        $scope.alerts.push(alert);
+        $timeout(function () {
+            if ($scope.alerts.indexOf(alert) > -1) {
+                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+            }
+        }, 5000);
     };
 
-    $scope.closeAlert = function (index) {
-        $scope.alerts.splice(index, 1);
+    $scope.closeAlert = function (alert) {
+        if ($scope.alerts.indexOf(alert) > -1) {
+            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+        }
     };
 
     $scope.loadCats();

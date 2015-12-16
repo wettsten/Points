@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('planningController', ['$scope', 'authService', 'catsService', 'planningTasksService', function ($scope, authService, catsService, planningTasksService) {
+app.controller('planningController', ['$scope', 'authService', 'catsService', 'planningTasksService', '$timeout', function ($scope, authService, catsService, planningTasksService, $timeout) {
 
     $scope.tasks = [];
     $scope.cats = [];
@@ -49,11 +49,19 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
     };
 
     $scope.addAlert = function (type, msg) {
-        $scope.alerts.push({ type: type, msg: msg });
+        var alert = { type: type, msg: msg };
+        $scope.alerts.push(alert);
+        $timeout(function () {
+            if ($scope.alerts.indexOf(alert) > -1) {
+                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+            }
+        }, 5000);
     };
 
-    $scope.closeAlert = function (index) {
-        $scope.alerts.splice(index, 1);
+    $scope.closeAlert = function (alert) {
+        if ($scope.alerts.indexOf(alert) > -1) {
+            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+        }
     };
 
     $scope.loadCats();
