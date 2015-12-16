@@ -10,7 +10,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'filte
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
             $scope.cats = results.data;
         }, function (err) {
-            $scope.addAlert({ type: 'danger', msg: err.data.message });
+            $scope.addAlert('danger', err.data.message);
         });
     };
 

@@ -6,6 +6,10 @@
             <hr/>
         </div>
         <div class="row">
+            <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
             Email (required for notifications):
             <a href="#" editable-email="user.email">
                 {{ user.email || 'not set' }}
@@ -35,11 +39,6 @@
             <a href="#" editable-select="user.startHour" e-ng-options="option.text for option in hours">
                 {{ user.startHour.text }}
             </a>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div data-ng-hide="message == ''" class="row alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="message = ''">&times;</button>
-            {{message}}
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">

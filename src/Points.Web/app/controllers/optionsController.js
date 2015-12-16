@@ -3,7 +3,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
 
     $scope.originalUser = {};
     $scope.user = {};
-    $scope.message = '';
+    $scope.alerts = [];
     $scope.days = [
         'Sunday',
         'Monday',
@@ -120,7 +120,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
                 $scope.originalUser = angular.copy($scope.user);
             },
             function (err) {
-                $scope.message = err.data.message;
+                $scope.addAlert('danger', err.data.message);
             });
     };
 
@@ -147,20 +147,29 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', fu
             usersService.editUser($scope.user).then(
                 function(response) {
                     $scope.originalUser = angular.copy($scope.user);
+                    $scope.addAlert('success', 'Options successfully updated');
                 },
                 function(err) {
-                    $scope.message = err.data.message;
+                    $scope.addAlert('danger', err.data.message);
                 });
         }
     };
 
-    $scope.validateEmail = function () {
+    $scope.validateEmail = function() {
         if (($scope.user.notifyWeekStarting || $scope.user.notifyWeekEnding) && !$scope.user.email) {
-            $scope.message = 'Email is required if notifications are desired';
+            $scope.addAlert('danger', 'Email is required if notifications are desired');
             return false;
         }
         return true;
-    }
+    };
+
+    $scope.addAlert = function (type, msg) {
+        $scope.alerts.push({ type: type, msg: msg });
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
+    };
 
     $scope.loadUser();
 }]);
