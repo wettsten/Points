@@ -4,7 +4,8 @@ app.directive('editTask', function () {
         scope: {
             task: '=theTask',
             cats: '=',
-            taskInEdit: '='
+            taskInEdit: '=',
+            addAlert: '&'
         },
         templateUrl: '/app/views/directives/editTask.html',
         replace: true,
@@ -47,10 +48,11 @@ app.directive('editTask', function () {
         $scope.editTask.userId = authService.authentication.userId;
         tasksService.editTask($scope.editTask).then(function (response) {
                 $scope.clearEditData();
-            $scope.$parent.loadTasks();
+                $scope.$parent.loadTasks();
+                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
         },
          function (err) {
-             $scope.$parent.$parent.$parent.message = err.data.message;
+             $scope.addAlert({ type: 'danger', msg: err.data.message });
              $scope.editForm.$show();
          });
     };
@@ -84,9 +86,10 @@ app.directive('editTask', function () {
                 tasksService.deleteTask($scope.task.id).then(
                     function (response) {
                         $scope.$parent.loadTasks();
+                        $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
                     },
                     function (err) {
-                        $scope.$parent.$parent.$parent.message = err.data.message;
+                        $scope.addAlert({ type: 'danger', msg: err.data.message });
                     });
             }
         });

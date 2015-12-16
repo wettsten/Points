@@ -1,7 +1,9 @@
 ﻿'use strict';
 app.directive('newCatRow', function() {
     return {
-        scope: {},
+        scope: {
+            addAlert: '&'
+        },
         templateUrl: '/app/views/directives/newCatRow.html',
         replace: true,
         controller: 'newCatRowController'
@@ -20,10 +22,11 @@ app.directive('newCatRow', function() {
             $scope.clearAddData();
             $timeout(function () {
                 $scope.$parent.loadCats();
+                $scope.addAlert({ type: 'success', msg: 'Category successfully added' });
             }, 100);
             },
          function (err) {
-             $scope.$parent.message = err.data.message;
+             $scope.addAlert({ type: 'danger', msg: err.data.message });
          });
     };
 }]);

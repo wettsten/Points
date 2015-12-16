@@ -3,7 +3,8 @@ app.directive('editCat', function () {
     return {
         scope: {
             cat: '=theCat',
-            catInEdit: '='
+            catInEdit: '=',
+            addAlert: '&'
         },
         templateUrl: '/app/views/directives/editCat.html',
         replace: true,
@@ -38,9 +39,10 @@ app.directive('editCat', function () {
         catsService.editCat($scope.editCat).then(function (response) {
             $scope.clearEditData();
             $scope.$parent.loadCats();
+            $scope.addAlert({ type: 'success', msg: 'Category successfully updated' });
             },
          function (err) {
-             $scope.$parent.$parent.$parent.message = err.data.message;
+             $scope.addAlert({ type: 'danger', msg: err.data.message });
          });
     };
 
@@ -65,9 +67,10 @@ app.directive('editCat', function () {
                 catsService.deleteCat($scope.cat.id).then(
                     function (response) {
                         $scope.$parent.loadCats();
+                        $scope.addAlert({ type: 'success', msg: 'Category successfully deleted' });
                     },
-                    function(err) {
-                        $scope.$parent.$parent.$parent.message = err.data.message;
+                    function (err) {
+                        $scope.addAlert({ type: 'danger', msg: err.data.message });
                     });
             }
         });

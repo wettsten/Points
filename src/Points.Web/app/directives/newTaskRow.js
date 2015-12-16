@@ -1,7 +1,9 @@
 ﻿'use strict';
 app.directive('newTaskRow', function () {
     return {
-        scope: {},
+        scope: {
+            addAlert: '&'
+        },
         templateUrl: '/app/views/directives/newTaskRow.html',
         replace: true,
         controller: 'newTaskRowController'
@@ -21,8 +23,8 @@ app.directive('newTaskRow', function () {
         catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
             $scope.cats = results.data;
             $scope.addTaskData.category = $scope.cats[0];
-        }, function (error) {
-            $scope.$parent.message = 'Error loading data';
+        }, function (err) {
+            $scope.addAlert({ type: 'danger', msg: err.data.message });
         });
     };
 
@@ -33,10 +35,11 @@ app.directive('newTaskRow', function () {
             $scope.clearAddData();
             $timeout(function () {
                 $scope.$parent.loadTasks();
+                $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
             }, 100);
             },
          function (err) {
-             $scope.$parent.message = err.data.message;
+             $scope.addAlert({ type: 'danger', msg: err.data.message });
          });
     };
 

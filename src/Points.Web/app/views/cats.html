@@ -6,9 +6,8 @@
             <hr />
         </div>
 
-        <div data-ng-hide="message == ''" class="row alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="message = ''">&times;</button>
-            {{message}}
+        <div class="row">
+            <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
         </div>
 
         <div class="row" filter-cat></div>
@@ -24,8 +23,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr new-cat-row></tr>
-                    <tr ng-repeat="cat in cats | filter:catFilter" edit-cat the-cat="cat" cat-in-edit="catInEdit"></tr>
+                    <tr new-cat-row add-alert="addAlert(type,msg)"></tr>
+                    <tr ng-repeat="cat in cats | filter:catFilter" edit-cat the-cat="cat" cat-in-edit="catInEdit" add-alert="addAlert(type,msg)"></tr>
                 </tbody>
             </table>
     </div>
