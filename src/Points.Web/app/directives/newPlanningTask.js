@@ -22,8 +22,8 @@ app.directive('newPlanningTask', function () {
             function (results) {
                 $scope.cats = results.data;
                 $scope.getEnums();
-            }, function (error) {
-                //$scope.$parent.message = 'Error loading data';
+            }, function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
         });
     };
 
@@ -32,8 +32,8 @@ app.directive('newPlanningTask', function () {
             function (results) {
                 $scope.enums = results.data;
                 $scope.loadTasks();
-            }, function (error) {
-                //$scope.message = 'Error loading data';
+            }, function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
         });
     };
 
@@ -50,8 +50,8 @@ app.directive('newPlanningTask', function () {
                         return true;
                     });
                 $scope.resetAddData();
-            }, function (error) {
-                //$scope.$parent.message = 'Error loading data';
+            }, function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
         });
     };
 
@@ -99,11 +99,12 @@ app.directive('newPlanningTask', function () {
         $scope.addTaskData.userId = authService.authentication.userId;
         planningTasksService.addTask($scope.addTaskData).then(
             function (response) {
-                //$scope.$parent.loadTasks();
+                $scope.$emit('refreshTasks');
                 $scope.resetAddData();
+                $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
             },
             function (err) {
-                //$scope.$parent.message = err.data.message;
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
          });
     };
 

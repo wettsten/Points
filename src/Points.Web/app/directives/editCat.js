@@ -36,14 +36,15 @@ app.directive('editCat', function () {
 
     $scope.saveEdit = function () {
         $scope.editCat.userId = authService.authentication.userId;
-        catsService.editCat($scope.editCat).then(function (response) {
-            $scope.clearEditData();
-            $scope.$parent.loadCats();
-            $scope.addAlert({ type: 'success', msg: 'Category successfully updated' });
+        catsService.editCat($scope.editCat).then(
+            function (response) {
+                $scope.clearEditData();
+                $scope.$emit('refreshCats');
+                $scope.addAlert({ type: 'success', msg: 'Category successfully updated' });
             },
-         function (err) {
-             $scope.addAlert({ type: 'danger', msg: err.data.message });
-         });
+             function (err) {
+                 $scope.addAlert({ type: 'danger', msg: err.data.message });
+             });
     };
 
     $scope.delete = function () {
@@ -66,7 +67,7 @@ app.directive('editCat', function () {
             if (result !== 'cancel') {
                 catsService.deleteCat($scope.cat.id).then(
                     function (response) {
-                        $scope.$parent.loadCats();
+                        $scope.$emit('refreshCats');
                         $scope.addAlert({ type: 'success', msg: 'Category successfully deleted' });
                     },
                     function (err) {

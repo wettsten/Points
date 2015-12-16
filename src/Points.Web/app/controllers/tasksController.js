@@ -40,6 +40,10 @@ app.controller('tasksController', [
         $scope.taskFilter = filterFactory.getTaskFilter();
     });
 
+    $scope.$on('refreshTasks', function () {
+        $scope.loadCats();
+    });
+
     $scope.addAlert = function (type, msg) {
         var alert = { type: type, msg: msg };
         $scope.alerts.push(alert);

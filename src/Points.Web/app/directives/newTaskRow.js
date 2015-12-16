@@ -34,7 +34,7 @@ app.directive('newTaskRow', function () {
         tasksService.addTask($scope.addTaskData).then(function (response) {
             $scope.clearAddData();
             $timeout(function () {
-                $scope.$parent.loadTasks();
+                $scope.$emit('refreshTasks');
                 $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
             }, 100);
             },

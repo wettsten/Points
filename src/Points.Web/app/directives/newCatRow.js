@@ -21,7 +21,7 @@ app.directive('newCatRow', function() {
         catsService.addCat($scope.addCatData).then(function (response) {
             $scope.clearAddData();
             $timeout(function () {
-                $scope.$parent.loadCats();
+                $scope.$emit('refreshCats');
                 $scope.addAlert({ type: 'success', msg: 'Category successfully added' });
             }, 100);
             },

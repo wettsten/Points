@@ -18,6 +18,10 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'filte
         $scope.catFilter = filterFactory.getCatFilter();
     });
 
+    $scope.$on('refreshCats', function() {
+        $scope.loadCats();
+    });
+
     $scope.addAlert = function (type, msg) {
         var alert = { type: type, msg: msg };
         $scope.alerts.push(alert);

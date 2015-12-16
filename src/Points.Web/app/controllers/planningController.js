@@ -48,6 +48,10 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
         }
     };
 
+    $scope.$on('refreshTasks', function () {
+        $scope.loadCats();
+    });
+
     $scope.addAlert = function (type, msg) {
         var alert = { type: type, msg: msg };
         $scope.alerts.push(alert);

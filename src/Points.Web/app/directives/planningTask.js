@@ -92,7 +92,7 @@ app.directive('planningTask', function () {
         planningTasksService.editTask($scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
-                //$scope.$parent.loadTasks();
+                $scope.$emit('refreshTasks');
                 $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
             },
             function (err) {
@@ -157,7 +157,7 @@ app.directive('planningTask', function () {
                 if (result !== 'cancel') {
                     planningTasksService.deleteTask($scope.task.id).then(
                         function (response) {
-                            $scope.$parent.loadTasks();
+                            $scope.$emit('refreshTasks');
                             $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
                         },
                         function (err) {
