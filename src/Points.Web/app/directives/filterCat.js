@@ -8,23 +8,17 @@ app.directive('filterCat', function () {
     };
 }).controller('filterCatController', ['$scope', 'filterFactory', function ($scope, filterFactory) {
 
-    $scope.searchText = '';
-    $scope.isExpanded = false;
-
-    $scope.expand = function() {
-        $scope.isExpanded = true;
-    };
-
-    $scope.collapse = function () {
-        $scope.isExpanded = false;
+    $scope.filter = {
+        isOpen: true,
+        text: ''
     };
 
     $scope.search = function() {
-        filterFactory.setCatFilter({name:$scope.searchText});
+        filterFactory.setCatFilter({name:$scope.filter.text});
     };
 
     $scope.clear = function () {
-        $scope.searchText = '';
+        $scope.filter.text = '';
         $scope.search();
     };
 }]);

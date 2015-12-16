@@ -10,29 +10,24 @@ app.directive('filterTask', function () {
     };
 }).controller('filterTaskController', ['$scope', 'filterFactory', function ($scope, filterFactory) {
 
-    $scope.searchText = '';
-    $scope.isExpanded = false;
-
-    $scope.expand = function() {
-        $scope.isExpanded = true;
-    };
-
-    $scope.collapse = function () {
-        $scope.isExpanded = false;
+    $scope.filter = {
+        isOpen: true,
+        text: '',
+        cat: {}
     };
 
     $scope.search = function() {
         filterFactory.setTaskFilter({
-            name: $scope.searchText,
+            name: $scope.filter.text,
             category: {
-                name: $scope.searchCat ? $scope.searchCat.name : ''
+                name: $scope.filter.cat ? $scope.filter.cat.name : ''
             }
         });
     };
 
     $scope.clear = function () {
-        $scope.searchText = '';
-        $scope.searchCat = null;
+        $scope.filter.text = '';
+        $scope.filter.cat = {};
         $scope.search();
     };
 }]);
