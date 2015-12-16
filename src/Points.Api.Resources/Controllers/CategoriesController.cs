@@ -5,6 +5,7 @@ using System.Web.Http;
 using Points.Common.Factories;
 using Points.Common.Processors;
 using Points.Data;
+using Points.Data.Raven;
 
 namespace Points.Api.Resources.Controllers
 {

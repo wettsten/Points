@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Points.Data;
+using Points.Data.Raven;
 using Raven.Client;
 
 namespace Points.DataAccess

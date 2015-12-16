@@ -15,6 +15,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
 using StructureMap;
@@ -36,6 +37,7 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.AssemblyContainingType<IObjectValidator>();
                     scan.AssemblyContainingType<IDataReader>();
                     scan.AddAllTypesOf<IObjectValidator>();
+                    scan.ConnectImplementationsToTypesClosing(typeof(IObjectMapper <,>));
                 });
         }
     }

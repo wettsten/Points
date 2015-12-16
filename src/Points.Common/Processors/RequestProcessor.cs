@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Points.Common.Factories;
 using Points.Data;
+using Points.Data.Raven;
 using Points.DataAccess;
 
 namespace Points.Common.Processors

@@ -10,6 +10,7 @@ using Newtonsoft.Json.Converters;
 using Points.Common.Processors;
 using Points.Data;
 using Points.Data.EnumExtensions;
+using Points.Data.Raven;
 
 namespace Points.Api.Resources.Controllers
 {

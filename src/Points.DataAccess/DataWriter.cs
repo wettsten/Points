@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Points.Data;
+using Points.Data.Raven;
 using Raven.Abstractions.Exceptions;
 using Raven.Client;
 using Raven.Client.Document;

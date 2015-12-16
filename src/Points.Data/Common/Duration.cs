@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Points.Data
+namespace Points.Data.Common
 {
-    public class Frequency : IValidatableObject
+    public class Duration : IValidatableObject
     {
-        [Required]
         [JsonConverter(typeof(StringEnumConverter))]
-        public FrequencyType Type { get; set; }
+        public DurationType Type { get; set; }
         public int? Value { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public FrequencyUnit? Unit { get; set; }
+        public DurationUnit? Unit { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -25,11 +19,11 @@ namespace Points.Data
             {
                 if (!Value.HasValue)
                 {
-                    yield return new ValidationResult("Frequency Value must be provided.");
+                    yield return new ValidationResult("Duration Value must be provided.");
                 }
                 if (!Unit.HasValue)
                 {
-                    yield return new ValidationResult("Frequency Unit must be provided.");
+                    yield return new ValidationResult("Duration Unit must be provided.");
                 }
             }
         }

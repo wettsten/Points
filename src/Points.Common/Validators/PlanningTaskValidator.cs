@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Points.Data;
+using Points.Data.Raven;
 using Points.DataAccess;
 
 namespace Points.Common.Validators

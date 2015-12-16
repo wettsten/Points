@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,12 @@
     <Compile Include="DependencyManagement\DependencyRegistry.cs" />
     <Compile Include="Factories\IObjectValidatorFactory.cs" />
     <Compile Include="Factories\ObjectValidatorFactory.cs" />
+    <Compile Include="Mappers\ObjectMapper.cs" />
+    <Compile Include="Mappers\ActiveTaskMapper.cs" />
+    <Compile Include="Mappers\PlanningTaskMapper.cs" />
+    <Compile Include="Mappers\TaskMapper.cs" />
+    <Compile Include="Mappers\CategoryMapper.cs" />
+    <Compile Include="Mappers\IObjectMapper.cs" />
     <Compile Include="Processors\IRequestProcessor.cs" />
     <Compile Include="Processors\RequestProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

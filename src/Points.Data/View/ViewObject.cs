@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Points.Data.Raven;
 
-namespace Points.Data
+namespace Points.Data.View
 {
-    public class RavenObject
+    public class ViewObject
     {
         public string Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
         public string UserId { get; set; }
 
-        public virtual void Copy(RavenObject obj)
+        public virtual void Copy(ViewObject obj)
         {
             Id = obj.Id;
             Name = obj.Name;

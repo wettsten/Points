@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Points.Data;
+using Points.Data.Raven;
 
 namespace Points.DataAccess
 {
