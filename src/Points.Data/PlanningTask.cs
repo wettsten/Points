@@ -8,8 +8,9 @@ using Newtonsoft.Json;
 
 namespace Points.Data
 {
-    public class PlanningTask : Task
+    public class PlanningTask : RavenObject
     {
+        public string TaskId { get; set; }
         [Required]
         public Duration Duration { get; set; }
         [Required]
@@ -21,6 +22,7 @@ namespace Points.Data
             var task = obj as PlanningTask;
             if (task != null)
             {
+                TaskId = task.TaskId;
                 Duration = task.Duration;
                 Frequency = task.Frequency;
             }

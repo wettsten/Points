@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Points.Data;
 using Points.DataAccess;
 
@@ -13,11 +14,23 @@ namespace Points.Common.Validators
         public void ValidateAdd(object data)
         {
             ValidateAdd<PlanningTask>(data);
+            var obj = data as PlanningTask;
+            var task = DataReader.Get<Category>(obj.TaskId);
+            if (task == null)
+            {
+                throw new InvalidDataException("Task is invalid");
+            }
         }
 
         public void ValidateEdit(object data)
         {
             ValidateEdit<PlanningTask>(data);
+            var obj = data as PlanningTask;
+            var task = DataReader.Get<Category>(obj.TaskId);
+            if (task == null)
+            {
+                throw new InvalidDataException("Task is invalid");
+            }
         }
 
         public void ValidateDelete(object data)
