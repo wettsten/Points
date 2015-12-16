@@ -3,6 +3,7 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
 
     $scope.tasks = [];
     $scope.cats = [];
+    $scope.alerts = [];
     $scope.filteredCats = [];
     $scope.taskInEdit = { id: '' };
 
@@ -45,6 +46,14 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
                 break;
             }
         }
+    };
+
+    $scope.addAlert = function (type, msg) {
+        $scope.alerts.push({ type: type, msg: msg });
+    };
+
+    $scope.closeAlert = function (index) {
+        $scope.alerts.splice(index, 1);
     };
 
     $scope.loadCats();

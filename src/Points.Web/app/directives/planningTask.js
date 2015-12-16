@@ -3,7 +3,8 @@ app.directive('planningTask', function () {
     return {
         scope: {
             task: '=theTask',
-            taskInEdit: '='
+            taskInEdit: '=',
+            addAlert: '&'
         },
         templateUrl: '/app/views/directives/planningTask.html',
         replace: true,
@@ -22,8 +23,8 @@ app.directive('planningTask', function () {
                 $scope.lookupDUnit();
                 $scope.lookupFType();
                 $scope.lookupFUnit();
-            }, function (error) {
-                //$scope.message = 'Error loading data';
+            }, function (errerror) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
             });
     };
 
@@ -92,9 +93,10 @@ app.directive('planningTask', function () {
             function (response) {
                 $scope.clearEditData();
                 //$scope.$parent.loadTasks();
+                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
             },
             function (err) {
-                //$scope.$parent.$parent.$parent.message = err.data.message;
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
         });
     };
 
@@ -156,9 +158,10 @@ app.directive('planningTask', function () {
                     planningTasksService.deleteTask($scope.task.id).then(
                         function (response) {
                             $scope.$parent.loadTasks();
+                            $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
                         },
                         function (err) {
-                            $scope.$parent.$parent.$parent.message = err.data.message;
+                            $scope.addAlert({ type: 'danger', msg: err.data.message });
                         });
                 }
         });
