@@ -8,17 +8,15 @@
         <span ng-hide="isInEditMode()">
             {{ task.dType.name }}
         </span>
-        <span ng-show="isInEditMode()" editable-select="editTask.dType" name="dType" e-ng-model="editTask.dType" e-ng-options="option.name for option in enums.dTypes track by option.id" e-form="editForm" e-ng-change="dChanged($data)">
+        <select class="form-control" ng-show="isInEditMode()" ng-model="editTask.dType" ng-options="option.name for option in enums.dTypes track by option.id">
             {{ editTask.dType.name }}
-        </span>
+        </select>
     </td>
     <td>
         <span ng-hide="isInEditMode() || ignoreDurationValueAndUnit()">
             {{ task.duration.value }}
         </span>
-        <span ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" editable-number="editTask.duration.value" name="dValue" e-ng-model="editTask.duration.value" e-form="editForm">
-            {{ editTask.duration.value }}
-        </span>
+        <input type="number" class="form-control" ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" ng-model="editTask.duration.value" min="1">
         <span ng-show="ignoreDurationValueAndUnit()">
             -
         </span>
@@ -27,9 +25,9 @@
         <span ng-hide="isInEditMode() || ignoreDurationValueAndUnit()">
             {{ task.dUnit.name }}
         </span>
-        <span ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" editable-select="editTask.dUnit" name="dUnit" e-ng-model="editTask.dUnit" e-ng-options="option.name for option in enums.dUnits track by option.id" e-form="editForm">
+        <select class="form-control" ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" ng-model="editTask.dUnit" ng-options="option.name for option in enums.dUnits track by option.id">
             {{ editTask.dUnit.name }}
-        </span>
+        </select>
         <span ng-show="ignoreDurationValueAndUnit()">
             -
         </span>
@@ -38,17 +36,15 @@
         <span ng-hide="isInEditMode()">
             {{ task.fType.name }}
         </span>
-        <span ng-show="isInEditMode()" editable-select="editTask.fType" name="fType" e-ng-model="editTask.fType" e-ng-options="option.name for option in enums.fTypes track by option.id" e-form="editForm" e-ng-change="fChanged($data)">
+        <select class="form-control" ng-show="isInEditMode()" ng-model="editTask.fType" ng-options="option.name for option in enums.fTypes track by option.id">
             {{ editTask.fType.name }}
-        </span>
+        </select>
     </td>
     <td>
         <span ng-hide="isInEditMode() || ignoreFrequencyValueAndUnit()">
             {{ task.frequency.value }}
         </span>
-        <span ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" editable-number="editTask.frequency.value" name="fValue" e-form="editForm">
-            {{ editTask.frequency.value }}
-        </span>
+        <input type="number" class="form-control" ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" ng-model="editTask.frequency.value" min="1">
         <span ng-show="ignoreFrequencyValueAndUnit()">
             -
         </span>
@@ -57,21 +53,21 @@
         <span ng-hide="isInEditMode() || ignoreFrequencyValueAndUnit()">
             {{ task.fUnit.name }}
         </span>
-        <span ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" editable-select="editTask.fUnit" name="fUnit" e-ng-options="option.name for option in enums.fUnits track by option.id" e-form="editForm">
+        <select class="form-control" ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" ng-model="editTask.fUnit" ng-options="option.name for option in enums.fUnits track by option.id">
             {{ editTask.fUnit.name }}
-        </span>
+        </select>
         <span ng-show="ignoreFrequencyValueAndUnit()">
             -
         </span>
     </td>
     <td class="buttons-td">
         <div ng-hide="isInEditMode()">
-            <div img-button btn-type="'edit'" ng-click="startEdit()"></div>
-            <div img-button btn-type="'delete'" ng-click="delete()"></div>
+            <div img-button btn-type="edit" ng-click="startEdit()"></div>
+            <div img-button btn-type="delete" ng-click="delete()"></div>
         </div>
-        <form editable-form name="editForm" ng-show="isInEditMode()">
-            <div img-button btn-type="'save'" ng-click="saveEdit()"></div>
-            <div img-button btn-type="'cancel'" ng-click="clearEditData()"></div>
-        </form>
+        <div ng-show="isInEditMode()">
+            <div img-button btn-type="save" ng-disabled="disableEditSave()" ng-click="saveEdit()"></div>
+            <div img-button btn-type="cancel" ng-click="clearEditData()"></div>
+        </div>
     </td>
 </tr>

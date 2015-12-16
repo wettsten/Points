@@ -34,31 +34,8 @@ app.directive('planningTask', function () {
     $scope.$watch('taskInEdit.id', function () {
         if ($scope.taskInEdit.id !== '' && $scope.taskInEdit.id !== $scope.task.id) {
             $scope.editTask = {};
-            $scope.editForm.$hide();
         }
     });
-
-    $scope.dChanged = function(data) {
-        if (data.id === 'None') {
-            $scope.editForm.$editables[1].hide();
-            $scope.editForm.$editables[2].hide();
-        } else if ($scope.editTask.dType.id === 'None') {
-            $scope.editForm.$editables[1].show();
-            $scope.editForm.$editables[2].show();
-        }
-        $scope.editTask.dType = data;
-    };
-
-    $scope.fChanged = function (data) {
-        if (data.id === 'Once') {
-            $scope.editForm.$editables[4].hide();
-            $scope.editForm.$editables[5].hide();
-        } else if ($scope.editTask.fType.id === 'Once') {
-            $scope.editForm.$editables[4].show();
-            $scope.editForm.$editables[5].show();
-        }
-        $scope.editTask.fType = data;
-    };
 
     $scope.ignoreDurationValueAndUnit = function () {
         if ($scope.isInEditMode()) {
@@ -79,21 +56,31 @@ app.directive('planningTask', function () {
     $scope.clearEditData = function () {
         $scope.editTask = {};
         $scope.taskInEdit.id = '';
-        $scope.editForm.$hide();
     };
 
     $scope.startEdit = function () {
         $scope.editTask = angular.copy($scope.task);
         $scope.taskInEdit.id = $scope.task.id;
-        $scope.editForm.$show();
-        $scope.dChanged($scope.editTask.dType);
-        $scope.fChanged($scope.editTask.fType);
+    };
+
+    $scope.disableEditSave = function () {
+        if ($scope.isInEditMode()) {
+            if ($scope.editTask.dType.id !== 'None') {
+                if (!$scope.editTask.duration.value || $scope.editTask.duration.value < 1) {
+                    return true;
+                }
+            }
+            if ($scope.editTask.fType.id !== 'Once') {
+                if (!$scope.editTask.frequency.value || $scope.editTask.frequency.value < 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     };
 
     $scope.saveEdit = function () {
-        $scope.editForm.$submit();
-        if ($scope.editForm.$dirty) {
-            $scope.editForm.$show();
+        if ($scope.disableEditSave()) {
             return;
         }
         $scope.editTask.duration.type = $scope.editTask.dType.id;
@@ -108,16 +95,7 @@ app.directive('planningTask', function () {
             },
             function (err) {
                 //$scope.$parent.$parent.$parent.message = err.data.message;
-                $scope.editForm.$show();
         });
-    };
-
-    $scope.validateName = function (data) {
-        if (!data) {
-            $scope.editForm.$setDirty();
-            return "Name is required!";
-        }
-        $scope.editForm.$setPristine();
     };
 
     $scope.lookupDType = function () {
