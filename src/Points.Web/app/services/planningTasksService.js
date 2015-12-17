@@ -5,8 +5,8 @@ app.factory('planningTasksService', ['$http', 'ngAuthSettings', function ($http,
 
     var tasksServiceFactory = {};
 
-    tasksServiceFactory.getTasksByUser = function (userId) {
-        return $http.get(serviceBase + 'api/planningtasks?userid=' + userId).then(function (results) {
+    tasksServiceFactory.getTasks = function () {
+        return $http.get(serviceBase + 'api/planningtasks').then(function (results) {
             return results;
         });
     };

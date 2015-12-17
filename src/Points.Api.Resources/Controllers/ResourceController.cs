@@ -1,13 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Web.DynamicData;
 using System.Web.Http;
-using System.Web.Http.Results;
-using Points.Common.Factories;
 using Points.Common.Processors;
-using Points.Data;
 using Points.Data.Raven;
 using Points.Data.View;
 
@@ -22,22 +17,9 @@ namespace Points.Api.Resources.Controllers
             _requestProcessor = requestProcessor;
         }
         
-        protected IHttpActionResult GetByName(string name)
+        protected IHttpActionResult GetForUser()
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                return BadRequest("Name is required");
-            }
-            var objs = _requestProcessor.LookupByName<TIn,TOut>(name);
-            if (!objs.Any())
-            {
-                return NotFound();
-            }
-            return Ok(objs);
-        }
-        
-        protected IHttpActionResult GetForUser(string userid)
-        {
+            string userid = GetUserIdFromHeaders();
             if (string.IsNullOrWhiteSpace(userid))
             {
                 return BadRequest("User id is required");
@@ -59,6 +41,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.Id = string.Empty;
+                obj.UserId = GetUserIdFromHeaders();
                 _requestProcessor.AddData(obj);
                 return Ok();
             }
@@ -80,6 +63,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
+                obj.UserId = GetUserIdFromHeaders();
                 _requestProcessor.EditData(obj);
                 return Ok();
             }
@@ -104,7 +88,7 @@ namespace Points.Api.Resources.Controllers
                 _requestProcessor.DeleteData(new TIn
                 {
                     Id = id,
-                    UserId = Request.Headers.GetValues("UserId").FirstOrDefault()
+                    UserId = GetUserIdFromHeaders()
                 });
                 return Ok();
             }
@@ -122,6 +106,11 @@ namespace Points.Api.Resources.Controllers
         {
             var errors = ModelState.Where(i => i.Value.Errors.Count > 0).SelectMany(i => i.Value.Errors).Select(i => i.ErrorMessage);
             return string.Join("\r\n", errors);
+        }
+
+        private string GetUserIdFromHeaders()
+        {
+            return Request.Headers.GetValues("UserId").FirstOrDefault();
         }
     }
 }

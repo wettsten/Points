@@ -11,7 +11,7 @@ app.directive('editTask', function () {
         replace: true,
         controller: 'editTaskController'
     };
-}).controller('editTaskController', ['$scope', 'tasksService', 'authService', '$uibModal', function ($scope, tasksService, authService, $uibModal) {
+}).controller('editTaskController', ['$scope', 'tasksService', '$uibModal', function ($scope, tasksService, $uibModal) {
 
    $scope.editTask = {};
 
@@ -37,7 +37,6 @@ app.directive('editTask', function () {
 
     $scope.saveEdit = function () {
         $scope.editTask.categoryId = $scope.editTask.category.id;
-        $scope.editTask.userId = authService.authentication.userId;
         tasksService.editTask($scope.editTask).then(
             function (response) {
                 $scope.clearEditData();

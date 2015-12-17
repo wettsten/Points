@@ -57,16 +57,5 @@ namespace Points.Common.Processors
                 .ToList();
             return objs.Select(i => mapper.Map(i)).ToList();
         }
-
-        public IList<TOut> LookupByName<TIn,TOut>(string name) where TIn : RavenObject where TOut : ViewObject
-        {
-            var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
-            var objs = _dataReader
-                .GetAll<TIn>()
-                .Where(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => !i.IsDeleted)
-                .ToList();
-            return objs.Select(i => mapper.Map(i)).ToList();
-        }
     }
 }

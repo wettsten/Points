@@ -1,6 +1,6 @@
 ﻿'use strict';
 app.controller('tasksController', [
-    '$scope', 'tasksService', 'catsService', 'authService', 'filterFactory', '$timeout', function ($scope, tasksService, catsService, authService, filterFactory, $timeout) {
+    '$scope', 'tasksService', 'catsService', 'filterFactory', '$timeout', function ($scope, tasksService, catsService, filterFactory, $timeout) {
 
     $scope.tasks = [];
     $scope.alerts = [];
@@ -8,7 +8,7 @@ app.controller('tasksController', [
     $scope.taskFilter = filterFactory.getTaskFilter();
 
     $scope.loadCats = function () {
-        catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
+        catsService.getCats().then(function (results) {
             $scope.cats = results.data;
             $scope.loadTasks();
         }, function (err) {
@@ -17,7 +17,7 @@ app.controller('tasksController', [
     };
 
     $scope.loadTasks = function () {
-        tasksService.getTasksByUser(authService.authentication.userId).then(function (results) {
+        tasksService.getTasks().then(function (results) {
             $scope.tasks = results.data;
             for (var i = 0; i < $scope.tasks.length; i++) {
                 $scope.lookupCategory($scope.tasks[i]);

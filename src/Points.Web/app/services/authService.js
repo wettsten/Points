@@ -2,7 +2,6 @@
 app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', 'usersService', function ($http, $q, localStorageService, ngAuthSettings, usersService) {
 
     var serviceBase = ngAuthSettings.apiServiceBaseUri;
-    var resourceBase = ngAuthSettings.apiResourceBaseUri;
     var authServiceFactory = {};
 
     var _authentication = {
@@ -39,7 +38,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.userName = loginData.userName;
             usersService.getUserByName(loginData.userName).then(
                 function (results) {
-                    _authentication.userId = results.data[0].id;
+                    _authentication.userId = results.data.id;
                     localStorageService.set('authorizationData', {
                         token: response.access_token,
                         userName: loginData.userName,
@@ -88,7 +87,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             usersService.getUserByName(response.userName).then(function (results) {
-                _authentication.userId = results.data[0].id;
+                _authentication.userId = results.data.id;
                 localStorageService.set('authorizationData', {
                     token: response.access_token,
                     userName: response.userName,
@@ -116,7 +115,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
             usersService.getUserByName(response.userName).then(function (results) {
-                _authentication.userId = results.data[0].id;
+                _authentication.userId = results.data.id;
                 localStorageService.set('authorizationData', {
                     token: response.access_token,
                     userName: response.userName,

@@ -17,13 +17,9 @@ namespace Points.Api.Resources.Controllers
         { }
 
         [Route("")]
-        public IHttpActionResult GetPlanningTasksForUser(string userid)
+        public IHttpActionResult GetPlanningTasksForUser()
         {
-            var tasks = GetForUser(userid);
-            //if (tasks is OkResult)
-            //{
-            //    var content = (tasks as OkResult).Request.Content;
-            //}
+            var tasks = GetForUser();
             return tasks;
         }
 

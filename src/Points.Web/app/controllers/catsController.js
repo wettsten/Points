@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('catsController', ['$scope', 'catsService', 'authService', 'filterFactory', '$timeout', function ($scope, catsService, authService, filterFactory, $timeout) {
+app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$timeout', function ($scope, catsService, filterFactory, $timeout) {
 
     $scope.cats = [];
     $scope.alerts = [];
@@ -7,7 +7,7 @@ app.controller('catsController', ['$scope', 'catsService', 'authService', 'filte
     $scope.catFilter = filterFactory.getCatFilter();
 
     $scope.loadCats = function() {
-        catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
+        catsService.getCats().then(function (results) {
             $scope.cats = results.data;
         }, function (err) {
             $scope.addAlert('danger', err.statusText);

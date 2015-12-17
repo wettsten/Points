@@ -5,8 +5,8 @@ app.factory('catsService', ['$http', 'ngAuthSettings', function ($http, ngAuthSe
 
     var catsServiceFactory = {};
 
-    catsServiceFactory.getCatsByUser = function (userId) {
-        return $http.get(serviceBase + 'api/categories?userid=' + userId).then(function (results) {
+    catsServiceFactory.getCats = function () {
+        return $http.get(serviceBase + 'api/categories').then(function (results) {
             return results;
         });
     };

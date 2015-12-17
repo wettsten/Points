@@ -13,6 +13,5 @@ namespace Points.Common.Processors
         void EditData<T>(T data) where T : RavenObject;
         void DeleteData<T>(T data) where T : RavenObject;
         IList<TOut> GetListForUser<TIn, TOut>(string userId) where TIn : RavenObject where TOut : ViewObject;
-        IList<TOut> LookupByName<TIn, TOut>(string name) where TIn : RavenObject where TOut : ViewObject;
     }
 }

@@ -5,8 +5,8 @@ app.factory('tasksService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
 
     var tasksServiceFactory = {};
 
-    tasksServiceFactory.getTasksByUser = function (userId) {
-        return $http.get(serviceBase + 'api/tasks?userid=' + userId).then(function (results) {
+    tasksServiceFactory.getTasks = function () {
+        return $http.get(serviceBase + 'api/tasks').then(function (results) {
             return results;
         });
     };

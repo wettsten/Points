@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('planningController', ['$scope', 'authService', 'catsService', 'planningTasksService', '$timeout', function ($scope, authService, catsService, planningTasksService, $timeout) {
+app.controller('planningController', ['$scope', 'catsService', 'planningTasksService', '$timeout', function ($scope, catsService, planningTasksService, $timeout) {
 
     $scope.tasks = [];
     $scope.cats = [];
@@ -8,7 +8,7 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
     $scope.taskInEdit = { id: '' };
 
     $scope.loadCats = function () {
-        catsService.getCatsByUser(authService.authentication.userId).then(function (results) {
+        catsService.getCats().then(function (results) {
             $scope.cats = results.data;
             for (var i = 0; i < $scope.cats.length; i++) {
                 $scope.cats[i].tasks = [];
@@ -21,7 +21,7 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
     };
 
     $scope.loadTasks = function () {
-        planningTasksService.getTasksByUser(authService.authentication.userId).then(function (results) {
+        planningTasksService.getTasks().then(function (results) {
             $scope.tasks = results.data;
             for (var i = 0; i < $scope.tasks.length; i++) {
                 $scope.lookupCategory($scope.tasks[i]);

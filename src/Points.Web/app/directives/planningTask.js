@@ -10,7 +10,7 @@ app.directive('planningTask', function () {
         replace: true,
         controller: 'planningTaskController'
     };
-}).controller('planningTaskController', ['$scope', 'planningTasksService', 'authService', '$uibModal', function ($scope, planningTasksService, authService, $uibModal) {
+}).controller('planningTaskController', ['$scope', 'planningTasksService', '$uibModal', function ($scope, planningTasksService, $uibModal) {
 
     $scope.editTask = {};
     $scope.enums = {};
@@ -86,7 +86,6 @@ app.directive('planningTask', function () {
         eTask.frequency.type = $scope.editTask.frequency.type.id;
         eTask.frequency.unit = $scope.editTask.frequency.unit.id;
         eTask.taskId = $scope.editTask.task.id;
-        eTask.userId = authService.authentication.userId;
         planningTasksService.editTask(eTask).then(
             function (response) {
                 $scope.clearEditData();

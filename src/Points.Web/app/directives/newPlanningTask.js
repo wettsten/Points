@@ -9,7 +9,7 @@ app.directive('newPlanningTask', function () {
         controller: 'newPlanningTaskController'
     };
 }).controller('newPlanningTaskController', [
-    '$scope', 'tasksService', 'catsService', 'planningTasksService', 'authService', function ($scope, tasksService, catsService, planningTasksService, authService) {
+    '$scope', 'tasksService', 'catsService', 'planningTasksService', function ($scope, tasksService, catsService, planningTasksService) {
         
     $scope.addTaskData = {};
     $scope.cats = [];
@@ -19,7 +19,7 @@ app.directive('newPlanningTask', function () {
     $scope.enums = {};
 
     $scope.loadCats = function () {
-        catsService.getCatsByUser(authService.authentication.userId).then(
+        catsService.getCats().then(
             function (results) {
                 $scope.cats = results.data;
                 $scope.getEnums();
@@ -39,7 +39,7 @@ app.directive('newPlanningTask', function () {
     };
 
     $scope.loadTasks = function () {
-        tasksService.getTasksByUser(authService.authentication.userId).then(
+        tasksService.getTasks().then(
             function (results) {
                 $scope.tasks = results.data;
                 $scope.loadPlanningTasks();
@@ -49,7 +49,7 @@ app.directive('newPlanningTask', function () {
     };
 
     $scope.loadPlanningTasks = function () {
-        planningTasksService.getTasksByUser(authService.authentication.userId).then(
+        planningTasksService.getTasks().then(
             function (results) {
                 $scope.planningTasks = results.data;
                 $scope.resetAddData();
@@ -109,7 +109,6 @@ app.directive('newPlanningTask', function () {
         aTask.frequency.type = $scope.addTaskData.frequency.type.id;
         aTask.frequency.unit = $scope.addTaskData.frequency.unit.id;
         aTask.isPrivate = true;
-        aTask.userId = authService.authentication.userId;
         planningTasksService.addTask(aTask).then(
             function (response) {
                 $scope.$emit('refreshTasks');

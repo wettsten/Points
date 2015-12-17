@@ -13,9 +13,9 @@ namespace Points.Api.Resources.Controllers
         {}
 
         [Route("")]
-        public IHttpActionResult GetCategoriesForUser(string userid)
+        public IHttpActionResult GetCategoriesForUser()
         {
-            return GetForUser(userid);
+            return GetForUser();
         }
 
         [Route("")]

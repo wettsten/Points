@@ -8,7 +8,7 @@ app.directive('newCatRow', function() {
         replace: true,
         controller: 'newCatRowController'
     };
-}).controller('newCatRowController', ['$scope', 'catsService', 'authService', '$timeout', function ($scope, catsService, authService, $timeout) {
+}).controller('newCatRowController', ['$scope', 'catsService', '$timeout', function ($scope, catsService, $timeout) {
 
     $scope.addCatData = {};
 
@@ -17,7 +17,6 @@ app.directive('newCatRow', function() {
     };
 
     $scope.addCat = function () {
-        $scope.addCatData.userId = authService.authentication.userId;
         catsService.addCat($scope.addCatData).then(function (response) {
             $scope.clearAddData();
             $timeout(function () {

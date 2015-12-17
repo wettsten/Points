@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Net;
+using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Results;
 using Points.Common.Processors;
+using Points.DataAccess;
 using RavenUser = Points.Data.Raven.User;
 using ViewUser = Points.Data.View.User;
 
@@ -12,14 +12,22 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/users")]
     public class UsersController : ResourceController<RavenUser,ViewUser>
     {
-        public UsersController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        { }
+        private readonly IDataReader _dataReader;
+
+        public UsersController(IRequestProcessor requestProcessor, IDataReader dataReader) : base(requestProcessor)
+        {
+            _dataReader = dataReader;
+        }
 
         [Route("")]
         public IHttpActionResult GetUserByName(string name)
         {
-            var user = GetByName(name);
-            if (user is NotFoundResult)
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return BadRequest("Name is required");
+            }
+            var obj = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
+            if (obj == null)
             {
                 var usr = new RavenUser
                 {
@@ -32,9 +40,9 @@ namespace Points.Api.Resources.Controllers
                     AllowAdvancedEdit = false
                 };
                 Add(usr);
-                user = GetByName(name);
+                return Ok(usr);
             }
-            return user;
+            return Ok(obj);
         }
 
         [Route("")]

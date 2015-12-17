@@ -10,7 +10,7 @@ app.directive('editCat', function () {
         replace: true,
         controller: 'editCatController'
     };
-}).controller('editCatController', ['$scope', 'catsService', 'authService', '$uibModal', function ($scope, catsService, authService, $uibModal) {
+}).controller('editCatController', ['$scope', 'catsService', '$uibModal', function ($scope, catsService, $uibModal) {
 
     $scope.editCat = {};
 
@@ -35,7 +35,6 @@ app.directive('editCat', function () {
     };
 
     $scope.saveEdit = function () {
-        $scope.editCat.userId = authService.authentication.userId;
         catsService.editCat($scope.editCat).then(
             function (response) {
                 $scope.clearEditData();

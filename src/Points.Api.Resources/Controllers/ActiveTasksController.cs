@@ -13,9 +13,9 @@ namespace Points.Api.Resources.Controllers
         { }
 
         [Route("")]
-        public IHttpActionResult GetActiveTasksForUser(string userid)
+        public IHttpActionResult GetActiveTasksForUser()
         {
-            return GetForUser(userid);
+            return GetForUser();
         }
     }
 }
