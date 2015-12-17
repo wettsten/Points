@@ -50,14 +50,22 @@ namespace Points.Common.Processors
         public IList<TOut> GetListForUser<TIn,TOut>(string userId) where TIn : RavenObject where TOut : ViewObject
         {
             var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
-            var objs = _dataReader.GetAll<TIn>().Where(i => (i.UserId.Equals(userId) || !i.IsPrivate) && !i.IsDeleted).ToList();
+            var objs = _dataReader
+                .GetAll<TIn>()
+                .Where(i => ((i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase) && i.IsPrivate) || !i.IsPrivate))
+                .Where(i => !i.IsDeleted)
+                .ToList();
             return objs.Select(i => mapper.Map(i)).ToList();
         }
 
         public IList<TOut> LookupByName<TIn,TOut>(string name) where TIn : RavenObject where TOut : ViewObject
         {
             var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
-            var objs = _dataReader.GetAll<TIn>().Where(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted).ToList();
+            var objs = _dataReader
+                .GetAll<TIn>()
+                .Where(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                .Where(i => !i.IsDeleted)
+                .ToList();
             return objs.Select(i => mapper.Map(i)).ToList();
         }
     }

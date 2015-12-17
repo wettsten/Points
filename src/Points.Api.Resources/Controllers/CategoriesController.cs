@@ -13,12 +13,6 @@ namespace Points.Api.Resources.Controllers
         {}
 
         [Route("")]
-        public IHttpActionResult GetCategoryByName(string name)
-        {
-            return GetByName(name);
-        }
-
-        [Route("")]
         public IHttpActionResult GetCategoriesForUser(string userid)
         {
             return GetForUser(userid);

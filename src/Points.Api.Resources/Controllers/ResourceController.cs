@@ -101,7 +101,11 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData(new TIn { Id = id});
+                _requestProcessor.DeleteData(new TIn
+                {
+                    Id = id,
+                    UserId = Request.Headers.GetValues("UserId").FirstOrDefault()
+                });
                 return Ok();
             }
             catch (InvalidDataException ide)

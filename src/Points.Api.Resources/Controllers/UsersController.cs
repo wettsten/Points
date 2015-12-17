@@ -28,7 +28,8 @@ namespace Points.Api.Resources.Controllers
                     WeekStartDay = DayOfWeek.Sunday,
                     WeekStartHour = 20,
                     NotifyWeekStarting = false,
-                    NotifyWeekEnding = false
+                    NotifyWeekEnding = false,
+                    AllowAdvancedEdit = false
                 };
                 Add(usr);
                 user = GetByName(name);
@@ -37,25 +38,11 @@ namespace Points.Api.Resources.Controllers
         }
 
         [Route("")]
-        [HttpPost]
-        public IHttpActionResult AddUser(RavenUser user)
-        {
-            return Add(user);
-        }
-
-        [Route("")]
         [HttpPut]
         //[HttpPatch]
         public IHttpActionResult EditUser(RavenUser user)
         {
             return Edit(user);
-        }
-
-        [Route("")]
-        [HttpDelete]
-        public IHttpActionResult DeleteUser(string id)
-        {
-            return StatusCode(HttpStatusCode.NotImplemented);
         }
     }
 }

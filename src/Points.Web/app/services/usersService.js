@@ -11,12 +11,6 @@ app.factory('usersService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
         });
     };
 
-    usersServiceFactory.addUser = function (userData) {
-        return $http.post(serviceBase + 'api/users', userData).then(function (results) {
-            return results;
-        });
-    };
-
     usersServiceFactory.editUser = function(userData) {
         return $http.put(serviceBase + 'api/users', userData).then(function(results) {
             return results;

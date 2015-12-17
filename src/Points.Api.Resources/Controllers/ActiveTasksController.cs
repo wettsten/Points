@@ -13,12 +13,6 @@ namespace Points.Api.Resources.Controllers
         { }
 
         [Route("")]
-        public IHttpActionResult GetActiveTaskByName(string name)
-        {
-            return GetByName(name);
-        }
-
-        [Route("")]
         public IHttpActionResult GetActiveTasksForUser(string userid)
         {
             return GetForUser(userid);

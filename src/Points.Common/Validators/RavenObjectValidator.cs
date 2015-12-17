@@ -34,6 +34,10 @@ namespace Points.Common.Validators
                 {
                     throw new InvalidDataException("User id is invalid");
                 }
+                if (!obj.IsPrivate && !user.AllowAdvancedEdit)
+                {
+                    throw new InvalidDataException("Action is not allowed");
+                }
             }
         }
 
@@ -56,6 +60,10 @@ namespace Points.Common.Validators
                 {
                     throw new InvalidDataException("User id is invalid");
                 }
+                if (!obj.IsPrivate && !user.AllowAdvancedEdit)
+                {
+                    throw new InvalidDataException("Action is not allowed");
+                }
             }
         }
 
@@ -66,6 +74,18 @@ namespace Points.Common.Validators
             if (res == null || res.IsDeleted)
             {
                 throw new InvalidDataException("Item does not exist or has already been deleted");
+            }
+            if (!(obj is User))
+            {
+                var user = DataReader.Get<User>(obj.UserId);
+                if (user == null)
+                {
+                    throw new InvalidDataException("User id is invalid");
+                }
+                if (!obj.IsPrivate && !user.AllowAdvancedEdit)
+                {
+                    throw new InvalidDataException("Action is not allowed");
+                }
             }
         }
     }
