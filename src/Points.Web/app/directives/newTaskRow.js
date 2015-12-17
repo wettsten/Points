@@ -8,14 +8,18 @@ app.directive('newTaskRow', function () {
         replace: true,
         controller: 'newTaskRowController'
     };
-}).controller('newTaskRowController', ['$scope', 'tasksService', 'catsService', '$timeout', function ($scope, tasksService, catsService, $timeout) {
-        
-    $scope.addTaskData = {};
+}).controller('newTaskRowController', ['$scope', 'tasksService', 'catsService', '$timeout', 'authService', function ($scope, tasksService, catsService, $timeout, authService) {
+
+    $scope.allowEditPublic = authService.authentication.allowEditPublic;
+    $scope.addTaskData = {
+        isPrivate: !$scope.allowEditPublic
+    };
     $scope.cats = [];
 
     $scope.clearAddData = function () {
         $scope.addTaskData = {
-            category: $scope.cats[0]
+            category: $scope.cats[0],
+            isPrivate: !$scope.allowEditPublic
         };
     };
 

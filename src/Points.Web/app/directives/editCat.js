@@ -10,9 +10,10 @@ app.directive('editCat', function () {
         replace: true,
         controller: 'editCatController'
     };
-}).controller('editCatController', ['$scope', 'catsService', '$uibModal', function ($scope, catsService, $uibModal) {
+}).controller('editCatController', ['$scope', 'catsService', '$uibModal', 'authService', function ($scope, catsService, $uibModal, authService) {
 
     $scope.editCat = {};
+    $scope.allowEditPublic = authService.authentication.allowEditPublic;
 
     $scope.isInEditMode = function() {
         return $scope.catInEdit.id === $scope.cat.id;
