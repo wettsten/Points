@@ -12,7 +12,7 @@ app.controller('tasksController', [
             $scope.cats = results.data;
             $scope.loadTasks();
         }, function (err) {
-            $scope.addAlert('danger', err.data.message);
+            $scope.addAlert('danger', err.statusText);
         });
     };
 
@@ -23,7 +23,7 @@ app.controller('tasksController', [
                 $scope.lookupCategory($scope.tasks[i]);
             }
         }, function (err) {
-            $scope.addAlert('danger', err.data.message);
+            $scope.addAlert('danger', err.statusText);
         });
     };
 

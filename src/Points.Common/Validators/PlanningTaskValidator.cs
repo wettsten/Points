@@ -16,7 +16,7 @@ namespace Points.Common.Validators
         {
             ValidateAdd<PlanningTask>(data);
             var obj = data as PlanningTask;
-            var task = DataReader.Get<Category>(obj.TaskId);
+            var task = DataReader.Get<Task>(obj.TaskId);
             if (task == null)
             {
                 throw new InvalidDataException("Task is invalid");
@@ -27,7 +27,7 @@ namespace Points.Common.Validators
         {
             ValidateEdit<PlanningTask>(data);
             var obj = data as PlanningTask;
-            var task = DataReader.Get<Category>(obj.TaskId);
+            var task = DataReader.Get<Task>(obj.TaskId);
             if (task == null)
             {
                 throw new InvalidDataException("Task is invalid");

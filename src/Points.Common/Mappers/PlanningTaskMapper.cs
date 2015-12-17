@@ -1,3 +1,4 @@
+using Points.Data.EnumExtensions;
 using Points.Data.Raven;
 using Points.Data.View;
 using Points.DataAccess;
@@ -27,8 +28,34 @@ namespace Points.Common.Mappers
             viewTask.Copy(_baseMapper.Map(obj));
             var task = _dataReader.Get<RavenTask>(obj.TaskId);
             viewTask.Task = _taskMapper.Map(task);
-            viewTask.Duration = obj.Duration;
-            viewTask.Frequency = obj.Frequency;
+            viewTask.Duration = new Data.View.Duration
+            {
+                Type = new Data.View.DurationType
+                {
+                    Id = obj.Duration.Type.ToString(),
+                    Name = obj.Duration.Type.Spacify()
+                },
+                Value = obj.Duration.Value,
+                Unit = new Data.View.DurationUnit
+                {
+                    Id = obj.Duration.Unit.ToString(),
+                    Name = obj.Duration.Unit.Spacify()
+                }
+            };
+            viewTask.Frequency = new Data.View.Frequency
+            {
+                Type = new Data.View.FrequencyType
+                {
+                    Id = obj.Frequency.Type.ToString(),
+                    Name = obj.Frequency.Type.Spacify()
+                },
+                Value = obj.Frequency.Value,
+                Unit = new Data.View.FrequencyUnit
+                {
+                    Id = obj.Frequency.Unit.ToString(),
+                    Name = obj.Frequency.Unit.Spacify()
+                }
+            };
             return viewTask;
         }
     }

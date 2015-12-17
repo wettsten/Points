@@ -24,7 +24,7 @@ app.directive('newTaskRow', function () {
             $scope.cats = results.data;
             $scope.addTaskData.category = $scope.cats[0];
         }, function (err) {
-            $scope.addAlert({ type: 'danger', msg: err.data.message });
+            $scope.addAlert({ type: 'danger', msg: err.statusText });
         });
     };
 

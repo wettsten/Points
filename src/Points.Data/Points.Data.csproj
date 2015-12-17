@@ -48,15 +48,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Raven\ArchivedTask.cs" />
+    <Compile Include="Raven\Duration.cs" />
+    <Compile Include="Raven\DurationType.cs" />
+    <Compile Include="Raven\DurationUnit.cs" />
+    <Compile Include="Raven\Frequency.cs" />
+    <Compile Include="Raven\FrequencyType.cs" />
+    <Compile Include="Raven\FrequencyUnit.cs" />
     <Compile Include="Raven\PlanningTask.cs" />
     <Compile Include="Raven\Category.cs" />
     <Compile Include="EnumExtensions\EnumExtensions.cs" />
-    <Compile Include="Common\FrequencyUnit.cs" />
-    <Compile Include="Common\Frequency.cs" />
-    <Compile Include="Common\Duration.cs" />
-    <Compile Include="Common\DurationUnit.cs" />
-    <Compile Include="Common\FrequencyType.cs" />
-    <Compile Include="Common\DurationType.cs" />
+    <Compile Include="View\FrequencyUnit.cs" />
+    <Compile Include="View\Frequency.cs" />
+    <Compile Include="View\Duration.cs" />
+    <Compile Include="View\DurationUnit.cs" />
+    <Compile Include="View\FrequencyType.cs" />
+    <Compile Include="View\DurationType.cs" />
     <Compile Include="Raven\RavenObject.cs" />
     <Compile Include="Raven\ActiveTask.cs" />
     <Compile Include="Raven\Task.cs" />
@@ -74,6 +80,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

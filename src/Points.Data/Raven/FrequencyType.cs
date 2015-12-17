@@ -1,4 +1,4 @@
-﻿namespace Points.Data.Common
+﻿namespace Points.Data.Raven
 {
     public enum FrequencyType
     {

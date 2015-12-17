@@ -15,8 +15,8 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
                 $scope.cats[i].isOpen = true;
             }
             $scope.loadTasks();
-        }, function (error) {
-            $scope.message = 'Error loading data';
+        }, function (err) {
+            $scope.addAlert('danger', err.statusText);
         });
     };
 
@@ -27,8 +27,8 @@ app.controller('planningController', ['$scope', 'authService', 'catsService', 'p
                 $scope.lookupCategory($scope.tasks[i]);
             }
             $scope.filterCats();
-        }, function (error) {
-            $scope.message = 'Error loading data';
+        }, function (err) {
+            $scope.addAlert('danger', err.statusText);
         });
     };
 

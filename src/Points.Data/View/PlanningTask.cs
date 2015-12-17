@@ -1,5 +1,4 @@
-﻿using Points.Data.Common;
-using Points.Data.Raven;
+﻿using Points.Data.Raven;
 
 namespace Points.Data.View
 {

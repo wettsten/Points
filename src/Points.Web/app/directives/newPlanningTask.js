@@ -2,7 +2,7 @@
 app.directive('newPlanningTask', function () {
     return {
         scope: {
-            planningTasks: '=tasks'
+            addAlert: '&'
         },
         templateUrl: '/app/views/directives/newPlanningTask.html',
         replace: true,
@@ -15,6 +15,7 @@ app.directive('newPlanningTask', function () {
     $scope.cats = [];
     $scope.tasks = [];
     $scope.filteredTasks = [];
+    $scope.planningTasks = [];
     $scope.enums = {};
 
     $scope.loadCats = function () {
@@ -23,7 +24,7 @@ app.directive('newPlanningTask', function () {
                 $scope.cats = results.data;
                 $scope.getEnums();
             }, function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addAlert({ type: 'danger', msg: err.statusMessage });
         });
     };
 
@@ -33,44 +34,55 @@ app.directive('newPlanningTask', function () {
                 $scope.enums = results.data;
                 $scope.loadTasks();
             }, function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addAlert({ type: 'danger', msg: err.statusText });
         });
     };
 
     $scope.loadTasks = function () {
         tasksService.getTasksByUser(authService.authentication.userId).then(
             function (results) {
-                $scope.tasks = results.data.filter(
-                    function (task) {
-                        for (var i = 0; i < $scope.planningTasks.length; i++) {
-                            if ($scope.planningTasks[i].name === task.name) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    });
-                $scope.resetAddData();
+                $scope.tasks = results.data;
+                $scope.loadPlanningTasks();
             }, function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addAlert({ type: 'danger', msg: err.statusText });
         });
     };
 
-    $scope.filterTasks = function() {
+    $scope.loadPlanningTasks = function () {
+        planningTasksService.getTasksByUser(authService.authentication.userId).then(
+            function (results) {
+                $scope.planningTasks = results.data;
+                $scope.resetAddData();
+            }, function (err) {
+                $scope.resetAddData();
+            });
+    };
+
+    $scope.filterTasks = function () {
         $scope.filteredTasks = $scope.tasks.filter(
             function (task) {
-                return task.categoryId === $scope.addTaskData.cat.id;
-        });
+                for (var i = 0; i < $scope.planningTasks.length; i++) {
+                    if ($scope.planningTasks[i].task.id === task.id) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        $scope.filteredTasks = $scope.filteredTasks.filter(
+            function (task) {
+                return task.category.id === $scope.addTaskData.cat.id;
+            });
         $scope.addTaskData.task = $scope.filteredTasks[0];
     };
 
     $scope.resetAddData = function () {
+        $scope.addTaskData.cat = $scope.cats[0];
         $scope.addTaskData.duration = {value:0};
         $scope.addTaskData.frequency = {value:1};
-        $scope.addTaskData.cat = $scope.cats[0];
-        $scope.addTaskData.dType = $scope.enums.dTypes[0];
-        $scope.addTaskData.dUnit = $scope.enums.dUnits[0];
-        $scope.addTaskData.fType = $scope.enums.fTypes[0];
-        $scope.addTaskData.fUnit = $scope.enums.fUnits[0];
+        $scope.addTaskData.duration.type = $scope.enums.dTypes[0];
+        $scope.addTaskData.duration.unit = $scope.enums.dUnits[0];
+        $scope.addTaskData.frequency.type = $scope.enums.fTypes[0];
+        $scope.addTaskData.frequency.unit = $scope.enums.fUnits[0];
         $scope.filterTasks();
     };
 
@@ -89,15 +101,16 @@ app.directive('newPlanningTask', function () {
     };
 
     $scope.addTask = function () {
-        $scope.addTaskData.name = $scope.addTaskData.task.name;
-        $scope.addTaskData.categoryId = $scope.addTaskData.cat.id;
-        $scope.addTaskData.duration.type = $scope.addTaskData.dType.id;
-        $scope.addTaskData.duration.unit = $scope.addTaskData.dUnit.id;
-        $scope.addTaskData.frequency.type = $scope.addTaskData.fType.id;
-        $scope.addTaskData.frequency.unit = $scope.addTaskData.fUnit.id;
-        $scope.addTaskData.isPrivate = true;
-        $scope.addTaskData.userId = authService.authentication.userId;
-        planningTasksService.addTask($scope.addTaskData).then(
+        var aTask = angular.copy($scope.addTaskData);
+        aTask.name = $scope.addTaskData.task.id;
+        aTask.taskId = $scope.addTaskData.task.id;
+        aTask.duration.type = $scope.addTaskData.duration.type.id;
+        aTask.duration.unit = $scope.addTaskData.duration.unit.id;
+        aTask.frequency.type = $scope.addTaskData.frequency.type.id;
+        aTask.frequency.unit = $scope.addTaskData.frequency.unit.id;
+        aTask.isPrivate = true;
+        aTask.userId = authService.authentication.userId;
+        planningTasksService.addTask(aTask).then(
             function (response) {
                 $scope.$emit('refreshTasks');
                 $scope.resetAddData();

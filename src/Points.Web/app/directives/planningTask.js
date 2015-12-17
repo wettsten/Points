@@ -19,12 +19,8 @@ app.directive('planningTask', function () {
         planningTasksService.getEnums().then(
             function (results) {
                 $scope.enums = results.data;
-                $scope.lookupDType();
-                $scope.lookupDUnit();
-                $scope.lookupFType();
-                $scope.lookupFUnit();
-            }, function (errerror) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+            }, function (err) {
+                $scope.addAlert({ type: 'danger', msg: statusText });
             });
     };
 
@@ -40,17 +36,17 @@ app.directive('planningTask', function () {
 
     $scope.ignoreDurationValueAndUnit = function () {
         if ($scope.isInEditMode()) {
-            return $scope.editTask.dType.id === 'None';
+            return $scope.editTask.duration.type.id === 'None';
         } else {
-            return $scope.task.duration.type === 'None';
+            return $scope.task.duration.type.id === 'None';
         }
     };
 
     $scope.ignoreFrequencyValueAndUnit = function () {
         if ($scope.isInEditMode()) {
-            return $scope.editTask.fType.id === 'Once';
+            return $scope.editTask.frequency.type.id === 'Once';
         } else {
-            return $scope.task.frequency.type === 'Once';
+            return $scope.task.frequency.type.id === 'Once';
         }
     };
 
@@ -66,12 +62,12 @@ app.directive('planningTask', function () {
 
     $scope.disableEditSave = function () {
         if ($scope.isInEditMode()) {
-            if ($scope.editTask.dType.id !== 'None') {
+            if ($scope.editTask.duration.type.id !== 'None') {
                 if (!$scope.editTask.duration.value || $scope.editTask.duration.value < 1) {
                     return true;
                 }
             }
-            if ($scope.editTask.fType.id !== 'Once') {
+            if ($scope.editTask.frequency.type.id !== 'Once') {
                 if (!$scope.editTask.frequency.value || $scope.editTask.frequency.value < 1) {
                     return true;
                 }
@@ -84,12 +80,14 @@ app.directive('planningTask', function () {
         if ($scope.disableEditSave()) {
             return;
         }
-        $scope.editTask.duration.type = $scope.editTask.dType.id;
-        $scope.editTask.duration.unit = $scope.editTask.dUnit.id;
-        $scope.editTask.frequency.type = $scope.editTask.fType.id;
-        $scope.editTask.frequency.unit = $scope.editTask.fUnit.id;
-        $scope.editTask.userId = authService.authentication.userId;
-        planningTasksService.editTask($scope.editTask).then(
+        var eTask = angular.copy($scope.editTask);
+        eTask.duration.type = $scope.editTask.duration.type.id;
+        eTask.duration.unit = $scope.editTask.duration.unit.id;
+        eTask.frequency.type = $scope.editTask.frequency.type.id;
+        eTask.frequency.unit = $scope.editTask.frequency.unit.id;
+        eTask.taskId = $scope.editTask.task.id;
+        eTask.userId = authService.authentication.userId;
+        planningTasksService.editTask(eTask).then(
             function (response) {
                 $scope.clearEditData();
                 $scope.$emit('refreshTasks');
@@ -98,42 +96,6 @@ app.directive('planningTask', function () {
             function (err) {
                 $scope.addAlert({ type: 'danger', msg: err.data.message });
         });
-    };
-
-    $scope.lookupDType = function () {
-        for (var i = 0; i < $scope.enums.dTypes.length; i++) {
-            if ($scope.enums.dTypes[i].id === $scope.task.duration.type) {
-                $scope.task.dType = $scope.enums.dTypes[i];
-                break;
-            }
-        }
-    };
-
-    $scope.lookupDUnit = function () {
-        for (var i = 0; i < $scope.enums.dUnits.length; i++) {
-            if ($scope.enums.dUnits[i].id === $scope.task.duration.unit) {
-                $scope.task.dUnit = $scope.enums.dUnits[i];
-                break;
-            }
-        }
-    };
-
-    $scope.lookupFType = function () {
-        for (var i = 0; i < $scope.enums.fTypes.length; i++) {
-            if ($scope.enums.fTypes[i].id === $scope.task.frequency.type) {
-                $scope.task.fType = $scope.enums.fTypes[i];
-                break;
-            }
-        }
-    };
-
-    $scope.lookupFUnit = function () {
-        for (var i = 0; i < $scope.enums.fUnits.length; i++) {
-            if ($scope.enums.fUnits[i].id === $scope.task.frequency.unit) {
-                $scope.task.fUnit = $scope.enums.fUnits[i];
-                break;
-            }
-        }
     };
 
     $scope.delete = function () {
@@ -145,7 +107,7 @@ app.directive('planningTask', function () {
             resolve: {
                 item: function () {
                     return {
-                        name: $scope.task.name,
+                        name: $scope.task.task.name,
                         id: $scope.task.id
                     };
                 }

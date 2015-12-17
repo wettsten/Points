@@ -26,7 +26,7 @@ app.directive('newCatRow', function() {
             }, 100);
             },
          function (err) {
-             $scope.addAlert({ type: 'danger', msg: err.data.message });
+             $scope.addAlert({ type: 'danger', msg: err.statusText });
          });
     };
 }]);

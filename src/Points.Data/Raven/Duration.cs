@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Points.Data.Common
+namespace Points.Data.Raven
 {
-    public class Frequency : IValidatableObject
+    public class Duration : IValidatableObject
     {
         [JsonConverter(typeof(StringEnumConverter))]
-        public FrequencyType Type { get; set; }
+        public DurationType Type { get; set; }
         public int? Value { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
-        public FrequencyUnit? Unit { get; set; }
+        public DurationUnit? Unit { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -19,11 +19,11 @@ namespace Points.Data.Common
             {
                 if (!Value.HasValue)
                 {
-                    yield return new ValidationResult("Frequency Value must be provided.");
+                    yield return new ValidationResult("Duration Value must be provided.");
                 }
                 if (!Unit.HasValue)
                 {
-                    yield return new ValidationResult("Frequency Unit must be provided.");
+                    yield return new ValidationResult("Duration Unit must be provided.");
                 }
             }
         }

@@ -120,7 +120,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
                 $scope.originalUser = angular.copy($scope.user);
             },
             function (err) {
-                $scope.addAlert('danger', err.data.message);
+                $scope.addAlert('danger', err.statusText);
             });
     };
 

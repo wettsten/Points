@@ -1,15 +1,15 @@
 ﻿<tr>
     <td>
         <span>
-            {{ task.name }}
+            {{ task.task.name }}
         </span>
     </td>
     <td>
         <span ng-hide="isInEditMode()">
-            {{ task.dType.name }}
+            {{ task.duration.type.name }}
         </span>
-        <select class="form-control" ng-show="isInEditMode()" ng-model="editTask.dType" ng-options="option.name for option in enums.dTypes track by option.id">
-            {{ editTask.dType.name }}
+        <select class="form-control" ng-show="isInEditMode()" ng-model="editTask.duration.type" ng-options="option.name for option in enums.dTypes track by option.id">
+            {{ editTask.duration.type.name }}
         </select>
     </td>
     <td>
@@ -23,10 +23,10 @@
     </td>
     <td>
         <span ng-hide="isInEditMode() || ignoreDurationValueAndUnit()">
-            {{ task.dUnit.name }}
+            {{ task.duration.unit.name }}
         </span>
-        <select class="form-control" ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" ng-model="editTask.dUnit" ng-options="option.name for option in enums.dUnits track by option.id">
-            {{ editTask.dUnit.name }}
+        <select class="form-control" ng-show="isInEditMode() && !ignoreDurationValueAndUnit()" ng-model="editTask.duration.unit" ng-options="option.name for option in enums.dUnits track by option.id">
+            {{ editTask.duration.unit.name }}
         </select>
         <span ng-show="ignoreDurationValueAndUnit()">
             -
@@ -34,10 +34,10 @@
     </td>
     <td>
         <span ng-hide="isInEditMode()">
-            {{ task.fType.name }}
+            {{ task.frequency.type.name }}
         </span>
-        <select class="form-control" ng-show="isInEditMode()" ng-model="editTask.fType" ng-options="option.name for option in enums.fTypes track by option.id">
-            {{ editTask.fType.name }}
+        <select class="form-control" ng-show="isInEditMode()" ng-model="editTask.frequency.type" ng-options="option.name for option in enums.fTypes track by option.id">
+            {{ editTask.frequency.type.name }}
         </select>
     </td>
     <td>
@@ -51,10 +51,10 @@
     </td>
     <td>
         <span ng-hide="isInEditMode() || ignoreFrequencyValueAndUnit()">
-            {{ task.fUnit.name }}
+            {{ task.frequency.unit.name }}
         </span>
-        <select class="form-control" ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" ng-model="editTask.fUnit" ng-options="option.name for option in enums.fUnits track by option.id">
-            {{ editTask.fUnit.name }}
+        <select class="form-control" ng-show="isInEditMode() && !ignoreFrequencyValueAndUnit()" ng-model="editTask.frequency.unit" ng-options="option.name for option in enums.fUnits track by option.id">
+            {{ editTask.frequency.unit.name }}
         </select>
         <span ng-show="ignoreFrequencyValueAndUnit()">
             -

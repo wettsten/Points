@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Points.Data.Common;
 
 namespace Points.Data.Raven
 {

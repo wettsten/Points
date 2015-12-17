@@ -9,20 +9,20 @@
     </div>
     <div class="col-md-2">
         <p>Duration</p>
-        <select class="form-control" ng-model="addTaskData.dType" ng-options="option.name for option in enums.dTypes" required></select>
+        <select class="form-control" ng-model="addTaskData.duration.type" ng-options="option.name for option in enums.dTypes" required></select>
         <div>&nbsp;</div>
         <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.duration.value" ng-show="showAddDuration()" />
         <div>&nbsp;</div>
-        <select class="form-control" ng-model="addTaskData.dUnit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits"></select>
+        <select class="form-control" ng-model="addTaskData.duration.unit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits"></select>
         <div>&nbsp;</div>
     </div>
     <div class="col-md-2">
         <p>Frequency</p>
-        <select class="form-control" ng-model="addTaskData.fType" ng-options="option.name for option in enums.fTypes" required></select>
+        <select class="form-control" ng-model="addTaskData.frequency.type" ng-options="option.name for option in enums.fTypes" required></select>
         <div>&nbsp;</div>
         <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" />
         <div>&nbsp;</div>
-        <select class="form-control" ng-model="addTaskData.fUnit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits"></select>
+        <select class="form-control" ng-model="addTaskData.frequency.unit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits"></select>
         <div>&nbsp;</div>
     </div>
     <div class="col-md-2">
