@@ -7,7 +7,8 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     var _authentication = {
         isAuth: false,
         userName: "",
-        userId: 0
+        userId: 0,
+        allowEditPublic: false
     };
 
     var _externalAuthData = {
@@ -39,12 +40,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             usersService.getUserByName(loginData.userName).then(
                 function (results) {
                     _authentication.userId = results.data.id;
+                    _authentication.allowEditPublic = results.data.allowAdvancedEdit;
                     localStorageService.set('authorizationData', {
                         token: response.access_token,
                         userName: loginData.userName,
                         userId: _authentication.userId,
-                        refreshToken: "",
-                        useRefreshTokens: false
+                        allowEditPublic: _authentication.allowEditPublic
                     });
                     deferred.resolve(response);
             });
@@ -64,6 +65,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
         _authentication.isAuth = false;
         _authentication.userName = "";
         _authentication.userId = 0;
+        _authentication.allowEditPublic = false;
 
     };
 
@@ -74,6 +76,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
             _authentication.userId = authData.userId;
+            _authentication.allowEditPublic = authData.allowEditPublic;
         }
 
     };
@@ -88,12 +91,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.userName = response.userName;
             usersService.getUserByName(response.userName).then(function (results) {
                 _authentication.userId = results.data.id;
+                _authentication.allowEditPublic = results.data.allowAdvancedEdit;
                 localStorageService.set('authorizationData', {
                     token: response.access_token,
                     userName: response.userName,
                     userId: _authentication.userId,
-                    refreshToken: "",
-                    useRefreshTokens: false
+                    allowEditPublic: _authentication.allowEditPublic
                 });
                 deferred.resolve(response);
             });
@@ -116,12 +119,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.userName = response.userName;
             usersService.getUserByName(response.userName).then(function (results) {
                 _authentication.userId = results.data.id;
+                _authentication.allowEditPublic = results.data.allowAdvancedEdit;
                 localStorageService.set('authorizationData', {
                     token: response.access_token,
                     userName: response.userName,
                     userId: _authentication.userId,
-                    refreshToken: "",
-                    useRefreshTokens: false
+                    allowEditPublic: _authentication.allowEditPublic
                 });
                 deferred.resolve(response);
             });
