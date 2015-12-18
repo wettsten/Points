@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('optionsController', ['$scope', 'authService', 'usersService', '$timeout', function ($scope, authService, usersService, $timeout) {
+app.controller('optionsController', ['$scope', 'authService', 'usersService', '$timeout', '$q', function ($scope, authService, usersService, $timeout, $q) {
 
     $scope.originalUser = {};
     $scope.user = {};
@@ -112,15 +112,17 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
         }
     ];
 
-    $scope.loadUser = function() {
-        usersService.getUserByName(authService.authentication.userName).then(
+    $scope.loadUser = usersService.getUserByName(authService.authentication.userName).then(
             function (response) {
-                $scope.user = response.data[0];
+                return response.data;
+            });
+
+    $scope.loadData = function () {
+        $q.all([$scope.loadUser]).then(
+            function (data) {
+                $scope.user = data[0];
                 $scope.lookupHour();
                 $scope.originalUser = angular.copy($scope.user);
-            },
-            function (err) {
-                $scope.addAlert('danger', err.statusText);
             });
     };
 
@@ -179,5 +181,5 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
         }
     };
 
-    $scope.loadUser();
+    $scope.loadData();
 }]);

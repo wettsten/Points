@@ -8,7 +8,7 @@ app.directive('newTask', function () {
         replace: true,
         controller: 'newTaskController'
     };
-}).controller('newTaskController', ['$scope', 'tasksService', 'catsService', '$timeout', function ($scope, tasksService, catsService, $timeout) {
+}).controller('newTaskController', ['$scope', 'tasksService', 'catsService', '$timeout', '$q', function ($scope, tasksService, catsService, $timeout, $q) {
 
     $scope.addTaskData = {};
     $scope.cats = [];
@@ -19,13 +19,17 @@ app.directive('newTask', function () {
         };
     };
 
-    $scope.loadCats = function () {
-        catsService.getCats().then(function (results) {
-            $scope.cats = results.data;
-            $scope.addTaskData.category = $scope.cats[0];
-        }, function (err) {
-            $scope.addAlert({ type: 'danger', msg: err.statusText });
+    $scope.loadCats = catsService.getCats().then(
+        function (results) {
+            return results.data;
         });
+
+    $scope.loadData = function () {
+        $q.all([$scope.loadCats]).then(
+            function (data) {
+                $scope.cats = data[0];
+                $scope.addTaskData.category = $scope.cats[0];
+            });
     };
 
     $scope.addTask = function () {
@@ -42,5 +46,5 @@ app.directive('newTask', function () {
          });
     };
 
-    $scope.loadCats();
+    $scope.loadData();
 }]);

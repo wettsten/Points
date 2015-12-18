@@ -1,16 +1,20 @@
 ﻿'use strict';
-app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$timeout', function ($scope, catsService, filterFactory, $timeout) {
+app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$timeout', '$q', function ($scope, catsService, filterFactory, $timeout, $q) {
 
     $scope.cats = [];
     $scope.alerts = [];
     $scope.catInEdit = {id: ''};
     $scope.catFilter = filterFactory.getCatFilter();
 
-    $scope.loadCats = function() {
-        catsService.getCats().then(function (results) {
-            $scope.cats = results.data;
-        }, function (err) {
-            $scope.addAlert('danger', err.statusText);
+    $scope.loadCats = catsService.getCats().then(
+        function (results) {
+            return results.data;
+    });
+
+    $scope.loadData = function () {
+        $q.all([$scope.loadCats]).then(
+            function (data) {
+                $scope.cats = data[0];
         });
     };
 
@@ -19,7 +23,7 @@ app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$ti
     });
 
     $scope.$on('refreshCats', function() {
-        $scope.loadCats();
+        $scope.loadData();
     });
 
     $scope.addAlert = function (type, msg) {
@@ -38,5 +42,5 @@ app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$ti
         }
     };
 
-    $scope.loadCats();
+    $scope.loadData();
 }]);

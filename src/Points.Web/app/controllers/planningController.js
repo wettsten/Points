@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('planningController', ['$scope', 'catsService', 'planningTasksService', '$timeout', function ($scope, catsService, planningTasksService, $timeout) {
+app.controller('planningController', ['$scope', 'catsService', 'planningTasksService', '$timeout', '$q', function ($scope, catsService, planningTasksService, $timeout, $q) {
 
     $scope.tasks = [];
     $scope.cats = [];
@@ -7,29 +7,30 @@ app.controller('planningController', ['$scope', 'catsService', 'planningTasksSer
     $scope.filteredCats = [];
     $scope.taskInEdit = { id: '' };
 
-    $scope.loadCats = function () {
-        catsService.getCats().then(function (results) {
-            $scope.cats = results.data;
-            for (var i = 0; i < $scope.cats.length; i++) {
-                $scope.cats[i].tasks = [];
-                $scope.cats[i].isOpen = true;
-            }
-            $scope.loadTasks();
-        }, function (err) {
-            $scope.addAlert('danger', err.statusText);
+    $scope.loadCats = catsService.getCats().then(
+        function (results) {
+            return results.data;
         });
-    };
 
-    $scope.loadTasks = function () {
-        planningTasksService.getTasks().then(function (results) {
-            $scope.tasks = results.data;
-            for (var i = 0; i < $scope.tasks.length; i++) {
-                $scope.lookupCategory($scope.tasks[i]);
-            }
-            $scope.filterCats();
-        }, function (err) {
-            $scope.addAlert('danger', err.statusText);
+    $scope.loadTasks = planningTasksService.getTasks().then(
+        function (results) {
+            return results.data;
         });
+
+    $scope.loadData = function () {
+        $q.all([$scope.loadCats, $scope.loadTasks]).then(
+            function (data) {
+                $scope.cats = data[0];
+                for (var i = 0; i < $scope.cats.length; i++) {
+                    $scope.cats[i].tasks = [];
+                    $scope.cats[i].isOpen = true;
+                }
+                $scope.tasks = data[1];
+                for (var i = 0; i < $scope.tasks.length; i++) {
+                    $scope.lookupCategory($scope.tasks[i]);
+                }
+                $scope.filterCats();
+            });
     };
 
     $scope.filterCats = function() {
@@ -49,7 +50,7 @@ app.controller('planningController', ['$scope', 'catsService', 'planningTasksSer
     };
 
     $scope.$on('refreshTasks', function () {
-        $scope.loadCats();
+        $scope.loadData();
     });
 
     $scope.addAlert = function (type, msg) {
@@ -68,5 +69,5 @@ app.controller('planningController', ['$scope', 'catsService', 'planningTasksSer
         }
     };
 
-    $scope.loadCats();
+    $scope.loadData();
 }]);

@@ -42,11 +42,11 @@
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
-            <button type="submit" class="btn btn-primary" ng-disabled="areNoChanges()" ng-click="saveChanges()">
-                Save
+            <button type="submit" class="btn btn-success" ng-disabled="areNoChanges()" ng-click="saveChanges()" title="Save changes">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
-            <button type="button" class="btn btn-default" ng-disabled="areNoChanges()" ng-click="cancelChanges()">
-                Cancel
+            <button type="button" class="btn btn-danger" ng-disabled="areNoChanges()" ng-click="cancelChanges()" title="Cancel changes">
+                <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
             </button>
         </div>
     </div>

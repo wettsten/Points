@@ -1,29 +1,30 @@
 ﻿'use strict';
 app.controller('tasksController', [
-    '$scope', 'tasksService', 'catsService', 'filterFactory', '$timeout', function ($scope, tasksService, catsService, filterFactory, $timeout) {
+    '$scope', 'tasksService', 'catsService', 'filterFactory', '$timeout', '$q', function ($scope, tasksService, catsService, filterFactory, $timeout, $q) {
 
     $scope.tasks = [];
     $scope.alerts = [];
     $scope.taskInEdit = { id: '' };
     $scope.taskFilter = filterFactory.getTaskFilter();
 
-    $scope.loadCats = function () {
-        catsService.getCats().then(function (results) {
-            $scope.cats = results.data;
-            $scope.loadTasks();
-        }, function (err) {
-            $scope.addAlert('danger', err.statusText);
+    $scope.loadCats = catsService.getCats().then(
+        function (results) {
+            return results.data;
         });
-    };
 
-    $scope.loadTasks = function () {
-        tasksService.getTasks().then(function (results) {
-            $scope.tasks = results.data;
-            for (var i = 0; i < $scope.tasks.length; i++) {
-                $scope.lookupCategory($scope.tasks[i]);
-            }
-        }, function (err) {
-            $scope.addAlert('danger', err.statusText);
+    $scope.loadTasks = tasksService.getTasks().then(
+        function (results) {
+            return results.data;
+        });
+
+    $scope.loadData = function () {
+        $q.all([$scope.loadCats, $scope.loadTasks]).then(
+            function (data) {
+                $scope.cats = data[0];
+                $scope.tasks = data[1];
+                for (var i = 0; i < $scope.tasks.length; i++) {
+                    $scope.lookupCategory($scope.tasks[i]);
+                }
         });
     };
 
@@ -41,7 +42,7 @@ app.controller('tasksController', [
     });
 
     $scope.$on('refreshTasks', function () {
-        $scope.loadCats();
+        $scope.loadData();
     });
 
     $scope.addAlert = function (type, msg) {
@@ -60,5 +61,5 @@ app.controller('tasksController', [
         }
     };
 
-    $scope.loadCats();
+    $scope.loadData();
 }]);

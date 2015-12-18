@@ -10,17 +10,20 @@ app.directive('editPlanningTask', function () {
         replace: true,
         controller: 'editPlanningTaskController'
     };
-}).controller('editPlanningTaskController', ['$scope', 'planningTasksService', '$uibModal', function ($scope, planningTasksService, $uibModal) {
+}).controller('editPlanningTaskController', ['$scope', 'planningTasksService', '$uibModal', '$q', function ($scope, planningTasksService, $uibModal, $q) {
 
     $scope.editTask = {};
     $scope.enums = {};
 
-    $scope.getEnums = function () {
-        planningTasksService.getEnums().then(
-            function (results) {
-                $scope.enums = results.data;
-            }, function (err) {
-                $scope.addAlert({ type: 'danger', msg: statusText });
+    $scope.getEnums = planningTasksService.getEnums().then(
+        function (results) {
+            return results.data;
+        });
+
+    $scope.loadData = function () {
+        $q.all([$scope.getEnums]).then(
+            function (data) {
+                $scope.enums = data[0];
             });
     };
 
@@ -128,5 +131,5 @@ app.directive('editPlanningTask', function () {
         });
     };
 
-    $scope.getEnums();
+    $scope.loadData();
 }]);
