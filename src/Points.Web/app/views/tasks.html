@@ -28,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr new-task-row add-alert="addAlert(type,msg)"></tr>
+                <tr new-task add-alert="addAlert(type,msg)"></tr>
                 <tr ng-repeat="task in tasks | filter:taskFilter" edit-task the-task="task" cats="cats" task-in-edit="taskInEdit" add-alert="addAlert(type,msg)"></tr>
                 </tbody>
             </table>

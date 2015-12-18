@@ -1,14 +1,14 @@
 ﻿'use strict';
-app.directive('newCatRow', function() {
+app.directive('newCat', function() {
     return {
         scope: {
             addAlert: '&'
         },
-        templateUrl: '/app/views/directives/newCatRow.html',
+        templateUrl: '/app/views/directives/newCat.html',
         replace: true,
-        controller: 'newCatRowController'
+        controller: 'newCatController'
     };
-}).controller('newCatRowController', ['$scope', 'catsService', '$timeout', 'authService', function ($scope, catsService, $timeout, authService) {
+}).controller('newCatController', ['$scope', 'catsService', '$timeout', 'authService', function ($scope, catsService, $timeout, authService) {
 
     $scope.allowEditPublic = authService.authentication.allowEditPublic;
     $scope.addCatData = {

@@ -11,7 +11,19 @@ app.directive('newPlanningTask', function () {
 }).controller('newPlanningTaskController', [
     '$scope', 'tasksService', 'catsService', 'planningTasksService', function ($scope, tasksService, catsService, planningTasksService) {
         
-    $scope.addTaskData = {};
+    $scope.addTaskData = {
+        duration: {
+            value: 0,
+            type: {},
+            unit: {}
+        },
+        frequency: {
+            value: 1,
+            type: {},
+            unit: {}
+        },
+        cat: {}
+    };
     $scope.cats = [];
     $scope.tasks = [];
     $scope.filteredTasks = [];
@@ -77,8 +89,19 @@ app.directive('newPlanningTask', function () {
 
     $scope.resetAddData = function () {
         $scope.addTaskData.cat = $scope.cats[0];
-        $scope.addTaskData.duration = {value:0};
-        $scope.addTaskData.frequency = {value:1};
+        $scope.addTaskData = {
+            duration: {
+                value: 0,
+                type: {},
+                unit: {}
+            },
+            frequency: {
+                value: 1,
+                type: {},
+                unit: {}
+            },
+            cat: {}
+        };
         $scope.addTaskData.duration.type = $scope.enums.dTypes[0];
         $scope.addTaskData.duration.unit = $scope.enums.dUnits[0];
         $scope.addTaskData.frequency.type = $scope.enums.fTypes[0];

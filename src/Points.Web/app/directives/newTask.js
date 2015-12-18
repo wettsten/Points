@@ -1,14 +1,14 @@
 ﻿'use strict';
-app.directive('newTaskRow', function () {
+app.directive('newTask', function () {
     return {
         scope: {
             addAlert: '&'
         },
-        templateUrl: '/app/views/directives/newTaskRow.html',
+        templateUrl: '/app/views/directives/newTask.html',
         replace: true,
-        controller: 'newTaskRowController'
+        controller: 'newTaskController'
     };
-}).controller('newTaskRowController', ['$scope', 'tasksService', 'catsService', '$timeout', 'authService', function ($scope, tasksService, catsService, $timeout, authService) {
+}).controller('newTaskController', ['$scope', 'tasksService', 'catsService', '$timeout', 'authService', function ($scope, tasksService, catsService, $timeout, authService) {
 
     $scope.allowEditPublic = authService.authentication.allowEditPublic;
     $scope.addTaskData = {
