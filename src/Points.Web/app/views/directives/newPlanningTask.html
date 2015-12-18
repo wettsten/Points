@@ -26,7 +26,14 @@
         <div>&nbsp;</div>
     </div>
     <div class="col-md-2">
-        <div>&nbsp;</div>
-        <button class="btn btn-primary" type="submit" ng-click="addTask()" ng-disabled="!addTaskData.task">Add New Task</button>
+        <p>&nbsp;</p>
+        <div class="row">
+            <button type="button" class="btn btn-success" ng-disabled="!addTaskData.task" ng-click="addTask()" title="Save new">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="resetAddData()" title="Clear">
+                <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+            </button>
+        </div>
     </div>
 </form>

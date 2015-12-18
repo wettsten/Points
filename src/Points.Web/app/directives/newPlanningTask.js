@@ -87,17 +87,17 @@ app.directive('newPlanningTask', function () {
     };
 
     $scope.showAddDuration = function () {
-        if (!$scope.addTaskData.dType) {
+        if (!$scope.addTaskData.duration.type) {
             return false;
         }
-        return $scope.addTaskData.dType.id !== 'None';
+        return $scope.addTaskData.duration.type.id !== 'None';
     };
 
     $scope.showAddFrequency = function () {
-        if (!$scope.addTaskData.fType) {
+        if (!$scope.addTaskData.frequency.type) {
             return false;
         }
-        return $scope.addTaskData.fType.id !== 'Once';
+        return $scope.addTaskData.frequency.type.id !== 'Once';
     };
 
     $scope.addTask = function () {
