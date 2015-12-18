@@ -8,7 +8,11 @@
         <input type="checkbox" ng-model="addCatData.isPrivate" ng-disabled="!allowEditPublic">
     </td>
     <td class="buttons-td">
-        <div img-button btn-type="new" ng-disabled="!addCatData.name" ng-click="addCat()"></div>
-        <div img-button btn-type="clear" ng-click="clearAddData()"></div>
+        <button type="button" class="btn btn-success" ng-disabled="!addCatData.name" ng-click="addCat()" title="Save new">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" ng-click="clearAddData()" title="Clear">
+            <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+        </button>
     </td>
 </tr>

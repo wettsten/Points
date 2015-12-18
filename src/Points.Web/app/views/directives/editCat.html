@@ -13,12 +13,20 @@
     </td>
     <td class="buttons-td">
         <div ng-hide="isInEditMode() || (!allowEditPublic && !cat.isPrivate)">
-            <div img-button btn-type="edit" ng-click="startEdit()"></div>
-            <div img-button btn-type="delete" ng-click="delete()"></div>
+            <button type="button" class="btn btn-info" ng-click="startEdit()" title="Edit">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="delete()" title="Delete">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
         </div>
         <div ng-show="isInEditMode()">
-            <div img-button btn-type="save" ng-disabled="!editCat.name" ng-click="saveEdit()"></div>
-            <div img-button btn-type="cancel" ng-click="clearEditData()"></div>
+            <button type="button" class="btn btn-success" ng-disabled="!editCat.name" ng-click="saveEdit()" title="Save edit">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="clearEditData()" title="Cancel edit">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
         </div>
     </td>
 </tr>
