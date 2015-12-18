@@ -4,6 +4,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Points.Api.Resources;
 using Points.Api.Resources.DependencyResolution;
+using Points.Scheduler;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace Points.Api.Resources
@@ -23,6 +24,9 @@ namespace Points.Api.Resources
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
             config.DependencyResolver = new StructureMapWebApiDependencyResolver(container);
+
+            var scheduler = container.GetInstance<IScheduler>();
+            scheduler.Start();
         }
 
         private void ConfigureOAuth(IAppBuilder app)
@@ -30,11 +34,6 @@ namespace Points.Api.Resources
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
             //Token Consumption
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
-        }
-
-        private void ConfigureRaven()
-        {
-            
         }
     }
 }

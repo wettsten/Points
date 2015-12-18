@@ -76,10 +76,6 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Points.DataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Points.DataAccess\bin\Debug\Points.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.4.0.0.315\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -172,9 +168,17 @@
       <Project>{846d3d22-2ecb-4e01-9fbf-bae697cde539}</Project>
       <Name>Points.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Points.DataAccess\Points.DataAccess.csproj">
+      <Project>{0b230498-d658-4be6-a41f-241a5d69bab5}</Project>
+      <Name>Points.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Points.Data\Points.Data.csproj">
       <Project>{3e8b9067-10da-49f7-abf4-7e800c055abe}</Project>
       <Name>Points.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Points.Scheduler\Points.Scheduler.csproj">
+      <Project>{7c8aea43-489c-4594-8eb8-a41de55e251c}</Project>
+      <Name>Points.Scheduler</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

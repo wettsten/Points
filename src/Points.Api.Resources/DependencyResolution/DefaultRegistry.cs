@@ -19,9 +19,9 @@ using System;
 using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
+using Points.Scheduler;
 using StructureMap;
 using StructureMap.Graph;
-using StructureMap.Graph.Scanning;
 
 namespace Points.Api.Resources.DependencyResolution
 {
@@ -38,6 +38,7 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.LookForRegistries();
                     scan.AssemblyContainingType<IObjectValidator>();
                     scan.AssemblyContainingType<IDataReader>();
+                    scan.AssemblyContainingType<IScheduler>();
                     scan.AddAllTypesOf<IObjectValidator>();
                     scan.ConnectImplementationsToTypesClosing(typeof(IObjectMapper <,>));
                 });
