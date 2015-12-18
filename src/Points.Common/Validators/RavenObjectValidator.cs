@@ -23,7 +23,7 @@ namespace Points.Common.Validators
             if (objs
                 .Where(i => i.Name.Equals(obj.Name, StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => !i.IsDeleted)
-                .Any(i => !i.IsPrivate || i.UserId.Equals(obj.UserId, StringComparison.InvariantCultureIgnoreCase)))
+                .Any(i => i.UserId.Equals(obj.UserId, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new InvalidDataException("This name is already in use");
             }
@@ -33,10 +33,6 @@ namespace Points.Common.Validators
                 if (user == null)
                 {
                     throw new InvalidDataException("User id is invalid");
-                }
-                if (!obj.IsPrivate && !user.AllowAdvancedEdit)
-                {
-                    throw new InvalidDataException("Action is not allowed");
                 }
             }
         }
@@ -49,7 +45,7 @@ namespace Points.Common.Validators
                 .Where(i => i.Name.Equals(obj.Name, StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => !i.Id.Equals(obj.Id))
                 .Where(i => !i.IsDeleted)
-                .Any(i => !i.IsPrivate || i.UserId.Equals(obj.UserId, StringComparison.InvariantCultureIgnoreCase)))
+                .Any(i => i.UserId.Equals(obj.UserId, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new InvalidDataException("This name is already in use");
             }
@@ -59,10 +55,6 @@ namespace Points.Common.Validators
                 if (user == null)
                 {
                     throw new InvalidDataException("User id is invalid");
-                }
-                if (!obj.IsPrivate && !user.AllowAdvancedEdit)
-                {
-                    throw new InvalidDataException("Action is not allowed");
                 }
             }
         }
@@ -81,10 +73,6 @@ namespace Points.Common.Validators
                 if (user == null)
                 {
                     throw new InvalidDataException("User id is invalid");
-                }
-                if (!obj.IsPrivate && !user.AllowAdvancedEdit)
-                {
-                    throw new InvalidDataException("Action is not allowed");
                 }
             }
         }

@@ -12,7 +12,6 @@ namespace Points.Data.Raven
         public int WeekStartHour { get; set; }
         public bool NotifyWeekStarting { get; set; }
         public bool NotifyWeekEnding { get; set; }
-        public bool AllowAdvancedEdit { get; set; }
 
         public override void Copy(RavenObject obj)
         {

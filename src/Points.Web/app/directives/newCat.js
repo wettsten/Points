@@ -8,17 +8,12 @@ app.directive('newCat', function() {
         replace: true,
         controller: 'newCatController'
     };
-}).controller('newCatController', ['$scope', 'catsService', '$timeout', 'authService', function ($scope, catsService, $timeout, authService) {
+}).controller('newCatController', ['$scope', 'catsService', '$timeout', function ($scope, catsService, $timeout) {
 
-    $scope.allowEditPublic = authService.authentication.allowEditPublic;
-    $scope.addCatData = {
-        isPrivate: !$scope.allowEditPublic
-    };
+    $scope.addCatData = {};
 
     $scope.clearAddData = function () {
-        $scope.addCatData = {
-            isPrivate: !$scope.allowEditPublic
-    };
+        $scope.addCatData = {};
     };
 
     $scope.addCat = function () {

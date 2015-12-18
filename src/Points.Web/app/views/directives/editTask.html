@@ -16,11 +16,8 @@
             {{ editTask.category.name }}
         </select>
     </td>
-    <td class="checkbox-td">
-        <input type="checkbox" data-ng-model="task.isPrivate" disabled="disabled">
-    </td>
     <td class="buttons-td">
-        <div ng-hide="isInEditMode() || (!allowEditPublic && !task.isPrivate)">
+        <div ng-hide="isInEditMode()">
             <button type="button" class="btn btn-info" ng-click="startEdit()" title="Edit">
                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </button>

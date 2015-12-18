@@ -7,8 +7,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     var _authentication = {
         isAuth: false,
         userName: "",
-        userId: 0,
-        allowEditPublic: false
+        userId: 0
     };
 
     var _externalAuthData = {
@@ -44,8 +43,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                     localStorageService.set('authorizationData', {
                         token: response.access_token,
                         userName: loginData.userName,
-                        userId: _authentication.userId,
-                        allowEditPublic: _authentication.allowEditPublic
+                        userId: _authentication.userId
                     });
                     deferred.resolve(response);
             });
@@ -65,7 +63,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
         _authentication.isAuth = false;
         _authentication.userName = "";
         _authentication.userId = 0;
-        _authentication.allowEditPublic = false;
 
     };
 
@@ -76,7 +73,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
             _authentication.userId = authData.userId;
-            _authentication.allowEditPublic = authData.allowEditPublic;
         }
 
     };
@@ -95,8 +91,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 localStorageService.set('authorizationData', {
                     token: response.access_token,
                     userName: response.userName,
-                    userId: _authentication.userId,
-                    allowEditPublic: _authentication.allowEditPublic
+                    userId: _authentication.userId
                 });
                 deferred.resolve(response);
             });
@@ -123,8 +118,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 localStorageService.set('authorizationData', {
                     token: response.access_token,
                     userName: response.userName,
-                    userId: _authentication.userId,
-                    allowEditPublic: _authentication.allowEditPublic
+                    userId: _authentication.userId
                 });
                 deferred.resolve(response);
             });

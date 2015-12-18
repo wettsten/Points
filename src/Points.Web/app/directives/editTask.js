@@ -11,10 +11,9 @@ app.directive('editTask', function () {
         replace: true,
         controller: 'editTaskController'
     };
-}).controller('editTaskController', ['$scope', 'tasksService', '$uibModal', 'authService', function ($scope, tasksService, $uibModal, authService) {
+}).controller('editTaskController', ['$scope', 'tasksService', '$uibModal', function ($scope, tasksService, $uibModal) {
 
     $scope.editTask = {};
-    $scope.allowEditPublic = authService.authentication.allowEditPublic;
 
     $scope.isInEditMode = function () {
         return $scope.taskInEdit.id === $scope.task.id;

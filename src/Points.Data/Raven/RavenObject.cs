@@ -7,7 +7,6 @@ namespace Points.Data.Raven
         public string Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
         public string UserId { get; set; }
 
@@ -15,7 +14,6 @@ namespace Points.Data.Raven
         {
             Id = obj.Id;
             Name = obj.Name;
-            IsPrivate = obj.IsPrivate;
             IsDeleted = obj.IsDeleted;
             UserId = obj.UserId;
         }

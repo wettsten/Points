@@ -36,8 +36,7 @@ namespace Points.Api.Resources.Controllers
                     WeekStartDay = DayOfWeek.Sunday,
                     WeekStartHour = 20,
                     NotifyWeekStarting = false,
-                    NotifyWeekEnding = false,
-                    AllowAdvancedEdit = false
+                    NotifyWeekEnding = false
                 };
                 Add(usr);
                 return Ok(usr);

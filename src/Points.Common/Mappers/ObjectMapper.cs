@@ -11,7 +11,6 @@ namespace Points.Common.Mappers
             {
                 Id = obj.Id,
                 Name = obj.Name,
-                IsPrivate = obj.IsPrivate,
                 IsDeleted = obj.IsDeleted,
                 UserId = obj.UserId
             };

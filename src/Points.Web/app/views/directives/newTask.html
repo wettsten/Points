@@ -8,9 +8,6 @@
             {{ addTaskData.category.name }}
         </select>
     </td>
-    <td class="checkbox-td">
-        <input type="checkbox" ng-model="addTaskData.isPrivate" ng-disabled="!allowEditPublic">
-    </td>
     <td class="buttons-td">
         <button type="button" class="btn btn-success" ng-disabled="!addTaskData.name" ng-click="addTask()" title="Save new">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

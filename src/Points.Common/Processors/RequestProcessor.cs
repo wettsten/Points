@@ -52,7 +52,7 @@ namespace Points.Common.Processors
             var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
             var objs = _dataReader
                 .GetAll<TIn>()
-                .Where(i => ((i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase) && i.IsPrivate) || !i.IsPrivate))
+                .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => !i.IsDeleted)
                 .ToList();
             return objs.Select(i => mapper.Map(i)).ToList();

@@ -7,7 +7,6 @@ namespace Points.Data.View
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public bool IsPrivate { get; set; }
         public bool IsDeleted { get; set; }
         public string UserId { get; set; }
 
@@ -15,7 +14,6 @@ namespace Points.Data.View
         {
             Id = obj.Id;
             Name = obj.Name;
-            IsPrivate = obj.IsPrivate;
             IsDeleted = obj.IsDeleted;
             UserId = obj.UserId;
         }

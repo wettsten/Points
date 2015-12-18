@@ -8,18 +8,14 @@ app.directive('newTask', function () {
         replace: true,
         controller: 'newTaskController'
     };
-}).controller('newTaskController', ['$scope', 'tasksService', 'catsService', '$timeout', 'authService', function ($scope, tasksService, catsService, $timeout, authService) {
+}).controller('newTaskController', ['$scope', 'tasksService', 'catsService', '$timeout', function ($scope, tasksService, catsService, $timeout) {
 
-    $scope.allowEditPublic = authService.authentication.allowEditPublic;
-    $scope.addTaskData = {
-        isPrivate: !$scope.allowEditPublic
-    };
+    $scope.addTaskData = {};
     $scope.cats = [];
 
     $scope.clearAddData = function () {
         $scope.addTaskData = {
-            category: $scope.cats[0],
-            isPrivate: !$scope.allowEditPublic
+            category: $scope.cats[0]
         };
     };
 

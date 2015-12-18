@@ -10,20 +10,17 @@ app.directive('filterCat', function () {
 
     $scope.filter = {
         isOpen: false,
-        text: '',
-        privateOnly: false
+        text: ''
     };
 
     $scope.search = function() {
         filterFactory.setCatFilter({
-            name: $scope.filter.text,
-            isPrivate: $scope.filter.privateOnly
+            name: $scope.filter.text
     });
     };
 
     $scope.clear = function () {
         $scope.filter.text = '';
-        $scope.filter.privateOnly = false;
         $scope.search();
     };
 }]);

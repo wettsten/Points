@@ -4,9 +4,6 @@
     <td>
         <input type="text" class="form-control" ng-model="addCatData.name">
     </td>
-    <td class="checkbox-td">
-        <input type="checkbox" ng-model="addCatData.isPrivate" ng-disabled="!allowEditPublic">
-    </td>
     <td class="buttons-td">
         <button type="button" class="btn btn-success" ng-disabled="!addCatData.name" ng-click="addCat()" title="Save new">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
