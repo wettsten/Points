@@ -15,7 +15,6 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
 using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
@@ -51,7 +50,7 @@ namespace Points.Api.Resources.DependencyResolution
             For<IObjectMapper<Data.Raven.ActiveTask, Data.View.ActiveTask>>().Use<ActiveTaskMapper>();
             For<IObjectMapper<Data.Raven.ArchivedTask, Data.View.ArchivedTask>>().Use<ArchivedTaskMapper>();
             For<IObjectMapper<Data.Raven.User, Data.View.User>>().Use<UserMapper>();
-            ForSingletonOf<IScheduler>().Use<IScheduler>();
+            ForSingletonOf<IScheduler>().Use<Scheduler.Processors.Scheduler>();
         }
     }
 }
