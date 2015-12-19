@@ -20,6 +20,7 @@ using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
 using Points.Scheduler;
+using Points.Scheduler.Processors;
 using StructureMap;
 using StructureMap.Graph;
 
@@ -40,6 +41,7 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.AssemblyContainingType<IDataReader>();
                     scan.AssemblyContainingType<IScheduler>();
                     scan.AddAllTypesOf<IObjectValidator>();
+                    scan.AddAllTypesOf<IJob>();
                     scan.ConnectImplementationsToTypesClosing(typeof(IObjectMapper <,>));
                 });
             For<IObjectMapper<Data.Raven.RavenObject, Data.View.ViewObject>>().Use<ObjectMapper>();
@@ -49,6 +51,7 @@ namespace Points.Api.Resources.DependencyResolution
             For<IObjectMapper<Data.Raven.ActiveTask, Data.View.ActiveTask>>().Use<ActiveTaskMapper>();
             For<IObjectMapper<Data.Raven.ArchivedTask, Data.View.ArchivedTask>>().Use<ArchivedTaskMapper>();
             For<IObjectMapper<Data.Raven.User, Data.View.User>>().Use<UserMapper>();
+            ForSingletonOf<IScheduler>().Use<IScheduler>();
         }
     }
 }

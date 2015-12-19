@@ -54,6 +54,7 @@
     <Compile Include="Raven\Frequency.cs" />
     <Compile Include="Raven\FrequencyType.cs" />
     <Compile Include="Raven\FrequencyUnit.cs" />
+    <Compile Include="Raven\Job.cs" />
     <Compile Include="Raven\PlanningTask.cs" />
     <Compile Include="Raven\Category.cs" />
     <Compile Include="EnumExtensions\EnumExtensions.cs" />

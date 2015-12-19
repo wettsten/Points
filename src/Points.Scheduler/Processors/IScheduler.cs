@@ -1,4 +1,4 @@
-﻿namespace Points.Scheduler
+﻿namespace Points.Scheduler.Processors
 {
     public interface IScheduler
     {

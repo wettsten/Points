@@ -29,12 +29,13 @@ namespace Points.Api.Resources.Controllers
             var obj = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
             if (obj == null)
             {
+                var now = DateTime.UtcNow.AddDays(1).AddHours(1);
                 var usr = new RavenUser
                 {
                     Name = name,
                     Email = string.Empty,
-                    WeekStartDay = DayOfWeek.Sunday,
-                    WeekStartHour = 20,
+                    WeekStartDay = now.DayOfWeek,
+                    WeekStartHour = now.Hour,
                     NotifyWeekStarting = false,
                     NotifyWeekEnding = false
                 };

@@ -5,6 +5,7 @@ using Owin;
 using Points.Api.Resources;
 using Points.Api.Resources.DependencyResolution;
 using Points.Scheduler;
+using Points.Scheduler.Processors;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace Points.Api.Resources
