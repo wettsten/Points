@@ -10,7 +10,7 @@ namespace Points.Scheduler.Factories
 
         public JobFactory(IList<IJob> iJobs)
         {
-            _iJobs = iJobs.ToDictionary(i => i.GetType().ToString(), j => j);
+            _iJobs = iJobs.ToDictionary(i => i.GetType().Name, j => j);
         }
 
         public IJob GetJobProcessor(string type)

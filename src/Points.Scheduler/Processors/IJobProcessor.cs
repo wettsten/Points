@@ -6,6 +6,7 @@ namespace Points.Scheduler.Processors
     public interface IJobProcessor
     {
         void ProcessJobs();
-        void ScheduleJob<T>(string userId) where T : IJob;
+        void ScheduleStartJob(string userId);
+        void ScheduleEndJob(string userId);
     }
 }

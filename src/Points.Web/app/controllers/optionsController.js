@@ -169,7 +169,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
             $scope.convertToUtc();
             usersService.editUser($scope.user).then(
                 function(response) {
-                    $scope.originalUser = angular.copy($scope.user);
+                    $scope.loadData();
                     $scope.addAlert('success', 'Options successfully updated');
                 },
                 function(err) {

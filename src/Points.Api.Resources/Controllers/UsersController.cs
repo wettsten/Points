@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Results;
 using Points.Common.Processors;
 using Points.DataAccess;
+using Points.Scheduler.Jobs;
+using Points.Scheduler.Processors;
 using RavenUser = Points.Data.Raven.User;
 using ViewUser = Points.Data.View.User;
 
@@ -13,10 +16,12 @@ namespace Points.Api.Resources.Controllers
     public class UsersController : ResourceController<RavenUser,ViewUser>
     {
         private readonly IDataReader _dataReader;
+        private readonly IJobProcessor _jobProcessor;
 
-        public UsersController(IRequestProcessor requestProcessor, IDataReader dataReader) : base(requestProcessor)
+        public UsersController(IRequestProcessor requestProcessor, IDataReader dataReader, IJobProcessor jobProcessor) : base(requestProcessor)
         {
             _dataReader = dataReader;
+            _jobProcessor = jobProcessor;
         }
 
         [Route("")]
@@ -26,11 +31,11 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("Name is required");
             }
-            var obj = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
-            if (obj == null)
+            var usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
+            if (usr == null)
             {
                 var now = DateTime.UtcNow.AddDays(1).AddHours(1);
-                var usr = new RavenUser
+                usr = new RavenUser
                 {
                     Name = name,
                     Email = string.Empty,
@@ -40,9 +45,11 @@ namespace Points.Api.Resources.Controllers
                     NotifyWeekEnding = false
                 };
                 Add(usr);
+                usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
+                _jobProcessor.ScheduleStartJob(usr.Id);
                 return Ok(usr);
             }
-            return Ok(obj);
+            return Ok(usr);
         }
 
         [Route("")]
@@ -50,7 +57,12 @@ namespace Points.Api.Resources.Controllers
         //[HttpPatch]
         public IHttpActionResult EditUser(RavenUser user)
         {
-            return Edit(user);
+            var result = Edit(user);
+            if (result is OkResult)
+            {
+                _jobProcessor.ScheduleStartJob(user.Id);
+            }
+            return result;
         }
     }
 }

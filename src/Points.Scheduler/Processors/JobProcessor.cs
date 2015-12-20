@@ -45,12 +45,12 @@ namespace Points.Scheduler.Processors
             }
         }
 
-        public void ScheduleJob<T>(string userId) where T : IJob
+        public void ScheduleStartJob(string userId)
         {
             var user = _dataReader.Get<User>(userId);
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => i.Processor.Equals(typeof(StartWeekJob).ToString(), StringComparison.InvariantCultureIgnoreCase))
+                .Where(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault(i => !i.IsDeleted);
             if (startJob == null)
             {
@@ -58,7 +58,7 @@ namespace Points.Scheduler.Processors
                 {
                     Id = string.Empty,
                     Name = Guid.NewGuid().ToString("N"),
-                    Processor = typeof (T).ToString(),
+                    Processor = typeof (StartWeekJob).Name,
                     UserId = user.Id,
                     Trigger = FindNextOccurrence(DateTime.UtcNow, user.WeekStartDay, user.WeekStartHour)
                 };
@@ -68,7 +68,7 @@ namespace Points.Scheduler.Processors
             {
                 var endJob = _dataReader.GetAll<Job>()
                     .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
-                    .Where(i => i.Processor.Equals(typeof(EndWeekJob).ToString(), StringComparison.InvariantCultureIgnoreCase))
+                    .Where(i => i.Processor.Equals(typeof(EndWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
                     .FirstOrDefault(i => !i.IsDeleted);
                 if (endJob == null)
                 {
@@ -82,6 +82,12 @@ namespace Points.Scheduler.Processors
                 }
             }
         }
+
+        public void ScheduleEndJob(string userId)
+        {
+            
+        }
+
         private DateTime FindNextOccurrence(DateTime start, DayOfWeek day, int hour)
         {
             int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
