@@ -46,9 +46,9 @@
     <Compile Include="IJob.cs" />
     <Compile Include="Jobs\EndWeekJob.cs" />
     <Compile Include="Jobs\StartWeekJob.cs" />
-    <Compile Include="Processors\IJobProcessor.cs" />
+    <Compile Include="Processors\IJobManager.cs" />
     <Compile Include="Processors\IScheduler.cs" />
-    <Compile Include="Processors\JobProcessor.cs" />
+    <Compile Include="Processors\JobManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Processors\Scheduler.cs" />
   </ItemGroup>

@@ -7,42 +7,17 @@ using Points.Scheduler.Jobs;
 
 namespace Points.Scheduler.Processors
 {
-    public class JobProcessor : IJobProcessor
+    public class JobManager : IJobManager
     {
         private readonly IDataReader _dataReader;
         private readonly IDataWriter _dataWriter;
         private readonly IJobFactory _jobFactory;
 
-        public JobProcessor(IDataReader dataReader, IDataWriter dataWriter, IJobFactory jobFactory)
+        public JobManager(IDataReader dataReader, IDataWriter dataWriter, IJobFactory jobFactory)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _jobFactory = jobFactory;
-        }
-
-        public void ProcessJobs()
-        {
-            var jobQ = _dataReader
-                .GetAll<Job>()
-                .Where(i => !i.IsDeleted)
-                .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
-                .OrderBy(i => i.Trigger);
-            foreach (var job in jobQ)
-            {
-                var iJob = _jobFactory.GetJobProcessor(job.Processor);
-                for (int i = 0; i < 2; i++)
-                {
-                    try
-                    {
-                        iJob.Process(job);
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        // maybe update job to show an error?
-                    }
-                }
-            }
         }
 
         public void ScheduleStartJob(string userId)

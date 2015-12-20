@@ -1,17 +1,25 @@
 ﻿
 using System;
+using System.Linq;
 using System.Threading;
+using Points.Data.Raven;
+using Points.DataAccess;
+using Points.Scheduler.Factories;
 
 namespace Points.Scheduler.Processors
 {
     public class Scheduler : IScheduler
     {
-        private readonly IJobProcessor _jobProcessor;
+        private readonly IDataReader _dataReader;
+        private readonly IDataWriter _dataWriter;
+        private readonly IJobFactory _jobFactory;
         private readonly Timer _hourTimer;
 
-        public Scheduler(IJobProcessor jobProcessor)
+        public Scheduler(IDataReader dataReader, IJobFactory jobFactory, IDataWriter dataWriter)
         {
-            _jobProcessor = jobProcessor;
+            _dataReader = dataReader;
+            _jobFactory = jobFactory;
+            _dataWriter = dataWriter;
             _hourTimer = new Timer(HourTick);
         }
 
@@ -24,7 +32,32 @@ namespace Points.Scheduler.Processors
 
         private void HourTick(object t)
         {
-            _jobProcessor.ProcessJobs();
+            var jobQ = _dataReader
+                .GetAll<Job>()
+                .Where(i => !i.IsDeleted)
+                .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
+                .OrderBy(i => i.Trigger);
+            foreach (var job in jobQ)
+            {
+                var iJob = _jobFactory.GetJobProcessor(job.Processor);
+                for (int i = 0; i < 2; i++)
+                {
+                    try
+                    {
+                        iJob.Process(job);
+                        job.IsDeleted = true;
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        // maybe update job to show an error?
+                    }
+                }
+                if (job.IsDeleted)
+                {
+                    _dataWriter.Edit(job);
+                }
+            }
         }
     }
 }

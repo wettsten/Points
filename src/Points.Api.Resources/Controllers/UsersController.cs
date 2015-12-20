@@ -16,9 +16,9 @@ namespace Points.Api.Resources.Controllers
     public class UsersController : ResourceController<RavenUser,ViewUser>
     {
         private readonly IDataReader _dataReader;
-        private readonly IJobProcessor _jobProcessor;
+        private readonly IJobManager _jobProcessor;
 
-        public UsersController(IRequestProcessor requestProcessor, IDataReader dataReader, IJobProcessor jobProcessor) : base(requestProcessor)
+        public UsersController(IRequestProcessor requestProcessor, IDataReader dataReader, IJobManager jobProcessor) : base(requestProcessor)
         {
             _dataReader = dataReader;
             _jobProcessor = jobProcessor;
