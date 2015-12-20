@@ -85,7 +85,19 @@ namespace Points.Scheduler.Processors
 
         public void ScheduleEndJob(string userId)
         {
-            
+            var startJob = _dataReader.GetAll<Job>()
+                .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
+                .Where(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
+                .FirstOrDefault(i => !i.IsDeleted);
+            var endJob = new Job
+            {
+                Id = string.Empty,
+                Name = Guid.NewGuid().ToString("N"),
+                Processor = typeof(EndWeekJob).Name,
+                UserId = userId,
+                Trigger = startJob.Trigger.AddDays(7)
+            };
+            _dataWriter.Add(endJob);
         }
 
         private DateTime FindNextOccurrence(DateTime start, DayOfWeek day, int hour)
