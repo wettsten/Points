@@ -68,6 +68,7 @@
     <Compile Include="Raven\ActiveTask.cs" />
     <Compile Include="Raven\Task.cs" />
     <Compile Include="View\ArchivedTask.cs" />
+    <Compile Include="View\Job.cs" />
     <Compile Include="View\User.cs" />
     <Compile Include="Raven\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

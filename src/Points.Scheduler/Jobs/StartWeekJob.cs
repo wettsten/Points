@@ -30,10 +30,10 @@ namespace Points.Scheduler.Jobs
             {
                 var activeTask = new ActiveTask
                 {
-                    Id = string.Empty,
                     Name = _dataReader.Get<Task>(task.TaskId)?.Name
                 };
                 activeTask.Copy(task);
+                activeTask.Id = string.Empty;
                 _dataWriter.Add(activeTask);
             }
             _jobManager.ScheduleEndJob(context.UserId);

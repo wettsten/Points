@@ -1,0 +1,13 @@
+﻿<div ng-style="{position: 'fixed', top: {{screen.top}} + 'px', left: {{screen.left}} + 'px', width: {{screen.width}} + 'px'}" ng-hide="status.time === ''">
+    <uib-accordion>
+        <uib-accordion-group is-open="status.isOpen" panel-class="{{status.color}}" ng-if="render">
+            <uib-accordion-heading>
+                {{status.title}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.isOpen, 'glyphicon-chevron-down': !status.isOpen}"></i>
+            </uib-accordion-heading>
+            <div class="row" style="padding:10px">
+                <p>Week ends in:</p>
+                <p>{{status.diff}}</p>
+            </div>
+        </uib-accordion-group>        
+    </uib-accordion>
+</div>

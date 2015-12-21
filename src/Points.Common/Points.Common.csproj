@@ -53,6 +53,7 @@
     <Compile Include="DependencyManagement\DependencyRegistry.cs" />
     <Compile Include="Factories\IObjectValidatorFactory.cs" />
     <Compile Include="Factories\ObjectValidatorFactory.cs" />
+    <Compile Include="Mappers\JobMapper.cs" />
     <Compile Include="Mappers\ArchivedTaskMapper.cs" />
     <Compile Include="Mappers\UserMapper.cs" />
     <Compile Include="Mappers\ObjectMapper.cs" />

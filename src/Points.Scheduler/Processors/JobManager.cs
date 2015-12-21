@@ -24,6 +24,7 @@ namespace Points.Scheduler.Processors
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
+                .Where(i => i.Trigger > DateTime.UtcNow)
                 .FirstOrDefault(i => !i.IsDeleted);
             if (startJob == null)
             {

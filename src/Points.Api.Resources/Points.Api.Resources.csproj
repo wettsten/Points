@@ -148,6 +148,7 @@
     <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ArchivedTasksController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\PlanningTasksController.cs" />
     <Compile Include="Controllers\ActiveTasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />

@@ -25,6 +25,7 @@ namespace Points.Scheduler.Processors
 
         public void Start()
         {
+            HourTick(null);
             var now = DateTime.UtcNow.AddHours(1);
             var ts = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0) - DateTime.UtcNow;
             _hourTimer.Change(ts, TimeSpan.FromHours(1));

@@ -50,6 +50,7 @@ namespace Points.Api.Resources.DependencyResolution
             For<IObjectMapper<Data.Raven.ActiveTask, Data.View.ActiveTask>>().Use<ActiveTaskMapper>();
             For<IObjectMapper<Data.Raven.ArchivedTask, Data.View.ArchivedTask>>().Use<ArchivedTaskMapper>();
             For<IObjectMapper<Data.Raven.User, Data.View.User>>().Use<UserMapper>();
+            For<IObjectMapper<Data.Raven.Job, Data.View.Job>>().Use<JobMapper>();
             ForSingletonOf<IScheduler>().Use<Scheduler.Processors.Scheduler>();
         }
     }

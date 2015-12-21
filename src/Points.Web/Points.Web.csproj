@@ -79,9 +79,12 @@
     <Content Include="app\controllers\loginController.js" />
     <Content Include="app\controllers\catsController.js" />
     <Content Include="app\controllers\signupController.js" />
+    <Content Include="app\directives\activeStatus.js" />
+    <Content Include="app\directives\planningStatus.js" />
     <Content Include="app\factories\filterFactory.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\jobsService.js" />
     <Content Include="app\services\planningTasksService.js" />
     <Content Include="app\services\usersService.js" />
     <Content Include="app\services\tasksService.js" />
@@ -98,6 +101,8 @@
     <Content Include="app\views\directives\editTask.html" />
     <Content Include="app\views\active.html" />
     <Content Include="app\views\directives\planningCat.html" />
+    <Content Include="app\views\directives\activeStatus.html" />
+    <Content Include="app\views\directives\planningStatus.html" />
     <Content Include="app\views\partials\confirmDelete.html" />
     <Content Include="app\views\planning.html" />
     <Content Include="app\views\options.html" />
