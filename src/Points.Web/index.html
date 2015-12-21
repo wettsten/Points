@@ -51,8 +51,8 @@
 
     <hr/>
 
-    <div active-status ng-if="authentication.isAuth"></div>
-    <div planning-status ng-if="authentication.isAuth"></div>
+    <div active-status ng-show="authentication.isAuth"></div>
+    <div planning-status ng-show="authentication.isAuth"></div>
 
     <!-- 3rd party libraries -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
