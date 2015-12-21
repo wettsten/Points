@@ -11,13 +11,11 @@ namespace Points.Scheduler.Processors
     {
         private readonly IDataReader _dataReader;
         private readonly IDataWriter _dataWriter;
-        private readonly IJobFactory _jobFactory;
 
-        public JobManager(IDataReader dataReader, IDataWriter dataWriter, IJobFactory jobFactory)
+        public JobManager(IDataReader dataReader, IDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
-            _jobFactory = jobFactory;
         }
 
         public void ScheduleStartJob(string userId)
