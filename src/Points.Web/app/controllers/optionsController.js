@@ -180,7 +180,9 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
                 $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
                 $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
                 $scope.originalUser = angular.copy($scope.user);
-            });
+            }, function(error) {
+                $scope.addAlert('warning', 'Error loading data');
+        });
     };
 
     $scope.convertToLocal = function () {

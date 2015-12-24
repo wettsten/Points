@@ -30,6 +30,8 @@ app.controller('planningController', ['$scope', 'catsService', 'planningTasksSer
                     $scope.lookupCategory($scope.tasks[i]);
                 }
                 $scope.filterCats();
+            }, function (error) {
+                $scope.addAlert('warning', 'Error loading data');
             });
     };
 

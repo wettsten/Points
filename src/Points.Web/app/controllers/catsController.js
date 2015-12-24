@@ -15,6 +15,8 @@ app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$ti
         $q.all([$scope.loadCats]).then(
             function (data) {
                 $scope.cats = data[0];
+            }, function (error) {
+                $scope.addAlert('warning', 'Error loading data');
         });
     };
 

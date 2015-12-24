@@ -25,6 +25,8 @@ app.controller('tasksController', [
                 for (var i = 0; i < $scope.tasks.length; i++) {
                     $scope.lookupCategory($scope.tasks[i]);
                 }
+            }, function (error) {
+                $scope.addAlert('warning', 'Error loading data');
         });
     };
 
