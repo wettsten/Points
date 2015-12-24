@@ -17,16 +17,16 @@
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
-            Notification on week start (8 hours before start):
-            <a href="#" editable-checkbox="user.notifyWeekStarting" e-title="Notify week starting?">
-                {{ user.notifyWeekStarting && "yes" || "no" }}
+            Notification on week start:
+            <a href="#" editable-select="user.weekStartNotify" e-ng-options="option.name for option in hoursPrior">
+                {{ user.weekStartNotify.name }}
             </a>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
-            Notification on week end (8 hours before end):
-            <a href="#" editable-checkbox="user.notifyWeekEnding" e-title="Notify week ending?">
-                {{ user.notifyWeekEnding && "yes" || "no" }}
+            Notification on week end:
+            <a href="#" editable-select="user.weekEndNotify" e-ng-options="option.name for option in hoursPrior">
+                {{ user.weekEndNotify.name }}
             </a>
         </div>
         <div class="row">&nbsp;</div>

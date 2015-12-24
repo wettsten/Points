@@ -41,8 +41,8 @@ namespace Points.Api.Resources.Controllers
                     Email = string.Empty,
                     WeekStartDay = now.DayOfWeek,
                     WeekStartHour = now.Hour,
-                    NotifyWeekStarting = false,
-                    NotifyWeekEnding = false
+                    NotifyWeekStarting = 0,
+                    NotifyWeekEnding = 0
                 };
                 Add(usr);
                 usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));

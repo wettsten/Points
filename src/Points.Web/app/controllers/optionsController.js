@@ -111,6 +111,60 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
             hour: 23
         }
     ];
+    $scope.hoursPrior = [
+        {
+            name: 'None',
+            value: 0
+        },
+        {
+            name: '1 hour',
+            value: 1
+        },
+        {
+            name: '2 hours',
+            value: 2
+        },
+        {
+            name: '3 hours',
+            value: 3
+        },
+        {
+            name: '4 hours',
+            value: 4
+        },
+        {
+            name: '5 hours',
+            value: 5
+        },
+        {
+            name: '6 hours',
+            value: 6
+        },
+        {
+            name: '7 hours',
+            value: 7
+        },
+        {
+            name: '8 hours',
+            value: 8
+        },
+        {
+            name: '9 hours',
+            value: 9
+        },
+        {
+            name: '10 hours',
+            value: 10
+        },
+        {
+            name: '11 hours',
+            value: 11
+        },
+        {
+            name: '12 hours',
+            value: 12
+        },
+    ];
 
     $scope.loadUser = usersService.getUserByName(authService.authentication.userName).then(
             function (response) {
@@ -123,6 +177,8 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
                 $scope.user = data[0];
                 $scope.convertToLocal();
                 $scope.user.startHour = $scope.hours[$scope.user.offsetHour];
+                $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
+                $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
                 $scope.originalUser = angular.copy($scope.user);
             });
     };
@@ -161,6 +217,9 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
 
     $scope.cancelChanges = function() {
         $scope.user = angular.copy($scope.originalUser);
+        $scope.user.startHour = $scope.hours[$scope.user.offsetHour];
+        $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
+        $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
     };
 
     $scope.saveChanges = function () {
@@ -179,8 +238,8 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
     };
 
     $scope.validateEmail = function() {
-        if (($scope.user.notifyWeekStarting || $scope.user.notifyWeekEnding) && !$scope.user.email) {
-            $scope.addAlert('danger', 'Email is required if notifications are desired');
+        if (($scope.user.weekStartNotify.value > 0 || $scope.user.weekEndNotify.value > 0) && !$scope.user.email) {
+            $scope.addAlert('danger', 'Email is required for notifications');
             return false;
         }
         return true;

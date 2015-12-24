@@ -10,8 +10,8 @@ namespace Points.Data.Raven
         [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek WeekStartDay { get; set; }
         public int WeekStartHour { get; set; }
-        public bool NotifyWeekStarting { get; set; }
-        public bool NotifyWeekEnding { get; set; }
+        public int NotifyWeekStarting { get; set; }
+        public int NotifyWeekEnding { get; set; }
 
         public override void Copy(RavenObject obj)
         {
