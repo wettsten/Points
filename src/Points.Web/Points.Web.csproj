@@ -85,6 +85,7 @@
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\jobsService.js" />
+    <Content Include="app\services\activeTasksService.js" />
     <Content Include="app\services\planningTasksService.js" />
     <Content Include="app\services\usersService.js" />
     <Content Include="app\services\tasksService.js" />
