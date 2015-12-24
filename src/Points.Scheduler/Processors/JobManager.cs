@@ -24,8 +24,7 @@ namespace Points.Scheduler.Processors
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => i.Trigger > DateTime.UtcNow)
-                .FirstOrDefault(i => !i.IsDeleted);
+                .FirstOrDefault(i => i.Trigger > DateTime.UtcNow);
             if (startJob == null)
             {
                 startJob = new Job
@@ -42,8 +41,7 @@ namespace Points.Scheduler.Processors
             {
                 var endJob = _dataReader.GetAll<Job>()
                     .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
-                    .Where(i => i.Processor.Equals(typeof(EndWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
-                    .FirstOrDefault(i => !i.IsDeleted);
+                    .FirstOrDefault(i => i.Processor.Equals(typeof(EndWeekJob).Name, StringComparison.InvariantCultureIgnoreCase));
                 if (endJob == null)
                 {
                     startJob.Trigger = FindNextOccurrence(DateTime.UtcNow, user.WeekStartDay, user.WeekStartHour);
@@ -61,8 +59,7 @@ namespace Points.Scheduler.Processors
         {
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
-                .FirstOrDefault(i => !i.IsDeleted);
+                .FirstOrDefault(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase));
             var endJob = new Job
             {
                 Id = string.Empty,

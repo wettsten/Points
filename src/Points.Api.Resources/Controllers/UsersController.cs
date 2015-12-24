@@ -31,7 +31,7 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("Name is required");
             }
-            var usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
+            var usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
             if (usr == null)
             {
                 var now = DateTime.UtcNow.AddDays(1).AddHours(1);
@@ -45,7 +45,7 @@ namespace Points.Api.Resources.Controllers
                     NotifyWeekEnding = false
                 };
                 Add(usr);
-                usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase) && !i.IsDeleted);
+                usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
                 _jobProcessor.ScheduleStartJob(usr.Id);
                 return Ok(usr);
             }

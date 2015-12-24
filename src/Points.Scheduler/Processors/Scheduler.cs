@@ -35,7 +35,6 @@ namespace Points.Scheduler.Processors
         {
             var jobQ = _dataReader
                 .GetAll<Job>()
-                .Where(i => !i.IsDeleted)
                 .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
                 .OrderBy(i => i.Trigger);
             foreach (var job in jobQ)
@@ -46,17 +45,13 @@ namespace Points.Scheduler.Processors
                     try
                     {
                         iJob.Process(job);
-                        job.IsDeleted = true;
+                        _dataWriter.Delete<Job>(job.Id);
                         break;
                     }
                     catch (Exception ex)
                     {
                         // maybe update job to show an error?
                     }
-                }
-                if (job.IsDeleted)
-                {
-                    _dataWriter.Edit(job);
                 }
             }
         }

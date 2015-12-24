@@ -53,7 +53,6 @@ namespace Points.Common.Processors
             var objs = _dataReader
                 .GetAll<TIn>()
                 .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => !i.IsDeleted)
                 .ToList();
             return objs.Select(i => mapper.Map(i)).ToList();
         }

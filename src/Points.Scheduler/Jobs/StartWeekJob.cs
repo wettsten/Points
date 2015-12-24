@@ -24,8 +24,7 @@ namespace Points.Scheduler.Jobs
         {
             var tasks = _dataReader
                 .GetAll<PlanningTask>()
-                .Where(i => i.UserId.Equals(context.UserId, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => !i.IsDeleted);
+                .Where(i => i.UserId.Equals(context.UserId, StringComparison.InvariantCultureIgnoreCase));
             foreach (var task in tasks)
             {
                 var activeTask = new ActiveTask

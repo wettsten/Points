@@ -39,7 +39,7 @@ namespace Points.Common.Validators
         {
             ValidateDelete<Task>(data);
             var obj = data as Category;
-            var tasks = DataReader.GetAll<PlanningTask>().Where(i => !i.IsDeleted && i.TaskId.Equals(obj.Id, StringComparison.InvariantCultureIgnoreCase));
+            var tasks = DataReader.GetAll<PlanningTask>().Where(i => i.TaskId.Equals(obj.Id, StringComparison.InvariantCultureIgnoreCase));
             if (tasks.Any())
             {
                 throw new InvalidDataException("Task is currently in use");

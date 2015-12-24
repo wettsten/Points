@@ -22,7 +22,6 @@ namespace Points.Common.Validators
             var objs = DataReader.GetAll<T>();
             if (objs
                 .Where(i => i.Name.Equals(obj.Name, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => !i.IsDeleted)
                 .Any(i => i.UserId.Equals(obj.UserId, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new InvalidDataException("This name is already in use");
@@ -44,7 +43,6 @@ namespace Points.Common.Validators
             if (objs
                 .Where(i => i.Name.Equals(obj.Name, StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => !i.Id.Equals(obj.Id))
-                .Where(i => !i.IsDeleted)
                 .Any(i => i.UserId.Equals(obj.UserId, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new InvalidDataException("This name is already in use");
@@ -63,7 +61,7 @@ namespace Points.Common.Validators
         {
             var obj = data as RavenObject;
             var res = DataReader.Get<T>(obj.Id);
-            if (res == null || res.IsDeleted)
+            if (res == null)
             {
                 throw new InvalidDataException("Item does not exist or has already been deleted");
             }

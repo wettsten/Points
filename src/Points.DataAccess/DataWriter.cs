@@ -36,20 +36,13 @@ namespace Points.DataAccess
             _session.SaveChanges();
         }
 
-        public void Delete<TD>(string id, bool hardDelete = false) where TD : RavenObject
+        public void Delete<TD>(string id) where TD : RavenObject
         {
             var existingObj = _session.Load<TD>(id);
             if (existingObj != null)
             {
                 // object exists
-                if (hardDelete)
-                {
-                    _session.Delete(id);
-                }
-                else
-                {
-                    existingObj.IsDeleted = true;
-                }
+                _session.Delete(id);
                 _session.SaveChanges();
             }
         }

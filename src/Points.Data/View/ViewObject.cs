@@ -7,14 +7,12 @@ namespace Points.Data.View
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public bool IsDeleted { get; set; }
         public string UserId { get; set; }
 
         public virtual void Copy(ViewObject obj)
         {
             Id = obj.Id;
             Name = obj.Name;
-            IsDeleted = obj.IsDeleted;
             UserId = obj.UserId;
         }
     }
