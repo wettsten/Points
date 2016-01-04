@@ -26,12 +26,11 @@ namespace Points.Scheduler.Jobs
                 .Where(i => i.UserId.Equals(context.UserId, StringComparison.InvariantCultureIgnoreCase));
             foreach (var task in tasks)
             {
-                var archiveTask = new ArchivedTask
-                {
-                    Id = string.Empty,
-                    Name = task.Name
-                };
+                var archiveTask = new ArchivedTask();
                 archiveTask.Copy(task);
+                archiveTask.Id = string.Empty;
+                archiveTask.Name = task.Name;
+                archiveTask.DateEnded = DateTime.UtcNow;
                 _dataWriter.Add(archiveTask);
             }
         }

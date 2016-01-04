@@ -1,10 +1,13 @@
 ﻿
+using System;
+
 namespace Points.Data.View
 {
     public class ActiveTask : PlanningTask
     {
         public int TimesCompleted { get; set; }
         public bool IsCompleted => TimesCompleted >= Frequency.Value;
+        public DateTime DateStarted { get; set; }
 
         public override void Copy(ViewObject obj)
         {
@@ -13,6 +16,7 @@ namespace Points.Data.View
             if (task != null)
             {
                 TimesCompleted = task.TimesCompleted;
+                DateStarted = task.DateStarted;
             }
         }
     }

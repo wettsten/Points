@@ -19,6 +19,7 @@ namespace Points.Common.Mappers
             var viewTask = new ViewActiveTask();
             viewTask.Copy(_taskMapper.Map(obj));
             viewTask.TimesCompleted = obj.TimesCompleted;
+            viewTask.DateStarted = obj.DateStarted;
             return viewTask;
         }
     }

@@ -29,12 +29,11 @@ namespace Points.Scheduler.Jobs
                 .Where(i => i.UserId.Equals(context.UserId, StringComparison.InvariantCultureIgnoreCase));
             foreach (var task in tasks)
             {
-                var activeTask = new ActiveTask
-                {
-                    Name = _dataReader.Get<Task>(task.TaskId)?.Name
-                };
+                var activeTask = new ActiveTask();
                 activeTask.Copy(task);
                 activeTask.Id = string.Empty;
+                activeTask.Name = _dataReader.Get<Task>(task.TaskId)?.Name;
+                activeTask.DateStarted = DateTime.UtcNow;
                 _dataWriter.Add(activeTask);
             }
             _jobManager.ScheduleEndJob(context.UserId);

@@ -1,9 +1,12 @@
-﻿namespace Points.Data.Raven
+﻿using System;
+
+namespace Points.Data.Raven
 {
     public class ActiveTask : PlanningTask
     {
         public int TimesCompleted { get; set; }
         public bool IsCompleted => TimesCompleted >= Frequency.Value;
+        public DateTime DateStarted { get; set; }
 
         public override void Copy(RavenObject obj)
         {
@@ -12,6 +15,7 @@
             if (task != null)
             {
                 TimesCompleted = task.TimesCompleted;
+                DateStarted = task.DateStarted;
             }
         }
     }
