@@ -18,6 +18,7 @@
 using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
 using Points.Scheduler;
 using Points.Scheduler.Processors;
 using StructureMap;

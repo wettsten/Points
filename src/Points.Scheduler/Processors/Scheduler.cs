@@ -4,18 +4,20 @@ using System.Linq;
 using System.Threading;
 using Points.Data.Raven;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
+using Points.DataAccess.Writers;
 using Points.Scheduler.Factories;
 
 namespace Points.Scheduler.Processors
 {
     public class Scheduler : IScheduler
     {
-        private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
+        private readonly ISingleSessionDataReader _dataReader;
+        private readonly ISingleSessionDataWriter _dataWriter;
         private readonly IJobFactory _jobFactory;
         private readonly Timer _hourTimer;
 
-        public Scheduler(IDataReader dataReader, IJobFactory jobFactory, IDataWriter dataWriter)
+        public Scheduler(ISingleSessionDataReader dataReader, IJobFactory jobFactory, ISingleSessionDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _jobFactory = jobFactory;

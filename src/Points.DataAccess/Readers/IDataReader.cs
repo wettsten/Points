@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Points.Data;
+﻿using System.Collections.Generic;
 using Points.Data.Raven;
 
-namespace Points.DataAccess
+namespace Points.DataAccess.Readers
 {
     public interface IDataReader
     {

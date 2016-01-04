@@ -7,6 +7,8 @@ using Points.Data;
 using Points.Data.Raven;
 using Points.Data.View;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
+using Points.DataAccess.Writers;
 using StructureMap;
 
 namespace Points.Common.Processors

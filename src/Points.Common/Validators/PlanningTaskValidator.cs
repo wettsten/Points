@@ -3,6 +3,7 @@ using System.IO;
 using Points.Data;
 using Points.Data.Raven;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
 
 namespace Points.Common.Validators
 {

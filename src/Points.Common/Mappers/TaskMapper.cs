@@ -1,6 +1,7 @@
 using Points.Data.Raven;
 using Points.Data.View;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
 using RavenCategory = Points.Data.Raven.Category;
 using ViewCategory = Points.Data.View.Category;
 using RavenTask = Points.Data.Raven.Task;

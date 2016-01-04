@@ -2,6 +2,7 @@ using Points.Data.EnumExtensions;
 using Points.Data.Raven;
 using Points.Data.View;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
 using RavenTask = Points.Data.Raven.Task;
 using ViewTask = Points.Data.View.Task;
 using RavenPlanningTask = Points.Data.Raven.PlanningTask;

@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using Points.Data;
-using Points.Data.Raven;
-using Raven.Abstractions.Exceptions;
+﻿using Points.Data.Raven;
 using Raven.Client;
-using Raven.Client.Document;
-using Raven.Client.Document.Async;
 
-namespace Points.DataAccess
+namespace Points.DataAccess.Writers
 {
     public class DataWriter : IDataWriter
     {

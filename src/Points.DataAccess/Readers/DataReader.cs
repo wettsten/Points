@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Points.Data;
 using Points.Data.Raven;
 using Raven.Client;
 
-namespace Points.DataAccess
+namespace Points.DataAccess.Readers
 {
     public class DataReader : IDataReader
     {

@@ -59,11 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataReader.cs" />
-    <Compile Include="DataWriter.cs" />
+    <Compile Include="Readers\ISingleSessionDataReader.cs" />
+    <Compile Include="Readers\SingleSessionDataReader.cs" />
+    <Compile Include="Readers\DataReader.cs" />
+    <Compile Include="Writers\ISingleSessionDataWriter.cs" />
+    <Compile Include="Writers\SingleSessionDataWriter.cs" />
+    <Compile Include="Writers\DataWriter.cs" />
     <Compile Include="DependencyManagement\DependencyRegistry.cs" />
-    <Compile Include="IDataReader.cs" />
-    <Compile Include="IDataWriter.cs" />
+    <Compile Include="Readers\IDataReader.cs" />
+    <Compile Include="Writers\IDataWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

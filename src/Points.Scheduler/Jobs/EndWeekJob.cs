@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Points.Data.Raven;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
+using Points.DataAccess.Writers;
 
 namespace Points.Scheduler.Jobs
 {
     public class EndWeekJob : IJob
     {
-        private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
+        private readonly ISingleSessionDataReader _dataReader;
+        private readonly ISingleSessionDataWriter _dataWriter;
 
-        public EndWeekJob(IDataReader dataReader, IDataWriter dataWriter)
+        public EndWeekJob(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;

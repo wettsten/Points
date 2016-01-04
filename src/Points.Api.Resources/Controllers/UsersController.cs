@@ -4,6 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Common.Processors;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
 using Points.Scheduler.Jobs;
 using Points.Scheduler.Processors;
 using RavenUser = Points.Data.Raven.User;

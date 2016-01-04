@@ -1,9 +1,6 @@
-﻿using System.Net;
-using Points.Data;
-using Points.Data.Raven;
-using Raven.Client;
+﻿using Points.Data.Raven;
 
-namespace Points.DataAccess
+namespace Points.DataAccess.Writers
 {
     public interface IDataWriter
     {

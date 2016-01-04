@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using Points.Data.Raven;
 using Points.DataAccess;
+using Points.DataAccess.Readers;
+using Points.DataAccess.Writers;
 using Points.Scheduler.Factories;
 using Points.Scheduler.Jobs;
 
@@ -9,10 +11,10 @@ namespace Points.Scheduler.Processors
 {
     public class JobManager : IJobManager
     {
-        private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
+        private readonly ISingleSessionDataReader _dataReader;
+        private readonly ISingleSessionDataWriter _dataWriter;
 
-        public JobManager(IDataReader dataReader, IDataWriter dataWriter)
+        public JobManager(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
