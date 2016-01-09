@@ -13,7 +13,7 @@ namespace Points.DataAccess.DependencyManagement
         {
             var docStore = new DocumentStore
             {
-                Url = "http://localhost:8080",
+                Url = "http://points-raven.elasticbeanstalk.com:8080",
                 DefaultDatabase = "Points"
             }.Initialize();
 
