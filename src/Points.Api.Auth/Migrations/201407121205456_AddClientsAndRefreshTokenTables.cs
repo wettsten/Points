@@ -6,7 +6,6 @@ namespace Points.Api.Auth.Migrations
     {
         public override void Up()
         {
-            return;
             CreateTable(
                 "dbo.Clients",
                 c => new
@@ -106,7 +105,6 @@ namespace Points.Api.Auth.Migrations
         
         public override void Down()
         {
-            return;
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
