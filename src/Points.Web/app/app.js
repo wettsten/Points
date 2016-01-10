@@ -52,10 +52,10 @@ app.config(function ($routeProvider) {
 
 });
 
-//var serviceBase = 'http://localhost:26264/';
-//var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
-var authServiceBase = 'http://points.wettsten.com/auth/';
-var resourceServiceBase = 'http://points.wettsten.com/resources/';
+var authServiceBase = 'http://points-auth.elasticbeanstalk.com/';
+var resourceServiceBase = 'http://points-resources.elasticbeanstalk.com/';
+//var authServiceBase = 'http://points.wettsten.com/auth/';
+//var resourceServiceBase = 'http://points.wettsten.com/resources/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: authServiceBase,
     apiResourceBaseUri: resourceServiceBase,
