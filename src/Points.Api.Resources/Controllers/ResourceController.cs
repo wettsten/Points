@@ -25,10 +25,6 @@ namespace Points.Api.Resources.Controllers
                 return BadRequest("User id is required");
             }
             var objs = _requestProcessor.GetListForUser<TIn,TOut>(userid);
-            if (!objs.Any())
-            {
-                return NotFound();
-            }
             return Ok(objs.OrderBy(i => i.Name));
         }
 
