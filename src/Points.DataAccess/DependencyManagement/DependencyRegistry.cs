@@ -11,11 +11,7 @@ namespace Points.DataAccess.DependencyManagement
         /// </summary>
         public DependencyRegistry()
         {
-            var docStore = new DocumentStore
-            {
-                Url = "http://points-raven.elasticbeanstalk.com:8080",
-                DefaultDatabase = "Points"
-            }.Initialize();
+            var docStore = new DocumentStore { ConnectionStringName = "PointsRaven" }.Initialize();
 
             Scan(
                 scan =>

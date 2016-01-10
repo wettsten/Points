@@ -52,8 +52,8 @@ app.config(function ($routeProvider) {
 
 });
 
-var authServiceBase = 'http://points.wettsten.com/auth/';
-var resourceServiceBase = 'http://points.wettsten.com/resources/';
+var authServiceBase = 'http://points-auth.elasticbeanstalk.com/';
+var resourceServiceBase = 'http://points-resources.elasticbeanstalk.com/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: authServiceBase,
     apiResourceBaseUri: resourceServiceBase,
