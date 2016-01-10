@@ -9,6 +9,7 @@ using Points.Scheduler.Jobs;
 using Points.Scheduler.Processors;
 using RavenUser = Points.Data.Raven.User;
 using ViewUser = Points.Data.View.User;
+using RavenJob = Points.Data.Raven.Job;
 
 namespace Points.Api.Resources.Controllers
 {
@@ -47,9 +48,10 @@ namespace Points.Api.Resources.Controllers
                 };
                 Add(usr);
                 usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-                _jobProcessor.ScheduleStartJob(usr.Id);
+                EnsureStartJobForUser(usr.Id);
                 return Ok(usr);
             }
+            EnsureStartJobForUser(usr.Id);
             return Ok(usr);
         }
 
@@ -64,6 +66,18 @@ namespace Points.Api.Resources.Controllers
                 _jobProcessor.ScheduleStartJob(user.Id);
             }
             return result;
+        }
+
+        private void EnsureStartJobForUser(string userId)
+        {
+            var job = _dataReader
+                .GetAll<RavenJob>()
+                .Where(i => i.Processor.Equals(typeof (StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
+                .FirstOrDefault(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase));
+            if (job == null)
+            {
+                _jobProcessor.ScheduleStartJob(userId);
+            }
         }
     }
 }

@@ -36,7 +36,10 @@ namespace Points.Scheduler.Jobs
                 activeTask.DateStarted = DateTime.UtcNow;
                 _dataWriter.Add(activeTask);
             }
-            _jobManager.ScheduleEndJob(context.UserId);
+            if (tasks.Any())
+            {
+                _jobManager.ScheduleEndJob(context.UserId);
+            }
             _jobManager.ScheduleStartJob(context.UserId);
         }
     }
