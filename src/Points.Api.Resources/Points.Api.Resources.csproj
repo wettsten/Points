@@ -132,7 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\ngauthenticationResourcesAPI.pubxml" />
+    <None Include="Properties\PublishProfiles\Package.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
