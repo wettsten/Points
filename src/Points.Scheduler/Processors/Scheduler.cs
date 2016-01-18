@@ -35,27 +35,35 @@ namespace Points.Scheduler.Processors
 
         private void HourTick(object t)
         {
-            var jobQ = _dataReader
+            try
+            {
+                var jobQ = _dataReader
                 .GetAll<Job>()
                 .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
                 .OrderBy(i => i.Trigger);
-            foreach (var job in jobQ)
-            {
-                var iJob = _jobFactory.GetJobProcessor(job.Processor);
-                for (int i = 0; i < 2; i++)
+                foreach (var job in jobQ)
                 {
-                    try
+                    var iJob = _jobFactory.GetJobProcessor(job.Processor);
+                    for (int i = 0; i < 2; i++)
                     {
-                        iJob.Process(job);
-                        _dataWriter.Delete<Job>(job.Id);
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        // maybe update job to show an error?
+                        try
+                        {
+                            iJob.Process(job);
+                            _dataWriter.Delete<Job>(job.Id);
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            // maybe update job to show an error?
+                        }
                     }
                 }
             }
+            catch (InvalidOperationException)
+            {
+                
+            }
+            
         }
     }
 }
