@@ -52,8 +52,8 @@ app.config(function ($routeProvider) {
 
 });
 
-var authServiceBase = 'http://points-auth.elasticbeanstalk.com/';
-var resourceServiceBase = 'http://points-resources.elasticbeanstalk.com/';
+var authServiceBase = 'http://points-api-auth.elasticbeanstalk.com/';
+var resourceServiceBase = 'http://points-api-resources.elasticbeanstalk.com/';
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: authServiceBase,
     apiResourceBaseUri: resourceServiceBase,
