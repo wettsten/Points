@@ -139,20 +139,6 @@
   <ItemGroup>
     <Content Include="content\css\bootstrap.min.css" />
     <Content Include="content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Icons\cancel.png" />
-    <Content Include="Icons\cancelActive.png" />
-    <Content Include="Icons\clear.png" />
-    <Content Include="Icons\clearActive.png" />
-    <Content Include="Icons\delete.png" />
-    <Content Include="Icons\deleteactive.png" />
-    <Content Include="Icons\edit.png" />
-    <Content Include="Icons\editactive.png" />
-    <Content Include="Icons\new.png" />
-    <Content Include="Icons\newActive.png" />
-    <Content Include="Icons\refresh.png" />
-    <Content Include="Icons\refreshActive.png" />
-    <Content Include="Icons\save.png" />
-    <Content Include="Icons\saveActive.png" />
     <Content Include="index.html" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\authComplete.js" />
