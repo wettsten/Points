@@ -23,7 +23,10 @@ app.controller('planningController', ['$scope', 'catsService', 'planningTasksSer
                 $scope.cats = data[0];
                 for (var i = 0; i < $scope.cats.length; i++) {
                     $scope.cats[i].tasks = [];
-                    $scope.cats[i].isOpen = true;
+                    $scope.cats[i].isOpen = false;
+                }
+                if ($scope.cats.length > 0) {
+                    $scope.cats[0].isOpen = true;
                 }
                 $scope.tasks = data[1];
                 for (var i = 0; i < $scope.tasks.length; i++) {

@@ -17,7 +17,7 @@
     </div>
 
     <div class="row">
-        <uib-accordion close-others="false">
+        <uib-accordion close-others="true">
             <uib-accordion-group ng-repeat="cat in filteredCats" is-open="cat.isOpen">
                 <uib-accordion-heading>
                     {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
