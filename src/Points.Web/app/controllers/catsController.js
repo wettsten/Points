@@ -1,32 +1,26 @@
 ﻿'use strict';
-app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$timeout', '$q', function ($scope, catsService, filterFactory, $timeout, $q) {
+app.controller('catsController', ['$scope', 'resourceService', 'filterFactory', '$timeout', function ($scope, resourceService, filterFactory, $timeout) {
 
     $scope.cats = [];
     $scope.alerts = [];
     $scope.catInEdit = {id: ''};
     $scope.catFilter = filterFactory.getCatFilter();
 
-    $scope.loadCats = catsService.getCats().then(
-        function (results) {
-            return results.data;
-    });
-
-    $scope.loadData = function () {
-        $q.all([$scope.loadCats]).then(
-            function (data) {
-                $scope.cats = data[0];
-                if ($scope.cats.length === 0) {
-                    $scope.addAlert('warning', 'No categories found');
-                }
-            });
-    };
-
     filterFactory.subscribe($scope, 'catFilter', function catFilterChanged() {
         $scope.catFilter = filterFactory.getCatFilter();
     });
 
-    $scope.$on('refreshCats', function() {
-        $scope.loadData();
+    var loadCats = function () {
+        $scope.cats = resourceService.get('categories');
+        $timeout(function () {
+            if ($scope.cats.length === 0) {
+                $scope.addAlert('warning', 'No categories found');
+            }
+        }, 1000);
+    };
+
+    resourceService.registerForUpdates('categories', function (data) {
+        $scope.cats = data;
     });
 
     $scope.addAlert = function (type, msg) {
@@ -45,5 +39,5 @@ app.controller('catsController', ['$scope', 'catsService', 'filterFactory', '$ti
         }
     };
 
-    $scope.loadData();
+    loadCats();
 }]);
