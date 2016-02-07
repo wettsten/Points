@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
+using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
 using Points.Data.EnumExtensions;
 using Points.Data.View;
@@ -20,6 +22,19 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult GetPlanningTasksForUser()
         {
             var tasks = GetForUser();
+            if (tasks.IsOk())
+            {
+                var content = tasks.GetObjects<ViewTask>();
+                var cats = content
+                    .GroupBy(i => i.Task.Category, task => task)
+                    .Select(i => new
+                    {
+                        Category = i.Key,
+                        Tasks = i.AsEnumerable()
+                    })
+                    .OrderBy(i => i.Category.Name);
+                return Ok(cats);
+            }
             return tasks;
         }
 
