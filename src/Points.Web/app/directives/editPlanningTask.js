@@ -10,7 +10,7 @@ app.directive('editPlanningTask', function () {
         replace: true,
         controller: 'editPlanningTaskController'
     };
-}).controller('editPlanningTaskController', ['$scope', 'resourceService', '$uibModal', '$q', function ($scope, resourceService, $uibModal, $q) {
+}).controller('editPlanningTaskController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
 
     $scope.editTask = {};
     $scope.enums = {};
