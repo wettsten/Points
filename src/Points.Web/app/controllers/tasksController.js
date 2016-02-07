@@ -10,7 +10,7 @@ app.controller('tasksController', ['$scope', 'resourceService', 'filterFactory',
         $scope.taskFilter = filterFactory.getTaskFilter();
     });
 
-    var loadTasks = function () {
+    $scope.loadTasks = function () {
         $scope.tasks = resourceService.get('tasks');
         $timeout(function() {
             if ($scope.tasks.length === 0) {
@@ -39,5 +39,5 @@ app.controller('tasksController', ['$scope', 'resourceService', 'filterFactory',
         }
     };
 
-    loadTasks();
+    $scope.loadTasks();
 }]);

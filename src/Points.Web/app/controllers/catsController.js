@@ -10,7 +10,7 @@ app.controller('catsController', ['$scope', 'resourceService', 'filterFactory', 
         $scope.catFilter = filterFactory.getCatFilter();
     });
 
-    var loadCats = function () {
+    $scope.loadCats = function () {
         $scope.cats = resourceService.get('categories');
         $timeout(function () {
             if ($scope.cats.length === 0) {
@@ -39,5 +39,5 @@ app.controller('catsController', ['$scope', 'resourceService', 'filterFactory', 
         }
     };
 
-    loadCats();
+    $scope.loadCats();
 }]);

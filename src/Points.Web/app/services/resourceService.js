@@ -7,6 +7,8 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
     var cats = [];
     var tasks = [];
     var planningtasks = [];
+    var availabletasks = [];
+    var enums = [];
     var activetasks = [];
 
     var callCallbacks = function(type,data) {
@@ -33,6 +35,14 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
                     objList = planningtasks;
                     planningtasks = results.data;
                     break;
+                case 'availabletasks':
+                    objList = availabletasks;
+                    availabletasks = results.data;
+                    break;
+                case 'enums':
+                    objList = enums;
+                    enums = results.data;
+                    break;
                 case 'activetasks':
                     objList = activetasks;
                     activetasks = results.data;
@@ -55,17 +65,31 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
     };
     
     service.get = function (type) {
+        var objList = [];
         switch (type) {
             case 'categories':
-                return cats;
+                objList = cats;
+                break;
             case 'tasks':
-                return tasks;
+                objList = tasks;
+                break;
             case 'planningtasks':
-                return planningtasks;
+                objList = planningtasks;
+                break;
+            case 'availabletasks':
+                objList = availabletasks;
+                break;
+            case 'enums':
+                objList = enums;
+                break;
             case 'activetasks':
-                return activetasks;
+                objList = activetasks;
+                break;
         }
-        return [];
+        if (objList.length === 0) {
+            retrieve(type);
+        }
+        return objList;
     };
 
     service.add = function (type,data) {
@@ -89,6 +113,8 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
     retrieve('categories');
     retrieve('tasks');
     retrieve('planningtasks');
+    retrieve('availabletasks');
+    retrieve('enums');
     retrieve('activetasks');
 
     return service;

@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-3">
         <p>Task</p>
-        <select class="form-control" ng-model="addTaskData.task" ng-options="option.name for option in filteredTasks" required></select>
+        <select class="form-control" ng-model="addTaskData.task" ng-options="option.name for option in addTaskData.cat.tasks" required></select>
     </div>
     <div class="col-md-2">
         <p>Duration</p>
@@ -28,7 +28,7 @@
     <div class="col-md-2">
         <p>&nbsp;</p>
         <div class="row">
-            <button type="button" class="btn btn-success" ng-disabled="!addTaskData.task" ng-click="addTask()" title="Save new">
+            <button type="button" class="btn btn-success" ng-disabled="!addTaskData.task.id || !addTaskData.cat.id" ng-click="addTask()" title="Save new">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </button>
             <button type="button" class="btn btn-default" ng-click="resetAddData()" title="Clear">
