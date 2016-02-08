@@ -10,7 +10,7 @@ app.directive('editCat', function () {
         replace: true,
         controller: 'editCatController'
     };
-}).controller('editCatController', ['$scope', 'catsService', '$uibModal', function ($scope, catsService, $uibModal) {
+}).controller('editCatController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
 
     $scope.editCat = {};
 
@@ -35,15 +35,15 @@ app.directive('editCat', function () {
     };
 
     $scope.saveEdit = function () {
-        catsService.editCat($scope.editCat).then(
+        resourceService.edit('categories',$scope.editCat).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.$emit('refreshCats');
                 $scope.addAlert({ type: 'success', msg: 'Category successfully updated' });
             },
-             function (err) {
-                 $scope.addAlert({ type: 'danger', msg: err.data.message });
-             });
+            function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
+            }
+        );
     };
 
     $scope.delete = function () {
@@ -64,14 +64,14 @@ app.directive('editCat', function () {
 
         modalInstance.result.then(function (result) {
             if (result !== 'cancel') {
-                catsService.deleteCat($scope.cat.id).then(
+                resourceService.delete('categories',$scope.cat.id).then(
                     function (response) {
-                        $scope.$emit('refreshCats');
                         $scope.addAlert({ type: 'success', msg: 'Category successfully deleted' });
                     },
                     function (err) {
                         $scope.addAlert({ type: 'danger', msg: err.data.message });
-                    });
+                    }
+                );
             }
         });
     };

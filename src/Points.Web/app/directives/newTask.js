@@ -8,10 +8,10 @@ app.directive('newTask', function () {
         replace: true,
         controller: 'newTaskController'
     };
-}).controller('newTaskController', ['$scope', 'tasksService', 'catsService', '$timeout', '$q', function ($scope, tasksService, catsService, $timeout, $q) {
+}).controller('newTaskController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
 
-    $scope.addTaskData = {};
     $scope.cats = [];
+    $scope.addTaskData = {};
 
     $scope.clearAddData = function () {
         $scope.addTaskData = {
@@ -19,32 +19,30 @@ app.directive('newTask', function () {
         };
     };
 
-    $scope.loadCats = catsService.getCats().then(
-        function (results) {
-            return results.data;
-        });
-
-    $scope.loadData = function () {
-        $q.all([$scope.loadCats]).then(
-            function (data) {
-                $scope.cats = data[0];
-                $scope.addTaskData.category = $scope.cats[0];
-            });
+    var loadCats = function() {
+        $scope.cats = resourceService.get('categories');
     };
+
+    resourceService.registerForUpdates('categories', function (data) {
+        $scope.cats = data;
+    });
 
     $scope.addTask = function () {
         $scope.addTaskData.categoryId = $scope.addTaskData.category.id;
-        tasksService.addTask($scope.addTaskData).then(function (response) {
-            $scope.clearAddData();
-            $timeout(function () {
-                $scope.$emit('refreshTasks');
-                $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
-            }, 100);
+        resourceService.add('tasks', $scope.addTaskData).then(
+            function (response) {
+                $scope.clearAddData();
+                $timeout(
+                    function () {
+                        $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
+                    }, 100
+                );
             },
-         function (err) {
-             $scope.addAlert({ type: 'danger', msg: err.data.message });
-         });
+            function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
+            }
+        );
     };
 
-    $scope.loadData();
+    loadCats();
 }]);

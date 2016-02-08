@@ -8,7 +8,7 @@ app.directive('newCat', function() {
         replace: true,
         controller: 'newCatController'
     };
-}).controller('newCatController', ['$scope', 'catsService', '$timeout', function ($scope, catsService, $timeout) {
+}).controller('newCatController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
 
     $scope.addCatData = {};
 
@@ -17,15 +17,18 @@ app.directive('newCat', function() {
     };
 
     $scope.addCat = function () {
-        catsService.addCat($scope.addCatData).then(function (response) {
-            $scope.clearAddData();
-            $timeout(function () {
-                $scope.$emit('refreshCats');
-                $scope.addAlert({ type: 'success', msg: 'Category successfully added' });
-            }, 100);
+        resourceService.add('categories', $scope.addCatData).then(
+            function (response) {
+                $scope.clearAddData();
+                $timeout(
+                    function () {
+                        $scope.addAlert({ type: 'success', msg: 'Category successfully added' });
+                    }, 100
+                );
             },
-         function (err) {
-             $scope.addAlert({ type: 'danger', msg: err.statusText });
-         });
+            function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.statusText });
+            }
+        );
     };
 }]);

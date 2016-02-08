@@ -3,7 +3,6 @@ app.directive('editTask', function () {
     return {
         scope: {
             task: '=theTask',
-            cats: '=',
             taskInEdit: '=',
             addAlert: '&'
         },
@@ -11,8 +10,9 @@ app.directive('editTask', function () {
         replace: true,
         controller: 'editTaskController'
     };
-}).controller('editTaskController', ['$scope', 'tasksService', '$uibModal', function ($scope, tasksService, $uibModal) {
+}).controller('editTaskController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
 
+    $scope.cats = [];
     $scope.editTask = {};
 
     $scope.isInEditMode = function () {
@@ -30,6 +30,14 @@ app.directive('editTask', function () {
         $scope.taskInEdit.id = '';
     };
 
+    var loadCats = function () {
+        $scope.cats = resourceService.get('categories');
+    };
+
+    resourceService.registerForUpdates('categories', function (data) {
+        $scope.cats = data;
+    });
+
     $scope.startEdit = function () {
         $scope.editTask = angular.copy($scope.task);
         $scope.taskInEdit.id = $scope.task.id;
@@ -37,15 +45,15 @@ app.directive('editTask', function () {
 
     $scope.saveEdit = function () {
         $scope.editTask.categoryId = $scope.editTask.category.id;
-        tasksService.editTask($scope.editTask).then(
+        resourceService.edit('tasks',$scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.$emit('refreshTasks');
                 $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
-        },
-         function (err) {
-             $scope.addAlert({ type: 'danger', msg: err.data.message });
-         });
+            },
+            function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
+            }
+        );
     };
 
     $scope.delete = function () {
@@ -66,15 +74,17 @@ app.directive('editTask', function () {
 
         modalInstance.result.then(function (result) {
             if (result !== 'cancel') {
-                tasksService.deleteTask($scope.task.id).then(
+                resourceService.delete('tasks',$scope.task.id).then(
                     function (response) {
-                        $scope.$emit('refreshTasks');
                         $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
                     },
                     function (err) {
                         $scope.addAlert({ type: 'danger', msg: err.data.message });
-                    });
+                    }
+                );
             }
         });
     };
+
+    loadCats();
 }]);

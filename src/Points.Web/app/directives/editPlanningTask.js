@@ -10,22 +10,18 @@ app.directive('editPlanningTask', function () {
         replace: true,
         controller: 'editPlanningTaskController'
     };
-}).controller('editPlanningTaskController', ['$scope', 'planningTasksService', '$uibModal', '$q', function ($scope, planningTasksService, $uibModal, $q) {
+}).controller('editPlanningTaskController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
 
     $scope.editTask = {};
     $scope.enums = {};
 
-    $scope.getEnums = planningTasksService.getEnums().then(
-        function (results) {
-            return results.data;
-        });
-
-    $scope.loadData = function () {
-        $q.all([$scope.getEnums]).then(
-            function (data) {
-                $scope.enums = data[0];
-            });
+    var loadEnums = function () {
+        $scope.enums = resourceService.get('enums');
     };
+
+    resourceService.registerForUpdates('enums', function (data) {
+        $scope.enums = data;
+    });
 
     $scope.isInEditMode = function () {
         return $scope.taskInEdit.id === $scope.task.id;
@@ -89,7 +85,7 @@ app.directive('editPlanningTask', function () {
         eTask.frequency.type = $scope.editTask.frequency.type.id;
         eTask.frequency.unit = $scope.editTask.frequency.unit.id;
         eTask.taskId = $scope.editTask.task.id;
-        planningTasksService.editTask(eTask).then(
+        resourceService.edit('planningtasks',eTask).then(
             function (response) {
                 $scope.clearEditData();
                 $scope.$emit('refreshTasks');
@@ -119,7 +115,7 @@ app.directive('editPlanningTask', function () {
         modalInstance.result.then(
             function (result) {
                 if (result !== 'cancel') {
-                    planningTasksService.deleteTask($scope.task.id).then(
+                    resourceService.delete('planningtasks',$scope.task.id).then(
                         function (response) {
                             $scope.$emit('refreshTasks');
                             $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
@@ -131,5 +127,5 @@ app.directive('editPlanningTask', function () {
         });
     };
 
-    $scope.loadData();
+    loadEnums();
 }]);
