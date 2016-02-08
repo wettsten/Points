@@ -34,6 +34,7 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
                 case 'planningtasks':
                     objList = planningtasks;
                     planningtasks = results.data;
+                    retrieveWithAttempt('availabletasks', 0);
                     break;
                 case 'availabletasks':
                     objList = availabletasks;
