@@ -26,7 +26,7 @@ namespace Points.Api.Resources.Controllers
                 var inUseTasks = _requestProcessor
                     .GetListForUser<RavenPTask,ViewPTask>(GetUserIdFromHeaders())
                     .Select(i => i.Task.Id);
-                var content = tasks.GetObjects<ViewTask>();
+                var content = tasks.GetContent<ViewTask>();
                 var cats = content
                     .Where(i => !inUseTasks.Contains(i.Id))
                     .GroupBy(i => i.Category, task => task)

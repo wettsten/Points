@@ -22,7 +22,7 @@ namespace Points.Api.Resources.Controllers
             var jobs = GetForUser();
             if (jobs.IsOk())
             {
-                var content = jobs.GetObjects<ViewJob>();
+                var content = jobs.GetContent<ViewJob>();
                 var job = content.FirstOrDefault(i => i.Processor.Equals(typeof (StartWeekJob).Name));
                 if (job == null)
                 {
@@ -39,7 +39,7 @@ namespace Points.Api.Resources.Controllers
             var jobs = GetForUser();
             if (jobs.IsOk())
             {
-                var content = jobs.GetObjects<ViewJob>();
+                var content = jobs.GetContent<ViewJob>();
                 var job = content.FirstOrDefault(i => i.Processor.Equals(typeof(EndWeekJob).Name));
                 if (job == null)
                 {

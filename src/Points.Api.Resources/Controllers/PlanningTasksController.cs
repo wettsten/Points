@@ -24,7 +24,7 @@ namespace Points.Api.Resources.Controllers
             var tasks = GetForUser();
             if (tasks.IsOk())
             {
-                var content = tasks.GetObjects<ViewTask>();
+                var content = tasks.GetContent<ViewTask>();
                 var cats = content
                     .GroupBy(i => i.Task.Category, task => task)
                     .Select(i => new

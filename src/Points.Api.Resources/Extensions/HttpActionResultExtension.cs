@@ -7,7 +7,7 @@ namespace Points.Api.Resources.Extensions
 {
     public static class HttpActionResultExtension
     {
-        public static IOrderedEnumerable<T> GetObjects<T>(this IHttpActionResult actionResult)
+        public static IOrderedEnumerable<T> GetContent<T>(this IHttpActionResult actionResult)
         {
             var ok = actionResult as OkNegotiatedContentResult<IOrderedEnumerable<T>>;
             return ok?.Content;
