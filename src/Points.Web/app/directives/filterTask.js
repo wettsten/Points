@@ -1,20 +1,27 @@
 ﻿'use strict';
 app.directive('filterTask', function () {
     return {
-        scope: {
-            cats: '='
-        },
+        scope: {},
         templateUrl: '/app/views/directives/filterTask.html',
         replace: true,
         controller: 'filterTaskController'
     };
-}).controller('filterTaskController', ['$scope', 'filterFactory', function ($scope, filterFactory) {
+}).controller('filterTaskController', ['$scope', 'filterFactory', 'resourceService', function ($scope, filterFactory, resourceService) {
 
+    $scope.cats = [];
     $scope.filter = {
         isOpen: false,
         text: '',
         cat: {}
     };
+
+    var loadCats = function () {
+        $scope.cats = resourceService.get('categories');
+    };
+
+    resourceService.registerForUpdates('categories', function (data) {
+        $scope.cats = data;
+    });
 
     $scope.search = function() {
         filterFactory.setTaskFilter({
@@ -30,4 +37,6 @@ app.directive('filterTask', function () {
         $scope.filter.cat = {};
         $scope.search();
     };
+
+    loadCats();
 }]);

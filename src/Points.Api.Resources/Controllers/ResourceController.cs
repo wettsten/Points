@@ -10,7 +10,7 @@ namespace Points.Api.Resources.Controllers
 {
     public class ResourceController<TIn, TOut> : ApiController where TIn : RavenObject, new() where TOut : ViewObject
     {
-        private readonly IRequestProcessor _requestProcessor;
+        protected readonly IRequestProcessor _requestProcessor;
 
         protected ResourceController(IRequestProcessor requestProcessor)
         {
@@ -104,7 +104,7 @@ namespace Points.Api.Resources.Controllers
             return string.Join("\r\n", errors);
         }
 
-        private string GetUserIdFromHeaders()
+        protected string GetUserIdFromHeaders()
         {
             return Request.Headers.GetValues("UserId").FirstOrDefault();
         }

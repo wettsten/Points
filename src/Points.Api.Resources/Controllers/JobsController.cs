@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
 using Points.Scheduler.Jobs;
 using RavenJob = Points.Data.Raven.Job;
@@ -19,9 +20,9 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult GetStartJobForUser()
         {
             var jobs = GetForUser();
-            if (jobs is OkNegotiatedContentResult<IOrderedEnumerable<ViewJob>>)
+            if (jobs.IsOk())
             {
-                var content = (jobs as OkNegotiatedContentResult<IOrderedEnumerable<ViewJob>>).Content;
+                var content = jobs.GetContent<ViewJob>();
                 var job = content.FirstOrDefault(i => i.Processor.Equals(typeof (StartWeekJob).Name));
                 if (job == null)
                 {
@@ -36,9 +37,9 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult GetEndJobForUser()
         {
             var jobs = GetForUser();
-            if (jobs is OkNegotiatedContentResult<IOrderedEnumerable<ViewJob>>)
+            if (jobs.IsOk())
             {
-                var content = (jobs as OkNegotiatedContentResult<IOrderedEnumerable<ViewJob>>).Content;
+                var content = jobs.GetContent<ViewJob>();
                 var job = content.FirstOrDefault(i => i.Processor.Equals(typeof(EndWeekJob).Name));
                 if (job == null)
                 {

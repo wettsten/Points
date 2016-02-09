@@ -150,8 +150,10 @@
     <Compile Include="Controllers\ArchivedTasksController.cs" />
     <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
+    <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\PlanningTasksController.cs" />
     <Compile Include="Controllers\ActiveTasksController.cs" />
+    <Compile Include="Controllers\AvailableTasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -162,6 +164,7 @@
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyResolver.cs" />
     <Compile Include="DependencyResolution\StructureMapWebApiDependencyScope.cs" />
     <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Extensions\HttpActionResultExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -210,9 +213,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-<Target Name="BeforeBuild">
+  <Target Name="BeforeBuild">
     <TransformXml Source="Web.config" Transform="Web.$(Configuration).config" Destination="Web.config" />
-</Target>
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -16,7 +16,7 @@ app.directive('filterCat', function () {
     $scope.search = function() {
         filterFactory.setCatFilter({
             name: $scope.filter.text
-    });
+        });
     };
 
     $scope.clear = function () {
