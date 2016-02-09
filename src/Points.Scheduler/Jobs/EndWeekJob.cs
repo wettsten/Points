@@ -32,6 +32,7 @@ namespace Points.Scheduler.Jobs
                 archiveTask.Name = task.Name;
                 archiveTask.DateEnded = DateTime.UtcNow;
                 _dataWriter.Add(archiveTask);
+                _dataWriter.Delete<ActiveTask>(task.Id);
             }
         }
     }
