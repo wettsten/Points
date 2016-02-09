@@ -26,11 +26,11 @@ namespace Points.Api.Resources.Controllers
             {
                 var content = tasks.GetContent<ViewTask>();
                 var cats = content
-                    .GroupBy(i => i.Task.Category, task => task)
+                    .GroupBy(i => i.Task.Category.Id, task => task)
                     .Select(i => new
                     {
-                        Id = i.Key.Id,
-                        Name = i.Key.Name,
+                        Id = i.Key,
+                        Name = i.First().Task.Category.Name,
                         Tasks = i.OrderBy(j => j.Task.Name)
                     })
                     .OrderBy(i => i.Name);

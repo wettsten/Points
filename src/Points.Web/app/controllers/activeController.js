@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('activeController', ['$scope', 'catsService', 'activeTasksService', '$timeout', '$q', function ($scope, catsService, activeTasksService, $timeout, $q) {
+app.controller('activeController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
 
     $scope.tasks = [];
     $scope.cats = [];
@@ -7,55 +7,29 @@ app.controller('activeController', ['$scope', 'catsService', 'activeTasksService
     $scope.filteredCats = [];
     $scope.taskInEdit = { id: '' };
 
-    $scope.loadCats = catsService.getCats().then(
-        function (results) {
-            return results.data;
-        });
-
-    $scope.loadTasks = activeTasksService.getTasks().then(
-        function (results) {
-            return results.data;
-        });
-
-    $scope.loadData = function () {
-        $q.all([$scope.loadCats, $scope.loadTasks]).then(
-            function (data) {
-                $scope.cats = data[0];
-                for (var i = 0; i < $scope.cats.length; i++) {
-                    $scope.cats[i].tasks = [];
-                    $scope.cats[i].isOpen = true;
-                }
-                $scope.tasks = data[1];
-                for (var i = 0; i < $scope.tasks.length; i++) {
-                    $scope.tasks[i].isOpen = true;
-                    $scope.tasks[i].details = { isOpen: false };
-                    $scope.lookupCategory($scope.tasks[i]);
-                }
-                $scope.filterCats();
-                if ($scope.tasks.length === 0) {
-                    $scope.addAlert('warning', 'No active tasks found');
-                }
-            });
-    };
-
-    $scope.filterCats = function () {
-        $scope.filteredCats = $scope.cats.filter(
-        function (cat) {
-            return cat.tasks.length > 0;
-        });
-    };
-
-    $scope.lookupCategory = function (task) {
+    var setupCats = function () {
         for (var i = 0; i < $scope.cats.length; i++) {
-            if ($scope.cats[i].id === task.task.category.id) {
-                $scope.cats[i].tasks.push(task);
-                break;
+            $scope.cats[i].isOpen = i === 0;
+            for (var j = 0; j < $scope.cats[i].tasks.length; j++) {
+                $scope.cats[i].tasks[j].isOpen = true;
+                $scope.cats[i].tasks[j].details = { isOpen: false };
             }
         }
     };
 
-    $scope.$on('refreshTasks', function () {
-        $scope.loadData();
+    var loadCats = function () {
+        $scope.cats = resourceService.get('activetasks');
+        setupCats();
+        $timeout(function () {
+            if ($scope.cats.length === 0) {
+                $scope.addAlert('warning', 'No active tasks found');
+            }
+        }, 1000);
+    };
+
+    resourceService.registerForUpdates('activetasks', function (data) {
+        $scope.cats = data;
+        setupCats();
     });
 
     $scope.addAlert = function (type, msg) {
@@ -74,5 +48,5 @@ app.controller('activeController', ['$scope', 'catsService', 'activeTasksService
         }
     };
 
-    $scope.loadData();
+    loadCats();
 }]);
