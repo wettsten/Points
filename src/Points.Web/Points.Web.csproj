@@ -64,6 +64,8 @@
     <Content Include="app\controllers\planningController.js" />
     <Content Include="app\controllers\associateController.js" />
     <Content Include="app\controllers\activeController.js" />
+    <Content Include="app\directives\basicPanel.js" />
+    <Content Include="app\directives\collapsePanel.js" />
     <Content Include="app\directives\editPlanningTask.js" />
     <Content Include="app\directives\planningCat.js" />
     <Content Include="app\directives\filterTask.js" />
@@ -89,6 +91,8 @@
     <Content Include="app\services\jobsService.js" />
     <Content Include="app\services\usersService.js" />
     <Content Include="app\views\associate.html" />
+    <Content Include="app\views\directives\basicPanel.html" />
+    <Content Include="app\views\directives\collapsePanel.html" />
     <Content Include="app\views\directives\editPlanningTask.html" />
     <Content Include="app\views\directives\filterTask.html" />
     <Content Include="app\views\directives\filterCat.html" />
