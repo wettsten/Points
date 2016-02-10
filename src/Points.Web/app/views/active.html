@@ -15,11 +15,8 @@
                     {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
                 </div>
                 <div class="col-md-3" ng-repeat="task in cat.tasks" collapse-panel is-open="task.isOpen" header-title="task.name">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Check!</div>
-                        <div class="panel-body">
-                            Enter method to check off task here
-                        </div>
+                    <div basic-panel header-title="'Check!'">
+                        Enter method to check off task here
                     </div><br/>
                     <div collapse-panel is-open="task.details.isOpen" header-title="'Details'">
                         <div basic-panel header-title="'Duration'">
