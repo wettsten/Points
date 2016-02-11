@@ -60,6 +60,7 @@
   <ItemGroup>
     <Content Include="app\app.Debug.js" />
     <Content Include="app\controllers\optionsController.js" />
+    <Content Include="app\controllers\partials\confirmUncheckController.js" />
     <Content Include="app\controllers\partials\confirmDeleteController.js" />
     <Content Include="app\controllers\planningController.js" />
     <Content Include="app\controllers\associateController.js" />
@@ -106,6 +107,7 @@
     <Content Include="app\views\directives\planningCat.html" />
     <Content Include="app\views\directives\activeStatus.html" />
     <Content Include="app\views\directives\planningStatus.html" />
+    <Content Include="app\views\partials\confirmUncheck.html" />
     <Content Include="app\views\partials\confirmDelete.html" />
     <Content Include="app\views\planning.html" />
     <Content Include="app\views\options.html" />
