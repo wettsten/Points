@@ -14,11 +14,15 @@
                 <div uib-accordion-heading>
                     {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
                 </div>
-                <div class="col-md-3" ng-repeat="task in cat.tasks" collapse-panel init-open="true" header-title="task.name">
+                <div class="col-md-3" ng-repeat="task in cat.tasks" collapse-panel init-open="true" header-title="task.name + ' (' + task.timesCompleted + '/' + task.frequency.value + ')'">
                     <div basic-panel header-title="'Check!'">
-                        Enter method to check off task here
+                        <div class="text-center">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="check(task)" title="Check!">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     </div><br/>
-                    <div collapse-panel init-open="false" header-title="'Details'">
+                    <div collapse-panel init-open="false" header-title="'Task Details'">
                         <div basic-panel header-title="'Duration'">
                             <span><b>Type:</b> <i>{{task.duration.type.name}}</i><br /></span>
                             <span ng-hide="task.duration.type.name === 'None'"><b>Value:</b> <i>{{task.duration.value}}</i><br /></span>

@@ -44,5 +44,23 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', fun
         }
     };
 
+    $scope.check = function (task) {
+        var editTask = angular.copy(task);
+        editTask.timesCompleted += 1;
+        editTask.taskId = task.task.id;
+        editTask.duration.type = task.duration.type.id;
+        editTask.duration.unit = task.duration.unit.id;
+        editTask.frequency.type = task.frequency.type.id;
+        editTask.frequency.unit = task.frequency.unit.id;
+        resourceService.edit('activetasks', editTask).then(
+            function (response) {
+                $scope.addAlert('success', 'Task successfully updated');
+            },
+            function (err) {
+                $scope.addAlert('danger', err.data.message);
+            }
+        );
+    };
+
     loadCats();
 }]);
