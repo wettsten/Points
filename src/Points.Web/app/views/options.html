@@ -6,7 +6,7 @@
             <hr/>
         </div>
         <div class="row">
-            <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</uib-alert>
+            <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">

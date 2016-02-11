@@ -10,10 +10,6 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', fun
     var setupCats = function () {
         for (var i = 0; i < $scope.cats.length; i++) {
             $scope.cats[i].isOpen = i === 0;
-            for (var j = 0; j < $scope.cats[i].tasks.length; j++) {
-                $scope.cats[i].tasks[j].isOpen = true;
-                $scope.cats[i].tasks[j].details = { isOpen: false };
-            }
         }
     };
 

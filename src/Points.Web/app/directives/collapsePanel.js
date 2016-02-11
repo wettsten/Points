@@ -1,11 +1,15 @@
 ﻿'use strict';
-app.directive('collapsePanel', function () {
+app.directive('collapsePanel', function() {
     return {
         scope: {
-            isOpen: '=',
+            initOpen: '=',
             headerTitle: '='
         },
         templateUrl: '/app/views/directives/collapsePanel.html',
-        transclude: true
+        transclude: true,
+        controller: "collapsePanelController"
     };
-});
+}).controller('collapsePanelController', ['$scope', function ($scope) {
+
+    $scope.isOpen = $scope.initOpen;
+}]);

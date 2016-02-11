@@ -10,7 +10,6 @@ app.directive('filterTask', function () {
 
     $scope.cats = [];
     $scope.filter = {
-        isOpen: false,
         text: '',
         cat: {}
     };

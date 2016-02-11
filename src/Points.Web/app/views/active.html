@@ -5,7 +5,7 @@
     </div>
 
     <div class="row">
-        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</uib-alert>
+        <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
     </div>
 
     <div class="row">
@@ -14,11 +14,11 @@
                 <div uib-accordion-heading>
                     {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
                 </div>
-                <div class="col-md-3" ng-repeat="task in cat.tasks" collapse-panel is-open="task.isOpen" header-title="task.name">
+                <div class="col-md-3" ng-repeat="task in cat.tasks" collapse-panel init-open="true" header-title="task.name">
                     <div basic-panel header-title="'Check!'">
                         Enter method to check off task here
                     </div><br/>
-                    <div collapse-panel is-open="task.details.isOpen" header-title="'Details'">
+                    <div collapse-panel init-open="false" header-title="'Details'">
                         <div basic-panel header-title="'Duration'">
                             <span><b>Type:</b> <i>{{task.duration.type.name}}</i><br /></span>
                             <span ng-hide="task.duration.type.name === 'None'"><b>Value:</b> <i>{{task.duration.value}}</i><br /></span>
