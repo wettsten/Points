@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('activeController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
+app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$uibModal', function ($scope, resourceService, $timeout, $uibModal) {
 
     $scope.tasks = [];
     $scope.cats = [];
@@ -60,6 +60,43 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', fun
                 $scope.addAlert('danger', err.data.message);
             }
         );
+    };
+
+    $scope.uncheck = function (task) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: '/app/views/partials/confirmDelete.html',
+            controller: 'confirmDeleteController',
+            size: 'sm',
+            resolve: {
+                item: function () {
+                    return {
+                        name: task.name,
+                        id: task.id
+                    };
+                }
+            }
+        });
+
+        modalInstance.result.then(function (result) {
+            if (result !== 'cancel') {
+                var editTask = angular.copy(task);
+                editTask.timesCompleted -= 1;
+                editTask.taskId = task.task.id;
+                editTask.duration.type = task.duration.type.id;
+                editTask.duration.unit = task.duration.unit.id;
+                editTask.frequency.type = task.frequency.type.id;
+                editTask.frequency.unit = task.frequency.unit.id;
+                resourceService.edit('activetasks', editTask).then(
+                    function (response) {
+                        $scope.addAlert('success', 'Task successfully updated');
+                    },
+                    function (err) {
+                        $scope.addAlert('danger', err.data.message);
+                    }
+                );
+            }
+        });
     };
 
     loadCats();
