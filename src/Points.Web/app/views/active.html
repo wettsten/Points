@@ -20,6 +20,9 @@
                             <button type="button" class="btn btn-lg btn-success" ng-click="check(task)" title="Check!">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
+                            <button type="button" class="btn btn-xs btn-danger pull-right" ng-click="uncheck(task)" ng-disabled="task.timesCompleted === 0" title="Uncheck!">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
                         </div>
                     </div><br/>
                     <div collapse-panel init-open="false" header-title="'Task Details'">

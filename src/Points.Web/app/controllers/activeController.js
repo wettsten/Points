@@ -54,7 +54,7 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
         editTask.frequency.unit = task.frequency.unit.id;
         resourceService.edit('activetasks', editTask).then(
             function (response) {
-                $scope.addAlert('success', 'Task successfully updated');
+                $scope.addAlert('success', 'Task successfully checked');
             },
             function (err) {
                 $scope.addAlert('danger', err.data.message);
@@ -65,8 +65,8 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
     $scope.uncheck = function (task) {
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: '/app/views/partials/confirmDelete.html',
-            controller: 'confirmDeleteController',
+            templateUrl: '/app/views/partials/confirmUncheck.html',
+            controller: 'confirmUncheckController',
             size: 'sm',
             resolve: {
                 item: function () {
@@ -89,7 +89,7 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
                 editTask.frequency.unit = task.frequency.unit.id;
                 resourceService.edit('activetasks', editTask).then(
                     function (response) {
-                        $scope.addAlert('success', 'Task successfully updated');
+                        $scope.addAlert('success', 'Task successfully unchecked');
                     },
                     function (err) {
                         $scope.addAlert('danger', err.data.message);
