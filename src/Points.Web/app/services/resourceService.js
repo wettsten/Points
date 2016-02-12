@@ -90,7 +90,7 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
         if (objList.length === 0) {
             retrieve(type);
         }
-        return objList;
+        return angular.copy(objList);
     };
 
     service.add = function (type,data) {

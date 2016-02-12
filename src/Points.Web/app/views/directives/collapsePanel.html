@@ -1,0 +1,10 @@
+﻿<div uib-accordion close-others="false">
+    <div uib-accordion-group is-open="isOpen">
+        <div uib-accordion-heading class="panel-heading">
+            {{headerTitle}} <i class=" pull-right glyphicon" ng-class="{'glyphicon-chevron-up': isOpen, 'glyphicon-chevron-down': !isOpen}"></i>
+        </div>
+        <div ng-transclude>
+            
+        </div>
+    </div>
+</div>

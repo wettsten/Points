@@ -5,7 +5,7 @@
     </div>
 
     <div class="row">
-        <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</uib-alert>
+        <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
     </div>
 
     <div class="row">
@@ -17,13 +17,13 @@
     </div>
 
     <div class="row">
-        <uib-accordion close-others="true">
-            <uib-accordion-group ng-repeat="cat in cats" is-open="cat.isOpen">
-                <uib-accordion-heading>
+        <div uib-accordion close-others="true">
+            <div uib-accordion-group ng-repeat="cat in cats" is-open="cat.isOpen">
+                <div uib-accordion-heading>
                     {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
-                </uib-accordion-heading>
+                </div>
                 <div planning-cat the-cat="cat" task-in-edit="taskInEdit" add-alert="addAlert(type,msg)"></div>
-            </uib-accordion-group>
-        </uib-accordion>
+            </div>
+        </div>
     </div>
 </div>

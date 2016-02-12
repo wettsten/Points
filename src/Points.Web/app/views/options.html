@@ -6,7 +6,7 @@
             <hr/>
         </div>
         <div class="row">
-            <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</uib-alert>
+            <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
@@ -43,7 +43,7 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <button type="submit" class="btn btn-success" ng-disabled="areNoChanges()" ng-click="saveChanges()" title="Save changes">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
             </button>
             <button type="button" class="btn btn-danger" ng-disabled="areNoChanges()" ng-click="cancelChanges()" title="Cancel changes">
                 <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>

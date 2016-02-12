@@ -9,7 +9,6 @@ app.directive('filterCat', function () {
 }).controller('filterCatController', ['$scope', 'filterFactory', function ($scope, filterFactory) {
 
     $scope.filter = {
-        isOpen: false,
         text: ''
     };
 
