@@ -9,9 +9,9 @@ namespace Points.Common.Processors
 {
     public interface IRequestProcessor
     {
-        void AddData<T>(T data) where T : RavenObject;
-        void EditData<T>(T data) where T : RavenObject;
-        void DeleteData<T>(T data) where T : RavenObject;
-        IList<TOut> GetListForUser<TIn, TOut>(string userId) where TIn : RavenObject where TOut : ViewObject;
+        void AddData<T>(T data) where T : ViewObject;
+        void EditData<T>(T data) where T : ViewObject;
+        void DeleteData<T>(ViewObject data) where T : ViewObject;
+        IList<T> GetListForUser<T>(string userId) where T : ViewObject;
     }
 }

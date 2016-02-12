@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.4.0.0.315\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -50,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapper\MappingProfile.cs" />
     <Compile Include="DependencyManagement\DependencyRegistry.cs" />
     <Compile Include="Factories\IObjectValidatorFactory.cs" />
     <Compile Include="Factories\ObjectValidatorFactory.cs" />

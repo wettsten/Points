@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Points.Common.Factories;
 using Points.Common.Mappers;
 using Points.Data;
@@ -19,37 +20,43 @@ namespace Points.Common.Processors
         private readonly IDataWriter _dataWriter;
         private readonly IObjectValidatorFactory _objectValidatorFactory;
         private readonly IContainer _container;
+        private readonly IMapperConfiguration _mapperConfiguration;
 
-        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IContainer container)
+        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IContainer container, IMapperConfiguration mapperConfiguration)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _objectValidatorFactory = objectValidatorFactory;
             _container = container;
+            _mapperConfiguration = mapperConfiguration;
         }
 
-        public void AddData<T>(T data) where T : RavenObject
+        public void AddData<T>(T data) where T : ViewObject
         {
             var validator = _objectValidatorFactory.Get(typeof (T));
             validator?.ValidateAdd(data);
+            // map to RavenObject
+            _mapperConfiguration.CreateMapper();
             _dataWriter.Add(data);
         }
 
-        public void EditData<T>(T data) where T : RavenObject
+        public void EditData<T>(T data) where T : ViewObject
         {
             var validator = _objectValidatorFactory.Get(typeof(T));
             validator?.ValidateEdit(data);
+            // map to RavenObject
             _dataWriter.Edit(data);
         }
 
-        public void DeleteData<T>(T data) where T : RavenObject
+        public void DeleteData<T>(ViewObject data) where T : ViewObject
         {
             var validator = _objectValidatorFactory.Get(typeof(T));
             validator?.ValidateDelete(data);
+            // map to RavenObject
             _dataWriter.Delete<T>(data.Id);
         }
 
-        public IList<TOut> GetListForUser<TIn,TOut>(string userId) where TIn : RavenObject where TOut : ViewObject
+        public IList<T> GetListForUser<T>(string userId) where T : ViewObject
         {
             var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
             var objs = _dataReader

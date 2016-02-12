@@ -15,6 +15,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using AutoMapper;
+using AutoMapper.Mappers;
+using Points.Common.AutoMapper;
 using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
@@ -52,7 +56,14 @@ namespace Points.Api.Resources.DependencyResolution
             For<IObjectMapper<Data.Raven.ArchivedTask, Data.View.ArchivedTask>>().Use<ArchivedTaskMapper>();
             For<IObjectMapper<Data.Raven.User, Data.View.User>>().Use<UserMapper>();
             For<IObjectMapper<Data.Raven.Job, Data.View.Job>>().Use<JobMapper>();
+
             ForSingletonOf<IScheduler>().Use<Scheduler.Processors.Scheduler>();
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile(null));
+            });
+            For<IMapper>().Use(config.CreateMapper());
         }
     }
 }

@@ -8,7 +8,7 @@ using Points.Data.View;
 
 namespace Points.Api.Resources.Controllers
 {
-    public class ResourceController<TIn, TOut> : ApiController where TIn : RavenObject, new() where TOut : ViewObject
+    public class ResourceController<T> : ApiController where T : ViewObject
     {
         protected readonly IRequestProcessor _requestProcessor;
 
@@ -24,11 +24,11 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("User id is required");
             }
-            var objs = _requestProcessor.GetListForUser<TIn,TOut>(userid);
+            var objs = _requestProcessor.GetListForUser<T>(userid);
             return Ok(objs.OrderBy(i => i.Name));
         }
 
-        protected IHttpActionResult Add(TIn obj)
+        protected IHttpActionResult Add(T obj)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace Points.Api.Resources.Controllers
             }
         }
         
-        protected IHttpActionResult Edit(TIn obj)
+        protected IHttpActionResult Edit(T obj)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData(new TIn
+                _requestProcessor.DeleteData<T>(new ViewObject
                 {
                     Id = id,
                     UserId = GetUserIdFromHeaders()
