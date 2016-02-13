@@ -3,15 +3,14 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
+using Points.Model;
 using Points.Scheduler.Jobs;
-using RavenJob = Points.Data.Raven.Job;
-using ViewJob = Points.Data.View.Job;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/jobs")]
-    public class JobsController : ResourceController<RavenJob, ViewJob>
+    public class JobsController : ResourceController<Job>
     {
         public JobsController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }
@@ -22,7 +21,7 @@ namespace Points.Api.Resources.Controllers
             var jobs = GetForUser();
             if (jobs.IsOk())
             {
-                var content = jobs.GetContent<ViewJob>();
+                var content = jobs.GetContent<Job>();
                 var job = content.FirstOrDefault(i => i.Processor.Equals(typeof (StartWeekJob).Name));
                 if (job == null)
                 {
@@ -39,7 +38,7 @@ namespace Points.Api.Resources.Controllers
             var jobs = GetForUser();
             if (jobs.IsOk())
             {
-                var content = jobs.GetContent<ViewJob>();
+                var content = jobs.GetContent<Job>();
                 var job = content.FirstOrDefault(i => i.Processor.Equals(typeof(EndWeekJob).Name));
                 if (job == null)
                 {

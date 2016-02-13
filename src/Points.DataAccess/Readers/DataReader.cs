@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using Points.Data.Raven;
+using Points.Data;
 using Raven.Client;
 
 namespace Points.DataAccess.Readers
@@ -22,6 +24,11 @@ namespace Points.DataAccess.Readers
         public IList<TA> GetAll<TA>() where TA : RavenObject
         {
             return _session.Query<TA>().ToList();
+        }
+
+        public IList<RavenObject> GetAll(Type objType)
+        {
+            return _session.Query<RavenObject>().ToList();
         }
     }
 }

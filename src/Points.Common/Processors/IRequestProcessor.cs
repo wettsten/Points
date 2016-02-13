@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Points.Data;
-using Points.Data.Raven;
-using Points.Data.View;
+using Points.Model;
 
 namespace Points.Common.Processors
 {
     public interface IRequestProcessor
     {
-        void AddData<T>(T data) where T : ViewObject;
-        void EditData<T>(T data) where T : ViewObject;
-        void DeleteData<T>(ViewObject data) where T : ViewObject;
-        IList<T> GetListForUser<T>(string userId) where T : ViewObject;
+        void AddData<TView>(TView data) where TView : ViewObject;
+        void EditData<TView>(TView data) where TView : ViewObject;
+        void DeleteData<TView>(ViewObject data) where TView : ViewObject;
+        IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject;
     }
 }

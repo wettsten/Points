@@ -47,36 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Raven\ArchivedTask.cs" />
-    <Compile Include="Raven\Duration.cs" />
-    <Compile Include="Raven\DurationType.cs" />
-    <Compile Include="Raven\DurationUnit.cs" />
-    <Compile Include="Raven\Frequency.cs" />
-    <Compile Include="Raven\FrequencyType.cs" />
-    <Compile Include="Raven\FrequencyUnit.cs" />
-    <Compile Include="Raven\Job.cs" />
-    <Compile Include="Raven\PlanningTask.cs" />
-    <Compile Include="Raven\Category.cs" />
-    <Compile Include="EnumExtensions\EnumExtensions.cs" />
-    <Compile Include="View\FrequencyUnit.cs" />
-    <Compile Include="View\Frequency.cs" />
-    <Compile Include="View\Duration.cs" />
-    <Compile Include="View\DurationUnit.cs" />
-    <Compile Include="View\FrequencyType.cs" />
-    <Compile Include="View\DurationType.cs" />
-    <Compile Include="Raven\RavenObject.cs" />
-    <Compile Include="Raven\ActiveTask.cs" />
-    <Compile Include="Raven\Task.cs" />
-    <Compile Include="View\ArchivedTask.cs" />
-    <Compile Include="View\Job.cs" />
-    <Compile Include="View\User.cs" />
-    <Compile Include="Raven\User.cs" />
+    <Compile Include="ArchivedTask.cs" />
+    <Compile Include="Duration.cs" />
+    <Compile Include="DurationType.cs" />
+    <Compile Include="DurationUnit.cs" />
+    <Compile Include="Frequency.cs" />
+    <Compile Include="FrequencyType.cs" />
+    <Compile Include="FrequencyUnit.cs" />
+    <Compile Include="Job.cs" />
+    <Compile Include="PlanningTask.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="RavenObject.cs" />
+    <Compile Include="ActiveTask.cs" />
+    <Compile Include="Task.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\ActiveTask.cs" />
-    <Compile Include="View\Category.cs" />
-    <Compile Include="View\PlanningTask.cs" />
-    <Compile Include="View\Task.cs" />
-    <Compile Include="View\ViewObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

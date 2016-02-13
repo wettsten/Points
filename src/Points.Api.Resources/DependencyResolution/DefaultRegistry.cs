@@ -17,9 +17,7 @@
 
 using System.Collections.Generic;
 using AutoMapper;
-using AutoMapper.Mappers;
 using Points.Common.AutoMapper;
-using Points.Common.Mappers;
 using Points.Common.Validators;
 using Points.DataAccess;
 using Points.DataAccess.Readers;
@@ -46,24 +44,11 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.AssemblyContainingType<IScheduler>();
                     scan.AddAllTypesOf<IObjectValidator>();
                     scan.AddAllTypesOf<IJob>();
-                    scan.ConnectImplementationsToTypesClosing(typeof(IObjectMapper <,>));
                 });
-            For<IObjectMapper<Data.Raven.RavenObject, Data.View.ViewObject>>().Use<ObjectMapper>();
-            For<IObjectMapper<Data.Raven.Category, Data.View.Category>>().Use<CategoryMapper>();
-            For<IObjectMapper<Data.Raven.Task, Data.View.Task>>().Use<TaskMapper>();
-            For<IObjectMapper<Data.Raven.PlanningTask, Data.View.PlanningTask>>().Use<PlanningTaskMapper>();
-            For<IObjectMapper<Data.Raven.ActiveTask, Data.View.ActiveTask>>().Use<ActiveTaskMapper>();
-            For<IObjectMapper<Data.Raven.ArchivedTask, Data.View.ArchivedTask>>().Use<ArchivedTaskMapper>();
-            For<IObjectMapper<Data.Raven.User, Data.View.User>>().Use<UserMapper>();
-            For<IObjectMapper<Data.Raven.Job, Data.View.Job>>().Use<JobMapper>();
 
             ForSingletonOf<IScheduler>().Use<Scheduler.Processors.Scheduler>();
 
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile(null));
-            });
-            For<IMapper>().Use(config.CreateMapper());
+            For<IMapper>().Use(ctx => (new MapperConfiguration(mapper => mapper.AddProfile(new MappingProfile(ctx.GetInstance<IDataReader>())))).CreateMapper());
         }
     }
 }

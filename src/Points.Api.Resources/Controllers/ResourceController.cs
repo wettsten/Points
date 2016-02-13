@@ -3,12 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Web.Http;
 using Points.Common.Processors;
-using Points.Data.Raven;
-using Points.Data.View;
+using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    public class ResourceController<T> : ApiController where T : ViewObject
+    public class ResourceController<TView> : ApiController where TView : ViewObject
     {
         protected readonly IRequestProcessor _requestProcessor;
 
@@ -24,11 +23,11 @@ namespace Points.Api.Resources.Controllers
             {
                 return BadRequest("User id is required");
             }
-            var objs = _requestProcessor.GetListForUser<T>(userid);
+            var objs = _requestProcessor.GetListForUser<TView>(userid);
             return Ok(objs.OrderBy(i => i.Name));
         }
 
-        protected IHttpActionResult Add(T obj)
+        protected IHttpActionResult Add(TView obj)
         {
             if (!ModelState.IsValid)
             {
@@ -38,7 +37,7 @@ namespace Points.Api.Resources.Controllers
             {
                 obj.Id = string.Empty;
                 obj.UserId = GetUserIdFromHeaders();
-                _requestProcessor.AddData(obj);
+                _requestProcessor.AddData<TView>(obj);
                 return Ok();
             }
             catch(InvalidDataException ide)
@@ -51,7 +50,7 @@ namespace Points.Api.Resources.Controllers
             }
         }
         
-        protected IHttpActionResult Edit(T obj)
+        protected IHttpActionResult Edit(TView obj)
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +59,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.UserId = GetUserIdFromHeaders();
-                _requestProcessor.EditData(obj);
+                _requestProcessor.EditData<TView>(obj);
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -81,7 +80,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData<T>(new ViewObject
+                _requestProcessor.DeleteData<TView>(new ViewObject
                 {
                     Id = id,
                     UserId = GetUserIdFromHeaders()

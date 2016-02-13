@@ -1,13 +1,15 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
+using Points.Common.EnumExtensions;
 using Points.DataAccess.Readers;
 
 namespace Points.Common.AutoMapper
 {
     public class MappingProfile : Profile
     {
-        private readonly DataReader _dataReader;
+        private readonly IDataReader _dataReader;
 
-        public MappingProfile(DataReader dataReader)
+        public MappingProfile(IDataReader dataReader)
         {
             _dataReader = dataReader;
         }
@@ -15,32 +17,44 @@ namespace Points.Common.AutoMapper
         protected override void Configure()
         {
             // View to Raven
-            CreateMap<Data.View.ViewObject, Data.Raven.RavenObject>();
-            CreateMap<Data.View.Category, Data.Raven.Category>();
-            CreateMap<Data.View.Task, Data.Raven.Task>()
+            CreateMap<Model.ViewObject, Data.RavenObject>();
+            CreateMap<Model.Duration, Data.Duration>()
+                .ForMember(t => t.Type, o => o.MapFrom(s => (Data.DurationType)Enum.Parse(typeof(Data.DurationType), s.Type.Id)))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => (Data.DurationUnit)Enum.Parse(typeof(Data.DurationUnit), s.Unit.Id)));
+            CreateMap<Model.Frequency, Data.Frequency>()
+                .ForMember(t => t.Type, o => o.MapFrom(s => (Data.FrequencyType)Enum.Parse(typeof(Data.FrequencyType), s.Type.Id)))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => (Data.FrequencyUnit)Enum.Parse(typeof(Data.FrequencyUnit), s.Unit.Id)));
+            CreateMap<Model.Category, Data.Category>();
+            CreateMap<Model.Task, Data.Task>()
                 .ForMember(t => t.CategoryId, o => o.MapFrom(s => s.Category.Id));
-            CreateMap<Data.View.PlanningTask, Data.Raven.PlanningTask>()
+            CreateMap<Model.PlanningTask, Data.PlanningTask>()
                 .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
-            CreateMap<Data.View.ActiveTask, Data.Raven.ActiveTask>()
+            CreateMap<Model.ActiveTask, Data.ActiveTask>()
                 .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
-            CreateMap<Data.View.ArchivedTask, Data.Raven.ArchivedTask>()
+            CreateMap<Model.ArchivedTask, Data.ArchivedTask>()
                 .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
-            CreateMap<Data.View.User, Data.Raven.User>();
-            CreateMap<Data.View.Job, Data.Raven.Job>();
+            CreateMap<Model.User, Data.User>();
+            CreateMap<Model.Job, Data.Job>();
 
             // Raven to View
-            CreateMap<Data.Raven.RavenObject, Data.View.ViewObject>();
-            CreateMap<Data.Raven.Category, Data.View.Category>();
-            CreateMap<Data.Raven.Task, Data.View.Task>()
-                .ForMember(t => t.Category, o => o.MapFrom(s => _dataReader.Get<Data.Raven.Category>(s.CategoryId)));
-            CreateMap<Data.Raven.PlanningTask, Data.View.PlanningTask>()
-                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Raven.Task>(s.TaskId)));
-            CreateMap<Data.Raven.ActiveTask, Data.View.ActiveTask>()
-                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Raven.Task>(s.TaskId)));
-            CreateMap<Data.Raven.ArchivedTask, Data.View.ArchivedTask>()
-                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Raven.Task>(s.TaskId)));
-            CreateMap<Data.Raven.User, Data.View.User>();
-            CreateMap<Data.Raven.Job, Data.View.Job>();
+            CreateMap<Data.RavenObject, Model.ViewObject>();
+            CreateMap<Data.Duration, Model.Duration>()
+                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.DurationType {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.DurationUnit {Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
+            CreateMap<Data.Frequency, Model.Frequency>()
+                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.FrequencyType {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.FrequencyUnit {Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
+            CreateMap<Data.Category, Model.Category>();
+            CreateMap<Data.Task, Model.Task>()
+                .ForMember(t => t.Category, o => o.MapFrom(s => _dataReader.Get<Data.Category>(s.CategoryId)));
+            CreateMap<Data.PlanningTask, Model.PlanningTask>()
+                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
+            CreateMap<Data.ActiveTask, Model.ActiveTask>()
+                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
+            CreateMap<Data.ArchivedTask, Model.ArchivedTask>()
+                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
+            CreateMap<Data.User, Model.User>();
+            CreateMap<Data.Job, Model.Job>();
         }
     }
 }

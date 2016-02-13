@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Points.Data.Raven;
+using Points.Data;
 using Points.DataAccess;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;

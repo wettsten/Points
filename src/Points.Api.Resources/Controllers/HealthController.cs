@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
-using Points.Data.Raven;
 using Points.DataAccess.Readers;
+using Points.Model;
 using StructureMap;
 
 namespace Points.Api.Resources.Controllers

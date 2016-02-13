@@ -1,4 +1,4 @@
-﻿using Points.Data.Raven;
+﻿using Points.Data;
 using Raven.Client;
 
 namespace Points.DataAccess.Writers

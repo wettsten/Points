@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Common", "Points.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Scheduler", "Points.Scheduler\Points.Scheduler.csproj", "{7C8AEA43-489C-4594-8EB8-A41DE55E251C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Model", "Points.Model\Points.Model.csproj", "{4E456776-5F29-4F69-A0BB-32CF6B388036}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{7C8AEA43-489C-4594-8EB8-A41DE55E251C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C8AEA43-489C-4594-8EB8-A41DE55E251C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C8AEA43-489C-4594-8EB8-A41DE55E251C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

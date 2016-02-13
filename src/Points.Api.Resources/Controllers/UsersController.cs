@@ -3,19 +3,15 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Common.Processors;
-using Points.DataAccess;
-using Points.DataAccess.Readers;
+using Points.Model;
 using Points.Scheduler.Jobs;
 using Points.Scheduler.Processors;
-using RavenUser = Points.Data.Raven.User;
-using ViewUser = Points.Data.View.User;
-using RavenJob = Points.Data.Raven.Job;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/users")]
-    public class UsersController : ResourceController<RavenUser,ViewUser>
+    public class UsersController : ResourceController<User>
     {
         private readonly IDataReader _dataReader;
         private readonly IJobManager _jobProcessor;
@@ -37,7 +33,7 @@ namespace Points.Api.Resources.Controllers
             if (usr == null)
             {
                 var now = DateTime.UtcNow.AddDays(1).AddHours(1);
-                usr = new RavenUser
+                var user = new ViewUser
                 {
                     Name = name,
                     Email = string.Empty,
@@ -46,7 +42,7 @@ namespace Points.Api.Resources.Controllers
                     NotifyWeekStarting = 0,
                     NotifyWeekEnding = 0
                 };
-                Add(usr);
+                Add(user);
                 usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
                 EnsureStartJobForUser(usr.Id);
                 return Ok(usr);
@@ -58,7 +54,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditUser(RavenUser user)
+        public IHttpActionResult EditUser(User user)
         {
             var result = Edit(user);
             if (result is OkResult)

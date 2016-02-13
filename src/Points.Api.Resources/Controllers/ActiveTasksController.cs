@@ -3,14 +3,13 @@ using System.Web.Http;
 using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
 using Points.DataAccess.Readers;
-using RavenTask = Points.Data.Raven.ActiveTask;
-using ViewTask = Points.Data.View.ActiveTask;
+using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/activetasks")]
-    public class ActiveTasksController : ResourceController<RavenTask,ViewTask>
+    public class ActiveTasksController : ResourceController<ActiveTask>
     {
         private DataReader _dataReader;
 
@@ -25,7 +24,7 @@ namespace Points.Api.Resources.Controllers
             var tasks = GetForUser();
             if (tasks.IsOk())
             {
-                var content = tasks.GetContent<ViewTask>();
+                var content = tasks.GetContent<ActiveTask>();
                 var cats = content
                     .GroupBy(i => i.Task.Category.Id, task => task)
                     .Select(i => new
@@ -42,9 +41,9 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPut]
-        public IHttpActionResult UpdateTask(RavenTask task)
+        public IHttpActionResult UpdateTask(ActiveTask task)
         {
-            var aTask = _dataReader.Get<RavenTask>(task.Id);
+            var aTask = _dataReader.Get<ActiveTask>(task.Id);
             aTask.TimesCompleted = task.TimesCompleted;
             return Edit(aTask);
         }

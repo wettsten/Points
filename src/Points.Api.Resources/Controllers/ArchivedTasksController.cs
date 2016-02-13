@@ -1,13 +1,12 @@
 ﻿using System.Web.Http;
 using Points.Common.Processors;
-using RavenTask = Points.Data.Raven.ArchivedTask;
-using ViewTask = Points.Data.View.ArchivedTask;
+using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/archivedtasks")]
-    public class ArchivedTasksController : ResourceController<RavenTask,ViewTask>
+    public class ArchivedTasksController : ResourceController<ArchivedTask>
     {
         public ArchivedTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }

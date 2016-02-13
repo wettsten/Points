@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
-using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
-using Points.Data.EnumExtensions;
-using Points.Data.View;
-using RavenTask = Points.Data.Raven.PlanningTask;
-using ViewTask = Points.Data.View.PlanningTask;
+using Points.Common.EnumExtensions;
 
 namespace Points.Api.Resources.Controllers
 {
@@ -18,10 +12,10 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetEnums()
         {
-            var durationTypes = GetEnumsList(typeof(Data.Raven.DurationType));
-            var durationUnits = GetEnumsList(typeof(Data.Raven.DurationUnit));
-            var frequencyTypes = GetEnumsList(typeof(Data.Raven.FrequencyType));
-            var frequencyUnits = GetEnumsList(typeof(Data.Raven.FrequencyUnit));
+            var durationTypes = GetEnumsList(typeof(DurationType));
+            var durationUnits = GetEnumsList(typeof(DurationUnit));
+            var frequencyTypes = GetEnumsList(typeof(FrequencyType));
+            var frequencyUnits = GetEnumsList(typeof(FrequencyUnit));
             return Ok(new
             {
                 dTypes = durationTypes,
