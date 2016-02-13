@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using Points.Common.EnumExtensions;
+using Points.Common.Processors;
 
 namespace Points.Api.Resources.Controllers
 {
@@ -9,34 +10,23 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/enums")]
     public class EnumsController : ApiController
     {
+        private readonly IRequestProcessor _requestProcessor;
+
+        public EnumsController(IRequestProcessor requestProcessor)
+        {
+            _requestProcessor = requestProcessor;
+        }
+
         [Route("")]
         public IHttpActionResult GetEnums()
         {
-            var durationTypes = GetEnumsList(typeof(DurationType));
-            var durationUnits = GetEnumsList(typeof(DurationUnit));
-            var frequencyTypes = GetEnumsList(typeof(FrequencyType));
-            var frequencyUnits = GetEnumsList(typeof(FrequencyUnit));
             return Ok(new
             {
-                dTypes = durationTypes,
-                dUnits = durationUnits,
-                fTypes = frequencyTypes,
-                fUnits = frequencyUnits
+                dTypes = _requestProcessor.GetEnums("DurationType"),
+                dUnits = _requestProcessor.GetEnums("DurationUnit"),
+                fTypes = _requestProcessor.GetEnums("FrequencyType"),
+                fUnits = _requestProcessor.GetEnums("FrequencyUnit")
             });
-        }
-
-        private List<object> GetEnumsList(Type enumType)
-        {
-            var output = new List<object>();
-            foreach (var item in Enum.GetValues(enumType))
-            {
-                output.Add(new
-                {
-                    id = item.ToString(),
-                    name = item.Spacify()
-                });
-            }
-            return output;
         }
     }
 }

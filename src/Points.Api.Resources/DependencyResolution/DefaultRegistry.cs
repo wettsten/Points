@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using Points.Common.AutoMapper;
 using Points.Common.Validators;
-using Points.DataAccess;
-using Points.DataAccess.Readers;
 using Points.Scheduler;
 using Points.Scheduler.Processors;
 using StructureMap;
@@ -40,15 +38,8 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.AssembliesFromApplicationBaseDirectory(assembly => !assembly.FullName.StartsWith("System.Web"));
                     scan.LookForRegistries();
                     scan.AssemblyContainingType<IObjectValidator>();
-                    scan.AssemblyContainingType<IDataReader>();
                     scan.AssemblyContainingType<IScheduler>();
-                    scan.AddAllTypesOf<IObjectValidator>();
-                    scan.AddAllTypesOf<IJob>();
                 });
-
-            ForSingletonOf<IScheduler>().Use<Scheduler.Processors.Scheduler>();
-
-            For<IMapper>().Use(ctx => (new MapperConfiguration(mapper => mapper.AddProfile(new MappingProfile(ctx.GetInstance<IDataReader>())))).CreateMapper());
         }
     }
 }

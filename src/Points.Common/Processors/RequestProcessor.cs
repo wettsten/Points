@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Points.Common.EnumExtensions;
 using Points.Common.Factories;
 using Points.Model;
 using Points.DataAccess.Readers;
@@ -61,6 +62,32 @@ namespace Points.Common.Processors
                 .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
             return objs.Select(i => (TView)_mapFactory.MapToViewObject(i)).ToList();
+        }
+
+        public User GetUser(string name)
+        {
+            var dataUser = _dataReader
+                .GetAll<Data.User>()
+                .FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            return (User)_mapFactory.MapToViewObject(dataUser);
+        }
+
+        public IList<object> GetEnums(string enumType)
+        {
+            var output = new List<object>();
+            var eType = Type.GetType(enumType);
+            if (eType != null)
+            {
+                foreach (var item in Enum.GetValues(eType))
+                {
+                    output.Add(new
+                    {
+                        Id = item,
+                        Name = item.Spacify()
+                    });
+                }
+            }
+            return output;
         }
     }
 }

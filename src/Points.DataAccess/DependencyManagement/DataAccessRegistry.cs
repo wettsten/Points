@@ -1,21 +1,23 @@
 ﻿using Raven.Client;
 using Raven.Client.Document;
 using StructureMap;
+using StructureMap.Graph;
 
 namespace Points.DataAccess.DependencyManagement
 {
-    public class DependencyRegistry : Registry
+    public class DataAccessRegistry : Registry
     {
         /// <summary>
-        /// Prevents a default instance of the <see cref="DependencyRegistry" /> class from being created.
+        /// Prevents a default instance of the <see cref="DataAccessRegistry" /> class from being created.
         /// </summary>
-        public DependencyRegistry()
+        public DataAccessRegistry()
         {
             var docStore = new DocumentStore { ConnectionStringName = "PointsRaven" }.Initialize();
 
             Scan(
                 scan =>
                 {
+                    scan.TheCallingAssembly();
                     scan.WithDefaultConventions();
                 });
             For<IDocumentStore>().Use(docStore);

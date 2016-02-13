@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoMapper\MappingProfile.cs" />
-    <Compile Include="DependencyManagement\DependencyRegistry.cs" />
+    <Compile Include="DependencyManagement\CommonRegistry.cs" />
     <Compile Include="EnumExtensions\EnumExtensions.cs" />
     <Compile Include="Factories\IMapFactory.cs" />
     <Compile Include="Factories\IObjectValidatorFactory.cs" />
