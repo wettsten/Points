@@ -17,7 +17,8 @@ namespace Points.Common.AutoMapper
         protected override void Configure()
         {
             // View to Raven
-            CreateMap<Model.ViewObject, Data.RavenObject>();
+            CreateMap<Model.ViewObject, Data.RavenObject>()
+                .ForMember(t => t.UserId, o => o.Ignore());
             CreateMap<Model.Duration, Data.Duration>()
                 .ForMember(t => t.Type, o => o.MapFrom(s => (Data.DurationType)Enum.Parse(typeof(Data.DurationType), s.Type.Id)))
                 .ForMember(t => t.Unit, o => o.MapFrom(s => (Data.DurationUnit)Enum.Parse(typeof(Data.DurationUnit), s.Unit.Id)));

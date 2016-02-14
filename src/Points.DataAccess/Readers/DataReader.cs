@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Points.Data;
-using Raven.Abstractions.Linq;
 using Raven.Client;
-using Raven.Client.Linq;
 
 namespace Points.DataAccess.Readers
 {
@@ -30,18 +27,7 @@ namespace Points.DataAccess.Readers
 
         public IList<RavenObject> GetAll(Type objType)
         {
-            //var x = _session.Advanced
-            //    .DocumentQuery<dynamic>("Raven/DocumentsByEntityName")
-            //    .Where("Tag:" + objType);
-            var ids = _session.Advanced
-                .DocumentQuery<dynamic>()
-                .SelectFields<dynamic>("@metadata")
-                .Select(
-                    x => new {Id = x["__document_id"], Type = x["@metadata"]["Raven-Clr-Type"]})
-                .Where(i => i.Type.StartsWith(objType.FullName));
-            var res = _session.Query<object>()
-                .ToList();
-            return new List<RavenObject>();
+            return _session.Query<object>(objType.Name).ToList().ConvertAll(i => i as RavenObject);
         }
     }
 }

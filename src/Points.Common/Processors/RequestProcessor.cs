@@ -27,31 +27,34 @@ namespace Points.Common.Processors
             _mapFactory = mapFactory;
         }
 
-        public void AddData<TView>(TView data) where TView : ViewObject
+        public void AddData<TView>(TView data, string userId) where TView : ViewObject
         {
-            var validator = _objectValidatorFactory.Get(typeof (TView));
-            validator?.ValidateAdd(data);
             // map to RavenObject
             var ravenObj = _mapFactory.MapToRavenObject(data);
+            ravenObj.UserId = userId;
+            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
+            validator?.ValidateAdd(ravenObj);
             _dataWriter.Add(ravenObj);
         }
 
-        public void EditData<TView>(TView data) where TView : ViewObject
+        public void EditData<TView>(TView data, string userId) where TView : ViewObject
         {
-            var validator = _objectValidatorFactory.Get(typeof(TView));
-            validator?.ValidateEdit(data);
             // map to RavenObject
             var ravenObj = _mapFactory.MapToRavenObject(data);
+            ravenObj.UserId = userId;
+            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
+            validator?.ValidateEdit(ravenObj);
             _dataWriter.Edit(ravenObj);
         }
 
-        public void DeleteData<TView>(ViewObject data) where TView : ViewObject
+        public void DeleteData<TView>(TView data, string userId) where TView : ViewObject
         {
-            var validator = _objectValidatorFactory.Get(typeof(TView));
-            validator?.ValidateDelete(data);
             // map to RavenObject
             var ravenObj = _mapFactory.MapToRavenObject(data);
-            _dataWriter.Delete(data.Id, ravenObj.GetType());
+            ravenObj.UserId = userId;
+            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
+            validator?.ValidateDelete(ravenObj);
+            _dataWriter.Delete(ravenObj);
         }
 
         public IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject
@@ -75,14 +78,14 @@ namespace Points.Common.Processors
         public IList<object> GetEnums(string enumType)
         {
             var output = new List<object>();
-            var eType = Type.GetType(enumType);
+            var eType = Type.GetType("Points.Data." + enumType + ", Points.Data");
             if (eType != null)
             {
                 foreach (var item in Enum.GetValues(eType))
                 {
                     output.Add(new
                     {
-                        Id = item,
+                        Id = item.ToString(),
                         Name = item.Spacify()
                     });
                 }

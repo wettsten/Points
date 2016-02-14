@@ -7,7 +7,7 @@ using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    public class ResourceController<TView> : ApiController where TView : ViewObject
+    public class ResourceController<TView> : ApiController where TView : ViewObject, new()
     {
         protected readonly IRequestProcessor _requestProcessor;
 
@@ -36,8 +36,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.Id = string.Empty;
-                obj.UserId = GetUserIdFromHeaders();
-                _requestProcessor.AddData<TView>(obj);
+                _requestProcessor.AddData(obj, GetUserIdFromHeaders());
                 return Ok();
             }
             catch(InvalidDataException ide)
@@ -58,8 +57,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                obj.UserId = GetUserIdFromHeaders();
-                _requestProcessor.EditData<TView>(obj);
+                _requestProcessor.EditData(obj, GetUserIdFromHeaders());
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -80,11 +78,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData<TView>(new ViewObject
-                {
-                    Id = id,
-                    UserId = GetUserIdFromHeaders()
-                });
+                _requestProcessor.DeleteData(new TView { Id = id }, GetUserIdFromHeaders());
                 return Ok();
             }
             catch (InvalidDataException ide)
