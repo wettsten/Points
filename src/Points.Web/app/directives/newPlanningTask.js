@@ -27,7 +27,7 @@ app.directive('newPlanningTask', function () {
     $scope.cats = [];
     $scope.enums = {};
 
-    var resetDropdowns = function () {
+    $scope.resetDropdowns = function () {
         $scope.addTaskData.cat = $scope.cats[0];
         if ($scope.cats.length > 0) {
             $scope.addTaskData.task = $scope.cats[0].tasks[0];
@@ -42,18 +42,18 @@ app.directive('newPlanningTask', function () {
         $scope.cats = resourceService.get('availabletasks');
         $scope.enums = resourceService.get('enums');
         $timeout(function() {
-            resetDropdowns();
+            $scope.resetDropdowns();
         }, 1000);
     };
 
     resourceService.registerForUpdates('availabletasks', function (data) {
         $scope.cats = data;
-        resetDropdowns();
+        $scope.resetDropdowns();
     });
 
     resourceService.registerForUpdates('enums', function (data) {
         $scope.enums = data;
-        resetDropdowns();
+        $scope.resetDropdowns();
     });
 
     $scope.showAddDuration = function () {
@@ -71,14 +71,8 @@ app.directive('newPlanningTask', function () {
     };
 
     $scope.addTask = function () {
-        var aTask = angular.copy($scope.addTaskData);
-        aTask.name = $scope.addTaskData.task.id;
-        aTask.taskId = $scope.addTaskData.task.id;
-        aTask.duration.type = $scope.addTaskData.duration.type.id;
-        aTask.duration.unit = $scope.addTaskData.duration.unit.id;
-        aTask.frequency.type = $scope.addTaskData.frequency.type.id;
-        aTask.frequency.unit = $scope.addTaskData.frequency.unit.id;
-        resourceService.add('planningtasks',aTask).then(
+        $scope.addTaskData.name = $scope.addTaskData.task.name;
+        resourceService.add('planningtasks', $scope.addTaskData).then(
             function (response) {
                 $scope.resetAddData();
                 $scope.addAlert({ type: 'success', msg: 'Task successfully added' });

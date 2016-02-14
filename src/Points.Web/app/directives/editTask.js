@@ -44,7 +44,6 @@ app.directive('editTask', function () {
     };
 
     $scope.saveEdit = function () {
-        $scope.editTask.categoryId = $scope.editTask.category.id;
         resourceService.edit('tasks',$scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
