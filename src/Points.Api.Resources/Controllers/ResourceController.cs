@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Http;
 using Points.Common.Processors;
 using Points.Model;
@@ -18,7 +19,7 @@ namespace Points.Api.Resources.Controllers
         
         protected IHttpActionResult GetForUser()
         {
-            string userid = GetUserIdFromHeaders();
+            string userid = GetUserIdFromToken();
             if (string.IsNullOrWhiteSpace(userid))
             {
                 return BadRequest("User id is required");
@@ -36,7 +37,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.Id = string.Empty;
-                _requestProcessor.AddData(obj, GetUserIdFromHeaders());
+                _requestProcessor.AddData(obj, GetUserIdFromToken());
                 return Ok();
             }
             catch(InvalidDataException ide)
@@ -57,7 +58,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.EditData(obj, GetUserIdFromHeaders());
+                _requestProcessor.EditData(obj, GetUserIdFromToken());
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -78,7 +79,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData(new TView { Id = id }, GetUserIdFromHeaders());
+                _requestProcessor.DeleteData(new TView { Id = id }, GetUserIdFromToken());
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -99,7 +100,17 @@ namespace Points.Api.Resources.Controllers
 
         protected string GetUserIdFromHeaders()
         {
+            if (!Request.Headers.Contains("UserId"))
+            {
+                return string.Empty;
+            }
             return Request.Headers.GetValues("UserId").FirstOrDefault();
+        }
+
+        protected string GetUserIdFromToken()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            return identity?.Claims?.FirstOrDefault(i => i.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
         }
     }
 }

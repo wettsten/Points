@@ -4,7 +4,7 @@ using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/categories")]
     public class CategoriesController : ResourceController<Category>
     {

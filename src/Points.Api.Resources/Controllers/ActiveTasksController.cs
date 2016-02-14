@@ -7,7 +7,7 @@ using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/activetasks")]
     public class ActiveTasksController : ResourceController<ActiveTask>
     {
@@ -39,7 +39,7 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult UpdateTask(ActiveTask task)
         {
             var aTask = _requestProcessor
-                .GetListForUser<ActiveTask>(GetUserIdFromHeaders())
+                .GetListForUser<ActiveTask>(GetUserIdFromToken())
                 .FirstOrDefault(t => t.Id.Equals(task.Id, StringComparison.InvariantCultureIgnoreCase));
             if (aTask == null)
             {

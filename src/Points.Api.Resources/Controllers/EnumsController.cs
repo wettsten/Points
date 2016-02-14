@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
-using Points.Common.EnumExtensions;
+﻿using System.Web.Http;
 using Points.Common.Processors;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/enums")]
     public class EnumsController : ApiController
     {

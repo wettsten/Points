@@ -6,7 +6,7 @@ using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/availabletasks")]
     public class AvailableTasksController : ResourceController<Task>
     {
@@ -20,7 +20,7 @@ namespace Points.Api.Resources.Controllers
             if (tasks.IsOk())
             {
                 var inUseTasks = _requestProcessor
-                    .GetListForUser<PlanningTask>(GetUserIdFromHeaders())
+                    .GetListForUser<PlanningTask>(GetUserIdFromToken())
                     .Select(i => i.Task.Id);
                 var content = tasks.GetContent<Task>();
                 var cats = content

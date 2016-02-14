@@ -8,7 +8,7 @@ using Points.Scheduler.Jobs;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/jobs")]
     public class JobsController : ResourceController<Job>
     {

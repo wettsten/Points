@@ -9,7 +9,7 @@ using Points.Scheduler.Processors;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/users")]
     public class UsersController : ResourceController<User>
     {
@@ -23,6 +23,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetUserByName(string name)
         {
+            //GetForUser();
             if (string.IsNullOrWhiteSpace(name))
             {
                 return BadRequest("Name is required");
