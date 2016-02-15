@@ -14,17 +14,14 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
     };
 
     var loadCats = function () {
-        $scope.cats = resourceService.get('activetasks');
-        setupCats();
-        $timeout(function () {
-            if ($scope.cats.length === 0) {
-                $scope.addAlert('warning', 'No active tasks found');
-            }
-        }, 1000);
+        resourceService.get('activetasks');
     };
 
     resourceService.registerForUpdates('activetasks', function (data) {
         $scope.cats = data;
+        if ($scope.cats.length === 0) {
+            $scope.addAlert('warning', 'No active tasks found');
+        }
         setupCats();
     });
 

@@ -16,7 +16,7 @@ app.directive('editPlanningTask', function () {
     $scope.enums = {};
 
     var loadEnums = function () {
-        $scope.enums = resourceService.get('enums');
+        resourceService.get('enums');
     };
 
     resourceService.registerForUpdates('enums', function (data) {

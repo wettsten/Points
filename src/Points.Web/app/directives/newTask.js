@@ -20,11 +20,12 @@ app.directive('newTask', function () {
     };
 
     var loadCats = function() {
-        $scope.cats = resourceService.get('categories');
+        resourceService.get('categories');
     };
 
     resourceService.registerForUpdates('categories', function (data) {
         $scope.cats = data;
+        $scope.clearAddData();
     });
 
     $scope.addTask = function () {

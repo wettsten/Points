@@ -39,11 +39,8 @@ app.directive('newPlanningTask', function () {
     };
 
     var loadCats = function () {
-        $scope.cats = resourceService.get('availabletasks');
-        $scope.enums = resourceService.get('enums');
-        $timeout(function() {
-            $scope.resetDropdowns();
-        }, 1000);
+        resourceService.get('availabletasks');
+        resourceService.get('enums');
     };
 
     resourceService.registerForUpdates('availabletasks', function (data) {

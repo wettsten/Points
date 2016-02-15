@@ -11,16 +11,14 @@ app.controller('catsController', ['$scope', 'resourceService', 'filterFactory', 
     });
 
     $scope.loadCats = function () {
-        $scope.cats = resourceService.get('categories');
-        $timeout(function () {
-            if ($scope.cats.length === 0) {
-                $scope.addAlert('warning', 'No categories found');
-            }
-        }, 1000);
+        resourceService.get('categories');
     };
 
     resourceService.registerForUpdates('categories', function (data) {
         $scope.cats = data;
+        if ($scope.cats.length === 0) {
+            $scope.addAlert('warning', 'No categories found');
+        }
     });
 
     $scope.addAlert = function (type, msg) {
