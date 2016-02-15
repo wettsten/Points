@@ -25,7 +25,7 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', function 
 
     service.add = function (type,data) {
         return $http.post(serviceBase + 'api/' + type, data).then(function () {
-            $timeout(service.get(type), 500);
+            $timeout(service.get(type), 1000);
             if (type === 'planningtasks') {
                 $timeout(service.get('availabletasks'), 500);
             }
