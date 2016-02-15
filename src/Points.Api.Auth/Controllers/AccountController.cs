@@ -132,7 +132,7 @@ namespace Points.Api.Auth.Controllers
                 return BadRequest("External user is already registered");
             }
 
-            user = new IdentityUser() { UserName = model.UserName };
+            user = new IdentityUser { UserName = model.UserName };
 
             IdentityResult result = await _repo.CreateAsync(user);
             if (!result.Succeeded)
@@ -153,7 +153,7 @@ namespace Points.Api.Auth.Controllers
             }
 
             //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
+            var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
 
             return Ok(accessTokenResponse);
         }
@@ -185,7 +185,7 @@ namespace Points.Api.Auth.Controllers
             }
 
             //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
+            var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
 
             return Ok(accessTokenResponse);
 
@@ -350,15 +350,16 @@ namespace Points.Api.Auth.Controllers
             return parsedToken;
         }
 
-        private JObject GenerateLocalAccessTokenResponse(string userName)
+        private JObject GenerateLocalAccessTokenResponse(IdentityUser user)
         {
 
             var tokenExpiration = TimeSpan.FromDays(1);
 
             ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 
-            identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
             identity.AddClaim(new Claim("role", "user"));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             var props = new AuthenticationProperties()
             {
@@ -371,7 +372,7 @@ namespace Points.Api.Auth.Controllers
             var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
 
             JObject tokenResponse = new JObject(
-                                        new JProperty("userName", userName),
+                                        new JProperty("userName", user.UserName),
                                         new JProperty("access_token", accessToken),
                                         new JProperty("token_type", "bearer"),
                                         new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
