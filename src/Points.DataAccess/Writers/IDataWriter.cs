@@ -1,4 +1,5 @@
-﻿using Points.Data.Raven;
+﻿using System;
+using Points.Data;
 
 namespace Points.DataAccess.Writers
 {
@@ -6,6 +7,6 @@ namespace Points.DataAccess.Writers
     {
         void Add<TN>(TN obj) where TN : RavenObject;
         void Edit<TU>(TU obj) where TU : RavenObject;
-        void Delete<TD>(string id) where TD : RavenObject;
+        void Delete<TD>(TD obj) where TD : RavenObject;
     }
 }

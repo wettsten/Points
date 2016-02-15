@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Points.Data.Raven;
+using Points.Data;
 
 namespace Points.DataAccess.Readers
 {

@@ -11,16 +11,14 @@ app.controller('tasksController', ['$scope', 'resourceService', 'filterFactory',
     });
 
     $scope.loadTasks = function () {
-        $scope.tasks = resourceService.get('tasks');
-        $timeout(function() {
-            if ($scope.tasks.length === 0) {
-                $scope.addAlert('warning', 'No tasks found');
-            }
-        }, 1000);
+        resourceService.get('tasks');
     };
 
     resourceService.registerForUpdates('tasks', function (data) {
         $scope.tasks = data;
+        if ($scope.tasks.length === 0) {
+            $scope.addAlert('warning', 'No tasks found');
+        }
     });
 
     $scope.addAlert = function (type, msg) {

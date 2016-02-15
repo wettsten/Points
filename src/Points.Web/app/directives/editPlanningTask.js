@@ -16,7 +16,7 @@ app.directive('editPlanningTask', function () {
     $scope.enums = {};
 
     var loadEnums = function () {
-        $scope.enums = resourceService.get('enums');
+        resourceService.get('enums');
     };
 
     resourceService.registerForUpdates('enums', function (data) {
@@ -79,13 +79,7 @@ app.directive('editPlanningTask', function () {
         if ($scope.disableEditSave()) {
             return;
         }
-        var eTask = angular.copy($scope.editTask);
-        eTask.duration.type = $scope.editTask.duration.type.id;
-        eTask.duration.unit = $scope.editTask.duration.unit.id;
-        eTask.frequency.type = $scope.editTask.frequency.type.id;
-        eTask.frequency.unit = $scope.editTask.frequency.unit.id;
-        eTask.taskId = $scope.editTask.task.id;
-        resourceService.edit('planningtasks',eTask).then(
+        resourceService.edit('planningtasks', $scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
                 $scope.$emit('refreshTasks');

@@ -10,7 +10,6 @@ app.factory('authInterceptorService', ['$q', '$injector','$location', 'localStor
         var authData = localStorageService.get('authorizationData');
         if (authData) {
             config.headers.Authorization = 'Bearer ' + authData.token;
-            config.headers.UserId = authData.userId;
         }
 
         return config;

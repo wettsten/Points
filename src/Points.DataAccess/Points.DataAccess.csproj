@@ -65,7 +65,7 @@
     <Compile Include="Writers\ISingleSessionDataWriter.cs" />
     <Compile Include="Writers\SingleSessionDataWriter.cs" />
     <Compile Include="Writers\DataWriter.cs" />
-    <Compile Include="DependencyManagement\DependencyRegistry.cs" />
+    <Compile Include="DependencyManagement\DataAccessRegistry.cs" />
     <Compile Include="Readers\IDataReader.cs" />
     <Compile Include="Writers\IDataWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Points.Data;
-using Points.Data.Raven;
-using Points.Data.View;
+using Points.Model;
 
 namespace Points.Common.Processors
 {
     public interface IRequestProcessor
     {
-        void AddData<T>(T data) where T : RavenObject;
-        void EditData<T>(T data) where T : RavenObject;
-        void DeleteData<T>(T data) where T : RavenObject;
-        IList<TOut> GetListForUser<TIn, TOut>(string userId) where TIn : RavenObject where TOut : ViewObject;
+        void AddData<TView>(TView data, string userId) where TView : ViewObject;
+        void EditData<TView>(TView data, string userId) where TView : ViewObject;
+        void DeleteData<TView>(TView data, string userId) where TView : ViewObject;
+        IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject;
+        IList<object> GetEnums(string enumType);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Points.Data.Raven;
+﻿using System;
+using Points.Data;
 using Raven.Client;
 
 namespace Points.DataAccess.Writers
@@ -26,13 +27,13 @@ namespace Points.DataAccess.Writers
             _session.SaveChanges();
         }
 
-        public void Delete<TD>(string id) where TD : RavenObject
+        public void Delete<TD>(TD obj) where TD : RavenObject
         {
-            var existingObj = _session.Load<TD>(id);
-            if (existingObj != null)
+            var existingObj = _session.Load<object>(obj.Id);
+            if (existingObj != null && existingObj.GetType() == obj.GetType())
             {
                 // object exists
-                _session.Delete(id);
+                _session.Delete(obj.Id);
                 _session.SaveChanges();
             }
         }

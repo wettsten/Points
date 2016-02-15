@@ -31,7 +31,7 @@ app.directive('editTask', function () {
     };
 
     var loadCats = function () {
-        $scope.cats = resourceService.get('categories');
+        resourceService.get('categories');
     };
 
     resourceService.registerForUpdates('categories', function (data) {
@@ -44,7 +44,6 @@ app.directive('editTask', function () {
     };
 
     $scope.saveEdit = function () {
-        $scope.editTask.categoryId = $scope.editTask.category.id;
         resourceService.edit('tasks',$scope.editTask).then(
             function (response) {
                 $scope.clearEditData();

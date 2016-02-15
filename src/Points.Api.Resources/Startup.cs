@@ -16,7 +16,7 @@ namespace Points.Api.Resources
 
         public void Configuration(IAppBuilder app)
         {
-            var container = IoC.Initialize();
+            var container = StructuremapMvc.StructureMapDependencyScope.Container;
             HttpConfiguration config = new HttpConfiguration();
 
             ConfigureOAuth(app);

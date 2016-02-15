@@ -2,63 +2,58 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
-using Points.DataAccess;
-using Points.DataAccess.Readers;
+using Points.Model;
 using Points.Scheduler.Jobs;
 using Points.Scheduler.Processors;
-using RavenUser = Points.Data.Raven.User;
-using ViewUser = Points.Data.View.User;
-using RavenJob = Points.Data.Raven.Job;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/users")]
-    public class UsersController : ResourceController<RavenUser,ViewUser>
+    public class UsersController : ResourceController<User>
     {
-        private readonly IDataReader _dataReader;
         private readonly IJobManager _jobProcessor;
 
-        public UsersController(IRequestProcessor requestProcessor, IDataReader dataReader, IJobManager jobProcessor) : base(requestProcessor)
+        public UsersController(IRequestProcessor requestProcessor, IJobManager jobProcessor) : base(requestProcessor)
         {
-            _dataReader = dataReader;
             _jobProcessor = jobProcessor;
         }
 
         [Route("")]
-        public IHttpActionResult GetUserByName(string name)
+        public IHttpActionResult GetUser()
         {
-            if (string.IsNullOrWhiteSpace(name))
+            var usr = GetForUser();
+            if (usr.IsOk())
             {
-                return BadRequest("Name is required");
-            }
-            var usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-            if (usr == null)
-            {
-                var now = DateTime.UtcNow.AddDays(1).AddHours(1);
-                usr = new RavenUser
+                var user = usr.GetContent<User>().FirstOrDefault();
+                if (user == null)
                 {
-                    Name = name,
-                    Email = string.Empty,
-                    WeekStartDay = now.DayOfWeek,
-                    WeekStartHour = now.Hour,
-                    NotifyWeekStarting = 0,
-                    NotifyWeekEnding = 0
-                };
-                Add(usr);
-                usr = _dataReader.GetAll<RavenUser>().FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-                EnsureStartJobForUser(usr.Id);
-                return Ok(usr);
+                    var now = DateTime.UtcNow.AddDays(1).AddHours(1);
+                    user = new User
+                    {
+                        Id = GetUserIdFromToken(),
+                        Name = GetUserNameFromToken(),
+                        Email = string.Empty,
+                        WeekStartDay = now.DayOfWeek,
+                        WeekStartHour = now.Hour,
+                        NotifyWeekStarting = 0,
+                        NotifyWeekEnding = 0
+                    };
+                    _requestProcessor.AddData(user, user.Id);
+                    usr = GetForUser();
+                }
+                EnsureStartJobForUser(user.Id);
+                return usr;
             }
-            EnsureStartJobForUser(usr.Id);
-            return Ok(usr);
+            return usr;
         }
 
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditUser(RavenUser user)
+        public IHttpActionResult EditUser(User user)
         {
             var result = Edit(user);
             if (result is OkResult)
@@ -70,11 +65,9 @@ namespace Points.Api.Resources.Controllers
 
         private void EnsureStartJobForUser(string userId)
         {
-            var job = _dataReader
-                .GetAll<RavenJob>()
-                .Where(i => i.Processor.Equals(typeof (StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
-                .FirstOrDefault(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase));
-            if (job == null)
+            if (!_requestProcessor
+                .GetListForUser<Job>(userId)
+                .Any(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase)))
             {
                 _jobProcessor.ScheduleStartJob(userId);
             }

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.4.0.0.315\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -50,18 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DependencyManagement\DependencyRegistry.cs" />
+    <Compile Include="AutoMapper\MappingProfile.cs" />
+    <Compile Include="DependencyManagement\CommonRegistry.cs" />
+    <Compile Include="EnumExtensions\EnumExtensions.cs" />
+    <Compile Include="Factories\IMapFactory.cs" />
     <Compile Include="Factories\IObjectValidatorFactory.cs" />
     <Compile Include="Factories\ObjectValidatorFactory.cs" />
-    <Compile Include="Mappers\JobMapper.cs" />
-    <Compile Include="Mappers\ArchivedTaskMapper.cs" />
-    <Compile Include="Mappers\UserMapper.cs" />
-    <Compile Include="Mappers\ObjectMapper.cs" />
-    <Compile Include="Mappers\ActiveTaskMapper.cs" />
-    <Compile Include="Mappers\PlanningTaskMapper.cs" />
-    <Compile Include="Mappers\TaskMapper.cs" />
-    <Compile Include="Mappers\CategoryMapper.cs" />
-    <Compile Include="Mappers\IObjectMapper.cs" />
+    <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Processors\IRequestProcessor.cs" />
     <Compile Include="Processors\RequestProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +84,10 @@
     <ProjectReference Include="..\Points.Data\Points.Data.csproj">
       <Project>{3e8b9067-10da-49f7-abf4-7e800c055abe}</Project>
       <Name>Points.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Points.Model\Points.Model.csproj">
+      <Project>{4e456776-5f29-4f69-a0bb-32cf6b388036}</Project>
+      <Name>Points.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

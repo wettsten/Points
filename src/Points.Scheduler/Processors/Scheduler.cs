@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Points.Data.Raven;
+using Points.Data;
 using Points.DataAccess;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;

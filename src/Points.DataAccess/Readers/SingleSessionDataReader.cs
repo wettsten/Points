@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Points.Data.Raven;
+using Points.Data;
 using Raven.Client;
 
 namespace Points.DataAccess.Readers

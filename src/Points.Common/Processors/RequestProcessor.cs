@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Points.Common.EnumExtensions;
 using Points.Common.Factories;
-using Points.Common.Mappers;
-using Points.Data;
-using Points.Data.Raven;
-using Points.Data.View;
-using Points.DataAccess;
+using Points.Model;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
 using StructureMap;
@@ -19,44 +16,73 @@ namespace Points.Common.Processors
         private readonly IDataWriter _dataWriter;
         private readonly IObjectValidatorFactory _objectValidatorFactory;
         private readonly IContainer _container;
+        private readonly IMapFactory _mapFactory;
 
-        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IContainer container)
+        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IContainer container, IMapFactory mapFactory)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _objectValidatorFactory = objectValidatorFactory;
             _container = container;
+            _mapFactory = mapFactory;
         }
 
-        public void AddData<T>(T data) where T : RavenObject
+        public void AddData<TView>(TView data, string userId) where TView : ViewObject
         {
-            var validator = _objectValidatorFactory.Get(typeof (T));
-            validator?.ValidateAdd(data);
-            _dataWriter.Add(data);
+            // map to RavenObject
+            var ravenObj = _mapFactory.MapToRavenObject(data);
+            ravenObj.UserId = userId;
+            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
+            validator?.ValidateAdd(ravenObj);
+            _dataWriter.Add(ravenObj);
         }
 
-        public void EditData<T>(T data) where T : RavenObject
+        public void EditData<TView>(TView data, string userId) where TView : ViewObject
         {
-            var validator = _objectValidatorFactory.Get(typeof(T));
-            validator?.ValidateEdit(data);
-            _dataWriter.Edit(data);
+            // map to RavenObject
+            var ravenObj = _mapFactory.MapToRavenObject(data);
+            ravenObj.UserId = userId;
+            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
+            validator?.ValidateEdit(ravenObj);
+            _dataWriter.Edit(ravenObj);
         }
 
-        public void DeleteData<T>(T data) where T : RavenObject
+        public void DeleteData<TView>(TView data, string userId) where TView : ViewObject
         {
-            var validator = _objectValidatorFactory.Get(typeof(T));
-            validator?.ValidateDelete(data);
-            _dataWriter.Delete<T>(data.Id);
+            // map to RavenObject
+            var ravenObj = _mapFactory.MapToRavenObject(data);
+            ravenObj.UserId = userId;
+            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
+            validator?.ValidateDelete(ravenObj);
+            _dataWriter.Delete(ravenObj);
         }
 
-        public IList<TOut> GetListForUser<TIn,TOut>(string userId) where TIn : RavenObject where TOut : ViewObject
+        public IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject
         {
-            var mapper = _container.GetInstance<IObjectMapper<TIn, TOut>>();
+            var ravenType = _mapFactory.GetDestinationType(typeof (TView));
             var objs = _dataReader
-                .GetAll<TIn>()
+                .GetAll(ravenType)
                 .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
                 .ToList();
-            return objs.Select(i => mapper.Map(i)).ToList();
+            return objs.Select(i => (TView)_mapFactory.MapToViewObject(i)).ToList();
+        }
+
+        public IList<object> GetEnums(string enumType)
+        {
+            var output = new List<object>();
+            var eType = Type.GetType("Points.Data." + enumType + ", Points.Data");
+            if (eType != null)
+            {
+                foreach (var item in Enum.GetValues(eType))
+                {
+                    output.Add(new
+                    {
+                        Id = item.ToString(),
+                        Name = item.Spacify()
+                    });
+                }
+            }
+            return output;
         }
     }
 }

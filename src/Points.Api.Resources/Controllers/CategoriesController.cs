@@ -1,13 +1,12 @@
 ﻿using System.Web.Http;
 using Points.Common.Processors;
-using RavenCategory = Points.Data.Raven.Category;
-using ViewCategory = Points.Data.View.Category;
+using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/categories")]
-    public class CategoriesController : ResourceController<RavenCategory,ViewCategory>
+    public class CategoriesController : ResourceController<Category>
     {
         public CategoriesController(IRequestProcessor requestProcessor) : base(requestProcessor)
         {}
@@ -20,7 +19,7 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddCategory(RavenCategory category)
+        public IHttpActionResult AddCategory(Category category)
         {
             return Add(category);
         }
@@ -28,7 +27,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditCategory(RavenCategory category)
+        public IHttpActionResult EditCategory(Category category)
         {
             return Edit(category);
         }

@@ -40,6 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -69,8 +73,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
@@ -126,7 +130,7 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
+      <HintPath>..\packages\WebActivatorEx.2.1.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -148,7 +152,6 @@
     <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ArchivedTasksController.cs" />
-    <Compile Include="Controllers\HealthController.cs" />
     <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\EnumsController.cs" />
     <Compile Include="Controllers\PlanningTasksController.cs" />
@@ -173,13 +176,9 @@
       <Project>{846d3d22-2ecb-4e01-9fbf-bae697cde539}</Project>
       <Name>Points.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Points.DataAccess\Points.DataAccess.csproj">
-      <Project>{0b230498-d658-4be6-a41f-241a5d69bab5}</Project>
-      <Name>Points.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Points.Data\Points.Data.csproj">
-      <Project>{3e8b9067-10da-49f7-abf4-7e800c055abe}</Project>
-      <Name>Points.Data</Name>
+    <ProjectReference Include="..\Points.Model\Points.Model.csproj">
+      <Project>{4e456776-5f29-4f69-a0bb-32cf6b388036}</Project>
+      <Name>Points.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Points.Scheduler\Points.Scheduler.csproj">
       <Project>{7c8aea43-489c-4594-8eb8-a41de55e251c}</Project>

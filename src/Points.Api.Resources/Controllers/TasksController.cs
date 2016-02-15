@@ -1,13 +1,12 @@
 ﻿using System.Web.Http;
 using Points.Common.Processors;
-using RavenTask = Points.Data.Raven.Task;
-using ViewTask = Points.Data.View.Task;
+using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/tasks")]
-    public class TasksController : ResourceController<RavenTask,ViewTask>
+    public class TasksController : ResourceController<Task>
     {
         public TasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
         { }
@@ -20,7 +19,7 @@ namespace Points.Api.Resources.Controllers
 
         [Route("")]
         [HttpPost]
-        public IHttpActionResult AddTask(RavenTask task)
+        public IHttpActionResult AddTask(Task task)
         {
             return Add(task);
         }
@@ -28,7 +27,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         [HttpPut]
         //[HttpPatch]
-        public IHttpActionResult EditTask(RavenTask task)
+        public IHttpActionResult EditTask(Task task)
         {
             return Edit(task);
         }

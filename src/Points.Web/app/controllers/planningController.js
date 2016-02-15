@@ -12,17 +12,14 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', f
     };
 
     var loadCats = function () {
-        $scope.cats = resourceService.get('planningtasks');
-        setupCats();
-        $timeout(function () {
-            if ($scope.cats.length === 0) {
-                $scope.addAlert('warning', 'No planning tasks found');
-            }
-        }, 1000);
+        resourceService.get('planningtasks');
     };
 
     resourceService.registerForUpdates('planningtasks', function (data) {
         $scope.cats = data;
+        if ($scope.cats.length === 0) {
+            $scope.addAlert('warning', 'No planning tasks found');
+        }
         setupCats();
     });
 

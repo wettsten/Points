@@ -14,17 +14,14 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
     };
 
     var loadCats = function () {
-        $scope.cats = resourceService.get('activetasks');
-        setupCats();
-        $timeout(function () {
-            if ($scope.cats.length === 0) {
-                $scope.addAlert('warning', 'No active tasks found');
-            }
-        }, 1000);
+        resourceService.get('activetasks');
     };
 
     resourceService.registerForUpdates('activetasks', function (data) {
         $scope.cats = data;
+        if ($scope.cats.length === 0) {
+            $scope.addAlert('warning', 'No active tasks found');
+        }
         setupCats();
     });
 
@@ -45,14 +42,8 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
     };
 
     $scope.check = function (task) {
-        var editTask = angular.copy(task);
-        editTask.timesCompleted += 1;
-        editTask.taskId = task.task.id;
-        editTask.duration.type = task.duration.type.id;
-        editTask.duration.unit = task.duration.unit.id;
-        editTask.frequency.type = task.frequency.type.id;
-        editTask.frequency.unit = task.frequency.unit.id;
-        resourceService.edit('activetasks', editTask).then(
+        task.timesCompleted += 1;
+        resourceService.edit('activetasks', task).then(
             function (response) {
                 $scope.addAlert('success', 'Task successfully checked');
             },
@@ -80,14 +71,8 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
 
         modalInstance.result.then(function (result) {
             if (result !== 'cancel') {
-                var editTask = angular.copy(task);
-                editTask.timesCompleted -= 1;
-                editTask.taskId = task.task.id;
-                editTask.duration.type = task.duration.type.id;
-                editTask.duration.unit = task.duration.unit.id;
-                editTask.frequency.type = task.frequency.type.id;
-                editTask.frequency.unit = task.frequency.unit.id;
-                resourceService.edit('activetasks', editTask).then(
+                task.timesCompleted -= 1;
+                resourceService.edit('activetasks', task).then(
                     function (response) {
                         $scope.addAlert('success', 'Task successfully unchecked');
                     },

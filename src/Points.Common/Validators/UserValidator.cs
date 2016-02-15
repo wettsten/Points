@@ -1,6 +1,5 @@
 using System;
 using Points.Data;
-using Points.Data.Raven;
 using Points.DataAccess;
 using Points.DataAccess.Readers;
 

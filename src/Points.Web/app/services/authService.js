@@ -6,8 +6,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
     var _authentication = {
         isAuth: false,
-        userName: "",
-        userId: 0
+        userName: ""
     };
 
     var _externalAuthData = {
@@ -36,17 +35,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
-            usersService.getUserByName(loginData.userName).then(
-                function (results) {
-                    _authentication.userId = results.data.id;
-                    _authentication.allowEditPublic = results.data.allowAdvancedEdit;
-                    localStorageService.set('authorizationData', {
-                        token: response.access_token,
-                        userName: loginData.userName,
-                        userId: _authentication.userId
-                    });
-                    deferred.resolve(response);
+            localStorageService.set('authorizationData', {
+                token: response.access_token,
+                userName: loginData.userName
             });
+            usersService.getUser();
+            deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);
@@ -62,7 +56,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
         _authentication.isAuth = false;
         _authentication.userName = "";
-        _authentication.userId = 0;
 
     };
 
@@ -72,7 +65,6 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
         if (authData) {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
-            _authentication.userId = authData.userId;
         }
 
     };
@@ -85,16 +77,12 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
-            usersService.getUserByName(response.userName).then(function (results) {
-                _authentication.userId = results.data.id;
-                _authentication.allowEditPublic = results.data.allowAdvancedEdit;
-                localStorageService.set('authorizationData', {
-                    token: response.access_token,
-                    userName: response.userName,
-                    userId: _authentication.userId
-                });
-                deferred.resolve(response);
+            localStorageService.set('authorizationData', {
+                token: response.access_token,
+                userName: response.userName
             });
+            usersService.getUser();
+            deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);
@@ -112,16 +100,13 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
-            usersService.getUserByName(response.userName).then(function (results) {
-                _authentication.userId = results.data.id;
-                _authentication.allowEditPublic = results.data.allowAdvancedEdit;
-                localStorageService.set('authorizationData', {
-                    token: response.access_token,
-                    userName: response.userName,
-                    userId: _authentication.userId
-                });
-                deferred.resolve(response);
+            localStorageService.set('authorizationData', {
+                token: response.access_token,
+                userName: response.userName,
+                userId: _authentication.userId
             });
+            usersService.getUser();
+            deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
             deferred.reject(err);

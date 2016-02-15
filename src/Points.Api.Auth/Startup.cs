@@ -43,9 +43,9 @@ namespace Points.Api.Auth
             
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
-                Provider = new SimpleAuthorizationServerProvider(),
-                RefreshTokenProvider = new SimpleRefreshTokenProvider()
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(12),
+                Provider = new SimpleAuthorizationServerProvider()
+                //RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
 
             // Token Generation

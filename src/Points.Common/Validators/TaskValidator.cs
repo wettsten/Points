@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using Points.Data;
-using Points.Data.Raven;
 using Points.DataAccess;
 using Points.DataAccess.Readers;
 
@@ -39,7 +38,7 @@ namespace Points.Common.Validators
         public void ValidateDelete(object data)
         {
             ValidateDelete<Task>(data);
-            var obj = data as Category;
+            var obj = data as Task;
             var tasks = DataReader.GetAll<PlanningTask>().Where(i => i.TaskId.Equals(obj.Id, StringComparison.InvariantCultureIgnoreCase));
             if (tasks.Any())
             {

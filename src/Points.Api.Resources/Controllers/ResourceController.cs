@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Http;
 using Points.Common.Processors;
-using Points.Data.Raven;
-using Points.Data.View;
+using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    public class ResourceController<TIn, TOut> : ApiController where TIn : RavenObject, new() where TOut : ViewObject
+    public class ResourceController<TView> : ApiController where TView : ViewObject, new()
     {
         protected readonly IRequestProcessor _requestProcessor;
 
@@ -19,16 +19,16 @@ namespace Points.Api.Resources.Controllers
         
         protected IHttpActionResult GetForUser()
         {
-            string userid = GetUserIdFromHeaders();
+            string userid = GetUserIdFromToken();
             if (string.IsNullOrWhiteSpace(userid))
             {
                 return BadRequest("User id is required");
             }
-            var objs = _requestProcessor.GetListForUser<TIn,TOut>(userid);
+            var objs = _requestProcessor.GetListForUser<TView>(userid);
             return Ok(objs.OrderBy(i => i.Name));
         }
 
-        protected IHttpActionResult Add(TIn obj)
+        protected IHttpActionResult Add(TView obj)
         {
             if (!ModelState.IsValid)
             {
@@ -37,8 +37,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.Id = string.Empty;
-                obj.UserId = GetUserIdFromHeaders();
-                _requestProcessor.AddData(obj);
+                _requestProcessor.AddData(obj, GetUserIdFromToken());
                 return Ok();
             }
             catch(InvalidDataException ide)
@@ -51,7 +50,7 @@ namespace Points.Api.Resources.Controllers
             }
         }
         
-        protected IHttpActionResult Edit(TIn obj)
+        protected IHttpActionResult Edit(TView obj)
         {
             if (!ModelState.IsValid)
             {
@@ -59,8 +58,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                obj.UserId = GetUserIdFromHeaders();
-                _requestProcessor.EditData(obj);
+                _requestProcessor.EditData(obj, GetUserIdFromToken());
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -81,11 +79,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                _requestProcessor.DeleteData(new TIn
-                {
-                    Id = id,
-                    UserId = GetUserIdFromHeaders()
-                });
+                _requestProcessor.DeleteData(new TView { Id = id }, GetUserIdFromToken());
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -106,7 +100,23 @@ namespace Points.Api.Resources.Controllers
 
         protected string GetUserIdFromHeaders()
         {
+            if (!Request.Headers.Contains("UserId"))
+            {
+                return string.Empty;
+            }
             return Request.Headers.GetValues("UserId").FirstOrDefault();
+        }
+
+        protected string GetUserNameFromToken()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            return identity?.Claims?.FirstOrDefault(i => i.Type.Equals(ClaimTypes.Name))?.Value;
+        }
+
+        protected string GetUserIdFromToken()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            return identity?.Claims?.FirstOrDefault(i => i.Type.Equals(ClaimTypes.NameIdentifier))?.Value;
         }
     }
 }
