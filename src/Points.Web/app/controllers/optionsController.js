@@ -166,9 +166,9 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
         },
     ];
 
-    $scope.loadUser = usersService.getUserByName(authService.authentication.userName).then(
+    $scope.loadUser = usersService.getUser().then(
             function (response) {
-                return response.data;
+                return response.data[0];
             });
 
     $scope.loadData = function () {

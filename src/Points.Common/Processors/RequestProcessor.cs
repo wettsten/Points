@@ -67,14 +67,6 @@ namespace Points.Common.Processors
             return objs.Select(i => (TView)_mapFactory.MapToViewObject(i)).ToList();
         }
 
-        public User GetUser(string name)
-        {
-            var dataUser = _dataReader
-                .GetAll<Data.User>()
-                .FirstOrDefault(i => i.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-            return (User)_mapFactory.MapToViewObject(dataUser);
-        }
-
         public IList<object> GetEnums(string enumType)
         {
             var output = new List<object>();

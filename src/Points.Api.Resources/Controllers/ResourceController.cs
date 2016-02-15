@@ -107,6 +107,12 @@ namespace Points.Api.Resources.Controllers
             return Request.Headers.GetValues("UserId").FirstOrDefault();
         }
 
+        protected string GetUserNameFromToken()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            return identity?.Claims?.FirstOrDefault(i => i.Type.Equals(ClaimTypes.Name))?.Value;
+        }
+
         protected string GetUserIdFromToken()
         {
             var identity = User.Identity as ClaimsIdentity;

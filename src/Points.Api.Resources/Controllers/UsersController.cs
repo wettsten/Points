@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
+using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
 using Points.Model;
 using Points.Scheduler.Jobs;
@@ -21,33 +22,32 @@ namespace Points.Api.Resources.Controllers
         }
 
         [Route("")]
-        public IHttpActionResult GetUserByName(string name)
+        public IHttpActionResult GetUser()
         {
-            //GetForUser();
-            if (string.IsNullOrWhiteSpace(name))
+            var usr = GetForUser();
+            if (usr.IsOk())
             {
-                return BadRequest("Name is required");
-            }
-            var usr = _requestProcessor.GetUser(name);
-            if (usr == null)
-            {
-                var now = DateTime.UtcNow.AddDays(1).AddHours(1);
-                usr = new User
+                var user = usr.GetContent<User>().FirstOrDefault();
+                if (user == null)
                 {
-                    Name = name,
-                    Email = string.Empty,
-                    WeekStartDay = now.DayOfWeek,
-                    WeekStartHour = now.Hour,
-                    NotifyWeekStarting = 0,
-                    NotifyWeekEnding = 0
-                };
-                Add(usr);
-                usr = _requestProcessor.GetUser(name);
-                EnsureStartJobForUser(usr.Id);
-                return Ok(usr);
+                    var now = DateTime.UtcNow.AddDays(1).AddHours(1);
+                    user = new User
+                    {
+                        Id = GetUserIdFromToken(),
+                        Name = GetUserNameFromToken(),
+                        Email = string.Empty,
+                        WeekStartDay = now.DayOfWeek,
+                        WeekStartHour = now.Hour,
+                        NotifyWeekStarting = 0,
+                        NotifyWeekEnding = 0
+                    };
+                    _requestProcessor.AddData(user, user.Id);
+                    usr = GetForUser();
+                }
+                EnsureStartJobForUser(user.Id);
+                return usr;
             }
-            EnsureStartJobForUser(usr.Id);
-            return Ok(usr);
+            return usr;
         }
 
         [Route("")]

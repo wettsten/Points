@@ -10,7 +10,6 @@ namespace Points.Common.Processors
         void EditData<TView>(TView data, string userId) where TView : ViewObject;
         void DeleteData<TView>(TView data, string userId) where TView : ViewObject;
         IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject;
-        User GetUser(string name);
         IList<object> GetEnums(string enumType);
     }
 }

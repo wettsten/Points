@@ -5,8 +5,8 @@ app.factory('usersService', ['$http', 'ngAuthSettings', function ($http, ngAuthS
 
     var usersServiceFactory = {};
 
-    usersServiceFactory.getUserByName = function (name) {
-        return $http.get(serviceBase + 'api/users?name=' + name).then(function(results) {
+    usersServiceFactory.getUser = function () {
+        return $http.get(serviceBase + 'api/users').then(function(results) {
             return results;
         });
     };
