@@ -1,13 +1,13 @@
 ﻿'use strict';
 app.controller('planningController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
 
-    $scope.cats = [];
+    $scope.tasks = [];
     $scope.alerts = [];
     $scope.taskInEdit = { id: '' };
 
     var setupCats = function() {
-        for (var i = 0; i < $scope.cats.length; i++) {
-            $scope.cats[i].isOpen = i === 0;
+        for (var i = 0; i < $scope.tasks.length; i++) {
+            $scope.tasks[i].isOpen = i === 0;
         }
     };
 
@@ -16,8 +16,8 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', f
     };
 
     resourceService.registerForUpdates('planningtasks', function (data) {
-        $scope.cats = data;
-        if ($scope.cats.length === 0) {
+        $scope.tasks = data;
+        if ($scope.tasks.length === 0) {
             $scope.addAlert('warning', 'No planning tasks found');
         }
         setupCats();
