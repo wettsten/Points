@@ -111,6 +111,7 @@
     <Content Include="app\views\directives\planningStatus.html" />
     <Content Include="app\views\partials\confirmUncheck.html" />
     <Content Include="app\views\partials\confirmDelete.html" />
+    <Content Include="app\views\partials\editPlanningTask.html" />
     <Content Include="app\views\planning.html" />
     <Content Include="app\views\options.html" />
     <Content Include="app\views\tasks.html" />
