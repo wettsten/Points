@@ -4,7 +4,8 @@
 
     <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
     <title>checkPoint!</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="content/css/bootstrap.spacelab.min.css" rel="stylesheet" />
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
     <!--<link href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" rel="stylesheet" />-->
     <link href="content/css/site.css" rel="stylesheet" />
     <link href="content/css/loading-bar.css" rel="stylesheet" />
@@ -70,41 +71,46 @@
     <script src="app/services/resourceService.js?v=2"></script>
     <script src="app/services/authService.js?v=2"></script>
     <script src="app/services/usersService.js?v=2"></script>
-    <script src="app/services/jobsService.js?v=2"></script>
-    <!-- Load controllers -->
-    <script src="app/controllers/indexController.js?v=2"></script>
-    <script src="app/controllers/homeController.js?v=2"></script>
-    <script src="app/controllers/loginController.js?v=2"></script>
-    <script src="app/controllers/signupController.js?v=2"></script>
-    <script src="app/controllers/activeController.js?v=2"></script>
-    <script src="app/controllers/planningController.js?v=2"></script>
-    <script src="app/controllers/catsController.js?v=2"></script>
-    <script src="app/controllers/tasksController.js?v=2"></script>
-    <script src="app/controllers/optionsController.js?v=2"></script>
-    <script src="app/controllers/associateController.js?v=2"></script>
-    <!-- Load custom filters -->
+    <script src="app/services/jobsService.js?v=2"></script>    <!-- Load custom factories -->
+    <script src="app/factories/filterFactory.js?v=2"></script>
+    <!-- Load active -->
+    <script src="app/areas/active/activeController.js?v=2"></script>
+    <!-- Load categories -->
+    <script src="app/areas/categories/catsController.js?v=2"></script>
+    <script src="app/areas/categories/newCat.js?v=2"></script>
+    <script src="app/areas/categories/editCat.js?v=2"></script>
+    <script src="app/areas/categories/filterCat.js?v=2"></script>
+    <!-- Load home -->
+    <script src="app/areas/home/indexController.js?v=2"></script>
+    <script src="app/areas/home/homeController.js?v=2"></script>
+    <!-- Load login -->
+    <script src="app/areas/login/loginController.js?v=2"></script>
+    <script src="app/areas/login/signupController.js?v=2"></script>
+    <script src="app/areas/login/associateController.js?v=2"></script>
+    <!-- Load options -->
+    <script src="app/areas/options/optionsController.js?v=2"></script>
+    <!-- Load planning -->
+    <script src="app/areas/planning/planningController.js?v=2"></script>
+    <script src="app/areas/planning/newPlanningTask.js?v=2"></script>
+    <script src="app/areas/planning/planningCat.js?v=2"></script>
+    <script src="app/areas/planning/editPlanningTask.js?v=2"></script>
+    <script src="app/areas/planning/editPlanningTask2.js?v=2"></script>
+    <script src="app/areas/planning/editPlanningTaskController.js?v=2"></script>
+    <!-- Load status -->
+    <script src="app/areas/status/planningStatus.js?v=2"></script>
+    <script src="app/areas/status/activeStatus.js?v=2"></script>
+    <!-- Load tasks -->
+    <script src="app/areas/tasks/tasksController.js?v=2"></script>
+    <script src="app/areas/tasks/newTask.js?v=2"></script>
+    <script src="app/areas/tasks/editTask.js?v=2"></script>
+    <script src="app/areas/tasks/filterTask.js?v=2"></script>
     <!-- Load custom directives -->
-    <script src="app/directives/newCat.js?v=2"></script>
-    <script src="app/directives/editCat.js?v=2"></script>
-    <script src="app/directives/filterCat.js?v=2"></script>
-    <script src="app/directives/newPlanningTask.js?v=2"></script>
-    <script src="app/directives/newTask.js?v=2"></script>
-    <script src="app/directives/editTask.js?v=2"></script>
-    <script src="app/directives/filterTask.js?v=2"></script>
     <script src="app/directives/imgButton.js?v=2"></script>
-    <script src="app/directives/planningCat.js?v=2"></script>
-    <script src="app/directives/editPlanningTask.js?v=2"></script>
-    <script src="app/directives/editPlanningTask2.js?v=2"></script>
-    <script src="app/directives/planningStatus.js?v=2"></script>
-    <script src="app/directives/activeStatus.js?v=2"></script>
     <script src="app/directives/collapsePanel.js?v=2"></script>
     <script src="app/directives/basicPanel.js?v=2"></script>
-    <!-- Load custom factories -->
-    <script src="app/factories/filterFactory.js?v=2"></script>
-    <!-- Load custom partials -->
-    <script src="app/controllers/partials/confirmDeleteController.js?v=2"></script>
-    <script src="app/controllers/partials/editPlanningTaskController.js?v=2"></script>
-    <script src="app/controllers/partials/confirmUncheckController.js?v=2"></script>
+    <!-- Load custom templates -->
+    <script src="app/controllers/confirmDeleteController.js?v=2"></script>
+    <script src="app/controllers/confirmUncheckController.js?v=2"></script>
 
 </body>
 </html>

@@ -59,32 +59,34 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.Debug.js" />
-    <Content Include="app\controllers\optionsController.js" />
-    <Content Include="app\controllers\partials\confirmUncheckController.js" />
-    <Content Include="app\controllers\partials\confirmDeleteController.js" />
-    <Content Include="app\controllers\planningController.js" />
-    <Content Include="app\controllers\associateController.js" />
-    <Content Include="app\controllers\activeController.js" />
+    <Content Include="app\areas\options\optionsController.js" />
+    <Content Include="app\areas\planning\editPlanningTask2.js" />
+    <Content Include="app\areas\planning\editPlanningTaskController.js" />
+    <Content Include="app\controllers\confirmUncheckController.js" />
+    <Content Include="app\controllers\confirmDeleteController.js" />
+    <Content Include="app\areas\planning\planningController.js" />
+    <Content Include="app\areas\login\associateController.js" />
+    <Content Include="app\areas\active\activeController.js" />
     <Content Include="app\directives\basicPanel.js" />
     <Content Include="app\directives\collapsePanel.js" />
-    <Content Include="app\directives\editPlanningTask.js" />
-    <Content Include="app\directives\planningCat.js" />
-    <Content Include="app\directives\filterTask.js" />
-    <Content Include="app\directives\filterCat.js" />
+    <Content Include="app\areas\planning\editPlanningTask.js" />
+    <Content Include="app\areas\planning\planningCat.js" />
+    <Content Include="app\areas\tasks\filterTask.js" />
+    <Content Include="app\areas\categories\filterCat.js" />
     <Content Include="app\directives\imgButton.js" />
-    <Content Include="app\directives\editCat.js" />
-    <Content Include="app\directives\newCat.js" />
-    <Content Include="app\directives\newTask.js" />
-    <Content Include="app\directives\newPlanningTask.js" />
-    <Content Include="app\directives\editTask.js" />
-    <Content Include="app\controllers\tasksController.js" />
-    <Content Include="app\controllers\homeController.js" />
-    <Content Include="app\controllers\indexController.js" />
-    <Content Include="app\controllers\loginController.js" />
-    <Content Include="app\controllers\catsController.js" />
-    <Content Include="app\controllers\signupController.js" />
-    <Content Include="app\directives\activeStatus.js" />
-    <Content Include="app\directives\planningStatus.js" />
+    <Content Include="app\areas\categories\editCat.js" />
+    <Content Include="app\areas\categories\newCat.js" />
+    <Content Include="app\areas\tasks\newTask.js" />
+    <Content Include="app\areas\planning\newPlanningTask.js" />
+    <Content Include="app\areas\tasks\editTask.js" />
+    <Content Include="app\areas\tasks\tasksController.js" />
+    <Content Include="app\areas\home\homeController.js" />
+    <Content Include="app\areas\home\indexController.js" />
+    <Content Include="app\areas\login\loginController.js" />
+    <Content Include="app\areas\categories\catsController.js" />
+    <Content Include="app\areas\login\signupController.js" />
+    <Content Include="app\areas\status\activeStatus.js" />
+    <Content Include="app\areas\status\planningStatus.js" />
     <Content Include="app\factories\filterFactory.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
@@ -117,6 +119,9 @@
     <Content Include="app\views\cats.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="authComplete.html" />
+    <Content Include="content\css\bootstrap.cyborg.min.css" />
+    <Content Include="content\css\bootstrap.lumen.min.css" />
+    <Content Include="content\css\bootstrap.spacelab.min.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\site.css" />
@@ -156,9 +161,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\filters\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
