@@ -61,7 +61,7 @@
     <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\options\optionsController.js" />
     <Content Include="app\areas\planning\editPlanningTask2.js" />
-    <Content Include="app\areas\planning\editPlanningTaskController.js" />
+    <Content Include="app\areas\planning\editPlanningTaskModal.js" />
     <Content Include="app\controllers\confirmUncheckController.js" />
     <Content Include="app\controllers\confirmDeleteController.js" />
     <Content Include="app\areas\planning\planningController.js" />
@@ -97,6 +97,7 @@
     <Content Include="app\views\directives\basicPanel.html" />
     <Content Include="app\views\directives\collapsePanel.html" />
     <Content Include="app\views\directives\editPlanningTask.html" />
+    <Content Include="app\views\directives\editPlanningTask2.html" />
     <Content Include="app\views\directives\filterTask.html" />
     <Content Include="app\views\directives\filterCat.html" />
     <Content Include="app\views\directives\imgButton.html" />

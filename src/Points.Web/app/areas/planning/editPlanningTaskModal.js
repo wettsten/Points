@@ -1,8 +1,21 @@
 ﻿'use strict';
-app.controller('editPlanningTaskController', function ($scope, $uibModalInstance, task, enums) {
+app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'task', 'resourceService', function ($scope, $uibModalInstance, task, resourceService) {
 
-    $scope.enums = enums;
+    $scope.enums = {
+        dTypes: [],
+        dUnits: [],
+        fTypes: [],
+        fUnits: []
+    };
     $scope.task = task;
+
+    var loadEnums = function () {
+        resourceService.get('enums');
+    };
+
+    resourceService.registerForUpdates('enums', function (data) {
+        $scope.enums = data;
+    });
 
     $scope.confirm = function () {
         $uibModalInstance.close($scope.task);
@@ -25,4 +38,6 @@ app.controller('editPlanningTaskController', function ($scope, $uibModalInstance
         }
         return $scope.task.frequency.type.id !== 'Once';
     };
-});
+
+    loadEnums();
+}]);
