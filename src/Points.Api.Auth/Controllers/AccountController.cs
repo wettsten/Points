@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -361,10 +362,10 @@ namespace Points.Api.Auth.Controllers
             identity.AddClaim(new Claim("role", "user"));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
-            var props = new AuthenticationProperties()
+            var props = new AuthenticationProperties
             {
                 IssuedUtc = DateTime.UtcNow,
-                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
+                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration)
             };
 
             var ticket = new AuthenticationTicket(identity, props);
@@ -373,6 +374,7 @@ namespace Points.Api.Auth.Controllers
 
             JObject tokenResponse = new JObject(
                                         new JProperty("userName", user.UserName),
+                                        new JProperty("userId", user.Id),
                                         new JProperty("access_token", accessToken),
                                         new JProperty("token_type", "bearer"),
                                         new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
