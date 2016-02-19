@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'task', 'resourceService', function ($scope, $uibModalInstance, task, resourceService) {
+app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 'resourceService', function ($scope, $uibModalInstance, data, resourceService) {
 
     $scope.enums = {
         dTypes: [],
@@ -7,7 +7,7 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'task', 
         fTypes: [],
         fUnits: []
     };
-    $scope.task = task;
+    $scope.task = data;
 
     var loadEnums = function () {
         resourceService.get('enums');

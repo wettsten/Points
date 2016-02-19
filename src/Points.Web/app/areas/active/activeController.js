@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$uibModal', function ($scope, resourceService, $timeout, $uibModal) {
+app.controller('activeController', ['$scope', 'resourceService', '$timeout', 'modalService', function ($scope, resourceService, $timeout, modalService) {
 
     $scope.tasks = [];
     $scope.cats = [];
@@ -54,23 +54,8 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
     };
 
     $scope.uncheck = function (task) {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '/app/views/partials/confirmUncheck.html',
-            controller: 'confirmUncheckController',
-            size: 'sm',
-            resolve: {
-                item: function () {
-                    return {
-                        name: task.name,
-                        id: task.id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(function (result) {
-            if (result !== 'cancel') {
+        modalService.newModal('confirmUncheck', { name: task.name, id: task.id }, 'sm',
+            function (result) {
                 task.timesCompleted -= 1;
                 resourceService.edit('activetasks', task).then(
                     function (response) {
@@ -81,7 +66,7 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', '$u
                     }
                 );
             }
-        });
+        );
     };
 
     loadCats();

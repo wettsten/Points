@@ -10,7 +10,7 @@ app.directive('editTask', function () {
         replace: true,
         controller: 'editTaskController'
     };
-}).controller('editTaskController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
+}).controller('editTaskController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
 
     $scope.cats = [];
     $scope.editTask = {};
@@ -56,23 +56,8 @@ app.directive('editTask', function () {
     };
 
     $scope.delete = function () {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '/app/views/partials/confirmDelete.html',
-            controller: 'confirmDeleteController',
-            size: 'sm',
-            resolve: {
-                item: function () {
-                    return {
-                        name: $scope.task.name,
-                        id: $scope.task.id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(function (result) {
-            if (result !== 'cancel') {
+        modalService.newModal('confirmDelete', { name: $scope.task.name, id: $scope.task.id }, 'sm',
+            function (result) {
                 resourceService.delete('tasks',$scope.task.id).then(
                     function (response) {
                         $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
@@ -82,7 +67,7 @@ app.directive('editTask', function () {
                     }
                 );
             }
-        });
+        );
     };
 
     loadCats();

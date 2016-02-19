@@ -33,8 +33,9 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
 
     var retrieveWithRetry = function (type,retry) {
         $http.get(serviceBase + 'api/' + type).then(function (results) {
-            if (angular.toJson(getCache().get(type)) === angular.toJson(results.data) && retry < 5) {
-                $timeout(retrieveWithRetry(type, ++retry), 250);
+            if (angular.toJson(getCache().get(type)) === angular.toJson(results.data) && retry < 1000) {
+                var interval = 100;
+                $timeout(retrieveWithRetry(type, retry + interval), interval);
                 return;
             }
             setCache(type, results.data);
@@ -57,24 +58,24 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
 
     service.add = function (type,data) {
         return $http.post(serviceBase + 'api/' + type, data).then(function () {
-            $timeout(retrieve(type), 1000);
+            retrieve(type);
             if (type === 'planningtasks') {
-                $timeout(retrieve('availabletasks'), 500);
+                retrieve('availabletasks');
             }
         });
     };
 
     service.edit = function (type,data) {
         return $http.put(serviceBase + 'api/' + type, data).then(function () {
-            $timeout(retrieve(type), 250);
+            retrieve(type);
         });
     };
 
     service.delete = function (type,id) {
         return $http.delete(serviceBase + 'api/' + type + '?id=' + id).then(function () {
-            $timeout(retrieve(type), 250);
+            retrieve(type);
             if (type === 'planningtasks') {
-                $timeout(retrieve('availabletasks'), 250);
+                retrieve('availabletasks');
             }
         });
     };

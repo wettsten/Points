@@ -60,17 +60,15 @@
   <ItemGroup>
     <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\options\optionsController.js" />
-    <Content Include="app\areas\planning\editPlanningTask2.js" />
+    <Content Include="app\areas\planning\editPlanningTask.js" />
     <Content Include="app\areas\planning\editPlanningTaskModal.js" />
-    <Content Include="app\controllers\confirmUncheckController.js" />
-    <Content Include="app\controllers\confirmDeleteController.js" />
+    <Content Include="app\controllers\confirmUncheckModal.js" />
+    <Content Include="app\controllers\confirmDeleteModal.js" />
     <Content Include="app\areas\planning\planningController.js" />
     <Content Include="app\areas\login\associateController.js" />
     <Content Include="app\areas\active\activeController.js" />
     <Content Include="app\directives\basicPanel.js" />
     <Content Include="app\directives\collapsePanel.js" />
-    <Content Include="app\areas\planning\editPlanningTask.js" />
-    <Content Include="app\areas\planning\planningCat.js" />
     <Content Include="app\areas\tasks\filterTask.js" />
     <Content Include="app\areas\categories\filterCat.js" />
     <Content Include="app\directives\imgButton.js" />
@@ -90,6 +88,7 @@
     <Content Include="app\factories\filterFactory.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
+    <Content Include="app\services\modalService.js" />
     <Content Include="app\services\resourceService.js" />
     <Content Include="app\services\jobsService.js" />
     <Content Include="app\services\usersService.js" />
@@ -97,7 +96,6 @@
     <Content Include="app\views\directives\basicPanel.html" />
     <Content Include="app\views\directives\collapsePanel.html" />
     <Content Include="app\views\directives\editPlanningTask.html" />
-    <Content Include="app\views\directives\editPlanningTask2.html" />
     <Content Include="app\views\directives\filterTask.html" />
     <Content Include="app\views\directives\filterCat.html" />
     <Content Include="app\views\directives\imgButton.html" />
@@ -107,7 +105,6 @@
     <Content Include="app\views\directives\newPlanningTask.html" />
     <Content Include="app\views\directives\editTask.html" />
     <Content Include="app\views\active.html" />
-    <Content Include="app\views\directives\planningCat.html" />
     <Content Include="app\views\directives\activeStatus.html" />
     <Content Include="app\views\directives\planningStatus.html" />
     <Content Include="app\views\partials\confirmUncheck.html" />

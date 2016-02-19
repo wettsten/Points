@@ -3,16 +3,14 @@ app.directive('editPlanningTask', function () {
     return {
         scope: {
             task: '=theTask',
-            taskInEdit: '=',
             addAlert: '&'
         },
         templateUrl: '/app/views/directives/editPlanningTask.html',
         replace: true,
         controller: 'editPlanningTaskController'
     };
-}).controller('editPlanningTaskController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
+}).controller('editPlanningTaskController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
 
-    $scope.editTask = {};
     $scope.enums = {};
 
     var loadEnums = function () {
@@ -23,102 +21,37 @@ app.directive('editPlanningTask', function () {
         $scope.enums = data;
     });
 
-    $scope.isInEditMode = function () {
-        return $scope.taskInEdit.id === $scope.task.id;
-    };
-
-    $scope.$watch('taskInEdit.id', function () {
-        if ($scope.taskInEdit.id !== '' && $scope.taskInEdit.id !== $scope.task.id) {
-            $scope.editTask = {};
-        }
-    });
-
-    $scope.ignoreDurationValueAndUnit = function () {
-        if ($scope.isInEditMode()) {
-            return $scope.editTask.duration.type.id === 'None';
-        } else {
-            return $scope.task.duration.type.id === 'None';
-        }
-    };
-
-    $scope.ignoreFrequencyValueAndUnit = function () {
-        if ($scope.isInEditMode()) {
-            return $scope.editTask.frequency.type.id === 'Once';
-        } else {
-            return $scope.task.frequency.type.id === 'Once';
-        }
-    };
-
-    $scope.clearEditData = function () {
-        $scope.editTask = {};
-        $scope.taskInEdit.id = '';
-    };
-
     $scope.startEdit = function () {
-        $scope.editTask = angular.copy($scope.task);
-        $scope.taskInEdit.id = $scope.task.id;
-    };
-
-    $scope.disableEditSave = function () {
-        if ($scope.isInEditMode()) {
-            if ($scope.editTask.duration.type.id !== 'None') {
-                if (!$scope.editTask.duration.value || $scope.editTask.duration.value < 1) {
-                    return true;
-                }
-            }
-            if ($scope.editTask.frequency.type.id !== 'Once') {
-                if (!$scope.editTask.frequency.value || $scope.editTask.frequency.value < 1) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
-    $scope.saveEdit = function () {
-        if ($scope.disableEditSave()) {
-            return;
-        }
-        resourceService.edit('planningtasks', $scope.editTask).then(
-            function (response) {
-                $scope.clearEditData();
-                $scope.$emit('refreshTasks');
-                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
-            },
-            function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
-        });
-    };
-
-    $scope.delete = function () {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '/app/views/partials/confirmDelete.html',
-            controller: 'confirmDeleteController',
-            size: 'sm',
-            resolve: {
-                item: function () {
-                    return {
-                        name: $scope.task.task.name,
-                        id: $scope.task.id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(
+        modalService.newModal('editPlanningTask', angular.copy($scope.task), 'lg', 
             function (result) {
-                if (result !== 'cancel') {
-                    resourceService.delete('planningtasks',$scope.task.id).then(
+                if (result) {
+                    resourceService.edit('planningtasks', result).then(
                         function (response) {
-                            $scope.$emit('refreshTasks');
-                            $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
+                            $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
                         },
                         function (err) {
                             $scope.addAlert({ type: 'danger', msg: err.data.message });
-                        });
+                        }
+                    );
                 }
-        });
+            }
+        );
+    };
+
+    $scope.delete = function () {
+        modalService.newModal('confirmDelete', { name: $scope.task.name, id: $scope.task.id }, 'sm', 
+            function (result) {
+                resourceService.delete('planningtasks',$scope.task.id).then(
+                    function (response) {
+                        $scope.$emit('refreshTasks');
+                        $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
+                    },
+                    function (err) {
+                        $scope.addAlert({ type: 'danger', msg: err.data.message });
+                    }
+                );
+            }
+        );
     };
 
     loadEnums();

@@ -10,7 +10,7 @@ app.directive('editCat', function () {
         replace: true,
         controller: 'editCatController'
     };
-}).controller('editCatController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
+}).controller('editCatController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
 
     $scope.editCat = {};
 
@@ -47,24 +47,9 @@ app.directive('editCat', function () {
     };
 
     $scope.delete = function () {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '/app/views/partials/confirmDelete.html',
-            controller: 'confirmDeleteController',
-            size: 'sm',
-            resolve: {
-                item: function () {
-                    return {
-                        name: $scope.cat.name,
-                        id: $scope.cat.id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(function (result) {
-            if (result !== 'cancel') {
-                resourceService.delete('categories',$scope.cat.id).then(
+        modalService.newModal('confirmDelete', { name: $scope.cat.name, id: $scope.cat.id }, 'sm',
+            function (result) {
+                resourceService.delete('categories', $scope.cat.id).then(
                     function (response) {
                         $scope.addAlert({ type: 'success', msg: 'Category successfully deleted' });
                     },
@@ -73,6 +58,6 @@ app.directive('editCat', function () {
                     }
                 );
             }
-        });
+        );
     };
 }]);
