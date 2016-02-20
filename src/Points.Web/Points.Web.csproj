@@ -75,7 +75,7 @@
     <Content Include="app\areas\categories\editCat.js" />
     <Content Include="app\areas\categories\newCat.js" />
     <Content Include="app\areas\tasks\newTask.js" />
-    <Content Include="app\areas\planning\newPlanningTask.js" />
+    <Content Include="app\areas\planning\newPlanningTaskModal.js" />
     <Content Include="app\areas\tasks\editTask.js" />
     <Content Include="app\areas\tasks\tasksController.js" />
     <Content Include="app\areas\home\homeController.js" />
@@ -102,7 +102,7 @@
     <Content Include="app\views\directives\editCat.html" />
     <Content Include="app\views\directives\newCat.html" />
     <Content Include="app\views\directives\newTask.html" />
-    <Content Include="app\views\directives\newPlanningTask.html" />
+    <Content Include="app\views\partials\newPlanningTask.html" />
     <Content Include="app\views\directives\editTask.html" />
     <Content Include="app\views\active.html" />
     <Content Include="app\views\directives\activeStatus.html" />
