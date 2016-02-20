@@ -1,14 +1,5 @@
 ﻿'use strict';
-app.directive('newPlanningTask', function () {
-    return {
-        scope: {
-            addAlert: '&'
-        },
-        templateUrl: '/app/views/directives/newPlanningTask.html',
-        replace: true,
-        controller: 'newPlanningTaskController'
-    };
-}).controller('newPlanningTaskController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
+app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 'resourceService', function ($scope, $uibModalInstance, data, resourceService) {
         
     $scope.addTaskData = {
         duration: {
@@ -25,9 +16,14 @@ app.directive('newPlanningTask', function () {
         cat: {}
     };
     $scope.cats = [];
-    $scope.enums = {};
+    $scope.enums = {
+        dTypes: [],
+        dUnits: [],
+        fTypes: [],
+        fUnits: []
+    };
 
-    $scope.resetDropdowns = function () {
+    var resetDropdowns = function () {
         $scope.addTaskData.cat = $scope.cats[0];
         if ($scope.cats.length > 0) {
             $scope.addTaskData.task = $scope.cats[0].tasks[0];
@@ -45,12 +41,12 @@ app.directive('newPlanningTask', function () {
 
     resourceService.registerForUpdates('availabletasks', function (data) {
         $scope.cats = data;
-        $scope.resetDropdowns();
+        resetDropdowns();
     });
 
     resourceService.registerForUpdates('enums', function (data) {
         $scope.enums = data;
-        $scope.resetDropdowns();
+        resetDropdowns();
     });
 
     $scope.showAddDuration = function () {
@@ -67,16 +63,13 @@ app.directive('newPlanningTask', function () {
         return $scope.addTaskData.frequency.type.id !== 'Once';
     };
 
-    $scope.addTask = function () {
+    $scope.confirm = function () {
         $scope.addTaskData.name = $scope.addTaskData.task.name;
-        resourceService.add('planningtasks', $scope.addTaskData).then(
-            function (response) {
-                $scope.resetAddData();
-                $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
-            },
-            function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
-         });
+        $uibModalInstance.close($scope.addTaskData);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
     };
 
     loadCats();

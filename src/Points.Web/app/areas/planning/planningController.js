@@ -1,7 +1,8 @@
 ﻿'use strict';
-app.controller('planningController', ['$scope', 'resourceService', '$timeout', function ($scope, resourceService, $timeout) {
+app.controller('planningController', ['$scope', 'resourceService', '$timeout', 'modalService', function ($scope, resourceService, $timeout, modalService) {
 
     $scope.tasks = [];
+    $scope.availableTasks = false;
     $scope.alerts = [];
     $scope.taskInEdit = { id: '' };
 
@@ -13,6 +14,7 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', f
 
     var loadCats = function () {
         resourceService.get('planningtasks');
+        resourceService.get('availabletasks');
     };
 
     resourceService.registerForUpdates('planningtasks', function (data) {
@@ -21,6 +23,10 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', f
             $scope.addAlert('warning', 'No planning tasks found');
         }
         setupCats();
+    });
+
+    resourceService.registerForUpdates('availabletasks', function (data) {
+        $scope.availableTasks = data.length > 0;
     });
 
     $scope.addAlert = function (type, msg) {
@@ -37,6 +43,23 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', f
         if ($scope.alerts.indexOf(alert) > -1) {
             $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
         }
+    };
+
+    $scope.addTask = function () {
+        modalService.newModal('newPlanningTask', null, 'lg',
+            function (result) {
+                if (result) {
+                    resourceService.add('planningtasks', result).then(
+                        function (response) {
+                            $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
+                        },
+                        function (err) {
+                            $scope.addAlert({ type: 'danger', msg: err.data.message });
+                        }
+                    );
+                }
+            }
+        );
     };
 
     loadCats();

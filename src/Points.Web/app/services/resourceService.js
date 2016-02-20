@@ -59,7 +59,7 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     service.add = function (type,data) {
         return $http.post(serviceBase + 'api/' + type, data).then(function () {
             retrieve(type);
-            if (type === 'planningtasks') {
+            if (type === 'planningtasks' || type === 'tasks') {
                 retrieve('availabletasks');
             }
         });
@@ -74,7 +74,7 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     service.delete = function (type,id) {
         return $http.delete(serviceBase + 'api/' + type + '?id=' + id).then(function () {
             retrieve(type);
-            if (type === 'planningtasks') {
+            if (type === 'planningtasks' || type === 'tasks') {
                 retrieve('availabletasks');
             }
         });
