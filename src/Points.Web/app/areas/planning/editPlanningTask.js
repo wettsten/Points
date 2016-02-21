@@ -23,17 +23,8 @@ app.directive('editPlanningTask', function () {
 
     $scope.startEdit = function () {
         modalService.newModal('editPlanningTask', angular.copy($scope.task), 'lg', 
-            function (result) {
-                if (result) {
-                    resourceService.edit('planningtasks', result).then(
-                        function (response) {
-                            $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
-                        },
-                        function (err) {
-                            $scope.addAlert({ type: 'danger', msg: err.data.message });
-                        }
-                    );
-                }
+            function () {
+                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
             }
         );
     };
@@ -43,7 +34,6 @@ app.directive('editPlanningTask', function () {
             function (result) {
                 resourceService.delete('planningtasks',$scope.task.id).then(
                     function (response) {
-                        $scope.$emit('refreshTasks');
                         $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
                     },
                     function (err) {

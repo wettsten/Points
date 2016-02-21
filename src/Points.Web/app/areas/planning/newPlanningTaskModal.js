@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 'resourceService', function ($scope, $uibModalInstance, data, resourceService) {
+app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 'resourceService', '$timeout', function ($scope, $uibModalInstance, data, resourceService, $timeout) {
         
     $scope.addTaskData = {
         duration: {
@@ -63,9 +63,32 @@ app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', '
         return $scope.addTaskData.frequency.type.id !== 'Once';
     };
 
+    $scope.addAlert = function (type, msg) {
+        var alert = { type: type, msg: msg };
+        $scope.alerts.push(alert);
+        $timeout(function () {
+            if ($scope.alerts.indexOf(alert) > -1) {
+                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+            }
+        }, 5000);
+    };
+
+    $scope.closeAlert = function (alert) {
+        if ($scope.alerts.indexOf(alert) > -1) {
+            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
+        }
+    };
+
     $scope.confirm = function () {
         $scope.addTaskData.name = $scope.addTaskData.task.name;
-        $uibModalInstance.close($scope.addTaskData);
+        resourceService.add('planningtasks', $scope.addTaskData).then(
+            function (response) {
+                $uibModalInstance.close();
+            },
+            function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
+            }
+        );
     };
 
     $scope.cancel = function () {

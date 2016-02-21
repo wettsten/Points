@@ -3,31 +3,36 @@
         <h3 class="modal-title">New Planning Task</h3>
     </div>
     <div class="modal-body">
-        <div class="col-md-3">
-            <p>Category</p>
-            <select class="form-control" ng-model="addTaskData.cat" ng-options="option.name for option in cats" ng-change="filterTasks()" required></select>
+        <div class="row">
+            <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
         </div>
-        <div class="col-md-3">
-            <p>Task</p>
-            <select class="form-control" ng-model="addTaskData.task" ng-options="option.name for option in addTaskData.cat.tasks" required></select>
-        </div>
-        <div class="col-md-3">
-            <p>Duration</p>
-            <select class="form-control" ng-model="addTaskData.duration.type" ng-options="option.name for option in enums.dTypes" required></select>
-            <div>&nbsp;</div>
-            <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.duration.value" ng-show="showAddDuration()" />
-            <div>&nbsp;</div>
-            <select class="form-control" ng-model="addTaskData.duration.unit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits"></select>
-            <div>&nbsp;</div>
-        </div>
-        <div class="col-md-3">
-            <p>Frequency</p>
-            <select class="form-control" ng-model="addTaskData.frequency.type" ng-options="option.name for option in enums.fTypes" required></select>
-            <div>&nbsp;</div>
-            <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" />
-            <div>&nbsp;</div>
-            <select class="form-control" ng-model="addTaskData.frequency.unit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits"></select>
-            <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Category</p>
+                <select class="form-control" ng-model="addTaskData.cat" ng-options="option.name for option in cats" ng-change="filterTasks()"></select>
+            </div>
+            <div class="col-md-3">
+                <p>Task</p>
+                <select class="form-control" ng-model="addTaskData.task" ng-options="option.name for option in addTaskData.cat.tasks"></select>
+            </div>
+            <div class="col-md-3">
+                <p>Duration</p>
+                <select class="form-control" ng-model="addTaskData.duration.type" ng-options="option.name for option in enums.dTypes"></select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.duration.value" ng-show="showAddDuration()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="addTaskData.duration.unit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits"></select>
+                <div>&nbsp;</div>
+            </div>
+            <div class="col-md-3">
+                <p>Frequency</p>
+                <select class="form-control" ng-model="addTaskData.frequency.type" ng-options="option.name for option in enums.fTypes"></select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="addTaskData.frequency.unit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits"></select>
+                <div>&nbsp;</div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

@@ -47,17 +47,8 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
 
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',
-            function (result) {
-                if (result) {
-                    resourceService.add('planningtasks', result).then(
-                        function (response) {
-                            $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
-                        },
-                        function (err) {
-                            $scope.addAlert({ type: 'danger', msg: err.data.message });
-                        }
-                    );
-                }
+            function () {
+                $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
             }
         );
     };

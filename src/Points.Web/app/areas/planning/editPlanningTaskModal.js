@@ -17,14 +17,6 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 
         $scope.enums = data;
     });
 
-    $scope.confirm = function () {
-        $uibModalInstance.close($scope.task);
-    };
-
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-
     $scope.showAddDuration = function () {
         if (!$scope.task.duration.type) {
             return false;
@@ -37,6 +29,21 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 
             return false;
         }
         return $scope.task.frequency.type.id !== 'Once';
+    };
+
+    $scope.confirm = function () {
+        resourceService.edit('planningtasks', $scope.task).then(
+            function (response) {
+                $uibModalInstance.close();
+            },
+            function (err) {
+                $scope.addAlert({ type: 'danger', msg: err.data.message });
+            }
+        );
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
     };
 
     loadEnums();
