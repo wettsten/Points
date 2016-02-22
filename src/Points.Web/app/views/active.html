@@ -9,35 +9,15 @@
     </div>
 
     <div class="row">
-        <div uib-accordion close-others="true">
-            <div uib-accordion-group ng-repeat="cat in cats" is-open="cat.isOpen">
-                <div uib-accordion-heading>
-                    {{cat.name}} ({{cat.tasks.length}} tasks) <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cat.isOpen, 'glyphicon-chevron-down': !cat.isOpen}"></i>
+        <div uib-tabset>
+            <div uib-tab heading="Tasks">
+                <div>&nbsp;</div>
+                <div class="col-md-3" ng-repeat="task in tasks">
+                    <div active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
                 </div>
-                <div class="col-md-3" ng-repeat="task in cat.tasks" collapse-panel init-open="true" header-title="task.name + ' (' + task.timesCompleted + '/' + task.frequency.value + ')'">
-                    <div basic-panel header-title="'Check!'">
-                        <div class="text-center">
-                            <button type="button" class="btn btn-lg btn-success" ng-click="check(task)" title="Check!">
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-xs btn-danger pull-right" ng-click="uncheck(task)" ng-disabled="task.timesCompleted === 0" title="Uncheck!">
-                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                    </div><br/>
-                    <div collapse-panel init-open="false" header-title="'Task Details'">
-                        <div basic-panel header-title="'Duration'">
-                            <span><b>Type:</b> <i>{{task.duration.type.name}}</i><br /></span>
-                            <span ng-hide="task.duration.type.name === 'None'"><b>Value:</b> <i>{{task.duration.value}}</i><br /></span>
-                            <span ng-hide="task.duration.type.name === 'None'"><b>Unit:</b> <i>{{task.duration.unit.name}}</i></span>
-                        </div><br/>
-                        <div basic-panel header-title="'Frequency'">
-                            <span><b>Type:</b> <i>{{task.frequency.type.name}}</i><br /></span>
-                            <span ng-hide="task.frequency.type.name === 'Once'"><b>Value:</b> <i>{{task.frequency.value}}</i><br /></span>
-                            <span ng-hide="task.frequency.type.name === 'Once'"><b>Unit:</b> <i>{{task.frequency.unit.name}}</i></span>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div uib-tab heading="Totals">
+
             </div>
         </div>
     </div>

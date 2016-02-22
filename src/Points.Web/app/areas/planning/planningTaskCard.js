@@ -1,16 +1,16 @@
 ﻿'use strict';
-app.directive('editPlanningTask', function () {
+app.directive('planningTaskCard', function () {
     return {
         scope: {
             task: '=theTask',
             addSuccess: '&',
             addError: '&'
         },
-        templateUrl: '/app/views/directives/editPlanningTask.html',
+        templateUrl: '/app/views/directives/planningTaskCard.html',
         replace: true,
-        controller: 'editPlanningTaskController'
+        controller: 'planningTaskCardController'
     };
-}).controller('editPlanningTaskController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
+}).controller('planningTaskCardController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
 
     $scope.enums = {};
 

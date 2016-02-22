@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('confirmUncheckModal', ['$scope', '$uibModalInstance', 'item', function ($scope, $uibModalInstance, data) {
+app.controller('confirmUncheckModal', ['$scope', '$uibModalInstance', 'data', function ($scope, $uibModalInstance, data) {
 
     $scope.item = data;
 
