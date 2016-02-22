@@ -19,22 +19,6 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult GetPlanningTasksForUser()
         {
             return GetForUser();
-            var tasks = GetForUser();
-            if (tasks.IsOk())
-            {
-                var content = tasks.GetContent<PlanningTask>();
-                var cats = content
-                    .GroupBy(i => i.Task.Category.Id, task => task)
-                    .Select(i => new
-                    {
-                        Id = i.Key,
-                        Name = i.First().Task.Category.Name,
-                        Tasks = i.OrderBy(j => j.Task.Name)
-                    })
-                    .OrderBy(i => i.Name);
-                return Ok(cats);
-            }
-            return tasks;
         }
 
         [Route("")]
