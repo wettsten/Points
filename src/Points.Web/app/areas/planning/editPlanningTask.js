@@ -24,18 +24,19 @@ app.directive('editPlanningTask', function () {
 
     $scope.startEdit = function () {
         modalService.newModal('editPlanningTask', angular.copy($scope.task), 'lg', 
-            function () {
-                $scope.addSuccess({ msg: 'Task successfully updated' });
+            function (result) {
+                $scope.addSuccess({ msg: "Task '{0}' successfully updated".format(result.name) });
             }
         );
     };
 
     $scope.delete = function () {
+        var name = $scope.task.name;
         modalService.newModal('confirmDelete', { name: $scope.task.name, id: $scope.task.id }, 'sm', 
             function (result) {
                 resourceService.delete('planningtasks',$scope.task.id).then(
                     function (response) {
-                        $scope.addSuccess({ msg: 'Task successfully deleted' });
+                        $scope.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
                     },
                     function (err) {
                         $scope.addError({ msg: err.data.message });

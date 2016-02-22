@@ -34,7 +34,7 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 
     $scope.confirm = function () {
         resourceService.edit('planningtasks', $scope.task).then(
             function (response) {
-                $uibModalInstance.close();
+                $uibModalInstance.close($scope.task);
             },
             function (err) {
                 $scope.addError(err.data.message);

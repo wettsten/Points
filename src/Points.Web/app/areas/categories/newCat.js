@@ -24,7 +24,7 @@ app.directive('newCat', function() {
                 $scope.clearAddData();
                 $timeout(
                     function () {
-                        $scope.addSuccess({ msg: "Category '" + name + "' successfully added" });
+                        $scope.addSuccess({ msg: "Category '{0}' successfully added".format(name) });
                     }, 100
                 );
             },

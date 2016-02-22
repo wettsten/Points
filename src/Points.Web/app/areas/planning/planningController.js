@@ -31,8 +31,8 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
 
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',
-            function () {
-                $scope.addSuccess('Task successfully added');
+            function (result) {
+                $scope.addSuccess("Task '{0}' successfully added".format(result.name));
             }
         );
     };

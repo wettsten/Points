@@ -40,7 +40,7 @@ app.directive('editCat', function () {
         resourceService.edit('categories',$scope.editCat).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.addSuccess({ msg: "Category '" + name + "' successfully updated" });
+                $scope.addSuccess({ msg: "Category '{0}' successfully updated".format(name) });
             },
             function (err) {
                 $scope.addError({ msg: err.data.message });
@@ -54,7 +54,7 @@ app.directive('editCat', function () {
             function (result) {
                 resourceService.delete('categories', $scope.cat.id).then(
                     function (response) {
-                        $scope.addSuccess({ msg: "Category '" + name + "' successfully deleted" });
+                        $scope.addSuccess({ msg: "Category '{0}' successfully deleted".format(name) });
                     },
                     function (err) {
                         $scope.addError({ msg: err.data.message });

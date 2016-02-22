@@ -49,7 +49,7 @@ app.directive('editTask', function () {
         resourceService.edit('tasks',$scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.addSuccess({ msg: "Task '" + name + "' successfully updated" });
+                $scope.addSuccess({ msg: "Task '{0}' successfully updated".format(name) });
             },
             function (err) {
                 $scope.addError({ msg: err.data.message });
@@ -63,7 +63,7 @@ app.directive('editTask', function () {
             function (result) {
                 resourceService.delete('tasks',$scope.task.id).then(
                     function (response) {
-                        $scope.addSuccess({ msg: "Task '" + name + "' successfully deleted" });
+                        $scope.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
                     },
                     function (err) {
                         $scope.addError({ msg: err.data.message });

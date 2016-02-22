@@ -67,7 +67,7 @@ app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', '
         $scope.addTaskData.name = $scope.addTaskData.task.name;
         resourceService.add('planningtasks', $scope.addTaskData).then(
             function (response) {
-                $uibModalInstance.close();
+                $uibModalInstance.close($scope.addTaskData);
             },
             function (err) {
                 $scope.addError(err.data.message);

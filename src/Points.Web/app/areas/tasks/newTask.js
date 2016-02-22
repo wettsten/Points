@@ -37,7 +37,7 @@ app.directive('newTask', function () {
                 $scope.clearAddData();
                 $timeout(
                     function () {
-                        $scope.addSuccess({ msg: "Task '" + name + "' successfully added" });
+                        $scope.addSuccess({ msg: "Task '{0}' successfully added".format(name) });
                     }, 100
                 );
             },
