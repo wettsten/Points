@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.CodeDom;
+using System.Linq;
 using System.Web.Http;
 using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
@@ -29,6 +30,7 @@ namespace Points.Api.Resources.Controllers
                         TargetPoints = i.Count(),
                         TaskPoints = i.Count(j => j.IsCompleted),
                         BonusPoints = i.Sum(j => j.BonusPoints),
+                        TotalPoints = i.Count(j => j.IsCompleted) + i.Sum(j => j.BonusPoints),
                         Tasks = i.Select(j => new
                         {
                             j.Id,
@@ -36,7 +38,8 @@ namespace Points.Api.Resources.Controllers
                             j.IsCompleted,
                             TargetPoints = 1,
                             TaskPoints = j.IsCompleted ? 1 : 0,
-                            j.BonusPoints
+                            j.BonusPoints,
+                            TotalPoints = (j.IsCompleted ? 1 : 0) + j.BonusPoints
                         })
                     })
                     .OrderBy(i => i.Name);
@@ -46,6 +49,7 @@ namespace Points.Api.Resources.Controllers
                     TargetPoints = cats.Sum(i => i.TargetPoints),
                     TaskPoints = cats.Sum(i => i.TaskPoints),
                     BonusPoints = cats.Sum(i => i.BonusPoints),
+                    TotalPoints = cats.Sum(i => i.TotalPoints),
                     Categories = cats
                 });
             }

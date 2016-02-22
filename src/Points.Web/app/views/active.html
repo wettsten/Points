@@ -9,16 +9,11 @@
     </div>
 
     <div class="row">
-        <div uib-tabset>
-            <div uib-tab heading="Tasks">
-                <div>&nbsp;</div>
-                <div class="col-md-3" ng-repeat="task in tasks">
-                    <div active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
-                </div>
-            </div>
-            <div uib-tab heading="Totals">
-
-            </div>
+        <div active-task-totals></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" ng-repeat="task in tasks">
+            <div active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
         </div>
     </div>
 </div>

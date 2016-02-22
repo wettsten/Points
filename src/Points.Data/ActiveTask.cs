@@ -31,8 +31,8 @@ namespace Points.Data
                 if (Frequency.Value != null && IsCompleted)
                 {
                     bonus = Frequency.Type == FrequencyType.AtMost
-                        ? (Frequency.Value.Value - TimesCompleted) / Frequency.Value.Value
-                        : (TimesCompleted - Frequency.Value.Value) / Frequency.Value.Value;
+                        ? (Frequency.Value.Value - TimesCompleted) / (decimal)Frequency.Value.Value
+                        : (TimesCompleted - Frequency.Value.Value) / (decimal)Frequency.Value.Value;
                 }
                 return bonus;
             }
