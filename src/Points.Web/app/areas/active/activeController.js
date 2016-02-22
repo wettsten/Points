@@ -20,35 +20,19 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', 'mo
     resourceService.registerForUpdates('activetasks', function (data) {
         $scope.cats = data;
         if ($scope.cats.length === 0) {
-            $scope.addAlert('warning', 'No active tasks found');
+            $scope.addWarning('No active tasks found');
         }
         setupCats();
     });
-
-    $scope.addAlert = function (type, msg) {
-        var alert = { type: type, msg: msg };
-        $scope.alerts.push(alert);
-        $timeout(function () {
-            if ($scope.alerts.indexOf(alert) > -1) {
-                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-            }
-        }, 5000);
-    };
-
-    $scope.closeAlert = function (alert) {
-        if ($scope.alerts.indexOf(alert) > -1) {
-            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-        }
-    };
 
     $scope.check = function (task) {
         task.timesCompleted += 1;
         resourceService.edit('activetasks', task).then(
             function (response) {
-                $scope.addAlert('success', 'Task successfully checked');
+                $scope.addSuccess('Task successfully checked');
             },
             function (err) {
-                $scope.addAlert('danger', err.data.message);
+                $scope.addError(err.data.message);
             }
         );
     };
@@ -59,10 +43,10 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', 'mo
                 task.timesCompleted -= 1;
                 resourceService.edit('activetasks', task).then(
                     function (response) {
-                        $scope.addAlert('success', 'Task successfully unchecked');
+                        $scope.addSuccess('Task successfully unchecked');
                     },
                     function (err) {
-                        $scope.addAlert('danger', err.data.message);
+                        $scope.addError(err.data.message);
                     }
                 );
             }

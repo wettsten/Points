@@ -20,7 +20,7 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
     resourceService.registerForUpdates('planningtasks', function (data) {
         $scope.tasks = data;
         if ($scope.tasks.length === 0) {
-            $scope.addAlert('warning', 'No planning tasks found');
+            $scope.addWarning('No planning tasks found');
         }
         setupCats();
     });
@@ -29,26 +29,10 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
         $scope.availableTasks = data.length > 0;
     });
 
-    $scope.addAlert = function (type, msg) {
-        var alert = { type: type, msg: msg };
-        $scope.alerts.push(alert);
-        $timeout(function () {
-            if ($scope.alerts.indexOf(alert) > -1) {
-                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-            }
-        }, 5000);
-    };
-
-    $scope.closeAlert = function (alert) {
-        if ($scope.alerts.indexOf(alert) > -1) {
-            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-        }
-    };
-
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',
             function () {
-                $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
+                $scope.addSuccess('Task successfully added');
             }
         );
     };

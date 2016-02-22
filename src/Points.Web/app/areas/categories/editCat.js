@@ -4,7 +4,8 @@ app.directive('editCat', function () {
         scope: {
             cat: '=theCat',
             catInEdit: '=',
-            addAlert: '&'
+            addSuccess: '&',
+            addError: '&'
         },
         templateUrl: '/app/views/directives/editCat.html',
         replace: true,
@@ -35,26 +36,28 @@ app.directive('editCat', function () {
     };
 
     $scope.saveEdit = function () {
+        var name = $scope.editCat.name;
         resourceService.edit('categories',$scope.editCat).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.addAlert({ type: 'success', msg: 'Category successfully updated' });
+                $scope.addSuccess({ msg: "Category '" + name + "' successfully updated" });
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addError({ msg: err.data.message });
             }
         );
     };
 
     $scope.delete = function () {
+        var name = $scope.cat.name;
         modalService.newModal('confirmDelete', { name: $scope.cat.name, id: $scope.cat.id }, 'sm',
             function (result) {
                 resourceService.delete('categories', $scope.cat.id).then(
                     function (response) {
-                        $scope.addAlert({ type: 'success', msg: 'Category successfully deleted' });
+                        $scope.addSuccess({ msg: "Category '" + name + "' successfully deleted" });
                     },
                     function (err) {
-                        $scope.addAlert({ type: 'danger', msg: err.data.message });
+                        $scope.addError({ msg: err.data.message });
                     }
                 );
             }

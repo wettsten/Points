@@ -3,7 +3,8 @@ app.directive('editPlanningTask', function () {
     return {
         scope: {
             task: '=theTask',
-            addAlert: '&'
+            addSuccess: '&',
+            addError: '&'
         },
         templateUrl: '/app/views/directives/editPlanningTask.html',
         replace: true,
@@ -24,7 +25,7 @@ app.directive('editPlanningTask', function () {
     $scope.startEdit = function () {
         modalService.newModal('editPlanningTask', angular.copy($scope.task), 'lg', 
             function () {
-                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
+                $scope.addSuccess({ msg: 'Task successfully updated' });
             }
         );
     };
@@ -34,10 +35,10 @@ app.directive('editPlanningTask', function () {
             function (result) {
                 resourceService.delete('planningtasks',$scope.task.id).then(
                     function (response) {
-                        $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
+                        $scope.addSuccess({ msg: 'Task successfully deleted' });
                     },
                     function (err) {
-                        $scope.addAlert({ type: 'danger', msg: err.data.message });
+                        $scope.addError({ msg: err.data.message });
                     }
                 );
             }

@@ -7,7 +7,7 @@
         </div>
 
         <div class="row">
-            <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
+            <div alert-box></div>
         </div>
 
         <div class="row" filter-task></div>
@@ -27,8 +27,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr new-task add-alert="addAlert(type,msg)"></tr>
-                <tr ng-repeat="task in tasks | filter:taskFilter" edit-task the-task="task" task-in-edit="taskInEdit" add-alert="addAlert(type,msg)"></tr>
+                <tr new-task add-success="addSuccess(msg)" add-error="addError(msg)"></tr>
+                <tr ng-repeat="task in tasks | filter:taskFilter" edit-task the-task="task" task-in-edit="taskInEdit" add-success="addSuccess(msg)" add-error="addError(msg)"></tr>
                 </tbody>
             </table>
         </div>

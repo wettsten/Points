@@ -4,7 +4,8 @@ app.directive('editTask', function () {
         scope: {
             task: '=theTask',
             taskInEdit: '=',
-            addAlert: '&'
+            addSuccess: '&',
+            addError: '&'
         },
         templateUrl: '/app/views/directives/editTask.html',
         replace: true,
@@ -44,26 +45,28 @@ app.directive('editTask', function () {
     };
 
     $scope.saveEdit = function () {
+        var name = $scope.editTask.name;
         resourceService.edit('tasks',$scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
+                $scope.addSuccess({ msg: "Task '" + name + "' successfully updated" });
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addError({ msg: err.data.message });
             }
         );
     };
 
     $scope.delete = function () {
+        var name = $scope.task.name;
         modalService.newModal('confirmDelete', { name: $scope.task.name, id: $scope.task.id }, 'sm',
             function (result) {
                 resourceService.delete('tasks',$scope.task.id).then(
                     function (response) {
-                        $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
+                        $scope.addSuccess({ msg: "Task '" + name + "' successfully deleted" });
                     },
                     function (err) {
-                        $scope.addAlert({ type: 'danger', msg: err.data.message });
+                        $scope.addError({ msg: err.data.message });
                     }
                 );
             }

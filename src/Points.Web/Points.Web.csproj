@@ -68,6 +68,7 @@
     <Content Include="app\areas\login\associateController.js" />
     <Content Include="app\areas\active\activeController.js" />
     <Content Include="app\directives\basicPanel.js" />
+    <Content Include="app\directives\alertBox.js" />
     <Content Include="app\directives\collapsePanel.js" />
     <Content Include="app\areas\tasks\filterTask.js" />
     <Content Include="app\areas\categories\filterCat.js" />
@@ -94,6 +95,7 @@
     <Content Include="app\services\usersService.js" />
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\directives\basicPanel.html" />
+    <Content Include="app\views\directives\alertBox.html" />
     <Content Include="app\views\directives\collapsePanel.html" />
     <Content Include="app\views\directives\editPlanningTask.html" />
     <Content Include="app\views\directives\filterTask.html" />

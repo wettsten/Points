@@ -2,7 +2,8 @@
 app.directive('newTask', function () {
     return {
         scope: {
-            addAlert: '&'
+            addSuccess: '&',
+            addError: '&'
         },
         templateUrl: '/app/views/directives/newTask.html',
         replace: true,
@@ -32,15 +33,16 @@ app.directive('newTask', function () {
         $scope.addTaskData.categoryId = $scope.addTaskData.category.id;
         resourceService.add('tasks', $scope.addTaskData).then(
             function (response) {
+                var name = $scope.addTaskData.name;
                 $scope.clearAddData();
                 $timeout(
                     function () {
-                        $scope.addAlert({ type: 'success', msg: 'Task successfully added' });
+                        $scope.addSuccess({ msg: "Task '" + name + "' successfully added" });
                     }, 100
                 );
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addError({ msg: err.data.message });
             }
         );
     };

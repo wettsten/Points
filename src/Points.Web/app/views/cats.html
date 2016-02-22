@@ -7,7 +7,7 @@
         </div>
 
         <div class="row">
-            <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
+            <div alert-box></div>
         </div>
 
         <div class="row" filter-cat></div>
@@ -26,8 +26,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr new-cat add-alert="addAlert(type,msg)"></tr>
-                    <tr ng-repeat="cat in cats | filter:catFilter" edit-cat the-cat="cat" cat-in-edit="catInEdit" add-alert="addAlert(type,msg)"></tr>
+                    <tr new-cat add-success="addSuccess(msg)" add-error="addError(msg)"></tr>
+                    <tr ng-repeat="cat in cats | filter:catFilter" edit-cat the-cat="cat" cat-in-edit="catInEdit" add-success="addSuccess(msg)" add-error="addError(msg)"></tr>
                 </tbody>
             </table>
         </div>

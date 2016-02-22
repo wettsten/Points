@@ -2,7 +2,8 @@
 app.directive('newCat', function() {
     return {
         scope: {
-            addAlert: '&'
+            addSuccess: '&',
+            addError: '&'
         },
         templateUrl: '/app/views/directives/newCat.html',
         replace: true,
@@ -19,15 +20,16 @@ app.directive('newCat', function() {
     $scope.addCat = function () {
         resourceService.add('categories', $scope.addCatData).then(
             function (response) {
+                var name = $scope.addCatData.name;
                 $scope.clearAddData();
                 $timeout(
                     function () {
-                        $scope.addAlert({ type: 'success', msg: 'Category successfully added' });
+                        $scope.addSuccess({ msg: "Category '" + name + "' successfully added" });
                     }, 100
                 );
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.statusText });
+                $scope.addError({ msg: err.data.message });
             }
         );
     };

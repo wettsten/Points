@@ -63,22 +63,6 @@ app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', '
         return $scope.addTaskData.frequency.type.id !== 'Once';
     };
 
-    $scope.addAlert = function (type, msg) {
-        var alert = { type: type, msg: msg };
-        $scope.alerts.push(alert);
-        $timeout(function () {
-            if ($scope.alerts.indexOf(alert) > -1) {
-                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-            }
-        }, 5000);
-    };
-
-    $scope.closeAlert = function (alert) {
-        if ($scope.alerts.indexOf(alert) > -1) {
-            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-        }
-    };
-
     $scope.confirm = function () {
         $scope.addTaskData.name = $scope.addTaskData.task.name;
         resourceService.add('planningtasks', $scope.addTaskData).then(
@@ -86,7 +70,7 @@ app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', '
                 $uibModalInstance.close();
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addError(err.data.message);
             }
         );
     };

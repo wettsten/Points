@@ -5,7 +5,7 @@
     </div>
 
     <div class="row">
-        <div uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert(alert)">{{alert.msg}}</div>
+        <div alert-box></div>
     </div>
 
     <div class="row">
@@ -17,7 +17,7 @@
                 </button>
                 <div>&nbsp;</div>
                 <div class="col-md-3" ng-repeat="task in tasks">
-                    <div edit-planning-task the-task="task" add-alert="addAlert(type,msg)"></div>
+                    <div edit-planning-task the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
                 </div>
             </div>
             <div uib-tab heading="Totals">

@@ -37,7 +37,7 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 
                 $uibModalInstance.close();
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addError(err.data.message);
             }
         );
     };
