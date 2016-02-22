@@ -17,7 +17,7 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
         resourceService.get('availabletasks');
     };
 
-    resourceService.registerForUpdates('planningtasks', function (data) {
+    resourceService.subscribe('planningtasks', function (data) {
         $scope.tasks = data;
         if ($scope.tasks.length === 0) {
             $scope.addWarning('No planning tasks found');
@@ -25,7 +25,7 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
         setupCats();
     });
 
-    resourceService.registerForUpdates('availabletasks', function (data) {
+    resourceService.subscribe('availabletasks', function (data) {
         $scope.availableTasks = data.length > 0;
     });
 

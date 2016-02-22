@@ -39,12 +39,12 @@ app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', '
         resourceService.get('enums');
     };
 
-    resourceService.registerForUpdates('availabletasks', function (data) {
+    resourceService.subscribe('availabletasks', function (data) {
         $scope.cats = data;
         resetDropdowns();
     });
 
-    resourceService.registerForUpdates('enums', function (data) {
+    resourceService.subscribe('enums', function (data) {
         $scope.enums = data;
         resetDropdowns();
     });

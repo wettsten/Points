@@ -17,7 +17,7 @@ app.controller('activeController', ['$scope', 'resourceService', '$timeout', 'mo
         resourceService.get('activetasks');
     };
 
-    resourceService.registerForUpdates('activetasks', function (data) {
+    resourceService.subscribe('activetasks', function (data) {
         $scope.cats = data;
         if ($scope.cats.length === 0) {
             $scope.addWarning('No active tasks found');

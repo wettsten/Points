@@ -14,7 +14,7 @@ app.controller('tasksController', ['$scope', 'resourceService', 'filterFactory',
         resourceService.get('tasks');
     };
 
-    resourceService.registerForUpdates('tasks', function (data) {
+    resourceService.subscribe('tasks', function (data) {
         $scope.tasks = data;
         if ($scope.tasks.length === 0) {
             $scope.addWarning('No tasks found');
