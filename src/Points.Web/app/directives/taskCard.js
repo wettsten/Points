@@ -2,7 +2,7 @@
 app.directive('taskCard', function () {
     return {
         scope: {
-            tasksPerRow: '@'
+            columnSize: '@'
         },
         templateUrl: '/app/views/directives/taskCard.html',
         transclude: true,
@@ -10,5 +10,5 @@ app.directive('taskCard', function () {
     };
 }).controller('taskCardController', ['$scope', function ($scope) {
 
-    $scope.colWidth = "col-md-{0}".format(12 / $scope.tasksPerRow);
+    $scope.colWidth = "width:{0}px".format($scope.columnSize);
 }]);

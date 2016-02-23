@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('PointsApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'xeditable', 'ui.bootstrap', 'akoenig.deckgrid']);
+var app = angular.module('PointsApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'xeditable', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
 

@@ -11,12 +11,7 @@
     <div class="row">
         <div active-task-totals></div>
     </div>
-    <div class="row">
-        <div deckgrid source="tasks" class="deckgrid" ng-class="cardClass">
-            <div active-task-card the-task="card" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
-        </div>
-        <!--<div ng-repeat="task in tasks" task-card tasks-per-row="4">
-            <div active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
-        </div>-->
+    <div class="row" layout="column" layout-wrap>
+        <div ng-repeat="task in tasks" class="card-item" active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
     </div>
 </div>
