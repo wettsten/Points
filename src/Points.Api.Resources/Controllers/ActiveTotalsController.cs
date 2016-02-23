@@ -40,7 +40,7 @@ namespace Points.Api.Resources.Controllers
                             TaskPoints = j.IsCompleted ? 1 : 0,
                             j.BonusPoints,
                             TotalPoints = (j.IsCompleted ? 1 : 0) + j.BonusPoints
-                        })
+                        }).OrderBy(j => j.Name)
                     })
                     .OrderBy(i => i.Name);
                 return Ok(new

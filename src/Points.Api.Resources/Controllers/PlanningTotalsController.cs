@@ -26,7 +26,8 @@ namespace Points.Api.Resources.Controllers
                     {
                         Id = i.Key,
                         Name = i.First().Task.Category.Name,
-                        Points = i.Count()
+                        Points = i.Count(),
+                        Tasks = i.OrderBy(j => j.Name)
                     })
                     .OrderBy(i => i.Name);
                 return Ok(new
