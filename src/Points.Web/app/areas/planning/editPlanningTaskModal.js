@@ -13,7 +13,7 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 
         resourceService.get('enums');
     };
 
-    resourceService.registerForUpdates('enums', function (data) {
+    resourceService.subscribe('enums', function (data) {
         $scope.enums = data;
     });
 

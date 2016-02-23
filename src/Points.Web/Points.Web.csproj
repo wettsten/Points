@@ -60,8 +60,11 @@
   <ItemGroup>
     <Content Include="app\format.js" />
     <Content Include="app\app.Debug.js" />
+    <Content Include="app\areas\active\activeTaskCard.js" />
+    <Content Include="app\areas\active\activeTaskTotals.js" />
     <Content Include="app\areas\options\optionsController.js" />
-    <Content Include="app\areas\planning\editPlanningTask.js" />
+    <Content Include="app\areas\planning\planningTaskTotals.js" />
+    <Content Include="app\areas\planning\planningTaskCard.js" />
     <Content Include="app\areas\planning\editPlanningTaskModal.js" />
     <Content Include="app\controllers\confirmUncheckModal.js" />
     <Content Include="app\controllers\confirmDeleteModal.js" />
@@ -98,7 +101,10 @@
     <Content Include="app\views\directives\basicPanel.html" />
     <Content Include="app\views\directives\alertBox.html" />
     <Content Include="app\views\directives\collapsePanel.html" />
-    <Content Include="app\views\directives\editPlanningTask.html" />
+    <Content Include="app\views\directives\activeTaskCard.html" />
+    <Content Include="app\views\directives\activeTaskTotals.html" />
+    <Content Include="app\views\directives\planningTaskTotals.html" />
+    <Content Include="app\views\directives\planningTaskCard.html" />
     <Content Include="app\views\directives\filterTask.html" />
     <Content Include="app\views\directives\filterCat.html" />
     <Content Include="app\views\directives\imgButton.html" />

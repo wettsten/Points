@@ -24,7 +24,7 @@ app.directive('newTask', function () {
         resourceService.get('categories');
     };
 
-    resourceService.registerForUpdates('categories', function (data) {
+    resourceService.subscribe('categories', function (data) {
         $scope.cats = data;
         $scope.clearAddData();
     });

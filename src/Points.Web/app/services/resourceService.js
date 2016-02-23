@@ -5,6 +5,45 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     var service = {};
     var callbacks = [];
     var caches = {};
+    var links = [
+        {
+            type: 'planningtasks',
+            action: 'add',
+            links: [
+                'availabletasks',
+                'planningtotals'
+            ]
+        },
+        {
+            type: 'planningtasks',
+            action: 'delete',
+            links: [
+                'availabletasks',
+                'planningtotals'
+            ]
+        },
+        {
+            type: 'tasks',
+            action: 'add',
+            links: [
+                'availabletasks'
+            ]
+        },
+        {
+            type: 'tasks',
+            action: 'delete',
+            links: [
+                'availabletasks'
+            ]
+        },
+        {
+            type: 'activetasks',
+            action: 'edit',
+            links: [
+                'activetotals'
+            ]
+        }
+    ];
 
     var getCache = function () {
         if (!caches[authService.authentication.userId]) {
@@ -19,16 +58,12 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
         getCache().put(type, data);
     };
 
-    var callCallbacks = function(type,data) {
-        for (var i = 0; i < callbacks.length; i++) {
-            if (callbacks[i].type === type) {
-                callbacks[i].callback(data);
+    var callCallbacks = function (type, data) {
+        angular.forEach(callbacks, function(callback) {
+            if (callback.type === type) {
+                callback.callback(data);
             }
-        }
-    };
-
-    service.registerForUpdates = function(type,callback) {
-        callbacks.push({ type: type, callback: callback });
+        });
     };
 
     var retrieveWithRetry = function (type,retry) {
@@ -47,6 +82,20 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
         retrieveWithRetry(type, 0);
     };
 
+    var updateLinks = function (type, action) {
+        angular.forEach(links, function (link) {
+            if (link.type === type && link.action === action) {
+                angular.forEach(link.links, function(linked) {
+                    retrieve(linked);
+                });
+            }
+        });
+    };
+
+    service.subscribe = function (type, callback) {
+        callbacks.push({ type: type, callback: callback });
+    };
+
     service.get = function (type) {
         var cache = getCache().get(type);
         if (!cache) {
@@ -59,24 +108,21 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     service.add = function (type,data) {
         return $http.post(serviceBase + 'api/' + type, data).then(function () {
             retrieve(type);
-            if (type === 'planningtasks' || type === 'tasks') {
-                retrieve('availabletasks');
-            }
+            updateLinks(type, 'add');
         });
     };
 
     service.edit = function (type,data) {
         return $http.put(serviceBase + 'api/' + type, data).then(function () {
             retrieve(type);
+            updateLinks(type, 'edit');
         });
     };
 
     service.delete = function (type,id) {
         return $http.delete(serviceBase + 'api/' + type + '?id=' + id).then(function () {
             retrieve(type);
-            if (type === 'planningtasks' || type === 'tasks') {
-                retrieve('availabletasks');
-            }
+            updateLinks(type, 'delete');
         });
     };
 

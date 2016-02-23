@@ -14,7 +14,7 @@ app.controller('catsController', ['$scope', 'resourceService', 'filterFactory', 
         resourceService.get('categories');
     };
 
-    resourceService.registerForUpdates('categories', function (data) {
+    resourceService.subscribe('categories', function (data) {
         $scope.cats = data;
         if ($scope.cats.length === 0) {
             $scope.addWarning('No categories found');

@@ -5,10 +5,21 @@ namespace Points.Data
     public class PlanningTask : RavenObject
     {
         public string TaskId { get; set; }
-        [Required]
         public Duration Duration { get; set; }
-        [Required]
         public Frequency Frequency { get; set; }
+
+        public decimal BonusPointValue
+        {
+            get
+            {
+                decimal bonus = 0M;
+                if (Frequency.Value != null)
+                {
+                    bonus = 1/(decimal) Frequency.Value.Value;
+                }
+                return bonus;
+            }
+        }
 
         public override void Copy(RavenObject obj)
         {

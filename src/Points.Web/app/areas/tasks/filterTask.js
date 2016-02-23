@@ -18,7 +18,7 @@ app.directive('filterTask', function () {
         resourceService.get('categories');
     };
 
-    resourceService.registerForUpdates('categories', function (data) {
+    resourceService.subscribe('categories', function (data) {
         $scope.cats = data;
     });
 
