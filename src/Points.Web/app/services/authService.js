@@ -6,12 +6,14 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
     var _authentication = {
         isAuth: false,
-        userName: ""
+        userName: "",
+        userId: ""
     };
 
     var _externalAuthData = {
         provider: "",
         userName: "",
+        userId: "",
         externalAccessToken: ""
     };
 
@@ -35,9 +37,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
+            _authentication.userId = response.userId;
             localStorageService.set('authorizationData', {
                 token: response.access_token,
-                userName: loginData.userName
+                userName: loginData.userName,
+                userId: _authentication.userId
             });
             usersService.getUser();
             deferred.resolve(response);
@@ -56,7 +60,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
         _authentication.isAuth = false;
         _authentication.userName = "";
-
+        _authentication.userId = "";
     };
 
     var _fillAuthData = function () {
@@ -65,6 +69,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
         if (authData) {
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
+            _authentication.userId = authData.userId;
         }
 
     };
@@ -77,9 +82,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
+            _authentication.userId = response.userId;
             localStorageService.set('authorizationData', {
                 token: response.access_token,
-                userName: response.userName
+                userName: response.userName,
+                userId: _authentication.userId
             });
             usersService.getUser();
             deferred.resolve(response);
@@ -100,6 +107,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             
             _authentication.isAuth = true;
             _authentication.userName = response.userName;
+            _authentication.userId = response.userId;
             localStorageService.set('authorizationData', {
                 token: response.access_token,
                 userName: response.userName,

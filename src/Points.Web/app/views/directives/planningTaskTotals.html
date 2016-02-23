@@ -1,0 +1,23 @@
+﻿<div>
+    <table class="table table-condensed table-hover" style="width:50%">
+        <thead>
+            <tr>
+                <th style="width:20px"></th>
+                <th>Name</th>
+                <th style="width:20px">Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-click="hideCats = !hideCats">
+                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !hideCats, 'glyphicon-chevron-right': hideCats}"></i></td>
+                <td><b>Total</b></td>
+                <td><b>{{totals.points}}</b></td>
+            </tr>
+            <tr ng-repeat="cat in totals.categories" ng-hide="hideCats">
+                <td></td>
+                <td>{{cat.name}}</td>
+                <td>{{cat.points}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

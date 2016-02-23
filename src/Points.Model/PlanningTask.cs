@@ -5,6 +5,7 @@
         public Task Task { get; set; }
         public Duration Duration { get; set; }
         public Frequency Frequency { get; set; }
+        public decimal BonusPointValue { get; set; }
 
         public override void Copy(ViewObject obj)
         {

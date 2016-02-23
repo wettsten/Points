@@ -1,0 +1,50 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Edit {{task.name}}</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div alert-box></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Category</p>
+                <input type="text" class="form-control" ng-model="task.task.category.name" ng-disabled="true" />
+            </div>
+            <div class="col-md-3">
+                <p>Task</p>
+                <input type="text" class="form-control" ng-model="task.name" ng-disabled="true" />
+            </div>
+            <div class="col-md-3">
+                <p>Duration</p>
+                <select class="form-control" ng-model="task.duration.type" ng-options="option.name for option in enums.dTypes track by option.id">
+                    {{task.duration.type.name}}
+                </select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="task.duration.value" ng-show="showAddDuration()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="task.duration.unit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits track by option.id">
+                    {{task.duration.unit.name}}
+                </select>
+                <div>&nbsp;</div>
+            </div>
+            <div class="col-md-3">
+                <p>Frequency</p>
+                <select class="form-control" ng-model="task.frequency.type" ng-options="option.name for option in enums.fTypes track by option.id">
+                    {{task.frequency.type.name}}
+                </select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="task.frequency.value" ng-show="showAddFrequency()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="task.frequency.unit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits track by option.id">
+                    {{task.frequency.unit.name}}
+                </select>
+                <div>&nbsp;</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="button" ng-click="confirm()">Save</button>
+        <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

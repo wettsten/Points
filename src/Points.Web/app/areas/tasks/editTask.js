@@ -4,13 +4,14 @@ app.directive('editTask', function () {
         scope: {
             task: '=theTask',
             taskInEdit: '=',
-            addAlert: '&'
+            addSuccess: '&',
+            addError: '&'
         },
         templateUrl: '/app/views/directives/editTask.html',
         replace: true,
         controller: 'editTaskController'
     };
-}).controller('editTaskController', ['$scope', 'resourceService', '$uibModal', function ($scope, resourceService, $uibModal) {
+}).controller('editTaskController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
 
     $scope.cats = [];
     $scope.editTask = {};
@@ -34,7 +35,7 @@ app.directive('editTask', function () {
         resourceService.get('categories');
     };
 
-    resourceService.registerForUpdates('categories', function (data) {
+    resourceService.subscribe('categories', function (data) {
         $scope.cats = data;
     });
 
@@ -44,45 +45,32 @@ app.directive('editTask', function () {
     };
 
     $scope.saveEdit = function () {
+        var name = $scope.editTask.name;
         resourceService.edit('tasks',$scope.editTask).then(
             function (response) {
                 $scope.clearEditData();
-                $scope.addAlert({ type: 'success', msg: 'Task successfully updated' });
+                $scope.addSuccess({ msg: "Task '{0}' successfully updated".format(name) });
             },
             function (err) {
-                $scope.addAlert({ type: 'danger', msg: err.data.message });
+                $scope.addError({ msg: err.data.message });
             }
         );
     };
 
     $scope.delete = function () {
-        var modalInstance = $uibModal.open({
-            animation: true,
-            templateUrl: '/app/views/partials/confirmDelete.html',
-            controller: 'confirmDeleteController',
-            size: 'sm',
-            resolve: {
-                item: function () {
-                    return {
-                        name: $scope.task.name,
-                        id: $scope.task.id
-                    };
-                }
-            }
-        });
-
-        modalInstance.result.then(function (result) {
-            if (result !== 'cancel') {
+        var name = $scope.task.name;
+        modalService.newModal('confirmDelete', { name: $scope.task.name, id: $scope.task.id }, 'sm',
+            function (result) {
                 resourceService.delete('tasks',$scope.task.id).then(
                     function (response) {
-                        $scope.addAlert({ type: 'success', msg: 'Task successfully deleted' });
+                        $scope.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
                     },
                     function (err) {
-                        $scope.addAlert({ type: 'danger', msg: err.data.message });
+                        $scope.addError({ msg: err.data.message });
                     }
                 );
             }
-        });
+        );
     };
 
     loadCats();

@@ -108,6 +108,9 @@ namespace Points.Api.Auth.Providers
                     },
                     { 
                         "userName", context.UserName
+                    },
+                    {
+                        "userId", id
                     }
                 });
 

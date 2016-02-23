@@ -1,0 +1,42 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">New Planning Task</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div alert-box></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Category</p>
+                <select class="form-control" ng-model="addTaskData.cat" ng-options="option.name for option in cats" ng-change="filterTasks()"></select>
+            </div>
+            <div class="col-md-3">
+                <p>Task</p>
+                <select class="form-control" ng-model="addTaskData.task" ng-options="option.name for option in addTaskData.cat.tasks"></select>
+            </div>
+            <div class="col-md-3">
+                <p>Duration</p>
+                <select class="form-control" ng-model="addTaskData.duration.type" ng-options="option.name for option in enums.dTypes"></select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.duration.value" ng-show="showAddDuration()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="addTaskData.duration.unit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits"></select>
+                <div>&nbsp;</div>
+            </div>
+            <div class="col-md-3">
+                <p>Frequency</p>
+                <select class="form-control" ng-model="addTaskData.frequency.type" ng-options="option.name for option in enums.fTypes"></select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="addTaskData.frequency.value" ng-show="showAddFrequency()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="addTaskData.frequency.unit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits"></select>
+                <div>&nbsp;</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="button" ng-disabled="!addTaskData.task.id || !addTaskData.cat.id" ng-click="confirm()">Save</button>
+        <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

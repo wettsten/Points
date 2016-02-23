@@ -181,7 +181,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
                 $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
                 $scope.originalUser = angular.copy($scope.user);
             }, function(error) {
-                $scope.addAlert('warning', 'Error loading data');
+                $scope.addWarning('Error loading data');
         });
     };
 
@@ -231,36 +231,20 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
             usersService.editUser($scope.user).then(
                 function(response) {
                     $scope.loadData();
-                    $scope.addAlert('success', 'Options successfully updated');
+                    $scope.addSuccess('Options successfully updated');
                 },
                 function(err) {
-                    $scope.addAlert('danger', err.data.message);
+                    $scope.addError(err.data.message);
                 });
         }
     };
 
     $scope.validateEmail = function() {
         if (($scope.user.weekStartNotify.value > 0 || $scope.user.weekEndNotify.value > 0) && !$scope.user.email) {
-            $scope.addAlert('danger', 'Email is required for notifications');
+            $scope.addError('Email is required for notifications');
             return false;
         }
         return true;
-    };
-
-    $scope.addAlert = function (type, msg) {
-        var alert = { type: type, msg: msg };
-        $scope.alerts.push(alert);
-        $timeout(function () {
-            if ($scope.alerts.indexOf(alert) > -1) {
-                $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-            }
-        }, 5000);
-    };
-
-    $scope.closeAlert = function (alert) {
-        if ($scope.alerts.indexOf(alert) > -1) {
-            $scope.alerts.splice($scope.alerts.indexOf(alert), 1);
-        }
     };
 
     $scope.loadData();

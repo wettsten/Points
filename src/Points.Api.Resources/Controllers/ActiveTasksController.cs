@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using Points.Api.Resources.Extensions;
 using Points.Common.Processors;
 using Points.Model;
 
@@ -16,22 +15,7 @@ namespace Points.Api.Resources.Controllers
         [Route("")]
         public IHttpActionResult GetActiveTasksForUser()
         {
-            var tasks = GetForUser();
-            if (tasks.IsOk())
-            {
-                var content = tasks.GetContent<ActiveTask>();
-                var cats = content
-                    .GroupBy(i => i.Task.Category.Id, task => task)
-                    .Select(i => new
-                    {
-                        Id = i.Key,
-                        Name = i.First().Task.Category.Name,
-                        Tasks = i.OrderBy(j => j.Task.Name)
-                    })
-                    .OrderBy(i => i.Name);
-                return Ok(cats);
-            }
-            return tasks;
+            return GetForUser();
         }
 
         [Route("")]
