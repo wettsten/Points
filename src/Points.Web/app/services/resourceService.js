@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authService) {
+app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authDataService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authDataService) {
 
     var serviceBase = ngAuthSettings.apiResourceBaseUri;
     var service = {};
@@ -46,12 +46,12 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     ];
 
     var getCache = function () {
-        if (!caches[authService.authentication.userId]) {
-            var cache = $cacheFactory(authService.authentication.userId);
-            caches[authService.authentication.userId] = cache;
+        if (!caches[authDataService.authentication.userId]) {
+            var cache = $cacheFactory(authDataService.authentication.userId);
+            caches[authDataService.authentication.userId] = cache;
             return cache;
         }
-        return caches[authService.authentication.userId];
+        return caches[authDataService.authentication.userId];
     };
 
     var setCache = function (type, data) {
@@ -93,7 +93,9 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     };
 
     service.subscribe = function (type, callback) {
-        callbacks.push({ type: type, callback: callback });
+        if (callback) {
+            callbacks.push({ type: type, callback: callback });
+        }
     };
 
     service.get = function (type) {

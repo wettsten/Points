@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('optionsController', ['$scope', 'authService', 'userService', '$timeout', '$q', function ($scope, authService, userService, $timeout, $q) {
+app.controller('optionsController', ['$scope', 'authService', 'resourceService', function ($scope, authService, resourceService) {
 
     $scope.originalUser = {};
     $scope.user = {};
@@ -194,16 +194,18 @@ app.controller('optionsController', ['$scope', 'authService', 'userService', '$t
         }
     };
 
-    $scope.loadData = function () {
-        userService.getUser(authService.authentication.userId, function(user) {
-            $scope.user = user;
-            convertToLocal();
-            $scope.user.startHour = $scope.hours[$scope.user.offsetHour];
-            $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
-            $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
-            $scope.originalUser = angular.copy($scope.user);
-        });
+    var loadData = function () {
+        resourceService.get('users');
     };
+
+    resourceService.subscribe('users', function (data) {
+        $scope.user = data[0];
+        convertToLocal();
+        $scope.user.startHour = $scope.hours[$scope.user.offsetHour];
+        $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
+        $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
+        $scope.originalUser = angular.copy($scope.user);
+    });
 
     $scope.areNoChanges = function() {
         return angular.equals($scope.user, $scope.originalUser);
@@ -222,9 +224,9 @@ app.controller('optionsController', ['$scope', 'authService', 'userService', '$t
             convertToUtc();
             $scope.user.notifyWeekStarting = $scope.user.weekStartNotify.value;
             $scope.user.notifyWeekEnding = $scope.user.weekEndNotify.value;
-            userService.editUser($scope.user).then(
+            resourceService.edit('users',$scope.user).then(
                 function() {
-                    $scope.loadData();
+                    loadData();
                     $scope.addSuccess('Options successfully updated');
                 },
                 function(err) {
@@ -241,5 +243,5 @@ app.controller('optionsController', ['$scope', 'authService', 'userService', '$t
         return true;
     };
 
-    $scope.loadData();
+    loadData();
 }]);
