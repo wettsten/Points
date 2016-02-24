@@ -64,15 +64,6 @@ body {
     height: 40px;
     cursor: pointer;
 }
-input[type=checkbox]
-{
-  /* Double-sized Checkboxes */
-  -ms-transform: scale(2); /* IE */
-  -moz-transform: scale(2); /* FF */
-  -webkit-transform: scale(2); /* Safari and Chrome */
-  -o-transform: scale(2); /* Opera */
-  padding: 10px;
-}
 .editable-wrap
 {
     width: 100%;
@@ -93,3 +84,15 @@ table tr td.buttons-td
     white-space: nowrap;
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.myrow {
+    font-size: 0;
+}
+.myrow > * {
+    float: none;
+    display: inline-block;
+    font-size: 14px; /* if using LESS it's quicker to just use @font-size-base */
+}
+.myrow > *:last-child {
+    vertical-align: bottom;
+}

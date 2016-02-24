@@ -1,54 +1,93 @@
 ﻿<div class="row">
-    <div class="col-md-3">&nbsp;</div>
-    <div class="col-md-6">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
         <div class="row">
             <h1>User Options</h1>
-            <hr/>
+            <hr />
         </div>
         <div class="row">
             <div alert-box></div>
         </div>
         <div class="row">&nbsp;</div>
-        <div class="row">
-            Email (required for notifications):
-            <a href="#" editable-email="user.email">
-                {{ user.email || 'not set' }}
-            </a>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            Notification on week start:
-            <a href="#" editable-select="user.notifyWeekStarting" e-ng-options="option.name for option in hoursPrior">
-                {{ user.notifyWeekStarting.name }}
-            </a>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            Notification on week end:
-            <a href="#" editable-select="user.notifyWeekEnding" e-ng-options="option.name for option in hoursPrior">
-                {{ user.notifyWeekEnding.name }}
-            </a>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            Week starts on:
-            <a href="#" editable-select="user.weekStartDay" e-ng-options="option for option in days">
-                {{ user.weekStartDay }}
-            </a>
-            &nbsp;
-            <a href="#" editable-select="user.weekStartHour" e-ng-options="option.name for option in hours">
-                {{ user.weekStartHour.name }}
-            </a>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <button type="submit" class="btn btn-success" ng-disabled="areNoChanges()" ng-click="saveChanges()" title="Save changes">
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-            </button>
-            <button type="button" class="btn btn-danger" ng-disabled="areNoChanges()" ng-click="cancelChanges()" title="Cancel changes">
-                <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
-            </button>
-        </div>
+        <form role="form">
+            <div class="row myrow form-group">
+                <div class="col-md-8">
+                    <span>Email (required for notifications):</span>
+                    <input type="email" class="form-control" ng-model="user.email" />
+                </div>
+                <div class="col-md-4">
+                    <span>Target points per week:</span>
+                    <input type="number" class="form-control" ng-model="user.targetPoints" min="0" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span>Notifications for active week</span>
+                </div>
+            </div>
+            <div class="row myrow form-group">
+                <div class="col-md-3">
+                    <span>Starting:</span>
+                    <select class="form-control" ng-model="user.notifyWeekStarting" ng-options="option.name for option in hoursPrior">
+                        {{ user.notifyWeekStarting.name }}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <span>Ending:</span>
+                    <select class="form-control" ng-model="user.notifyWeekEnding" ng-options="option.name for option in hoursPrior">
+                        {{ user.notifyWeekEnding.name }}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <span>Week starts on:</span>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select class="form-control" ng-model="user.weekStartDay" ng-options="option for option in days">
+                                {{ user.weekStartDay }}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control" ng-model="user.weekStartHour" ng-options="option.name for option in hours">
+                                {{ user.weekStartHour.name }}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row myrow form-group" ng-show="user.enableAdvancedFeatures">
+                <div class="col-md-3">
+                    <span>Category bonus:</span>
+                    <input type="number" class="form-control" ng-model="user.categoryBonus" min="0" />
+                </div>
+                <div class="col-md-3">
+                    <span>Task multiplier:</span>
+                    <input type="number" class="form-control" ng-model="user.taskMultiplier" min="1" />
+                </div>
+                <div class="col-md-3">
+                    <span>Bonus point multiplier:</span>
+                    <input type="number" class="form-control" ng-model="user.bonusPointMultiplier" min="1" />
+                </div>
+                <div class="col-md-3">
+                    <span>Duration bonus points per hour:</span>
+                    <input type="number" class="form-control" ng-model="user.durationBonusPointsPerHour" min="0" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <div class="checkbox">
+                        <label><input type="checkbox" ng-model="user.enableAdvancedFeatures"> Enable advanced features</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-danger pull-right" ng-disabled="areNoChanges()" ng-click="cancelChanges()" title="Cancel changes">
+                        <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+                    </button>
+                    <button type="submit" class="btn btn-success pull-right" ng-disabled="areNoChanges()" ng-click="saveChanges()" title="Save changes">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-2">&nbsp;</div>
 </div>
