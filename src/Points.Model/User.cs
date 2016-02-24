@@ -14,6 +14,12 @@ namespace Points.Model
         public int NotifyWeekEnding { get; set; }
         public DateTime? PlanningEndTime { get; set; }
         public DateTime? ActiveStartTime { get; set; }
+        public int TargetPoints { get; set; }
+        public bool EnableAdvancedFeatures { get; set; }
+        public int CategoryBonus { get; set; }
+        public int TaskMultiplier { get; set; }
+        public int BonusPointMultiplier { get; set; }
+        public decimal DurationBonusPointsPerHour { get; set; }
 
         public override void Copy(ViewObject obj)
         {
@@ -26,6 +32,14 @@ namespace Points.Model
                 WeekStartHour = user.WeekStartHour;
                 NotifyWeekStarting = user.NotifyWeekStarting;
                 NotifyWeekEnding = user.NotifyWeekEnding;
+                PlanningEndTime = user.PlanningEndTime;
+                ActiveStartTime = user.ActiveStartTime;
+                TargetPoints = user.TargetPoints;
+                EnableAdvancedFeatures = user.EnableAdvancedFeatures;
+                CategoryBonus = user.CategoryBonus;
+                TaskMultiplier = user.TaskMultiplier;
+                BonusPointMultiplier = user.BonusPointMultiplier;
+                DurationBonusPointsPerHour = user.DurationBonusPointsPerHour;
             }
         }
     }

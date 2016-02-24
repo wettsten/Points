@@ -39,7 +39,13 @@ namespace Points.Api.Resources.Controllers
                         WeekStartDay = now.DayOfWeek,
                         WeekStartHour = now.Hour,
                         NotifyWeekStarting = 0,
-                        NotifyWeekEnding = 0
+                        NotifyWeekEnding = 0,
+                        TargetPoints = 0,
+                        EnableAdvancedFeatures = false,
+                        CategoryBonus = 0,
+                        TaskMultiplier = 1,
+                        BonusPointMultiplier = 1,
+                        DurationBonusPointsPerHour = 0
                     };
                     _requestProcessor.AddData(user, user.Id);
                     usr = GetForUser();
