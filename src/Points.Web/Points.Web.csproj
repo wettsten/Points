@@ -95,8 +95,7 @@
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\modalService.js" />
     <Content Include="app\services\resourceService.js" />
-    <Content Include="app\services\jobsService.js" />
-    <Content Include="app\services\usersService.js" />
+    <Content Include="app\services\userService.js" />
     <Content Include="app\views\associate.html" />
     <Content Include="app\views\directives\basicPanel.html" />
     <Content Include="app\views\directives\alertBox.html" />

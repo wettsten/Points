@@ -12,6 +12,8 @@ namespace Points.Model
         public int WeekStartHour { get; set; }
         public int NotifyWeekStarting { get; set; }
         public int NotifyWeekEnding { get; set; }
+        public DateTime? PlanningEndTime { get; set; }
+        public DateTime? ActiveStartTime { get; set; }
 
         public override void Copy(ViewObject obj)
         {

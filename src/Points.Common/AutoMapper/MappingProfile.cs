@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Points.Common.EnumExtensions;
 using Points.DataAccess.Readers;
@@ -54,8 +55,30 @@ namespace Points.Common.AutoMapper
                 .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
             CreateMap<Data.ArchivedTask, Model.ArchivedTask>()
                 .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
-            CreateMap<Data.User, Model.User>();
+            CreateMap<Data.User, Model.User>()
+                .ForMember(t => t.PlanningEndTime, o => o.MapFrom(s => GetPlanningEndTime(s)))
+                .ForMember(t => t.ActiveStartTime, o => o.MapFrom(s => GetActiveStartTime(s)));
             CreateMap<Data.Job, Model.Job>();
+        }
+
+        private DateTime? GetPlanningEndTime(Data.User user)
+        {
+            var job = _dataReader.GetAll<Data.Job>().FirstOrDefault(i => i.UserId.Equals(user.Id) && i.Processor.Equals("StartWeekJob"));
+            if (job == null)
+            {
+                return new DateTime?();
+            }
+            return job.Trigger;
+        }
+
+        private DateTime? GetActiveStartTime(Data.User user)
+        {
+            var job = _dataReader.GetAll<Data.Job>().FirstOrDefault(i => i.UserId.Equals(user.Id) && i.Processor.Equals("EndWeekJob"));
+            if (job == null)
+            {
+                return new DateTime?();
+            }
+            return job.Trigger;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('optionsController', ['$scope', 'authService', 'usersService', '$timeout', '$q', function ($scope, authService, usersService, $timeout, $q) {
+app.controller('optionsController', ['$scope', 'authService', 'userService', '$timeout', '$q', function ($scope, authService, userService, $timeout, $q) {
 
     $scope.originalUser = {};
     $scope.user = {};
@@ -166,26 +166,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
         },
     ];
 
-    $scope.loadUser = usersService.getUser().then(
-            function (response) {
-                return response.data[0];
-            });
-
-    $scope.loadData = function () {
-        $q.all([$scope.loadUser]).then(
-            function (data) {
-                $scope.user = data[0];
-                $scope.convertToLocal();
-                $scope.user.startHour = $scope.hours[$scope.user.offsetHour];
-                $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
-                $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
-                $scope.originalUser = angular.copy($scope.user);
-            }, function(error) {
-                $scope.addWarning('Error loading data');
-        });
-    };
-
-    $scope.convertToLocal = function () {
+    var convertToLocal = function () {
         var offset = new Date().getTimezoneOffset() / 60;
         if ($scope.user.weekStartHour - offset < 0) {
             $scope.user.offsetHour = $scope.user.weekStartHour - offset + 24;
@@ -199,7 +180,7 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
         }
     };
 
-    $scope.convertToUtc = function () {
+    var convertToUtc = function () {
         var offset = new Date().getTimezoneOffset() / 60;
         if ($scope.user.offsetHour + offset < 0) {
             $scope.user.weekStartHour = $scope.user.offsetHour + offset + 24;
@@ -211,6 +192,17 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
             $scope.user.weekStartHour = $scope.user.offsetHour + offset;
             $scope.user.weekStartDay = $scope.user.offsetDay;
         }
+    };
+
+    $scope.loadData = function () {
+        userService.getUser(authService.authentication.userId, function(user) {
+            $scope.user = user;
+            convertToLocal();
+            $scope.user.startHour = $scope.hours[$scope.user.offsetHour];
+            $scope.user.weekStartNotify = $scope.hoursPrior[$scope.user.notifyWeekStarting];
+            $scope.user.weekEndNotify = $scope.hoursPrior[$scope.user.notifyWeekEnding];
+            $scope.originalUser = angular.copy($scope.user);
+        });
     };
 
     $scope.areNoChanges = function() {
@@ -227,9 +219,11 @@ app.controller('optionsController', ['$scope', 'authService', 'usersService', '$
     $scope.saveChanges = function () {
         if ($scope.validateEmail()) {
             $scope.user.offsetHour = $scope.user.startHour.hour;
-            $scope.convertToUtc();
-            usersService.editUser($scope.user).then(
-                function(response) {
+            convertToUtc();
+            $scope.user.notifyWeekStarting = $scope.user.weekStartNotify.value;
+            $scope.user.notifyWeekEnding = $scope.user.weekEndNotify.value;
+            userService.editUser($scope.user).then(
+                function() {
                     $scope.loadData();
                     $scope.addSuccess('Options successfully updated');
                 },

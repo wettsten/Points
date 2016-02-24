@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', 'usersService', function ($http, $q, localStorageService, ngAuthSettings, usersService) {
+app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', 'userService', function ($http, $q, localStorageService, ngAuthSettings, userService) {
 
     var serviceBase = ngAuthSettings.apiServiceBaseUri;
     var authServiceFactory = {};
@@ -43,7 +43,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 userName: loginData.userName,
                 userId: _authentication.userId
             });
-            usersService.getUser();
+            userService.getUser();
             deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
@@ -88,7 +88,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 userName: response.userName,
                 userId: _authentication.userId
             });
-            usersService.getUser();
+            userService.getUser();
             deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
@@ -113,7 +113,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 userName: response.userName,
                 userId: _authentication.userId
             });
-            usersService.getUser();
+            userService.getUser();
             deferred.resolve(response);
         }).error(function (err, status) {
             _logOut();
