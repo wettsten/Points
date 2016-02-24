@@ -9,9 +9,9 @@ namespace Points.Model
         public string Email { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek WeekStartDay { get; set; }
-        public int WeekStartHour { get; set; }
-        public int NotifyWeekStarting { get; set; }
-        public int NotifyWeekEnding { get; set; }
+        public SimpleInt WeekStartHour { get; set; }
+        public SimpleInt NotifyWeekStarting { get; set; }
+        public SimpleInt NotifyWeekEnding { get; set; }
         public DateTime? PlanningEndTime { get; set; }
         public DateTime? ActiveStartTime { get; set; }
         public int TargetPoints { get; set; }

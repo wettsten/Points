@@ -98,12 +98,13 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
         }
     };
 
-    service.get = function (type) {
+    service.get = function (type, callback) {
+        service.subscribe(type, callback);
         var cache = getCache().get(type);
-        if (!cache) {
-            retrieve(type);
-        } else {
+        if (cache) {
             $timeout(callCallbacks(type, cache), 10);
+        } else {
+            retrieve(type);
         }
     };
 

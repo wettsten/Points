@@ -35,7 +35,10 @@ namespace Points.Common.AutoMapper
                 .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
             CreateMap<Model.ArchivedTask, Data.ArchivedTask>()
                 .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
-            CreateMap<Model.User, Data.User>();
+            CreateMap<Model.User, Data.User>()
+                .ForMember(t => t.WeekStartHour, o => o.MapFrom(s => s.WeekStartHour.Id))
+                .ForMember(t => t.NotifyWeekStarting, o => o.MapFrom(s => s.NotifyWeekStarting.Id))
+                .ForMember(t => t.NotifyWeekEnding, o => o.MapFrom(s => s.NotifyWeekEnding.Id));
             CreateMap<Model.Job, Data.Job>();
 
             // Raven to View
@@ -57,7 +60,10 @@ namespace Points.Common.AutoMapper
                 .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
             CreateMap<Data.User, Model.User>()
                 .ForMember(t => t.PlanningEndTime, o => o.MapFrom(s => GetPlanningEndTime(s)))
-                .ForMember(t => t.ActiveStartTime, o => o.MapFrom(s => GetActiveStartTime(s)));
+                .ForMember(t => t.ActiveStartTime, o => o.MapFrom(s => GetActiveStartTime(s)))
+                .ForMember(t => t.WeekStartHour, o => o.MapFrom(s => Model.SimpleInt.FromId(s.WeekStartHour)))
+                .ForMember(t => t.NotifyWeekStarting, o => o.MapFrom(s => Model.SimpleInt.FromId(s.NotifyWeekStarting)))
+                .ForMember(t => t.NotifyWeekEnding, o => o.MapFrom(s => Model.SimpleInt.FromId(s.NotifyWeekEnding)));
             CreateMap<Data.Job, Model.Job>();
         }
 

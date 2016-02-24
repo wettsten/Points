@@ -18,26 +18,26 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             Notification on week start:
-            <a href="#" editable-select="user.weekStartNotify" e-ng-options="option.name for option in hoursPrior">
-                {{ user.weekStartNotify.name }}
+            <a href="#" editable-select="user.notifyWeekStarting" e-ng-options="option.name for option in hoursPrior">
+                {{ user.notifyWeekStarting.name }}
             </a>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
             Notification on week end:
-            <a href="#" editable-select="user.weekEndNotify" e-ng-options="option.name for option in hoursPrior">
-                {{ user.weekEndNotify.name }}
+            <a href="#" editable-select="user.notifyWeekEnding" e-ng-options="option.name for option in hoursPrior">
+                {{ user.notifyWeekEnding.name }}
             </a>
         </div>
         <div class="row">&nbsp;</div>
         <div class="row">
             Week starts on:
-            <a href="#" editable-select="user.offsetDay" e-ng-options="option for option in days">
-                {{ user.offsetDay }}
+            <a href="#" editable-select="user.weekStartDay" e-ng-options="option for option in days">
+                {{ user.weekStartDay }}
             </a>
             &nbsp;
-            <a href="#" editable-select="user.startHour" e-ng-options="option.text for option in hours">
-                {{ user.startHour.text }}
+            <a href="#" editable-select="user.weekStartHour" e-ng-options="option.name for option in hours">
+                {{ user.weekStartHour.name }}
             </a>
         </div>
         <div class="row">&nbsp;</div>
