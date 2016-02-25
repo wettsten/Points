@@ -14,6 +14,7 @@ namespace Points.Model
         public SimpleInt NotifyWeekEnding { get; set; }
         public DateTime? PlanningEndTime { get; set; }
         public DateTime? ActiveStartTime { get; set; }
+        public bool WeekSummaryEmail { get; set; }
         public int TargetPoints { get; set; }
         public bool EnableAdvancedFeatures { get; set; }
         public int CategoryBonus { get; set; }
@@ -40,6 +41,7 @@ namespace Points.Model
                 TaskMultiplier = user.TaskMultiplier;
                 BonusPointMultiplier = user.BonusPointMultiplier;
                 DurationBonusPointsPerHour = user.DurationBonusPointsPerHour;
+                WeekSummaryEmail = user.WeekSummaryEmail;
             }
         }
     }

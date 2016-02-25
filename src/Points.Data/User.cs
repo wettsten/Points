@@ -11,6 +11,7 @@ namespace Points.Data
         public int WeekStartHour { get; set; }
         public int NotifyWeekStarting { get; set; }
         public int NotifyWeekEnding { get; set; }
+        public bool WeekSummaryEmail { get; set; }
         public int TargetPoints { get; set; }
         public bool EnableAdvancedFeatures { get; set; }
         public int CategoryBonus { get; set; }
@@ -35,6 +36,7 @@ namespace Points.Data
                 TaskMultiplier = user.TaskMultiplier;
                 BonusPointMultiplier = user.BonusPointMultiplier;
                 DurationBonusPointsPerHour = user.DurationBonusPointsPerHour;
+                WeekSummaryEmail = user.WeekSummaryEmail;
             }
         }
     }

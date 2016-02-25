@@ -76,7 +76,7 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
     };
 
     $scope.validateEmail = function() {
-        if (($scope.user.notifyWeekStarting.id > 0 || $scope.user.notifyWeekEnding.id > 0) && !$scope.user.email) {
+        if (($scope.user.notifyWeekStarting.id > 0 || $scope.user.notifyWeekEnding.id > 0 || $scope.user.weekSummaryEmail === true) && !$scope.user.email) {
             $scope.addError('Email is required for notifications');
             return false;
         }

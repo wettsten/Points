@@ -41,6 +41,7 @@ namespace Points.Api.Resources.Controllers
                         WeekStartHour = SimpleInt.FromId(now.Hour),
                         NotifyWeekStarting = SimpleInt.FromId(0),
                         NotifyWeekEnding = SimpleInt.FromId(0),
+                        WeekSummaryEmail = false,
                         TargetPoints = 0,
                         EnableAdvancedFeatures = false,
                         CategoryBonus = 0,
