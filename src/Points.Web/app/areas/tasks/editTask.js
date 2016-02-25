@@ -32,12 +32,10 @@ app.directive('editTask', function () {
     };
 
     var loadCats = function () {
-        resourceService.get('categories');
+        resourceService.get('categories', function (data) {
+            $scope.cats = data;
+        });
     };
-
-    resourceService.subscribe('categories', function (data) {
-        $scope.cats = data;
-    });
 
     $scope.startEdit = function () {
         $scope.editTask = angular.copy($scope.task);

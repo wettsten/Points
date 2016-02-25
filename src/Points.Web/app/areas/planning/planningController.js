@@ -13,21 +13,17 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
     };
 
     var loadCats = function () {
-        resourceService.get('planningtasks');
-        resourceService.get('availabletasks');
+        resourceService.get('planningtasks', function (data) {
+            $scope.tasks = data;
+            if ($scope.tasks.length === 0) {
+                $scope.addWarning('No planning tasks found');
+            }
+            setupCats();
+        });
+        resourceService.get('availabletasks', function (data) {
+            $scope.availableTasks = data.length > 0;
+        });
     };
-
-    resourceService.subscribe('planningtasks', function (data) {
-        $scope.tasks = data;
-        if ($scope.tasks.length === 0) {
-            $scope.addWarning('No planning tasks found');
-        }
-        setupCats();
-    });
-
-    resourceService.subscribe('availabletasks', function (data) {
-        $scope.availableTasks = data.length > 0;
-    });
 
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',

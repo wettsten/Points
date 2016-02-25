@@ -13,15 +13,13 @@ app.directive('activeTaskTotals', function () {
     $scope.hideCats = true;
 
     var loadTotals = function () {
-        resourceService.get('activetotals');
-    };
-
-    resourceService.subscribe('activetotals', function (data) {
-        $scope.totals = data;
-        angular.forEach($scope.totals.categories, function(cat) {
-            cat.hideTasks = true;
+        resourceService.get('activetotals',  function (data) {
+            $scope.totals = data;
+            angular.forEach($scope.totals.categories, function(cat) {
+                cat.hideTasks = true;
+            });
         });
-    });
+    };
 
     $scope.toggleCats = function () {
         $scope.hideCats = !$scope.hideCats;

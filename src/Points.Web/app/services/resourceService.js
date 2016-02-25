@@ -1,9 +1,9 @@
-﻿'use strict';
+﻿//'use strict';
 app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authDataService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authDataService) {
 
     var serviceBase = ngAuthSettings.apiResourceBaseUri;
     var service = {};
-    var callbacks = [];
+    var callbacks = new Array();
     var caches = {};
     var links = [
         {
@@ -59,11 +59,10 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     };
 
     var callCallbacks = function (type, data) {
-        angular.forEach(callbacks, function(callback) {
-            if (callback.type === type) {
-                callback.callback(data);
-            }
-        });
+        var typeHashes = callbacks[type];
+        for (var key in typeHashes) {
+            typeHashes[key](data);
+        };
     };
 
     var retrieveWithRetry = function (type,retry) {
@@ -94,7 +93,15 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
 
     service.subscribe = function (type, callback) {
         if (callback) {
-            callbacks.push({ type: type, callback: callback });
+            var hash = Sha1.hash(callback.toString());
+            var types = callbacks[type];
+            if (!types) {
+                types = new Array();
+                types[hash] = callback;
+                callbacks[type] = types;
+            } else {
+                types[hash] = callback;
+            }
         }
     };
 

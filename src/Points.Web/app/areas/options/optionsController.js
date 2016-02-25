@@ -34,7 +34,6 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
         return user;
     };
 
-    resourceService.get('users');
     resourceService.get('users/days', function (data) {
         $scope.days = data;
     });
@@ -44,13 +43,14 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
     resourceService.get('users/hoursprior', function (data) {
         $scope.hoursPrior = data;
     });
-
-    resourceService.subscribe('users', function (data) {
-        $scope.user = convertToLocal(angular.copy(data[0]));
-        $scope.user.notifyWeekStarting = $scope.hoursPrior[$scope.user.notifyWeekStarting.id];
-        $scope.user.notifyWeekEnding = $scope.hoursPrior[$scope.user.notifyWeekEnding.id];
-        $scope.originalUser = angular.copy($scope.user);
-    });
+    var loadData = function() {
+        resourceService.get('users', function (data) {
+            $scope.user = convertToLocal(angular.copy(data[0]));
+            $scope.user.notifyWeekStarting = $scope.hoursPrior[$scope.user.notifyWeekStarting.id];
+            $scope.user.notifyWeekEnding = $scope.hoursPrior[$scope.user.notifyWeekEnding.id];
+            $scope.originalUser = angular.copy($scope.user);
+        });
+    };
 
     $scope.areNoChanges = function() {
         return angular.equals($scope.user, $scope.originalUser);
@@ -82,4 +82,6 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
         }
         return true;
     };
+
+    loadData();
 }]);

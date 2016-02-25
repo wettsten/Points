@@ -15,12 +15,10 @@ app.directive('planningTaskCard', function () {
     $scope.enums = {};
 
     var loadEnums = function () {
-        resourceService.get('enums');
+        resourceService.get('enums', function (data) {
+            $scope.enums = data;
+        });
     };
-
-    resourceService.subscribe('enums', function (data) {
-        $scope.enums = data;
-    });
 
     $scope.startEdit = function () {
         modalService.newModal('editPlanningTask', angular.copy($scope.task), 'lg', 

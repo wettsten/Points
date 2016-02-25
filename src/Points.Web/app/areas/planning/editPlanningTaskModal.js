@@ -10,12 +10,10 @@ app.controller('editPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 
     $scope.task = data;
 
     var loadEnums = function () {
-        resourceService.get('enums');
+        resourceService.get('enums', function (data) {
+            $scope.enums = data;
+        });
     };
-
-    resourceService.subscribe('enums', function (data) {
-        $scope.enums = data;
-    });
 
     $scope.showAddDuration = function () {
         if (!$scope.task.duration.type) {

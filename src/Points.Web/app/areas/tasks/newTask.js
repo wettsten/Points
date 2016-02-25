@@ -21,13 +21,11 @@ app.directive('newTask', function () {
     };
 
     var loadCats = function() {
-        resourceService.get('categories');
+        resourceService.get('categories', function (data) {
+            $scope.cats = data;
+            $scope.clearAddData();
+        });
     };
-
-    resourceService.subscribe('categories', function (data) {
-        $scope.cats = data;
-        $scope.clearAddData();
-    });
 
     $scope.addTask = function () {
         $scope.addTaskData.categoryId = $scope.addTaskData.category.id;

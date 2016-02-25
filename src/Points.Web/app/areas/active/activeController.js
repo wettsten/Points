@@ -3,13 +3,7 @@ app.controller('activeController', ['$scope', 'resourceService', function ($scop
 
     $scope.tasks = [];
 
-    var loadTasks = function () {
-        resourceService.get('activetasks');
-    };
-
-    resourceService.subscribe('activetasks', function (data) {
+    resourceService.get('activetasks', function (data) {
         $scope.tasks = data;
     });
-
-    loadTasks();
 }]);
