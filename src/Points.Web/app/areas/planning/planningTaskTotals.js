@@ -14,7 +14,7 @@ app.directive('planningTaskTotals', function () {
     $scope.hideCats = true;
     $scope.totalClass = 'active';
 
-    $scope.calculateTotalClass = function () {
+    var calculateTotalClass = function () {
         if ($scope.user.targetPoints && $scope.totals.points) {
             var pct = $scope.totals.points * 100 / $scope.user.targetPoints;
             if (pct >= 100) {
@@ -35,11 +35,11 @@ app.directive('planningTaskTotals', function () {
             angular.forEach($scope.totals.categories, function (cat) {
                 cat.hideTasks = true;
             });
-            $scope.calculateTotalClass();
+            calculateTotalClass();
         });
         resourceService.get('users', function (data) {
             $scope.user = data[0];
-            $scope.calculateTotalClass();
+            calculateTotalClass();
         });
     };
 

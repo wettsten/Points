@@ -43,6 +43,7 @@ namespace Points.Api.Resources.Controllers
                         NotifyWeekEnding = SimpleInt.FromId(0),
                         WeekSummaryEmail = false,
                         TargetPoints = 0,
+                        ActiveTargetPoints = 0,
                         EnableAdvancedFeatures = false,
                         CategoryBonus = 0,
                         TaskMultiplier = 1,

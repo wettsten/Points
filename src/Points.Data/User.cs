@@ -13,6 +13,7 @@ namespace Points.Data
         public int NotifyWeekEnding { get; set; }
         public bool WeekSummaryEmail { get; set; }
         public int TargetPoints { get; set; }
+        public int ActiveTargetPoints { get; set; }
         public bool EnableAdvancedFeatures { get; set; }
         public int CategoryBonus { get; set; }
         public int TaskMultiplier { get; set; }
@@ -31,6 +32,7 @@ namespace Points.Data
                 NotifyWeekStarting = user.NotifyWeekStarting;
                 NotifyWeekEnding = user.NotifyWeekEnding;
                 TargetPoints = user.TargetPoints;
+                ActiveTargetPoints = user.ActiveTargetPoints;
                 EnableAdvancedFeatures = user.EnableAdvancedFeatures;
                 CategoryBonus = user.CategoryBonus;
                 TaskMultiplier = user.TaskMultiplier;

@@ -41,6 +41,10 @@ namespace Points.Scheduler.Jobs
                 _jobManager.ScheduleEndJob(context.UserId);
             }
             _jobManager.ScheduleStartJob(context.UserId);
+
+            var user = _dataReader.Get<User>(context.UserId);
+            user.ActiveTargetPoints = user.TargetPoints;
+            _dataWriter.Edit(user);
         }
     }
 }
