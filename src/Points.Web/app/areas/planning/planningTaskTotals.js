@@ -10,13 +10,13 @@ app.directive('planningTaskTotals', function () {
 }).controller('planningTaskTotalsController', ['$scope', 'resourceService', function ($scope, resourceService) {
 
     $scope.totals = {};
-    var user = {};
+    $scope.user = {};
     $scope.hideCats = true;
     $scope.totalClass = 'active';
 
     $scope.calculateTotalClass = function () {
-        if (user.targetPoints && $scope.totals.points) {
-            var pct = $scope.totals.points * 100 / user.targetPoints;
+        if ($scope.user.targetPoints && $scope.totals.points) {
+            var pct = $scope.totals.points * 100 / $scope.user.targetPoints;
             if (pct >= 100) {
                 $scope.totalClass = 'success';
             } else if (pct >= 50) {
@@ -38,7 +38,7 @@ app.directive('planningTaskTotals', function () {
             $scope.calculateTotalClass();
         });
         resourceService.get('users', function (data) {
-            user = data[0];
+            $scope.user = data[0];
             $scope.calculateTotalClass();
         });
     };
