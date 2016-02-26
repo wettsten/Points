@@ -3,7 +3,8 @@ app.directive('collapsePanel', function() {
     return {
         scope: {
             initOpen: '=',
-            headerTitle: '='
+            headerTitle: '=',
+            headerClass: '='
         },
         templateUrl: '/app/views/directives/collapsePanel.html',
         transclude: true,
@@ -11,5 +12,6 @@ app.directive('collapsePanel', function() {
     };
 }).controller('collapsePanelController', ['$scope', function ($scope) {
 
+    $scope.panelClass = ($scope.headerClass) ? $scope.headerClass : 'panel-default';
     $scope.isOpen = $scope.initOpen;
 }]);

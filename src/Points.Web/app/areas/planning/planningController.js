@@ -1,10 +1,13 @@
 ﻿'use strict';
-app.controller('planningController', ['$scope', 'resourceService', '$timeout', 'modalService', function ($scope, resourceService, $timeout, modalService) {
+app.controller('planningController', ['$scope', 'resourceService', '$timeout', 'modalService', 'filterFactory', function ($scope, resourceService, $timeout, modalService, filterFactory) {
 
     $scope.tasks = [];
     $scope.availableTasks = false;
-    $scope.alerts = [];
-    $scope.taskInEdit = { id: '' };
+    $scope.taskFilter = filterFactory.getPTaskFilter();
+
+    filterFactory.subscribe($scope, 'ptaskFilter', function () {
+        $scope.taskFilter = filterFactory.getPTaskFilter();
+    });
 
     var setupCats = function() {
         for (var i = 0; i < $scope.tasks.length; i++) {
@@ -13,21 +16,17 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
     };
 
     var loadCats = function () {
-        resourceService.get('planningtasks');
-        resourceService.get('availabletasks');
+        resourceService.get('planningtasks', function (data) {
+            $scope.tasks = data;
+            if ($scope.tasks.length === 0) {
+                $scope.addWarning('No planning tasks found');
+            }
+            setupCats();
+        });
+        resourceService.get('availabletasks', function (data) {
+            $scope.availableTasks = data.length > 0;
+        });
     };
-
-    resourceService.subscribe('planningtasks', function (data) {
-        $scope.tasks = data;
-        if ($scope.tasks.length === 0) {
-            $scope.addWarning('No planning tasks found');
-        }
-        setupCats();
-    });
-
-    resourceService.subscribe('availabletasks', function (data) {
-        $scope.availableTasks = data.length > 0;
-    });
 
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',

@@ -15,12 +15,10 @@ app.directive('filterTask', function () {
     };
 
     var loadCats = function () {
-        resourceService.get('categories');
+        resourceService.get('categories', function (data) {
+            $scope.cats = data;
+        });
     };
-
-    resourceService.subscribe('categories', function (data) {
-        $scope.cats = data;
-    });
 
     $scope.search = function() {
         filterFactory.setTaskFilter({

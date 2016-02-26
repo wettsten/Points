@@ -62,7 +62,9 @@
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.1.2.js"></script>
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="scripts/xeditable.js"></script>
+    <script src="//underscorejs.org/underscore-min.js"></script>
 
+    <script src="app/hash.js?v=2"></script>
     <script src="app/format.js?v=2"></script>
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
@@ -71,15 +73,16 @@
     <script src="app/services/authInterceptorService.js?v=2"></script>
     <script src="app/services/resourceService.js?v=2"></script>
     <script src="app/services/authService.js?v=2"></script>
-    <script src="app/services/usersService.js?v=2"></script>
-    <script src="app/services/jobsService.js?v=2"></script>
+    <script src="app/services/authDataService.js?v=2"></script>
     <script src="app/services/modalService.js?v=2"></script>
-    <!-- Load custom factories -->
+    <!-- Load filters -->
+    <!-- Load factories -->
     <script src="app/factories/filterFactory.js?v=2"></script>
     <!-- Load active -->
     <script src="app/areas/active/activeController.js?v=2"></script>
     <script src="app/areas/active/activeTaskCard.js?v=2"></script>
     <script src="app/areas/active/activeTaskTotals.js?v=2"></script>
+    <script src="app/areas/active/filterActiveTask.js?v=2"></script>
     <!-- Load categories -->
     <script src="app/areas/categories/catsController.js?v=2"></script>
     <script src="app/areas/categories/newCat.js?v=2"></script>
@@ -100,6 +103,7 @@
     <script src="app/areas/planning/planningTaskCard.js?v=2"></script>
     <script src="app/areas/planning/editPlanningTaskModal.js?v=2"></script>
     <script src="app/areas/planning/planningTaskTotals.js?v=2"></script>
+    <script src="app/areas/planning/filterPlanningTask.js?v=2"></script>
     <!-- Load status -->
     <script src="app/areas/status/planningStatus.js?v=2"></script>
     <script src="app/areas/status/activeStatus.js?v=2"></script>

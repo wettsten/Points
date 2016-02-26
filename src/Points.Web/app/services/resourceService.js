@@ -1,9 +1,9 @@
-﻿'use strict';
-app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authService) {
+﻿//'use strict';
+app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authDataService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authDataService) {
 
     var serviceBase = ngAuthSettings.apiResourceBaseUri;
     var service = {};
-    var callbacks = [];
+    var callbacks = new Array();
     var caches = {};
     var links = [
         {
@@ -46,12 +46,12 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     ];
 
     var getCache = function () {
-        if (!caches[authService.authentication.userId]) {
-            var cache = $cacheFactory(authService.authentication.userId);
-            caches[authService.authentication.userId] = cache;
+        if (!caches[authDataService.authentication.userId]) {
+            var cache = $cacheFactory(authDataService.authentication.userId);
+            caches[authDataService.authentication.userId] = cache;
             return cache;
         }
-        return caches[authService.authentication.userId];
+        return caches[authDataService.authentication.userId];
     };
 
     var setCache = function (type, data) {
@@ -59,11 +59,10 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     };
 
     var callCallbacks = function (type, data) {
-        angular.forEach(callbacks, function(callback) {
-            if (callback.type === type) {
-                callback.callback(data);
-            }
-        });
+        var typeHashes = callbacks[type];
+        for (var key in typeHashes) {
+            typeHashes[key](data);
+        };
     };
 
     var retrieveWithRetry = function (type,retry) {
@@ -93,15 +92,26 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
     };
 
     service.subscribe = function (type, callback) {
-        callbacks.push({ type: type, callback: callback });
+        if (callback) {
+            var hash = Sha1.hash(callback.toString());
+            var types = callbacks[type];
+            if (!types) {
+                types = new Array();
+                types[hash] = callback;
+                callbacks[type] = types;
+            } else {
+                types[hash] = callback;
+            }
+        }
     };
 
-    service.get = function (type) {
+    service.get = function (type, callback) {
+        service.subscribe(type, callback);
         var cache = getCache().get(type);
-        if (!cache) {
-            retrieve(type);
-        } else {
+        if (cache) {
             $timeout(callCallbacks(type, cache), 10);
+        } else {
+            retrieve(type);
         }
     };
 

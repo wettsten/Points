@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuthSettings', function ($scope, $location, authService, ngAuthSettings) {
+app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuthSettings', 'authDataService', function ($scope, $location, authService, ngAuthSettings, authDataService) {
 
     $scope.loginData = {
         userName: "",
@@ -40,7 +40,7 @@ app.controller('loginController', ['$scope', '$location', 'authService', 'ngAuth
 
                 authService.logOut();
 
-                authService.externalAuthData = {
+                authDataService.externalAuthData = {
                     provider: fragment.provider,
                     userName: fragment.external_user_name,
                     externalAccessToken: fragment.external_access_token

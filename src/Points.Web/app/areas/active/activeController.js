@@ -1,15 +1,14 @@
 ﻿'use strict';
-app.controller('activeController', ['$scope', 'resourceService', function ($scope, resourceService) {
+app.controller('activeController', ['$scope', 'resourceService', 'filterFactory', function ($scope, resourceService, filterFactory) {
 
     $scope.tasks = [];
+    $scope.taskFilter = filterFactory.getPTaskFilter();
 
-    var loadTasks = function () {
-        resourceService.get('activetasks');
-    };
-
-    resourceService.subscribe('activetasks', function (data) {
-        $scope.tasks = data;
+    filterFactory.subscribe($scope, 'ptaskFilter', function () {
+        $scope.taskFilter = filterFactory.getPTaskFilter();
     });
 
-    loadTasks();
+    resourceService.get('activetasks', function (data) {
+        $scope.tasks = data;
+    });
 }]);

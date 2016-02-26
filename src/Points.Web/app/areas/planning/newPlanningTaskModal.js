@@ -1,6 +1,6 @@
 ﻿'use strict';
 app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', 'resourceService', '$timeout', function ($scope, $uibModalInstance, data, resourceService, $timeout) {
-        
+
     $scope.addTaskData = {
         duration: {
             value: 0,
@@ -35,19 +35,15 @@ app.controller('newPlanningTaskModal', ['$scope', '$uibModalInstance', 'data', '
     };
 
     var loadCats = function () {
-        resourceService.get('availabletasks');
-        resourceService.get('enums');
+        resourceService.get('availabletasks', function (data) {
+            $scope.cats = data;
+            resetDropdowns();
+        });
+        resourceService.get('enums', function (data) {
+            $scope.enums = data;
+            resetDropdowns();
+        });
     };
-
-    resourceService.subscribe('availabletasks', function (data) {
-        $scope.cats = data;
-        resetDropdowns();
-    });
-
-    resourceService.subscribe('enums', function (data) {
-        $scope.enums = data;
-        resetDropdowns();
-    });
 
     $scope.showAddDuration = function () {
         if (!$scope.addTaskData.duration.type) {

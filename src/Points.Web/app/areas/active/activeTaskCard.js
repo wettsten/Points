@@ -12,6 +12,24 @@ app.directive('activeTaskCard', function () {
     };
 }).controller('activeTaskCardController', ['$scope', 'resourceService', 'modalService', function ($scope, resourceService, modalService) {
 
+    $scope.status = function () {
+        var pct = $scope.task.timesCompleted * 100 / $scope.task.frequency.value;
+        if ($scope.task.frequency.type.id === 'AtMost') {
+            if (pct > 100) {
+                return 'panel-danger';
+            } else if (pct > 50) {
+                return 'panel-warning';
+            }
+            return 'panel-success';
+        }
+        if (pct >= 100) {
+            return 'panel-success';
+        } else if (pct >= 50) {
+            return 'panel-warning';
+        }
+        return 'panel-danger';
+    };
+
     $scope.check = function (task) {
         task.timesCompleted += 1;
         resourceService.edit('activetasks', task).then(

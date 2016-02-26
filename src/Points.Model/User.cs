@@ -9,9 +9,19 @@ namespace Points.Model
         public string Email { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek WeekStartDay { get; set; }
-        public int WeekStartHour { get; set; }
-        public int NotifyWeekStarting { get; set; }
-        public int NotifyWeekEnding { get; set; }
+        public SimpleInt WeekStartHour { get; set; }
+        public SimpleInt NotifyWeekStarting { get; set; }
+        public SimpleInt NotifyWeekEnding { get; set; }
+        public DateTime? PlanningEndTime { get; set; }
+        public DateTime? ActiveStartTime { get; set; }
+        public bool WeekSummaryEmail { get; set; }
+        public int TargetPoints { get; set; }
+        public int ActiveTargetPoints { get; set; }
+        public bool EnableAdvancedFeatures { get; set; }
+        public int CategoryBonus { get; set; }
+        public int TaskMultiplier { get; set; }
+        public int BonusPointMultiplier { get; set; }
+        public decimal DurationBonusPointsPerHour { get; set; }
 
         public override void Copy(ViewObject obj)
         {
@@ -24,6 +34,16 @@ namespace Points.Model
                 WeekStartHour = user.WeekStartHour;
                 NotifyWeekStarting = user.NotifyWeekStarting;
                 NotifyWeekEnding = user.NotifyWeekEnding;
+                PlanningEndTime = user.PlanningEndTime;
+                ActiveStartTime = user.ActiveStartTime;
+                TargetPoints = user.TargetPoints;
+                ActiveTargetPoints = user.ActiveTargetPoints;
+                EnableAdvancedFeatures = user.EnableAdvancedFeatures;
+                CategoryBonus = user.CategoryBonus;
+                TaskMultiplier = user.TaskMultiplier;
+                BonusPointMultiplier = user.BonusPointMultiplier;
+                DurationBonusPointsPerHour = user.DurationBonusPointsPerHour;
+                WeekSummaryEmail = user.WeekSummaryEmail;
             }
         }
     }
