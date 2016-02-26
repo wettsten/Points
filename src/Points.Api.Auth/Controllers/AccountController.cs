@@ -296,20 +296,28 @@ namespace Points.Api.Auth.Controllers
 
             var verifyTokenEndPoint = "";
 
-            if (provider == "Facebook")
+            switch (provider)
             {
-                //You can get it from here: https://developers.facebook.com/tools/accesstoken/
-                //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
-                const string appToken = "792287044238273|wuM9JRXLJQXgkwHHIXIYLYXgZuI";
-                verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
-            }
-            else if (provider == "Google")
-            {
-                verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
-            }
-            else
-            {
-                return null;
+                case "Facebook":
+                    //You can get it from here: https://developers.facebook.com/tools/accesstoken/
+                    //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
+                    const string appToken = "792287044238273|wuM9JRXLJQXgkwHHIXIYLYXgZuI";
+                    verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
+                    break;
+                case "Google":
+                    verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
+                    break;
+                case "Twitter":
+                    verifyTokenEndPoint = string.Format("https://api.twitter.com/oauth/authenticate?oauth_token={0}", accessToken);
+                    break;
+                case "Microsoft":
+                    verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
+                    break;
+                case "Instagram":
+                    verifyTokenEndPoint = string.Format("https://api.instagram.com/v1/users/self/?access_token={0}", accessToken);
+                    break;
+                default:
+                    return null;
             }
 
             var client = new HttpClient();
@@ -324,28 +332,33 @@ namespace Points.Api.Auth.Controllers
 
                 parsedToken = new ParsedExternalAccessToken();
 
-                if (provider == "Facebook")
+                switch (provider)
                 {
-                    parsedToken.user_id = jObj["data"]["user_id"];
-                    parsedToken.app_id = jObj["data"]["app_id"];
+                    case "Facebook":
+                        parsedToken.user_id = jObj["data"]["user_id"];
+                        parsedToken.app_id = jObj["data"]["app_id"];
 
-                    if (!string.Equals(Startup.facebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return null;
-                    }
+                        if (!string.Equals(Startup.facebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return null;
+                        }
+                        break;
+                    case "Google":
+                        parsedToken.user_id = jObj["user_id"];
+                        parsedToken.app_id = jObj["audience"];
+
+                        if (!string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return null;
+                        }
+                        break;
+                    case "Twitter":
+                        break;
+                    case "Microsoft":
+                        break;
+                    case "Instagram":
+                        break;
                 }
-                else if (provider == "Google")
-                {
-                    parsedToken.user_id = jObj["user_id"];
-                    parsedToken.app_id = jObj["audience"];
-
-                    if (!string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return null;
-                    }
-
-                }
-
             }
 
             return parsedToken;
@@ -370,7 +383,7 @@ namespace Points.Api.Auth.Controllers
 
             var ticket = new AuthenticationTicket(identity, props);
 
-            var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
+            var accessToken = Startup.oAuthBearerOptions.AccessTokenFormat.Protect(ticket);
 
             JObject tokenResponse = new JObject(
                                         new JProperty("userName", user.UserName),

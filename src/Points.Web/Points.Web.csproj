@@ -60,6 +60,7 @@
   <ItemGroup>
     <Content Include="app\areas\active\filterActiveTask.js" />
     <Content Include="app\areas\planning\filterPlanningTask.js" />
+    <Content Include="app\directives\socialLogin.js" />
     <Content Include="app\format.js" />
     <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\active\activeTaskCard.js" />
@@ -121,6 +122,7 @@
     <Content Include="app\views\partials\confirmUncheck.html" />
     <Content Include="app\views\partials\confirmDelete.html" />
     <Content Include="app\views\partials\editPlanningTask.html" />
+    <Content Include="app\views\partials\socialLogin.html" />
     <Content Include="app\views\planning.html" />
     <Content Include="app\views\options.html" />
     <Content Include="app\views\tasks.html" />
@@ -129,14 +131,13 @@
     <Content Include="app\views\cats.html" />
     <Content Include="app\views\signup.html" />
     <Content Include="authComplete.html" />
+    <Content Include="content\css\bootstrap-social.css" />
     <Content Include="content\css\bootstrap.cyborg.min.css" />
     <Content Include="content\css\bootstrap.lumen.min.css" />
     <Content Include="content\css\bootstrap.spacelab.min.css" />
     <Content Include="content\css\loading-bar.css" />
     <Content Include="content\css\loading-bar.min.css" />
     <Content Include="content\css\site.css" />
-    <Content Include="content\css\social-buttons.css" />
-    <Content Include="content\css\xeditable.css" />
     <Content Include="content\fonts\fontawesome-webfont.svg" />
     <Content Include="content\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="content\fonts\glyphicons-halflings-regular.ttf" />
@@ -158,8 +159,6 @@
     <Content Include="index.html" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\authComplete.js" />
-    <Content Include="scripts\xeditable.js" />
-    <Content Include="scripts\xeditable.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
