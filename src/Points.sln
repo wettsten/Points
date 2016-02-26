@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Api.Auth", "Points.Api.Auth\Points.Api.Auth.csproj", "{23DFCFD5-B158-4C0D-9C31-5E9CB64C64CF}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Scheduler", "Points.Scheduler\Points.Scheduler.csproj", "{7C8AEA43-489C-4594-8EB8-A41DE55E251C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Points.Model", "Points.Model\Points.Model.csproj", "{4E456776-5F29-4F69-A0BB-32CF6B388036}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthTest", "AuthTest\AuthTest.csproj", "{9880A66E-5CF2-4116-8ACB-878B6E9A2D22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E456776-5F29-4F69-A0BB-32CF6B388036}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9880A66E-5CF2-4116-8ACB-878B6E9A2D22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9880A66E-5CF2-4116-8ACB-878B6E9A2D22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9880A66E-5CF2-4116-8ACB-878B6E9A2D22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9880A66E-5CF2-4116-8ACB-878B6E9A2D22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
