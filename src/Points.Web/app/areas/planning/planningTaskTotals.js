@@ -7,7 +7,7 @@ app.directive('planningTaskTotals', function () {
         replace: true,
         controller: 'planningTaskTotalsController'
     };
-}).controller('planningTaskTotalsController', ['$scope', 'resourceService', function ($scope, resourceService) {
+}).controller('planningTaskTotalsController', ['$scope', 'resourceService', 'filterFactory', function ($scope, resourceService, filterFactory) {
 
     $scope.totals = {};
     $scope.user = {};

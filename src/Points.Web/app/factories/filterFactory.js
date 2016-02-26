@@ -9,6 +9,18 @@ app.factory('filterFactory', function ($rootScope) {
             category: {
                 name: ''
             }
+        },
+        pTask: {
+            name: [],
+            category: {
+                name: []
+            }
+        },
+        aTask: {
+            name: [],
+            category: {
+                name: []
+            }
         }
     };
 
@@ -26,6 +38,20 @@ app.factory('filterFactory', function ($rootScope) {
         setCatFilter: function (catFilter) {
             filters.cat = catFilter;
             $rootScope.$emit('catFilter');
+        },
+        getPTaskFilter: function () {
+            return filters.pTask;
+        },
+        setPTaskFilter: function (taskFilter) {
+            filters.pTask = taskFilter;
+            $rootScope.$emit('ptaskFilter');
+        },
+        getATaskFilter: function () {
+            return filters.aTask;
+        },
+        setATaskFilter: function (taskFilter) {
+            filters.aTask = taskFilter;
+            $rootScope.$emit('ataskFilter');
         },
         subscribe: function (scope, event, callback) {
             var handler = $rootScope.$on(event, callback);

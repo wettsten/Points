@@ -6,7 +6,7 @@ app.controller('tasksController', ['$scope', 'resourceService', 'filterFactory',
     $scope.taskInEdit = { id: '' };
     $scope.taskFilter = filterFactory.getTaskFilter();
 
-    filterFactory.subscribe($scope, 'taskFilter', function taskFilterChanged() {
+    filterFactory.subscribe($scope, 'taskFilter', function () {
         $scope.taskFilter = filterFactory.getTaskFilter();
     });
 

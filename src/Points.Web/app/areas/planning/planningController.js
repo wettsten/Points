@@ -1,10 +1,9 @@
 ﻿'use strict';
-app.controller('planningController', ['$scope', 'resourceService', '$timeout', 'modalService', function ($scope, resourceService, $timeout, modalService) {
+app.controller('planningController', ['$scope', 'resourceService', '$timeout', 'modalService', 'filterFactory', function ($scope, resourceService, $timeout, modalService, filterFactory) {
 
     $scope.tasks = [];
     $scope.availableTasks = false;
-    $scope.alerts = [];
-    $scope.taskInEdit = { id: '' };
+    $scope.taskFilter = filterFactory.getPTaskFilter();
 
     var setupCats = function() {
         for (var i = 0; i < $scope.tasks.length; i++) {
@@ -24,6 +23,10 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
             $scope.availableTasks = data.length > 0;
         });
     };
+
+    filterFactory.subscribe($scope, 'ptaskFilter', function () {
+        $scope.taskFilter = filterFactory.getPTaskFilter();
+    });
 
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',
