@@ -10,6 +10,7 @@
 
     <div class="row">
         <div planning-task-totals></div>
+        <div filter-planning-task></div>
     </div>
     <div class="row">
         <button type="submit" class="btn btn-success" ng-click="addTask()" ng-disabled="!availableTasks" title="New task">
@@ -18,7 +19,7 @@
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
-        <div class="col-md-3" ng-repeat="task in tasks">
+        <div class="col-md-3" ng-repeat="task in tasks | filter:taskFilter">
             <div planning-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
         </div>
     </div>

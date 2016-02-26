@@ -11,33 +11,37 @@ app.factory('filterFactory', function ($rootScope) {
             }
         },
         pTask: {
-            name: [],
-            category: {
-                name: []
+            name: '',
+            task: {
+                category: {
+                    name: ''
+                }
             }
         },
         aTask: {
-            name: [],
-            category: {
-                name: []
+            name: '',
+            task: {
+                category: {
+                    name: ''
+                }
             }
         }
     };
 
     return {
-        getTaskFilter: function () {
-            return filters.task;
-        },
-        setTaskFilter: function (taskFilter) {
-            filters.task = taskFilter;
-            $rootScope.$emit('taskFilter');
-        },
         getCatFilter: function () {
             return filters.cat;
         },
         setCatFilter: function (catFilter) {
             filters.cat = catFilter;
             $rootScope.$emit('catFilter');
+        },
+        getTaskFilter: function () {
+            return filters.task;
+        },
+        setTaskFilter: function (taskFilter) {
+            filters.task = taskFilter;
+            $rootScope.$emit('taskFilter');
         },
         getPTaskFilter: function () {
             return filters.pTask;

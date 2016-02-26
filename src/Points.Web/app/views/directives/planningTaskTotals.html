@@ -3,7 +3,6 @@
         <thead>
             <tr>
                 <th style="width:20px"></th>
-                <th style="width:20px"></th>
                 <th>Name</th>
                 <th style="width:20%">Points</th>
                 <th style="width:20%">Target Points</th>
@@ -13,7 +12,6 @@
         <tbody>
             <tr ng-class="totalClass" ng-click="toggleCats()">
                 <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !hideCats, 'glyphicon-chevron-right': hideCats}"></i></td>
-                <td><i class="glyphicon" ng-class="{'glyphicon-star-empty': !hasFilter, 'glyphicon-star': hasFilter}" ng-click="clearFilter()" title="Clear filter"></i></td>
                 <td><b>Total</b></td>
                 <td><b>{{totals.points}}</b></td>
                 <td><b>{{user.targetPoints}}</b></td>
@@ -21,7 +19,6 @@
             </tr>
             <tr class="info" ng-repeat-start="cat in totals.categories" ng-hide="hideCats" ng-click="toggleTasks(cat)">
                 <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !cat.hideTasks, 'glyphicon-chevron-right': cat.hideTasks}"></i></td>
-                <td><i class="glyphicon" ng-class="{'glyphicon-star-empty': !cat.filter, 'glyphicon-star': cat.filter}" ng-click="filterCat(cat)" title="Filter"></i></td>
                 <td>{{cat.name}}</td>
                 <td>{{cat.points}}</td>
                 <td></td>
@@ -29,7 +26,6 @@
             </tr>
             <tr ng-repeat-end ng-repeat="task in cat.tasks" ng-hide="cat.hideTasks">
                 <td></td>
-                <td><i class="glyphicon" ng-class="{'glyphicon-star-empty': !task.filter, 'glyphicon-star': task.filter}" ng-click="filterTask(task)" title="Filter"></i></td>
                 <td>{{task.name}}</td>
                 <td></td>
                 <td></td>

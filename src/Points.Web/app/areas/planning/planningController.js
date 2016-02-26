@@ -5,6 +5,10 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
     $scope.availableTasks = false;
     $scope.taskFilter = filterFactory.getPTaskFilter();
 
+    filterFactory.subscribe($scope, 'ptaskFilter', function () {
+        $scope.taskFilter = filterFactory.getPTaskFilter();
+    });
+
     var setupCats = function() {
         for (var i = 0; i < $scope.tasks.length; i++) {
             $scope.tasks[i].isOpen = i === 0;
@@ -23,10 +27,6 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
             $scope.availableTasks = data.length > 0;
         });
     };
-
-    filterFactory.subscribe($scope, 'ptaskFilter', function () {
-        $scope.taskFilter = filterFactory.getPTaskFilter();
-    });
 
     $scope.addTask = function () {
         modalService.newModal('newPlanningTask', null, 'lg',

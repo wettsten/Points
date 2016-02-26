@@ -13,8 +13,6 @@ app.directive('planningTaskTotals', function () {
     $scope.user = {};
     $scope.hideCats = true;
     $scope.totalClass = 'active';
-    $scope.hasFilter = false;
-    var toggle = true;
 
     var calculateTotalClass = function () {
         if ($scope.user.targetPoints && $scope.totals.points) {
@@ -50,10 +48,6 @@ app.directive('planningTaskTotals', function () {
     };
 
     $scope.toggleCats = function () {
-        if (!toggle) {
-            toggle = true;
-            return;
-        }
         $scope.hideCats = !$scope.hideCats;
         angular.forEach($scope.totals.categories, function (cat) {
             cat.hideTasks = true;
@@ -61,51 +55,7 @@ app.directive('planningTaskTotals', function () {
     };
 
     $scope.toggleTasks = function (cat) {
-        if (!toggle) {
-            toggle = true;
-            return;
-        }
         cat.hideTasks = !cat.hideTasks;
-    };
-
-    $scope.filterTask = function (task) {
-        task.filter = !task.filter;
-        angular.forEach($scope.totals.categories, function (cat) {
-            if (cat.filter) {
-                $scope.hasFilter = true;
-                return;
-            }
-            angular.forEach(cat.tasks, function(task) {
-                if (task.filter) {
-                    $scope.hasFilter = true;
-                    return;
-                }
-            });
-        });
-    };
-
-    $scope.filterCat = function (cat) {
-        toggle = false;
-        cat.filter = !cat.filter;
-        angular.forEach($scope.totals.categories, function (cat) {
-            if (cat.filter) {
-                $scope.hasFilter = true;
-                return;
-            }
-        });
-    };
-
-    $scope.clearFilter = function () {
-        toggle = false;
-        if ($scope.hasFilter) {
-            $scope.hasFilter = false;
-            angular.forEach($scope.totals.categories, function (cat) {
-                cat.filter = false;
-                angular.forEach(cat.tasks, function (task) {
-                    task.filter = false;
-                });
-            });
-        }
     };
 
     loadData();

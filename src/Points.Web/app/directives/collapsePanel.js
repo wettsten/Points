@@ -12,6 +12,6 @@ app.directive('collapsePanel', function() {
     };
 }).controller('collapsePanelController', ['$scope', function ($scope) {
 
-    $scope.panelClass = $scope.headerClass;
+    $scope.panelClass = ($scope.headerClass) ? $scope.headerClass : 'panel-default';
     $scope.isOpen = $scope.initOpen;
 }]);

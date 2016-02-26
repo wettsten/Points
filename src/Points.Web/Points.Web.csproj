@@ -58,7 +58,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\filters\filters.js" />
+    <Content Include="app\areas\active\filterActiveTask.js" />
+    <Content Include="app\areas\planning\filterPlanningTask.js" />
     <Content Include="app\format.js" />
     <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\active\activeTaskCard.js" />
