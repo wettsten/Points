@@ -60,6 +60,7 @@
   <ItemGroup>
     <Content Include="app\areas\active\filterActiveTask.js" />
     <Content Include="app\areas\planning\filterPlanningTask.js" />
+    <Content Include="app\directives\socialLogin.js" />
     <Content Include="app\format.js" />
     <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\active\activeTaskCard.js" />
@@ -121,6 +122,7 @@
     <Content Include="app\views\partials\confirmUncheck.html" />
     <Content Include="app\views\partials\confirmDelete.html" />
     <Content Include="app\views\partials\editPlanningTask.html" />
+    <Content Include="app\views\partials\socialLogin.html" />
     <Content Include="app\views\planning.html" />
     <Content Include="app\views\options.html" />
     <Content Include="app\views\tasks.html" />
