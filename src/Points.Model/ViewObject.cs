@@ -1,15 +1,13 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace Points.Model
 {
     public class ViewObject
     {
+        [Required]
         public string Id { get; set; }
+        [Required]
         public string Name { get; set; }
-
-        public virtual void Copy(ViewObject obj)
-        {
-            Id = obj.Id;
-            Name = obj.Name;
-        }
     }
 }

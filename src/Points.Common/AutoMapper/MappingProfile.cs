@@ -44,11 +44,11 @@ namespace Points.Common.AutoMapper
             // Raven to View
             CreateMap<Data.RavenObject, Model.ViewObject>();
             CreateMap<Data.Duration, Model.Duration>()
-                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.DurationType {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
-                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.DurationUnit {Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
+                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ViewObject {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.ViewObject { Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
             CreateMap<Data.Frequency, Model.Frequency>()
-                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.FrequencyType {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
-                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.FrequencyUnit {Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
+                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ViewObject { Id = s.Type.ToString(), Name = s.Type.Spacify()}))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.ViewObject { Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
             CreateMap<Data.Category, Model.Category>();
             CreateMap<Data.Task, Model.Task>()
                 .ForMember(t => t.Category, o => o.MapFrom(s => _dataReader.Get<Data.Category>(s.CategoryId)));

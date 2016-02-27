@@ -1,7 +1,10 @@
-﻿namespace Points.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Points.Model
 {
     public class SimpleInt
     {
+        [Required]
         public int Id { get; set; } 
         public string Name { get; set; }
 

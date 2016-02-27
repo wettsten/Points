@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Points.Data
 {
     public class Task : RavenObject
     {
-        [Required]
         public string CategoryId { get; set; }
 
         public override void Copy(RavenObject obj)
