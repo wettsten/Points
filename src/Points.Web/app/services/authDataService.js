@@ -3,21 +3,18 @@ app.factory('authDataService', function () {
 
     var authDataService = {};
 
-    var _authentication = {
+    authDataService.authentication = {
         isAuth: false,
         userName: "",
         userId: ""
     };
 
-    var _externalAuthData = {
+    authDataService.externalAuthData = {
         provider: "",
         userName: "",
         userId: "",
         externalAccessToken: ""
     };
-
-    authDataService.authentication = _authentication;
-    authDataService.externalAuthData = _externalAuthData;
 
     return authDataService;
 });
