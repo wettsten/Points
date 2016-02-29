@@ -8,17 +8,21 @@
         <div alert-box></div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-show="noItems">
+        <div help-no-items show-categories show-tasks></div>
+    </div>
+
+    <div class="row" ng-hide="noItems">
         <div planning-task-totals></div>
         <div filter-planning-task></div>
     </div>
-    <div class="row">
+    <div class="row" ng-hide="noItems">
         <button type="submit" class="btn btn-success" ng-click="addTask()" ng-disabled="!availableTasks" title="New task">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button>
     </div>
     <div class="row">&nbsp;</div>
-    <div class="row">
+    <div class="row" ng-hide="noItems">
         <div class="col-md-3" ng-repeat="task in tasks | filter:taskFilter">
             <div planning-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
         </div>

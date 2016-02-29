@@ -3,7 +3,7 @@ app.directive('socialLogin', function() {
     return {
         scope: {
         },
-        templateUrl: '/app/views/partials/socialLogin.html',
+        templateUrl: '/app/views/directives/socialLogin.html',
         replace: true,
         controller: 'socialLoginController'
     };

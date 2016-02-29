@@ -1,6 +1,7 @@
 ﻿'use strict';
 app.controller('activeController', ['$scope', 'resourceService', 'filterFactory', function ($scope, resourceService, filterFactory) {
 
+    $scope.noItems = false;
     $scope.tasks = [];
     $scope.taskFilter = filterFactory.getPTaskFilter();
 
@@ -10,5 +11,9 @@ app.controller('activeController', ['$scope', 'resourceService', 'filterFactory'
 
     resourceService.get('activetasks', function (data) {
         $scope.tasks = data;
+        if (data.length === 0) {
+            $scope.addWarning('No active tasks found');
+            $scope.noItems = true;
+        }
     });
 }]);

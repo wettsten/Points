@@ -8,11 +8,16 @@
         <div alert-box></div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-show="noItems">
+        <div help-no-items show-categories show-tasks show-planning></div>
+    </div>
+
+    <div class="row" ng-hide="noItems">
         <div active-task-totals></div>
         <div filter-active-task></div>
     </div>
-    <div class="row">
+
+    <div class="row" ng-hide="noItems">
         <div class="col-md-3" ng-repeat="task in tasks | filter:taskFilter">
             <div active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
         </div>

@@ -10,10 +10,15 @@
             <div alert-box></div>
         </div>
 
-        <div class="row" filter-task></div>
-        <div class="row">&nbsp;</div>
+        <div class="row" ng-hide="noItems">
+            <div filter-task></div>
+        </div>
 
-        <div class="row">
+        <div class="row" ng-show="noItems">
+            <div help-no-items show-categories></div>
+        </div>
+
+        <div class="row" ng-hide="noItems">
             <table class="table table-striped table-bordered table-hover" style="width: 100%">
                 <thead>
                 <tr>
