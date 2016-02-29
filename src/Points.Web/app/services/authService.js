@@ -26,7 +26,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 userName: loginData.userName,
                 userId: authDataService.authentication.userId
             });
-            resourceService.get('users');
+            resourceService.initData();
             deferred.resolve(response);
         }).error(function (err, status) {
             authServiceFactory.logOut();
@@ -65,7 +65,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 userName: response.userName,
                 userId: authDataService.authentication.userId
             });
-            resourceService.get('users');
+            resourceService.initData();
             deferred.resolve(response);
         }).error(function (err, status) {
             authServiceFactory.logOut();
@@ -87,7 +87,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
                 userName: response.userName,
                 userId: authDataService.authentication.userId
             });
-            resourceService.get('users');
+            resourceService.initData();
             deferred.resolve(response);
         }).error(function (err, status) {
             authServiceFactory.logOut();

@@ -136,5 +136,14 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
         });
     };
 
+    service.initData = function () {
+        retrieve('users');
+        retrieve('categories');
+        retrieve('tasks');
+        retrieve('availabletasks');
+        retrieve('planningtasks');
+        retrieve('activetasks');
+    };
+
     return service;
 }]);
