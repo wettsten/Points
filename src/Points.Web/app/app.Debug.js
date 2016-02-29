@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('PointsApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'xeditable', 'ui.bootstrap']);
+var app = angular.module('PointsApp', ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
 
@@ -64,9 +64,8 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 });
 
-app.run(['authService', 'editableOptions', function (authService, editableOptions) {
+app.run(['authService', 'editableOptions', function (authService) {
     authService.fillAuthData();
-    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 }]);
 
 
