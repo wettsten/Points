@@ -12,7 +12,9 @@ app.controller('activeController', ['$scope', 'resourceService', 'filterFactory'
     resourceService.get('activetasks', function (data) {
         $scope.tasks = data;
         if (data.length === 0) {
-            $scope.addWarning('No active tasks found');
+            if ($scope.addWarning) {
+                $scope.addWarning('No active tasks found');
+            }
             $scope.noItems = true;
         }
     });

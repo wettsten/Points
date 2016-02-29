@@ -20,7 +20,9 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
         resourceService.get('planningtasks', function (data) {
             $scope.tasks = data;
             if (data.length === 0) {
-                $scope.addWarning('No planning tasks found');
+                if ($scope.addWarning) {
+                    $scope.addWarning('No planning tasks found');
+                }
                 resourceService.get('availabletasks', function (data2) {
                     if (data2.length === 0) {
                         $scope.noItems = true;

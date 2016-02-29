@@ -16,8 +16,10 @@ app.controller('catsController', ['$scope', 'resourceService', 'filterFactory', 
 
     resourceService.subscribe('categories', function (data) {
         $scope.cats = data;
-        if ($scope.cats.length === 0) {
-            $scope.addWarning('No categories found');
+        if (data.length === 0) {
+            if ($scope.addWarning) {
+                $scope.addWarning('No categories found');
+            }
         }
     });
 

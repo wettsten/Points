@@ -18,7 +18,9 @@ app.controller('tasksController', ['$scope', 'resourceService', 'filterFactory',
     resourceService.subscribe('tasks', function (data) {
         $scope.tasks = data;
         if (data.length === 0) {
-            $scope.addWarning('No tasks found');
+            if ($scope.addWarning) {
+                $scope.addWarning('No tasks found');
+            }
             resourceService.get('categories', function (data2) {
                 if (data2.length === 0) {
                     $scope.noItems = true;
