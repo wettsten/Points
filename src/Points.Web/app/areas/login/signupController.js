@@ -10,19 +10,22 @@ app.controller('signupController', ['$scope', '$location', '$timeout', 'authServ
         confirmPassword: ""
     };
 
-    var startTimer = function () {
-        var timer = $timeout(function () {
-            $timeout.cancel(timer);
-            $location.path('/login');
-        }, 2000);
-    }
-
     $scope.signUp = function () {
         authService.saveRegistration($scope.registration).then(
             function (response) {
-                $scope.savedSuccessfully = true;
-                $scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-                startTimer();
+                if (response.status === 202) {
+                    $scope.savedSuccessfully = true;
+                    $scope.message = "User has been registered successfully, you will be redicted to Login page in 2 seconds.";
+                    $timeout(function () {
+                        $location.path('/login');
+                    }, 2000);
+                } else {
+                    $scope.savedSuccessfully = true;
+                    $scope.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
+                    $timeout(function () {
+                        $location.path('/options');
+                    }, 2000);
+                }
             },
             function (response) {
                 var errors = [];
@@ -31,7 +34,7 @@ app.controller('signupController', ['$scope', '$location', '$timeout', 'authServ
                         errors.push(response.data.modelState[key][i]);
                     }
                 }
-                $scope.message = "Failed to register user due to:" + errors.join(' ');
+                $scope.message = "Failed to register user due to: " + errors.join(' ');
             }
         );
     };

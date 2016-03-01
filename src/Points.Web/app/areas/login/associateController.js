@@ -10,19 +10,14 @@ app.controller('associateController', ['$scope', '$location','$timeout','authSer
         externalAccessToken: authService.externalAuthData.externalAccessToken
     };
 
-    var startTimer = function () {
-        var timer = $timeout(function () {
-            $timeout.cancel(timer);
-            $location.path('/options');
-        }, 2000);
-    }
-
     $scope.registerExternal = function () {
         authService.registerExternal($scope.registerData).then(
             function (response) {
                 $scope.savedSuccessfully = true;
                 $scope.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
-                startTimer();
+                $timeout(function () {
+                    $location.path('/options');
+                }, 2000);
             },
             function (response) {
                 var errors = [];

@@ -5,11 +5,29 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
     var authServiceFactory = {};
 
     authServiceFactory.saveRegistration = function (registration) {
-        authServiceFactory.logOut();
+        var deferred = $q.defer();
 
-        return $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
-            return response;
+        $http.post(serviceBase + 'api/account/register', registration).then(function (response) {
+            if (response.status !== 202) {
+                authDataService.authentication.isAuth = true;
+                authDataService.authentication.userName = response.data.userName;
+                authDataService.authentication.userId = response.data.userId;
+                localStorageService.set('authorizationData', {
+                    token: response.data.access_token,
+                    userName: response.data.userName,
+                    userId: response.data.userId
+                });
+                resourceService.initData();
+            } else {
+                authServiceFactory.logOut();
+            }
+            deferred.resolve(response);
+        }, function (err) {
+            authServiceFactory.logOut();
+            deferred.reject(err);
         });
+
+        return deferred.promise;
     };
 
     authServiceFactory.login = function (loginData) {
@@ -24,11 +42,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             localStorageService.set('authorizationData', {
                 token: response.access_token,
                 userName: loginData.userName,
-                userId: authDataService.authentication.userId
+                userId: response.userId
             });
             resourceService.initData();
             deferred.resolve(response);
-        }).error(function (err, status) {
+        }, function (err) {
             authServiceFactory.logOut();
             deferred.reject(err);
         });
@@ -63,11 +81,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             localStorageService.set('authorizationData', {
                 token: response.access_token,
                 userName: response.userName,
-                userId: authDataService.authentication.userId
+                userId: response.userId
             });
             resourceService.initData();
             deferred.resolve(response);
-        }).error(function (err, status) {
+        }, function (err) {
             authServiceFactory.logOut();
             deferred.reject(err);
         });
@@ -85,11 +103,11 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             localStorageService.set('authorizationData', {
                 token: response.access_token,
                 userName: response.userName,
-                userId: authDataService.authentication.userId
+                userId: response.userId
             });
             resourceService.initData();
             deferred.resolve(response);
-        }).error(function (err, status) {
+        }, function (err) {
             authServiceFactory.logOut();
             deferred.reject(err);
         });
