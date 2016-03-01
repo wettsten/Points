@@ -1,4 +1,4 @@
-﻿//'use strict';
+﻿'use strict';
 app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authDataService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authDataService) {
 
     var serviceBase = ngAuthSettings.apiResourceBaseUri;

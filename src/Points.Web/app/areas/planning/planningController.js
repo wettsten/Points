@@ -45,5 +45,5 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
         );
     };
 
-    loadCats();
+    $timeout(function() { loadCats(); }, 100);
 }]);
