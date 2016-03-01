@@ -1,4 +1,4 @@
-﻿//'use strict';
+﻿'use strict';
 app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFactory', 'authDataService', function ($http, ngAuthSettings, $timeout, $cacheFactory, authDataService) {
 
     var serviceBase = ngAuthSettings.apiResourceBaseUri;
@@ -134,6 +134,15 @@ app.factory('resourceService', ['$http', 'ngAuthSettings', '$timeout', '$cacheFa
             retrieve(type);
             updateLinks(type, 'delete');
         });
+    };
+
+    service.initData = function () {
+        retrieve('users');
+        retrieve('categories');
+        retrieve('tasks');
+        retrieve('availabletasks');
+        retrieve('planningtasks');
+        retrieve('activetasks');
     };
 
     return service;

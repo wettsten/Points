@@ -1,6 +1,7 @@
 ﻿'use strict';
 app.controller('planningController', ['$scope', 'resourceService', '$timeout', 'modalService', 'filterFactory', function ($scope, resourceService, $timeout, modalService, filterFactory) {
 
+    $scope.noItems = false;
     $scope.tasks = [];
     $scope.availableTasks = false;
     $scope.taskFilter = filterFactory.getPTaskFilter();
@@ -18,10 +19,18 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
     var loadCats = function () {
         resourceService.get('planningtasks', function (data) {
             $scope.tasks = data;
-            if ($scope.tasks.length === 0) {
-                $scope.addWarning('No planning tasks found');
+            if (data.length === 0) {
+                if ($scope.addWarning) {
+                    $scope.addWarning('No planning tasks found');
+                }
+                resourceService.get('availabletasks', function (data2) {
+                    if (data2.length === 0) {
+                        $scope.noItems = true;
+                    }
+                });
+            } else {
+                setupCats();
             }
-            setupCats();
         });
         resourceService.get('availabletasks', function (data) {
             $scope.availableTasks = data.length > 0;
@@ -36,5 +45,5 @@ app.controller('planningController', ['$scope', 'resourceService', '$timeout', '
         );
     };
 
-    loadCats();
+    $timeout(function() { loadCats(); }, 100);
 }]);

@@ -1,50 +1,39 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
 
 namespace Points.Model
 {
     public class User : ViewObject
     {
+        [Required]
         public string Email { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek WeekStartDay { get; set; }
+        [Required]
         public SimpleInt WeekStartHour { get; set; }
+        [Required]
         public SimpleInt NotifyWeekStarting { get; set; }
+        [Required]
         public SimpleInt NotifyWeekEnding { get; set; }
         public DateTime? PlanningEndTime { get; set; }
         public DateTime? ActiveStartTime { get; set; }
+        [Required]
         public bool WeekSummaryEmail { get; set; }
+        [Required]
         public int TargetPoints { get; set; }
+        [Required]
         public int ActiveTargetPoints { get; set; }
+        [Required]
         public bool EnableAdvancedFeatures { get; set; }
+        [Required]
         public int CategoryBonus { get; set; }
+        [Required]
         public int TaskMultiplier { get; set; }
+        [Required]
         public int BonusPointMultiplier { get; set; }
+        [Required]
         public decimal DurationBonusPointsPerHour { get; set; }
-
-        public override void Copy(ViewObject obj)
-        {
-            base.Copy(obj);
-            var user = obj as User;
-            if (user != null)
-            {
-                Email = user.Email;
-                WeekStartDay = user.WeekStartDay;
-                WeekStartHour = user.WeekStartHour;
-                NotifyWeekStarting = user.NotifyWeekStarting;
-                NotifyWeekEnding = user.NotifyWeekEnding;
-                PlanningEndTime = user.PlanningEndTime;
-                ActiveStartTime = user.ActiveStartTime;
-                TargetPoints = user.TargetPoints;
-                ActiveTargetPoints = user.ActiveTargetPoints;
-                EnableAdvancedFeatures = user.EnableAdvancedFeatures;
-                CategoryBonus = user.CategoryBonus;
-                TaskMultiplier = user.TaskMultiplier;
-                BonusPointMultiplier = user.BonusPointMultiplier;
-                DurationBonusPointsPerHour = user.DurationBonusPointsPerHour;
-                WeekSummaryEmail = user.WeekSummaryEmail;
-            }
-        }
     }
 }

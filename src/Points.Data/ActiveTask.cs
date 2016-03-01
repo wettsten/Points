@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Points.Data
 {
     public class ActiveTask : PlanningTask
     {
-        [Range(0,int.MaxValue)]
         public int TimesCompleted { get; set; }
 
         public bool IsCompleted

@@ -7,6 +7,8 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
     $scope.hours = [];
     $scope.hoursPrior = [];
     var offset = new Date().getTimezoneOffset() / 60;
+    var dataLoaded = false,
+        userLoaded = false;
 
     var convertToLocal = function (user) {
         if (user.weekStartHour.id - offset < 0) {
@@ -34,21 +36,28 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
         return user;
     };
 
-    resourceService.get('users/days', function (data) {
-        $scope.days = data;
-    });
-    resourceService.get('users/hours', function (data) {
-        $scope.hours = data;
-    });
-    resourceService.get('users/hoursprior', function (data) {
-        $scope.hoursPrior = data;
-    });
-    var loadData = function() {
-        resourceService.get('users', function (data) {
-            $scope.user = convertToLocal(angular.copy(data[0]));
+    var initData = function () {
+        if (dataLoaded === true && userLoaded === true) {
+            $scope.user = convertToLocal(angular.copy($scope.originalUser));
             $scope.user.notifyWeekStarting = $scope.hoursPrior[$scope.user.notifyWeekStarting.id];
             $scope.user.notifyWeekEnding = $scope.hoursPrior[$scope.user.notifyWeekEnding.id];
             $scope.originalUser = angular.copy($scope.user);
+        }
+    };
+
+    resourceService.get('users/data', function (data) {
+        $scope.days = data.days;
+        $scope.hours = data.hours;
+        $scope.hoursPrior = data.hoursPrior;
+        dataLoaded = true;
+        initData();
+    });
+
+    var loadData = function() {
+        resourceService.get('users', function (data) {
+            $scope.originalUser = data[0];
+            userLoaded = true;
+            initData();
         });
     };
 
@@ -62,8 +71,7 @@ app.controller('optionsController', ['$scope', 'authService', 'resourceService',
 
     $scope.saveChanges = function () {
         if ($scope.validateEmail()) {
-            var editUser = angular.copy($scope.user);
-            editUser = convertToUtc(editUser);
+            var editUser = convertToUtc(angular.copy($scope.user));
             resourceService.edit('users', editUser).then(
                 function() {
                     resourceService.get('users');

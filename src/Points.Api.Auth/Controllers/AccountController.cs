@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Points.Api.Auth.Models;
 using Points.Api.Auth.Results;
@@ -50,7 +52,22 @@ namespace Points.Api.Auth.Controllers
                  return errorResult;
              }
 
-             return Ok();
+            var client = new HttpClient();
+            var uri = new Uri($"{Request.RequestUri.Scheme}://{Request.RequestUri.Host}/auth/token");
+            var content = new FormUrlEncodedContent(new []
+            {
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("username", userModel.UserName),
+                new KeyValuePair<string, string>("password", userModel.Password)
+            });
+            var response = await client.PostAsync(uri, content);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                dynamic raw = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result);
+                return Ok(raw);
+            }
+            return StatusCode(HttpStatusCode.Accepted);
         }
 
         // GET api/Account/ExternalLogin

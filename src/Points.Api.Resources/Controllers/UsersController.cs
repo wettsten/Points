@@ -72,16 +72,19 @@ namespace Points.Api.Resources.Controllers
             return result;
         }
 
-        [Route("days")]
+        [Route("data")]
         [HttpGet]
-        public IHttpActionResult GetDays()
+        public IHttpActionResult GetData()
         {
-            return Ok(Enum.GetNames(typeof (DayOfWeek)));
+            return Ok(new
+            {
+                Days = Enum.GetNames(typeof(DayOfWeek)),
+                Hours = GetHours(),
+                HoursPrior = GetHoursPrior()
+            });
         }
-
-        [Route("hours")]
-        [HttpGet]
-        public IHttpActionResult GetHours()
+        
+        private IEnumerable<object> GetHours()
         {
             var dt = new DateTime(2000, 1, 1, 0, 0, 0);
             var hours = new List<object>();
@@ -94,12 +97,10 @@ namespace Points.Api.Resources.Controllers
                 });
                 dt = dt.AddHours(1);
             }
-            return Ok(hours);
+            return hours;
         }
-
-        [Route("hoursprior")]
-        [HttpGet]
-        public IHttpActionResult GetHoursPrior()
+        
+        private IEnumerable<object> GetHoursPrior()
         {
             var hoursPrior = new List<object>
             {
@@ -117,7 +118,7 @@ namespace Points.Api.Resources.Controllers
                     Name = string.Format("{0} hour{1}", i, i == 1 ? string.Empty : "s")
                 });
             }
-            return Ok(hoursPrior);
+            return hoursPrior;
         }
 
         private void EnsureStartJobForUser(string userId)

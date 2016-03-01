@@ -1,9 +1,15 @@
-﻿namespace Points.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Points.Model
 {
     public class Duration
     {
-        public DurationType Type { get; set; }
+        [Required]
+        public ViewObject Type { get; set; }
+        [Required]
+        [Range(1,int.MaxValue)]
         public int? Value { get; set; }
-        public DurationUnit Unit { get; set; }
+        [Required]
+        public ViewObject Unit { get; set; }
     }
 }
