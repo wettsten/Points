@@ -59,6 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\areas\active\active.controller.js" />
+    <Content Include="app\areas\active\activeTaskCard.directive.js" />
+    <Content Include="app\areas\active\activeTaskTotals.directive.js" />
+    <Content Include="app\areas\active\confirmUncheck.modal.js" />
+    <Content Include="app\areas\active\filterActiveTask.directive.js" />
     <Content Include="app\areas\categories\cats.controller.js" />
     <Content Include="app\areas\categories\newCat.directive.js" />
     <Content Include="app\areas\categories\filterCat.directive.js" />
@@ -90,7 +94,6 @@
     <Content Include="app\checkpoint.config.js" />
     <Content Include="app\checkpoint.run.js" />
     <Content Include="app\checkpoint.module.js" />
-    <Content Include="app\areas\active\filterActiveTask.js" />
     <Content Include="app\services\authInterceptor.service.js" />
     <Content Include="app\services\auth.service.js" />
     <Content Include="app\services\authData.service.js" />
@@ -99,9 +102,6 @@
     <Content Include="app\services\modal.service.js" />
     <Content Include="scripts\format.js" />
     <Content Include="app\app.Debug.js" />
-    <Content Include="app\areas\active\activeTaskCard.js" />
-    <Content Include="app\areas\active\activeTaskTotals.js" />
-    <Content Include="app\areas\active\confirmUncheckModal.js" />
     <Content Include="app\areas\status\activeStatus.js" />
     <Content Include="app\areas\status\planningStatus.js" />
     <Content Include="scripts\hash.js" />

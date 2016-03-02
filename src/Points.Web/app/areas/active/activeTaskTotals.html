@@ -12,16 +12,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-class="totalClass" ng-click="toggleCats()">
-                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !hideCats, 'glyphicon-chevron-right': hideCats}"></i></td>
+            <tr ng-class="aTotalsVm.totalClass" ng-click="aTotalsVm.toggleCats()">
+                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !aTotalsVm.hideCats, 'glyphicon-chevron-right': aTotalsVm.hideCats}"></i></td>
                 <td><b>Total</b></td>
-                <td><b>{{isSuccess}}</b></td>
-                <td><b>{{user.activeTargetPoints}}</b></td>
-                <td><b>{{totals.totalPoints | number:2}}</b></td>
-                <td><b>{{totals.taskPoints}}</b></td>
-                <td><b>{{totals.bonusPoints | number:2}}</b></td>
+                <td><b>{{aTotalsVm.isSuccess}}</b></td>
+                <td><b>{{aTotalsVm.user.activeTargetPoints}}</b></td>
+                <td><b>{{aTotalsVm.totals.totalPoints | number:2}}</b></td>
+                <td><b>{{aTotalsVm.totals.taskPoints}}</b></td>
+                <td><b>{{aTotalsVm.totals.bonusPoints | number:2}}</b></td>
             </tr>
-            <tr ng-class="cat.class" ng-repeat-start="cat in totals.categories" ng-hide="hideCats" ng-click="toggleTasks(cat)">
+            <tr ng-class="cat.class" ng-repeat-start="cat in aTotalsVm.totals.categories" ng-hide="aTotalsVm.hideCats" ng-click="aTotalsVm.toggleTasks(cat)">
                 <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !cat.hideTasks, 'glyphicon-chevron-right': cat.hideTasks}"></i></td>
                 <td>{{cat.name}}</td>
                 <td>{{cat.isCompleted}}</td>
