@@ -60,6 +60,9 @@
   <ItemGroup>
     <Content Include="app\areas\active\active.controller.js" />
     <Content Include="app\areas\categories\cats.controller.js" />
+    <Content Include="app\areas\categories\newCat.directive.js" />
+    <Content Include="app\areas\categories\filterCat.directive.js" />
+    <Content Include="app\areas\categories\editCat.directive.js" />
     <Content Include="app\areas\common\alertBox.directive.js" />
     <Content Include="app\areas\common\basicPanel.directive.js" />
     <Content Include="app\areas\common\collapsePanel.directive.js" />
@@ -74,6 +77,9 @@
     <Content Include="app\areas\login\signup.controller.js" />
     <Content Include="app\areas\login\login.controller.js" />
     <Content Include="app\areas\options\options.controller.js" />
+    <Content Include="app\areas\tasks\newTask.directive.js" />
+    <Content Include="app\areas\tasks\filterTask.directive.js" />
+    <Content Include="app\areas\tasks\editTask.directive.js" />
     <Content Include="app\areas\tasks\tasks.controller.js" />
     <Content Include="app\checkpoint.constants.js" />
     <Content Include="app\checkpoint.config.js" />
@@ -95,13 +101,7 @@
     <Content Include="app\areas\planning\planningTaskCard.js" />
     <Content Include="app\areas\planning\editPlanningTaskModal.js" />
     <Content Include="app\areas\active\confirmUncheckModal.js" />
-    <Content Include="app\areas\tasks\filterTask.js" />
-    <Content Include="app\areas\categories\filterCat.js" />
-    <Content Include="app\areas\categories\editCat.js" />
-    <Content Include="app\areas\categories\newCat.js" />
-    <Content Include="app\areas\tasks\newTask.js" />
     <Content Include="app\areas\planning\newPlanningTaskModal.js" />
-    <Content Include="app\areas\tasks\editTask.js" />
     <Content Include="app\areas\status\activeStatus.js" />
     <Content Include="app\areas\status\planningStatus.js" />
     <Content Include="scripts\hash.js" />

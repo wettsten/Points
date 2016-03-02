@@ -2,13 +2,13 @@
     <td ng-hide="true">
     </td>
     <td>
-        <input type="text" class="form-control" ng-model="addCatData.name">
+        <input type="text" class="form-control" ng-model="newCatVm.addCatData.name">
     </td>
     <td class="buttons-td">
-        <button type="button" class="btn btn-success" ng-disabled="!addCatData.name" ng-click="addCat()" title="Save new">
+        <button type="button" class="btn btn-success" ng-disabled="!newCatVm.addCatData.name" ng-click="newCatVm.addCat()" title="Save new">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default" ng-click="clearAddData()" title="Clear">
+        <button type="button" class="btn btn-default" ng-click="newCatVm.clearAddData()" title="Clear">
             <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
         </button>
     </td>

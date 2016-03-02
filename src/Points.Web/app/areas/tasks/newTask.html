@@ -1,18 +1,18 @@
 ﻿<tr>
     <td ng-hide="true"></td>
     <td>
-        <input type="text" class="form-control" ng-model="addTaskData.name">
+        <input type="text" class="form-control" ng-model="newTaskVm.addTaskData.name">
     </td>
     <td>
-        <select class="form-control" ng-model="addTaskData.category" ng-options="option.name for option in cats track by option.id">
-            {{ addTaskData.category.name }}
+        <select class="form-control" ng-model="newTaskVm.addTaskData.category" ng-options="option.name for option in newTaskVm.cats track by option.id">
+            {{ newTaskVm.addTaskData.category.name }}
         </select>
     </td>
     <td class="buttons-td">
-        <button type="button" class="btn btn-success" ng-disabled="!addTaskData.name" ng-click="addTask()" title="Save new">
+        <button type="button" class="btn btn-success" ng-disabled="!newTaskVm.addTaskData.name" ng-click="newTaskVm.addTask()" title="Save new">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-default" ng-click="clearAddData()" title="Clear">
+        <button type="button" class="btn btn-default" ng-click="newTaskVm.clearAddData()" title="Clear">
             <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
         </button>
     </td>
