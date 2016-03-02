@@ -98,7 +98,7 @@
         }
 
         function saveChanges () {
-            if (optionsVm.validateEmail()) {
+            if (validateEmail()) {
                 var editUser = convertToUtc(angular.copy(optionsVm.user));
                 resourceService.edit('users', editUser).then(
                     function () {

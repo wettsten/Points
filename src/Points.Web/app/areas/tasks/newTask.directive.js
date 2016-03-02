@@ -14,7 +14,8 @@
             },
             templateUrl: '/app/areas/tasks/newTask.html',
             controller: 'newTaskController',
-            controllerAs: 'newTaskVm'
+            controllerAs: 'newTaskVm',
+            bindToController: true
         };
         return directive;
     }

@@ -5,20 +5,20 @@
                 <div class="form-group">
                     <label class="control-label col-md-2" for="name">Name:</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="name" placeholder="Search task text" ng-model="filterTaskVm.filter.text">
+                        <input type="text" class="form-control" id="name" placeholder="Search task text" ng-model="filterVm.filter.text">
                     </div>
                     <label class="control-label col-md-2" for="cat">Category:</label>
                     <div class="col-md-3">
-                        <select class="form-control" id="cat" ng-model="filterTaskVm.filter.cat" ng-options="option.name for option in filterTaskVm.cats">
+                        <select class="form-control" id="cat" ng-model="filterVm.filter.cat" ng-options="option.name for option in filterVm.cats">
                             <option></option>
                         </select>
                     </div>
                     <div class="col-md-2">
                         <div class="row">
-                            <button type="button" class="btn btn-primary" ng-click="filterTaskVm.search()" title="Search">
+                            <button type="button" class="btn btn-primary" ng-click="filterVm.search()" title="Search">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </button>
-                            <button type="button" class="btn btn-default" ng-click="filterTaskVm.clear()" title="Clear">
+                            <button type="button" class="btn btn-default" ng-click="filterVm.clear()" title="Clear">
                                 <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
                             </button>
                         </div>

@@ -15,7 +15,8 @@
             },
             templateUrl: '/app/areas/active/activeTaskCard.html',
             controller: 'activeTaskCardController',
-            controllerAs: 'aCardVm'
+            controllerAs: 'aCardVm',
+            bindToController: true
         };
         return directive;
     }
@@ -24,9 +25,9 @@
         .module('checkpoint')
         .controller('activeTaskCardController', activeTaskCardController);
 
-    activeTaskCardController.$inject = ['resourceService', 'modalService'];
+    activeTaskCardController.$inject = ['resourceService', '$uibModal'];
 
-    function activeTaskCardController(resourceService, modalService) {
+    function activeTaskCardController(resourceService, $uibModal) {
         /* jshint validthis:true */
         var aCardVm = this;
 
@@ -68,18 +69,30 @@
             );
         }
 
-        function uncheck () {
-            modalService.newModal('confirmUncheck', { name: aCardVm.task.name, id: aCardVm.task.id }, 'sm',
+        function uncheck() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '/app/areas/active/confirmUncheck.html',
+                controller: 'confirmUncheckModal',
+                controllerAs: 'cuVm',
+                size: 'sm',
+                resolve: {
+                    data: { name: aCardVm.task.name, id: aCardVm.task.id }
+                }
+            });
+            modalInstance.result.then(
                 function (result) {
-                    aCardVm.task.timesCompleted -= 1;
-                    resourceService.edit('activetasks', aCardVm.task).then(
-                        function (response) {
-                            aCardVm.addSuccess({ msg: 'Task successfully unchecked' });
-                        },
-                        function (err) {
-                            $saCardVmcope.addError({ msg: err.data.message });
-                        }
-                    );
+                    if (result) {
+                        aCardVm.task.timesCompleted -= 1;
+                        resourceService.edit('activetasks', aCardVm.task).then(
+                            function (response) {
+                                aCardVm.addSuccess({ msg: 'Task successfully unchecked' });
+                            },
+                            function (err) {
+                                $saCardVmcope.addError({ msg: err.data.message });
+                            }
+                        );
+                    }
                 }
             );
         }

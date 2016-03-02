@@ -12,47 +12,47 @@
             .when('/home', {
                 controller: 'homeController',
                 controllerAs: 'homeVm',
-                templateUrl: '/app/views/home.html'
+                templateUrl: '/app/areas/home/home.html'
             })
             .when('/login', {
                 controller: 'loginController',
                 controllerAs: 'loginVm',
-                templateUrl: '/app/views/login.html'
+                templateUrl: '/app/areas/login/login.html'
             })
             .when('/signup', {
                 controller: 'signupController',
                 controllerAs: 'signupVm',
-                templateUrl: '/app/views/signup.html'
+                templateUrl: '/app/areas/login/signup.html'
             })
             .when('/active', {
                 controller: 'activeController',
                 controllerAs: 'activeVm',
-                templateUrl: '/app/views/active.html'
+                templateUrl: '/app/areas/active/active.html'
             })
             .when('/planning', {
                 controller: 'planningController',
                 controllerAs: 'planningVm',
-                templateUrl: '/app/views/planning.html'
+                templateUrl: '/app/areas/planning/planning.html'
             })
             .when('/cats', {
                 controller: 'catsController',
                 controllerAs: 'catsVm',
-                templateUrl: '/app/views/cats.html'
+                templateUrl: '/app/areas/categories/cats.html'
             })
             .when('/tasks', {
                 controller: 'tasksController',
                 controllerAs: 'tasksVm',
-                templateUrl: '/app/views/tasks.html'
+                templateUrl: '/app/areas/tasks/tasks.html'
             })
             .when('/options', {
                 controller: 'optionsController',
                 controllerAs: 'optionsVm',
-                templateUrl: '/app/views/options.html'
+                templateUrl: '/app/areas/options/options.html'
             })
             .when('/associate', {
                 controller: 'associateController',
                 controllerAs: 'associateVm',
-                templateUrl: '/app/views/associate.html'
+                templateUrl: '/app/areas/login/associate.html'
             })
             .otherwise({ redirectTo: '/home' });
 

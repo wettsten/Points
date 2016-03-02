@@ -11,7 +11,8 @@
             scope: {},
             templateUrl: '/app/areas/tasks/filterTask.html',
             controller: 'filterActiveTaskController',
-            controllerAs: 'filterVm'
+            controllerAs: 'filterVm',
+            bindToController: true
         };
         return directive;
     }

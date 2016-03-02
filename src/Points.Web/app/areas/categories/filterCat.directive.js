@@ -11,7 +11,8 @@
             scope: {},
             templateUrl: '/app/areas/categories/filterCat.html',
             controller: 'filterCatController',
-            controllerAs: 'filterCatVm'
+            controllerAs: 'filterCatVm',
+            bindToController: true
         };
         return directive;
     }

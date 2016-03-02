@@ -13,7 +13,7 @@
 
         newPlanVm.addTaskData = {
             duration: {
-                value: 0,
+                value: 1,
                 type: {},
                 unit: {}
             },

@@ -16,7 +16,8 @@
             templateUrl: '/app/areas/common/collapsePanel.html',
             transclude: true,
             controller: "collapsePanelController",
-            controllerAs: 'cpVm'
+            controllerAs: 'cpVm',
+            bindToController: true
         };
         return directive;
     }

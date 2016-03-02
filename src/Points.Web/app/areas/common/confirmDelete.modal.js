@@ -9,11 +9,11 @@
 
     function confirmDeleteModal($uibModalInstance, data) {
         /* jshint validthis:true */
-        var cdmVm = this;
+        var cdVm = this;
 
-        cdmVm.item = data;
-        cdmVm.confirm = confirm;
-        cdmVm.cancel = cancel;
+        cdVm.item = data;
+        cdVm.confirm = confirm;
+        cdVm.cancel = cancel;
 
         activate();
 

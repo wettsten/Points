@@ -15,7 +15,8 @@
             },
             templateUrl: '/app/areas/common/helpNoItems.html',
             controller: 'helpNoItemsController',
-            controllerAs: 'hniVm'
+            controllerAs: 'hniVm',
+            bindToController: true
         };
         return directive;
     }

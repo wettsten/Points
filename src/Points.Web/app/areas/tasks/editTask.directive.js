@@ -16,7 +16,8 @@
             },
             templateUrl: '/app/areas/tasks/editTask.html',
             controller: 'editTaskController',
-            controllerAs: 'editTaskVm'
+            controllerAs: 'editTaskVm',
+            bindToController: true
         };
         return directive;
     }
@@ -49,7 +50,7 @@
             });
             
             resourceService.get('categories', function (data) {
-                $scope.cats = data;
+                editTaskVm.cats = data;
             });
         }
 
@@ -82,9 +83,9 @@
 
         function deleteTask () {
             var name = editTaskVm.task.name;
-            modalService.newModal('confirmDelete', { name: editTaskVm.task.name, id: editTaskVm.task.id }, 'sm',
+            modalService.newModal('confirmDelete', 'common', { name: editTaskVm.task.name, id: editTaskVm.task.id }, 'sm',
                 function (result) {
-                    resourceService.delete('tasks', editTaskVm.task.id).then(
+                    resourceService.remove('tasks', editTaskVm.task.id).then(
                         function (response) {
                             editTaskVm.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
                         },

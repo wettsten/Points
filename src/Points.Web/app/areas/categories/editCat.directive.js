@@ -16,7 +16,8 @@
             },
             templateUrl: '/app/areas/categories/editCat.html',
             controller: 'editCatController',
-            controllerAs: 'editCatVm'
+            controllerAs: 'editCatVm',
+            bindToController: true
         };
         return directive;
     }
@@ -77,9 +78,9 @@
 
         function deleteCat() {
             var name = editCatVm.cat.name;
-            modalService.newModal('confirmDelete', { name: editCatVm.cat.name, id: editCatVm.cat.id }, 'sm',
+            modalService.newModal('confirmDelete', 'common', { name: editCatVm.cat.name, id: editCatVm.cat.id }, 'sm',
                 function (result) {
-                    resourceService.delete('categories', editCatVm.cat.id).then(
+                    resourceService.remove('categories', editCatVm.cat.id).then(
                         function (response) {
                             editCatVm.addSuccess({ msg: "Category '{0}' successfully deleted".format(name) });
                         },

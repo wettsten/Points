@@ -18,8 +18,8 @@
         activate();
 
         function activate() {
-            filterService.subscribe($scope, 'ptaskFilter', function () {
-                activeVm.taskFilter = filterService.getPTaskFilter();
+            filterService.subscribe($scope, 'ataskFilter', function () {
+                activeVm.taskFilter = filterService.getATaskFilter();
             });
 
             resourceService.get('activetasks', function (data) {

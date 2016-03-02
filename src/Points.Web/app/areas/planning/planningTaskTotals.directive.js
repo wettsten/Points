@@ -11,7 +11,8 @@
             scope: {},
             templateUrl: '/app/areas/planning/planningTaskTotals.html',
             controller: 'planningTaskTotalsController',
-            controllerAs: 'pTotalsVm'
+            controllerAs: 'pTotalsVm',
+            bindToController: true
         };
         return directive;
     }

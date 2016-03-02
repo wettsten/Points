@@ -14,7 +14,8 @@
             },
             templateUrl: '/app/areas/categories/newCat.html',
             controller: 'newCatController',
-            controllerAs: 'newCatVm'
+            controllerAs: 'newCatVm',
+            bindToController: true
         };
         return directive;
     }

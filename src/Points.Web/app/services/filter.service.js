@@ -37,13 +37,13 @@
         };
 
         var service = {
-            getCatFilter: filters.cat,
+            getCatFilter: getCatFilter,
             setCatFilter: setCatFilter,
-            getTaskFilter: filters.task,
+            getTaskFilter: getTaskFilter,
             setTaskFilter: setTaskFilter,
-            getPTaskFilter: filters.pTask,
+            getPTaskFilter: getPTaskFilter,
             setPTaskFilter: setPTaskFilter,
-            getATaskFilter: filters.aTask,
+            getATaskFilter: getATaskFilter,
             setATaskFilter: setATaskFilter,
             subscribe: subscribe
         };
@@ -54,17 +54,29 @@
             filters.cat = catFilter;
             $rootScope.$emit('catFilter');
         }
+        function getCatFilter() {
+            return filters.cat;
+        }
         function setTaskFilter (taskFilter) {
             filters.task = taskFilter;
             $rootScope.$emit('taskFilter');
+        }
+        function getTaskFilter() {
+            return filters.task;
         }
         function setPTaskFilter (taskFilter) {
             filters.pTask = taskFilter;
             $rootScope.$emit('ptaskFilter');
         }
-        function setATaskFilter (taskFilter) {
+        function getPTaskFilter() {
+            return filters.pTask;
+        }
+        function setATaskFilter(taskFilter) {
             filters.aTask = taskFilter;
             $rootScope.$emit('ataskFilter');
+        }
+        function getATaskFilter () {
+            return filters.aTask;
         }
         function subscribe (scope, event, callback) {
             var handler = $rootScope.$on(event, callback);

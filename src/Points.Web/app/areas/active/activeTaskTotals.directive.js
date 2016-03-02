@@ -11,7 +11,8 @@
             scope: {},
             templateUrl: '/app/areas/active/activeTaskTotals.html',
             controller: 'activeTaskTotalsController',
-            controllerAs: 'aTotalsVm'
+            controllerAs: 'aTotalsVm',
+            bindToController: true
         };
         return directive;
     }
@@ -55,14 +56,14 @@
         }
 
         function calculateTotalClass () {
-            if (aTotalsVm.user.activeTargetPoints && aTotalsVm.totals.totalPoints) {
+            if (typeof aTotalsVm.user.activeTargetPoints !== 'undefined' && typeof aTotalsVm.totals.totalPoints !== 'undefined') {
                 var pct = aTotalsVm.totals.totalPoints * 100 / aTotalsVm.user.activeTargetPoints;
                 if (pct >= 100) {
                     aTotalsVm.totalClass = 'success';
                     aTotalsVm.isSuccess = true;
                 } else if (pct >= 50) {
                     aTotalsVm.totalClass = 'warning';
-                } else if (pct > 0) {
+                } else if (pct >= 0) {
                     aTotalsVm.totalClass = 'danger';
                 } else {
                     aTotalsVm.totalClass = 'active';

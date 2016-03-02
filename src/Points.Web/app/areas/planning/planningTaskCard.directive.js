@@ -13,9 +13,10 @@
                 addSuccess: '&',
                 addError: '&'
             },
-            templateUrl: '/app/areas/jplanning/planningTaskCard.html',
+            templateUrl: '/app/areas/planning/planningTaskCard.html',
             controller: 'planningTaskCardController',
-            controllerAs: 'pCardVm'
+            controllerAs: 'pCardVm',
+            bindToController: true
         };
         return directive;
     }
@@ -24,9 +25,9 @@
         .module('checkpoint')
         .controller('planningTaskCardController', planningTaskCardController);
 
-    planningTaskCardController.$inject = ['resourceService', 'modalService'];
+    planningTaskCardController.$inject = ['resourceService', 'modalService', '$uibModal'];
 
-    function planningTaskCardController(resourceService, modalService) {
+    function planningTaskCardController(resourceService, modalService, $uibModal) {
         /* jshint validthis:true */
         var pCardVm = this;
 
@@ -42,19 +43,31 @@
             });
         }
 
-        function startEdit () {
-            modalService.newModal('editPlanningTask', angular.copy(pCardVm.task), 'lg',
+        function startEdit() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '/app/areas/planning/editPlanningTask.html',
+                controller: 'editPlanningTaskModal',
+                controllerAs: 'editPlanVm',
+                size: 'lg',
+                resolve: {
+                    data: angular.copy(pCardVm.task)
+                }
+            });
+            modalInstance.result.then(
                 function (result) {
-                    pCardVm.addSuccess({ msg: "Task '{0}' successfully updated".format(result.name) });
+                    if (result) {
+                        pCardVm.addSuccess({ msg: "Task '{0}' successfully updated".format(result.name) });
+                    }
                 }
             );
         }
 
         function deletePlanningTask() {
             var name = pCardVm.task.name;
-            modalService.newModal('confirmDelete', { name: pCardVm.task.name, id: pCardVm.task.id }, 'sm',
+            modalService.newModal('confirmDelete', 'common', { name: pCardVm.task.name, id: pCardVm.task.id }, 'sm',
                 function (result) {
-                    resourceService.delete('planningtasks', pCardVm.task.id).then(
+                    resourceService.remove('planningtasks', pCardVm.task.id).then(
                         function (response) {
                             pCardVm.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
                         },

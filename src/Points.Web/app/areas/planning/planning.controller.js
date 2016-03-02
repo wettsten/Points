@@ -5,9 +5,9 @@
         .module('checkpoint')
         .controller('planningController', planningController);
 
-    planningController.$inject = ['$scope', 'resourceService', '$timeout', 'modalService', 'filterService'];
+    planningController.$inject = ['$scope', 'resourceService', '$timeout', '$uibModal', 'filterService'];
 
-    function planningController($scope, resourceService, $timeout, modalService, filterService) {
+    function planningController($scope, resourceService, $timeout, $uibModal, filterService) {
         /* jshint validthis:true */
         var planningVm = this;
 
@@ -49,9 +49,21 @@
         }
 
         function addTask() {
-            modalService.newModal('newPlanningTask', null, 'lg',
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: '/app/areas/planning/newPlanningTask.html',
+                controller: 'newPlanningTaskModal',
+                controllerAs: 'newPlanVm',
+                size: 'lg',
+                resolve: {
+                    data: null
+                }
+            });
+            modalInstance.result.then(
                 function (result) {
-                    planningVm.addSuccess("Task '{0}' successfully added".format(result.name));
+                    if (result) {
+                        planningVm.addSuccess("Task '{0}' successfully added".format(result.name));
+                    }
                 }
             );
         }

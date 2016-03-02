@@ -11,7 +11,8 @@
             scope: {},
             templateUrl: '/app/areas/login/socialLogin.html',
             controller: 'socialLoginController',
-            controllerAs: 'slVm'
+            controllerAs: 'slVm',
+            bindToController: true
         };
         return directive;
     }

@@ -14,11 +14,12 @@
 
         return service;
 
-        function newModal(type, data, size, success) {
+        function newModal(type, location, data, size, success) {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: '/app/views/partials/' + type + '.html',
+                templateUrl: '/app/areas/' + location + '/' + type + '.html',
                 controller: type + 'Modal',
+                controllerAs: 'mVm',
                 size: size,
                 resolve: {
                     data: data
