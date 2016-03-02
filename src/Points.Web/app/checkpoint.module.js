@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('cp.core', [
+    angular.module('checkpoint', [
         // Angular modules
         'ngRoute',
         'ngAnimate',

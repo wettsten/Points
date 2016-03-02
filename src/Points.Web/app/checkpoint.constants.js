@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('cp.core')
+        .module('checkpoint')
         .constant('cpSettings', {
             apiServiceBaseUri: 'http://points.wettsten.com/auth/',
             apiResourceBaseUri: 'http://points.wettsten.com/resources/',

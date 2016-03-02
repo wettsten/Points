@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('cp.core')
+        .module('checkpoint')
         .run(runBlock);
 
     runBlock.$inject = ['authService'];

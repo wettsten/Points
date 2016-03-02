@@ -63,30 +63,38 @@
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="//underscorejs.org/underscore-min.js"></script>
 
-    <script src="app/hash.js?v=1"></script>
-    <script src="app/format.js?v=1"></script>
+    <script src="scripts/hash.js?v=1"></script>
+    <script src="scripts/format.js?v=1"></script>
     <!-- Load app main script -->
-    <script src="app/app.js?v=1"></script>
+    <script src="app/checkpoint.module.js?v=1"></script>
+    <script src="app/checkpoint.config.js?v=1"></script>
+    <script src="app/checkpoint.constants.js?v=1"></script>
+    <script src="app/checkpoint.run.js?v=1"></script>
 
     <!-- Load services -->
-    <script src="app/services/authInterceptorService.js?v=1"></script>
-    <script src="app/services/resourceService.js?v=1"></script>
-    <script src="app/services/authService.js?v=1"></script>
-    <script src="app/services/authDataService.js?v=1"></script>
-    <script src="app/services/modalService.js?v=1"></script>
-    <!-- Load filters -->
-    <!-- Load factories -->
-    <script src="app/factories/filterFactory.js?v=1"></script>
+    <script src="app/services/filter.service.js?v=1"></script>
+    <script src="app/services/authInterceptor.service.js?v=1"></script>
+    <script src="app/services/resource.service.js?v=1"></script>
+    <script src="app/services/auth.service.js?v=1"></script>
+    <script src="app/services/authData.service.js?v=1"></script>
+    <script src="app/services/modal.service.js?v=1"></script>
     <!-- Load active -->
     <script src="app/areas/active/activeController.js?v=1"></script>
     <script src="app/areas/active/activeTaskCard.js?v=1"></script>
     <script src="app/areas/active/activeTaskTotals.js?v=1"></script>
     <script src="app/areas/active/filterActiveTask.js?v=1"></script>
+    <script src="app/areas/active/confirmUncheckModal.js?v=1"></script>
     <!-- Load categories -->
     <script src="app/areas/categories/catsController.js?v=1"></script>
     <script src="app/areas/categories/newCat.js?v=1"></script>
     <script src="app/areas/categories/editCat.js?v=1"></script>
     <script src="app/areas/categories/filterCat.js?v=1"></script>
+    <!-- Load common -->
+    <script src="app/areas/common/collapsePanel.js?v=1"></script>
+    <script src="app/areas/common/basicPanel.js?v=1"></script>
+    <script src="app/areas/common/alertBox.js?v=1"></script>
+    <script src="app/areas/common/helpNoItems.js?v=1"></script>
+    <script src="app/areas/common/confirmDeleteModal.js?v=1"></script>
     <!-- Load home -->
     <script src="app/areas/home/indexController.js?v=1"></script>
     <script src="app/areas/home/homeController.js?v=1"></script>
@@ -94,6 +102,7 @@
     <script src="app/areas/login/loginController.js?v=1"></script>
     <script src="app/areas/login/signupController.js?v=1"></script>
     <script src="app/areas/login/associateController.js?v=1"></script>
+    <script src="app/areas/login/socialLogin.js?v=1"></script>
     <!-- Load options -->
     <script src="app/areas/options/optionsController.js?v=1"></script>
     <!-- Load planning -->
@@ -111,16 +120,6 @@
     <script src="app/areas/tasks/newTask.js?v=1"></script>
     <script src="app/areas/tasks/editTask.js?v=1"></script>
     <script src="app/areas/tasks/filterTask.js?v=1"></script>
-    <!-- Load custom directives -->
-    <script src="app/directives/imgButton.js?v=1"></script>
-    <script src="app/directives/collapsePanel.js?v=1"></script>
-    <script src="app/directives/basicPanel.js?v=1"></script>
-    <script src="app/directives/alertBox.js?v=1"></script>
-    <script src="app/directives/socialLogin.js?v=1"></script>
-    <script src="app/directives/helpNoItems.js?v=1"></script>
-    <!-- Load custom templates -->
-    <script src="app/controllers/confirmDeleteModal.js?v=1"></script>
-    <script src="app/controllers/confirmUncheckModal.js?v=1"></script>
 
 </body>
 </html>
