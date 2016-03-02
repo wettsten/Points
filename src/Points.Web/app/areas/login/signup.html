@@ -9,7 +9,7 @@
             <input type="password" class="form-control" placeholder="Password" ng-model="signupVm.registration.password" required><br />
             <input type="password" class="form-control" placeholder="Confirm Password" ng-model="signupVm.registration.confirmPassword" required><br />
             <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="signupVm.signUp()">Submit</button><br />
-            <div data-ng-hide="message == ''" ng-class="(signupVm.savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+            <div ng-hide="signupVm.message == ''" ng-class="(signupVm.savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
                 {{signupVm.message}}
             </div>
         </div>

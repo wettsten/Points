@@ -35,7 +35,11 @@
                 initData();
             });
 
-            loadData();
+            resourceService.get('users', function (data) {
+                optionsVm.originalUser = data[0];
+                userLoaded = true;
+                initData();
+            });
         }
 
         function convertToLocal (user) {
@@ -71,14 +75,6 @@
                 optionsVm.user.notifyWeekEnding = optionsVm.hoursPrior[optionsVm.user.notifyWeekEnding.id];
                 optionsVm.originalUser = angular.copy(optionsVm.user);
             }
-        }
-
-        function loadData () {
-            resourceService.get('users', function (data) {
-                optionsVm.originalUser = data[0];
-                userLoaded = true;
-                initData();
-            });
         }
 
         function validateEmail () {

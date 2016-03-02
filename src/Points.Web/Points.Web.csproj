@@ -97,6 +97,7 @@
     <Content Include="app\services\authInterceptor.service.js" />
     <Content Include="app\services\auth.service.js" />
     <Content Include="app\services\authData.service.js" />
+    <Content Include="app\services\resourceCache.service.js" />
     <Content Include="app\services\resource.service.js" />
     <Content Include="app\services\filter.service.js" />
     <Content Include="app\services\modal.service.js" />
