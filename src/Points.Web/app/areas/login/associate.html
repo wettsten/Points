@@ -3,20 +3,20 @@
         &nbsp;
     </div>
     <div class="col-md-8">
-        <h3>Associate your {{registerData.provider}} Account</h3>
+        <h3>Associate your {{associateVm.registerData.provider}} Account</h3>
         <hr />
-        <p class="text-success">You have successfully authenticated with <strong>{{registerData.provider}} </strong>. Please enter a user name below for this site and click the Register button to log in.</p>
+        <p class="text-success">You have successfully authenticated with <strong>{{associateVm.registerData.provider}} </strong>. Please enter a user name below for this site and click the Register button to log in.</p>
         <div class="row">
             <div class="col-md-3">
                 &nbsp;
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" data-ng-model="registerData.userName" required autofocus>
-                    <button class="btn btn-sm btn-info btn-block" type="button" style="margin-top:10px;" data-ng-click="registerExternal()">Register</button>
+                    <input type="text" class="form-control" placeholder="Username" ng-model="associateVm.registerData.userName" required autofocus>
+                    <button class="btn btn-sm btn-info btn-block" type="button" style="margin-top:10px;" ng-click="associateVm.registerExternal()">Register</button>
                 </div>
-                <div data-ng-hide="message == ''" data-ng-class="(savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
-                    {{message}}
+                <div ng-hide="associateVm.message == ''" ng-class="(associateVm.savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                    {{associateVm.message}}
                 </div>
             </div>
             <div class="col-md-3">

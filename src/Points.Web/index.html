@@ -16,25 +16,25 @@
 </head>
 <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-controller="indexController">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="indexController as indexVm">
         <div class="container">
             <div class="navbar-header">
-                <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                <button class="btn btn-success navbar-toggle" ng-click="indexVm.navbarExpanded = !indexVm.navbarExpanded">
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </button>
                 <a class="navbar-brand" href="#">checkPoint!</a>
             </div>
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-hide="!authentication.isAuth"><a>Welcome {{authentication.userName}}</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/active">Active Week</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/planning">Planning</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/cats">Categories</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/tasks">Tasks</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/options">Options</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a>Welcome {{indexVm.authentication.userName}}</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/active">Active Week</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/planning">Planning</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/cats">Categories</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/tasks">Tasks</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/options">Options</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="" ng-click="indexVm.logOut()">Logout</a></li>
+                    <li ng-hide="indexVm.authentication.isAuth"> <a href="#/login">Login</a></li>
+                    <li ng-hide="indexVm.authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -79,13 +79,13 @@
     <script src="app/services/authData.service.js?v=1"></script>
     <script src="app/services/modal.service.js?v=1"></script>
     <!-- Load active -->
-    <script src="app/areas/active/activeController.js?v=1"></script>
+    <script src="app/areas/active/active.controller.js?v=1"></script>
     <script src="app/areas/active/activeTaskCard.js?v=1"></script>
     <script src="app/areas/active/activeTaskTotals.js?v=1"></script>
     <script src="app/areas/active/filterActiveTask.js?v=1"></script>
     <script src="app/areas/active/confirmUncheckModal.js?v=1"></script>
     <!-- Load categories -->
-    <script src="app/areas/categories/catsController.js?v=1"></script>
+    <script src="app/areas/categories/cats.controller.js?v=1"></script>
     <script src="app/areas/categories/newCat.js?v=1"></script>
     <script src="app/areas/categories/editCat.js?v=1"></script>
     <script src="app/areas/categories/filterCat.js?v=1"></script>
@@ -96,17 +96,17 @@
     <script src="app/areas/common/helpNoItems.js?v=1"></script>
     <script src="app/areas/common/confirmDeleteModal.js?v=1"></script>
     <!-- Load home -->
-    <script src="app/areas/home/indexController.js?v=1"></script>
-    <script src="app/areas/home/homeController.js?v=1"></script>
+    <script src="app/areas/home/index.controller.js?v=1"></script>
+    <script src="app/areas/home/home.controller.js?v=1"></script>
     <!-- Load login -->
-    <script src="app/areas/login/loginController.js?v=1"></script>
-    <script src="app/areas/login/signupController.js?v=1"></script>
-    <script src="app/areas/login/associateController.js?v=1"></script>
+    <script src="app/areas/login/login.controller.js?v=1"></script>
+    <script src="app/areas/login/signup.controller.js?v=1"></script>
+    <script src="app/areas/login/associate.controller.js?v=1"></script>
     <script src="app/areas/login/socialLogin.js?v=1"></script>
     <!-- Load options -->
-    <script src="app/areas/options/optionsController.js?v=1"></script>
+    <script src="app/areas/options/options.controller.js?v=1"></script>
     <!-- Load planning -->
-    <script src="app/areas/planning/planningController.js?v=1"></script>
+    <script src="app/areas/planning/planning.controller.js?v=1"></script>
     <script src="app/areas/planning/newPlanningTaskModal.js?v=1"></script>
     <script src="app/areas/planning/planningTaskCard.js?v=1"></script>
     <script src="app/areas/planning/editPlanningTaskModal.js?v=1"></script>
@@ -116,7 +116,7 @@
     <script src="app/areas/status/planningStatus.js?v=1"></script>
     <script src="app/areas/status/activeStatus.js?v=1"></script>
     <!-- Load tasks -->
-    <script src="app/areas/tasks/tasksController.js?v=1"></script>
+    <script src="app/areas/tasks/tasks.controller.js?v=1"></script>
     <script src="app/areas/tasks/newTask.js?v=1"></script>
     <script src="app/areas/tasks/editTask.js?v=1"></script>
     <script src="app/areas/tasks/filterTask.js?v=1"></script>

@@ -10,30 +10,30 @@
             <div alert-box></div>
         </div>
 
-        <div class="row" ng-hide="noItems">
+        <div class="row" ng-hide="tasksVm.noItems">
             <div filter-task></div>
         </div>
 
-        <div class="row" ng-show="noItems">
+        <div class="row" ng-show="tasksVm.noItems">
             <div help-no-items show-categories></div>
         </div>
 
-        <div class="row" ng-hide="noItems">
+        <div class="row" ng-hide="tasksVm.noItems">
             <table class="table table-striped table-bordered table-hover" style="width: 100%">
                 <thead>
                 <tr>
                     <th>Name</th>
                     <th>Category</th>
                     <th style="width: 60px; text-align: right">
-                        <button type="button" class="btn btn-warning" ng-click="loadTasks()" title="Refresh">
+                        <button type="button" class="btn btn-warning" ng-click="tasksVm.loadTasks()" title="Refresh">
                             <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                         </button>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr new-task add-success="addSuccess(msg)" add-error="addError(msg)"></tr>
-                <tr ng-repeat="task in tasks | filter:taskFilter" edit-task the-task="task" task-in-edit="taskInEdit" add-success="addSuccess(msg)" add-error="addError(msg)"></tr>
+                <tr new-task add-success="tasksVm.addSuccess(msg)" add-error="tasksVm.addError(msg)"></tr>
+                <tr ng-repeat="task in tasksVm.tasks | filter:tasksVm.taskFilter" edit-task the-task="task" task-in-edit="tasksVm.taskInEdit" add-success="tasksVm.addSuccess(msg)" add-error="tasksVm.addError(msg)"></tr>
                 </tbody>
             </table>
         </div>
