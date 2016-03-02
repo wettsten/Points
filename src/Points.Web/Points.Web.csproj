@@ -70,6 +70,11 @@
     <Content Include="app\areas\common\helpNoItems.directive.js" />
     <Content Include="app\areas\directive.js" />
     <Content Include="app\areas\login\socialLogin.directive.js" />
+    <Content Include="app\areas\planning\filterPlanningTask.directive.js" />
+    <Content Include="app\areas\planning\planningTaskTotals.directive.js" />
+    <Content Include="app\areas\planning\planningTaskCard.directive.js" />
+    <Content Include="app\areas\planning\newPlanningTask.modal.js" />
+    <Content Include="app\areas\planning\editPlanningTask.modal.js" />
     <Content Include="app\areas\planning\planning.controller.js" />
     <Content Include="app\areas\home\index.controller.js" />
     <Content Include="app\areas\home\home.controller.js" />
@@ -86,7 +91,6 @@
     <Content Include="app\checkpoint.run.js" />
     <Content Include="app\checkpoint.module.js" />
     <Content Include="app\areas\active\filterActiveTask.js" />
-    <Content Include="app\areas\planning\filterPlanningTask.js" />
     <Content Include="app\services\authInterceptor.service.js" />
     <Content Include="app\services\auth.service.js" />
     <Content Include="app\services\authData.service.js" />
@@ -97,11 +101,7 @@
     <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\active\activeTaskCard.js" />
     <Content Include="app\areas\active\activeTaskTotals.js" />
-    <Content Include="app\areas\planning\planningTaskTotals.js" />
-    <Content Include="app\areas\planning\planningTaskCard.js" />
-    <Content Include="app\areas\planning\editPlanningTaskModal.js" />
     <Content Include="app\areas\active\confirmUncheckModal.js" />
-    <Content Include="app\areas\planning\newPlanningTaskModal.js" />
     <Content Include="app\areas\status\activeStatus.js" />
     <Content Include="app\areas\status\planningStatus.js" />
     <Content Include="scripts\hash.js" />

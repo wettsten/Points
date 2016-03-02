@@ -3,14 +3,14 @@
 
     angular
         .module('checkpoint')
-        .directive('filterTask', filterTask);
+        .directive('filterPlanningTask', filterPlanningTask);
     
-    function filterTask() {
+    function filterPlanningTask() {
         var directive = {
             restrict: 'EA',
             scope: {},
             templateUrl: '/app/areas/tasks/filterTask.html',
-            controller: 'filterTaskController',
+            controller: 'filterPlanningTaskController',
             controllerAs: 'filterVm'
         };
         return directive;
@@ -18,11 +18,11 @@
 
     angular
         .module('checkpoint')
-        .controller('filterTaskController', filterTaskController);
+        .controller('filterPlanningTaskController', filterPlanningTaskController);
 
-    filterTaskController.$inject = ['filterService', 'resourceService'];
+    filterPlanningTaskController.$inject = ['filterService', 'resourceService'];
 
-    function filterTaskController(filterService, resourceService) {
+    function filterPlanningTaskController(filterService, resourceService) {
         /* jshint validthis:true */
         var filterVm = this;
 
@@ -34,21 +34,23 @@
         activate();
 
         function activate() {
-            resourceService.get('categories', function (data) {
-                filterVm.cats = data;
+            resourceService.get('planningtotals', function (data) {
+                filterVm.cats = data.categories;
             });
         }
 
         function search () {
-            filterService.setTaskFilter({
+            filterService.setPTaskFilter({
                 name: filterVm.filter.text,
-                category: {
-                    name: filterVm.filter.cat ? filterVm.filter.cat.name : ''
+                task: {
+                    category: {
+                        name: filterVm.filter.cat ? filterVm.filter.cat.name : ''
+                    }
                 }
             });
         }
 
-        function clear () {
+        function clear() {
             filterVm.filter = { text: '', cat: {} };
             search();
         }

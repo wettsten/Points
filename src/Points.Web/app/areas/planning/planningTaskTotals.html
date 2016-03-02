@@ -10,14 +10,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-class="totalClass" ng-click="toggleCats()">
-                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !hideCats, 'glyphicon-chevron-right': hideCats}"></i></td>
+            <tr ng-class="pTotalsVm.totalClass" ng-click="pTotalsVm.toggleCats()">
+                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !pTotalsVm.hideCats, 'glyphicon-chevron-right': pTotalsVm.hideCats}"></i></td>
                 <td><b>Total</b></td>
-                <td><b>{{totals.points}}</b></td>
-                <td><b>{{user.targetPoints}}</b></td>
+                <td><b>{{pTotalsVm.totals.points}}</b></td>
+                <td><b>{{pTotalsVm.user.targetPoints}}</b></td>
                 <td></td>
             </tr>
-            <tr class="info" ng-repeat-start="cat in totals.categories" ng-hide="hideCats" ng-click="toggleTasks(cat)">
+            <tr class="info" ng-repeat-start="cat in pTotalsVm.totals.categories" ng-hide="pTotalsVm.hideCats" ng-click="pTotalsVm.toggleTasks(cat)">
                 <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !cat.hideTasks, 'glyphicon-chevron-right': cat.hideTasks}"></i></td>
                 <td>{{cat.name}}</td>
                 <td>{{cat.points}}</td>

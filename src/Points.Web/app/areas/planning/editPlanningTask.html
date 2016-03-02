@@ -1,6 +1,6 @@
 ﻿<div>
     <div class="modal-header">
-        <h3 class="modal-title">Edit {{task.name}}</h3>
+        <h3 class="modal-title">Edit {{editPlanVm.task.name}}</h3>
     </div>
     <div class="modal-body">
         <div class="row">
@@ -9,42 +9,42 @@
         <div class="row">
             <div class="col-md-3">
                 <p>Category</p>
-                <input type="text" class="form-control" ng-model="task.task.category.name" ng-disabled="true" />
+                <input type="text" class="form-control" ng-model="editPlanVm.task.task.category.name" ng-disabled="true" />
             </div>
             <div class="col-md-3">
                 <p>Task</p>
-                <input type="text" class="form-control" ng-model="task.name" ng-disabled="true" />
+                <input type="text" class="form-control" ng-model="editPlanVm.task.name" ng-disabled="true" />
             </div>
             <div class="col-md-3">
                 <p>Duration</p>
-                <select class="form-control" ng-model="task.duration.type" ng-options="option.name for option in enums.dTypes track by option.id">
-                    {{task.duration.type.name}}
+                <select class="form-control" ng-model="editPlanVm.task.duration.type" ng-options="option.name for option in editPlanVm.enums.dTypes track by option.id">
+                    {{editPlanVm.task.duration.type.name}}
                 </select>
                 <div>&nbsp;</div>
-                <input type="number" class="form-control" placeholder="Value" ng-model="task.duration.value" ng-show="showAddDuration()" min="1" />
+                <input type="number" class="form-control" placeholder="Value" ng-model="editPlanVm.task.duration.value" ng-show="editPlanVm.showAddDuration()" min="1" />
                 <div>&nbsp;</div>
-                <select class="form-control" ng-model="task.duration.unit" ng-show="showAddDuration()" ng-options="option.name for option in enums.dUnits track by option.id">
-                    {{task.duration.unit.name}}
+                <select class="form-control" ng-model="editPlanVm.task.duration.unit" ng-show="editPlanVm.showAddDuration()" ng-options="option.name for option in editPlanVm.enums.dUnits track by option.id">
+                    {{editPlanVm.task.duration.unit.name}}
                 </select>
                 <div>&nbsp;</div>
             </div>
             <div class="col-md-3">
                 <p>Frequency</p>
-                <select class="form-control" ng-model="task.frequency.type" ng-options="option.name for option in enums.fTypes track by option.id">
-                    {{task.frequency.type.name}}
+                <select class="form-control" ng-model="editPlanVm.task.frequency.type" ng-options="option.name for option in editPlanVm.enums.fTypes track by option.id">
+                    {{editPlanVm.task.frequency.type.name}}
                 </select>
                 <div>&nbsp;</div>
-                <input type="number" class="form-control" placeholder="Value" ng-model="task.frequency.value" ng-show="showAddFrequency()" min="1" />
+                <input type="number" class="form-control" placeholder="Value" ng-model="editPlanVm.task.frequency.value" ng-show="editPlanVm.showAddFrequency()" min="1" />
                 <div>&nbsp;</div>
-                <select class="form-control" ng-model="task.frequency.unit" ng-show="showAddFrequency()" ng-options="option.name for option in enums.fUnits track by option.id">
-                    {{task.frequency.unit.name}}
+                <select class="form-control" ng-model="editPlanVm.task.frequency.unit" ng-show="editPlanVm.showAddFrequency()" ng-options="option.name for option in editPlanVm.enums.fUnits track by option.id">
+                    {{editPlanVm.task.frequency.unit.name}}
                 </select>
                 <div>&nbsp;</div>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-success" type="button" ng-click="confirm()">Save</button>
-        <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-success" type="button" ng-click="editPlanVm.confirm()">Save</button>
+        <button class="btn btn-danger" type="button" ng-click="editPlanVm.cancel()">Cancel</button>
     </div>
 </div>

@@ -8,7 +8,7 @@
     function filterCat() {
         var directive = {
             restrict: 'EA',
-            scope: false,
+            scope: {},
             templateUrl: '/app/areas/categories/filterCat.html',
             controller: 'filterCatController',
             controllerAs: 'filterCatVm'

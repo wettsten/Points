@@ -7,8 +7,11 @@
     
     function newTask() {
         var directive = {
-            restrict: 'EA',
-            scope: false,
+            restrict: 'EA', 
+            scope: {
+                addSuccess: '&',
+                addError: '&'
+            },
             templateUrl: '/app/areas/tasks/newTask.html',
             controller: 'newTaskController',
             controllerAs: 'newTaskVm'
