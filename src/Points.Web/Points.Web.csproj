@@ -58,6 +58,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\checkpoint.constants.js" />
+    <Content Include="app\checkpoint.config.js" />
+    <Content Include="app\checkpoint.run.js" />
+    <Content Include="app\checkpoint.module.js" />
     <Content Include="app\areas\active\filterActiveTask.js" />
     <Content Include="app\areas\planning\filterPlanningTask.js" />
     <Content Include="app\directives\helpNoItems.js" />
