@@ -60,7 +60,7 @@
             }
         ];
 
-        var getCache = function () {
+        function getCache () {
             if (!caches[authDataService.authentication.userId]) {
                 var cache = $cacheFactory(authDataService.authentication.userId);
                 caches[authDataService.authentication.userId] = cache;
@@ -69,18 +69,18 @@
             return caches[authDataService.authentication.userId];
         };
 
-        var setCache = function (type, data) {
+        function setCache (type, data) {
             getCache().put(type, data);
         };
 
-        var callCallbacks = function (type, data) {
+        function callCallbacks (type, data) {
             var typeHashes = callbacks[type];
             for (var key in typeHashes) {
                 typeHashes[key](data);
             };
         };
 
-        var retrieveWithRetry = function (type, retry) {
+        function retrieveWithRetry (type, retry) {
             $http.get(serviceBase + 'api/' + type).then(function (results) {
                 if (angular.toJson(getCache().get(type)) === angular.toJson(results.data) && retry < 1000) {
                     var interval = 100;
@@ -92,11 +92,11 @@
             });
         }
 
-        var retrieve = function (type) {
+        function retrieve (type) {
             retrieveWithRetry(type, 0);
         };
 
-        var updateLinks = function (type, action) {
+        function updateLinks (type, action) {
             angular.forEach(links, function (link) {
                 if (link.type === type && link.action === action) {
                     angular.forEach(link.links, function (linked) {
@@ -123,7 +123,7 @@
         };
 
         function get (type, callback) {
-            service.subscribe(type, callback);
+            subscribe(type, callback);
             var cache = getCache().get(type);
             if (cache) {
                 $timeout(callCallbacks(type, cache), 10);
