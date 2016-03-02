@@ -3,10 +3,10 @@
         <h3 class="modal-title">Confirm Delete</h3>
     </div>
     <div class="modal-body">
-        <span>Are you sure you want to delete '{{item.name}}'?</span>
+        <span>Are you sure you want to delete '{{cdmVm.item.name}}'?</span>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-danger" type="button" ng-click="confirm()">Delete</button>
-        <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-danger" type="button" ng-click="cdmVm.confirm()">Delete</button>
+        <button class="btn btn-default" type="button" ng-click="cdmVm.cancel()">Cancel</button>
     </div>
 </div>

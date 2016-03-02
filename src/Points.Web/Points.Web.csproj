@@ -60,6 +60,13 @@
   <ItemGroup>
     <Content Include="app\areas\active\active.controller.js" />
     <Content Include="app\areas\categories\cats.controller.js" />
+    <Content Include="app\areas\common\alertBox.directive.js" />
+    <Content Include="app\areas\common\basicPanel.directive.js" />
+    <Content Include="app\areas\common\collapsePanel.directive.js" />
+    <Content Include="app\areas\common\confirmDelete.modal.js" />
+    <Content Include="app\areas\common\helpNoItems.directive.js" />
+    <Content Include="app\areas\directive.js" />
+    <Content Include="app\areas\login\socialLogin.directive.js" />
     <Content Include="app\areas\planning\planning.controller.js" />
     <Content Include="app\areas\home\index.controller.js" />
     <Content Include="app\areas\home\home.controller.js" />
@@ -74,8 +81,6 @@
     <Content Include="app\checkpoint.module.js" />
     <Content Include="app\areas\active\filterActiveTask.js" />
     <Content Include="app\areas\planning\filterPlanningTask.js" />
-    <Content Include="app\areas\common\helpNoItems.js" />
-    <Content Include="app\areas\login\socialLogin.js" />
     <Content Include="app\services\authInterceptor.service.js" />
     <Content Include="app\services\auth.service.js" />
     <Content Include="app\services\authData.service.js" />
@@ -90,10 +95,6 @@
     <Content Include="app\areas\planning\planningTaskCard.js" />
     <Content Include="app\areas\planning\editPlanningTaskModal.js" />
     <Content Include="app\areas\active\confirmUncheckModal.js" />
-    <Content Include="app\areas\common\confirmDeleteModal.js" />
-    <Content Include="app\areas\common\basicPanel.js" />
-    <Content Include="app\areas\common\alertBox.js" />
-    <Content Include="app\areas\common\collapsePanel.js" />
     <Content Include="app\areas\tasks\filterTask.js" />
     <Content Include="app\areas\categories\filterCat.js" />
     <Content Include="app\areas\categories\editCat.js" />
