@@ -11,7 +11,8 @@
             scope: false,
             templateUrl: '/app/areas/common/alertBox.html',
             controller: 'alertBoxController',
-            controllerAs: 'abVm'
+            controllerAs: 'abVm',
+            bindToController: true
         };
         return directive;
     }
@@ -20,16 +21,23 @@
         .module('checkpoint')
         .controller('alertBoxController', alertBoxController);
 
-    alertBoxController.$inject = ['$timeout'];
+    alertBoxController.$inject = ['$timeout', '$scope'];
 
-    function alertBoxController($timeout) {
+    function alertBoxController($timeout, $scope) {
         /* jshint validthis:true */
         var abVm = this;
 
+        for (var key in Object.keys($scope)) {
+            var val = Object.keys($scope)[key];
+            if (val.indexOf('Vm') > -1) {
+                $scope[val].addSuccess = addSuccess;
+                $scope[val].addWarning = addWarning;
+                $scope[val].addError = addError;
+                break;
+            }
+        }
+
         abVm.alerts = [];
-        abVm.addSuccess = addSuccess;
-        abVm.addWarning = addWarning;
-        abVm.addError = addError;
         abVm.closeAlert = closeAlert;
 
         activate();

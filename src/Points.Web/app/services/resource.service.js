@@ -60,9 +60,13 @@
 
         return service;
 
+        function subscribe(type, callback) {
+            resourceSubscriptionService.subscribe(type, callback);
+        }
+
         function retrieveWithRetry(type, retry) {
             $http.get(serviceBase + 'api/' + type).then(function (results) {
-                if (angular.toJson(getCache().get(type)) === angular.toJson(results.data) && retry < 1000) {
+                if (angular.toJson(resourceCacheService.getCache().get(type)) === angular.toJson(results.data) && retry < 1000) {
                     var interval = 100;
                     $timeout(retrieveWithRetry(type, retry + interval), interval);
                     return;
