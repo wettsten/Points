@@ -5,13 +5,12 @@
         .module('checkpoint')
         .controller('optionsController', optionsController);
 
-    optionsController.$inject = ['authService', 'resourceService'];
+    optionsController.$inject = ['authService', 'resourceService', 'datetimeService'];
 
-    function optionsController(authService, resourceService) {
+    function optionsController(authService, resourceService, datetimeService) {
         /* jshint validthis:true */
         var optionsVm = this;
 
-        var offset = new Date().getTimezoneOffset() / 60;
         var dataLoaded = false,
             userLoaded = false;
 
@@ -42,37 +41,15 @@
             });
         }
 
-        function convertToLocal (user) {
-            if (user.weekStartHour.id - offset < 0) {
-                user.weekStartHour = optionsVm.hours[user.weekStartHour.id - offset + 24];
-                user.weekStartDay = optionsVm.days[optionsVm.days.indexOf(user.weekStartDay) - 1];
-            } else if (user.weekStartHour.id - offset > 23) {
-                user.weekStartHour = optionsVm.hours[user.weekStartHour.id - offset - 24];
-                user.weekStartDay = optionsVm.days[optionsVm.days.indexOf(user.weekStartDay) + 1];
-            } else {
-                user.weekStartHour = optionsVm.hours[user.weekStartHour.id - offset];
-            }
-            return user;
-        }
-
-        function convertToUtc (user) {
-            if (user.weekStartHour.id + offset < 0) {
-                user.weekStartHour = optionsVm.hours[user.weekStartHour.id + offset + 24];
-                user.weekStartDay = optionsVm.days[optionsVm.days.indexOf(user.weekStartDay) - 1];
-            } else if (user.weekStartHour.id + offset > 23) {
-                user.weekStartHour = optionsVm.hours[user.weekStartHour.id + offset - 24];
-                user.weekStartDay = optionsVm.days[optionsVm.days.indexOf(user.weekStartDay) + 1];
-            } else {
-                user.weekStartHour = optionsVm.hours[user.weekStartHour.id + offset];
-            }
-            return user;
-        }
-
         function initData () {
             if (dataLoaded === true && userLoaded === true) {
-                optionsVm.user = convertToLocal(angular.copy(optionsVm.originalUser));
-                optionsVm.user.notifyWeekStarting = optionsVm.hoursPrior[optionsVm.user.notifyWeekStarting.id];
-                optionsVm.user.notifyWeekEnding = optionsVm.hoursPrior[optionsVm.user.notifyWeekEnding.id];
+                var user = angular.copy(optionsVm.originalUser);
+                var convertedTime = datetimeService.convertToLocal(optionsVm.days.indexOf(user.weekStartDay), user.weekStartHour.id);
+                user.weekStartHour = optionsVm.hours[convertedTime.hour];
+                user.weekStartDay = optionsVm.days[convertedTime.day];
+                user.notifyWeekStarting = optionsVm.hoursPrior[user.notifyWeekStarting.id];
+                user.notifyWeekEnding = optionsVm.hoursPrior[user.notifyWeekEnding.id];
+                optionsVm.user = user;
                 optionsVm.originalUser = angular.copy(optionsVm.user);
             }
         }
@@ -95,8 +72,11 @@
 
         function saveChanges () {
             if (validateEmail()) {
-                var editUser = convertToUtc(angular.copy(optionsVm.user));
-                resourceService.edit('users', editUser).then(
+                var user = angular.copy(optionsVm.user);
+                var convertedTime = datetimeService.convertToUtc(optionsVm.days.indexOf(user.weekStartDay), user.weekStartHour.id);
+                user.weekStartHour = optionsVm.hours[convertedTime.hour];
+                user.weekStartDay = optionsVm.days[convertedTime.day];
+                resourceService.edit('users', user).then(
                     function () {
                         resourceService.get('users');
                         optionsVm.addSuccess('Options successfully updated');
