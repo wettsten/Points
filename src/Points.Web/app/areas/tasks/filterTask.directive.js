@@ -35,9 +35,11 @@
         activate();
 
         function activate() {
-            resourceService.get('categories', function (data) {
-                filterVm.cats = data;
-            });
+            resourceService.get('categories', getCategories);
+        }
+
+        function getCategories(data) {
+            filterVm.cats = data;
         }
 
         function search () {

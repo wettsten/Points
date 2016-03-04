@@ -23,14 +23,17 @@
         function activate() { }
 
         function login () {
-            authService.login(loginVm.loginData).then(
-                function (response) {
-                    $location.path('/active');
-                },
-                function (err) {
-                    loginVm.message = err.error_description;
-                }
-            );
-        };
+            authService
+                .login(loginVm.loginData)
+                .then(loginSuccess, loginError);
+        }
+
+        function loginSuccess(response) {
+            $location.path('/active');
+        }
+
+        function loginError(err) {
+            loginVm.message = err.error_description;
+        }
     }
 })();

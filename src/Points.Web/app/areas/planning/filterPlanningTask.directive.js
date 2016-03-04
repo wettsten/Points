@@ -35,9 +35,11 @@
         activate();
 
         function activate() {
-            resourceService.get('planningtotals', function (data) {
-                filterVm.cats = data.categories;
-            });
+            resourceService.get('planningtotals', getPlanningTotals);
+        }
+
+        function getPlanningTotals(data) {
+            filterVm.cats = data.categories;
         }
 
         function search () {

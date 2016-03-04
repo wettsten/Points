@@ -42,11 +42,13 @@
         activate();
 
         function activate() {
-            $scope.$watch('editCatVm.catInEdit.id', function () {
-                if (editCatVm.catInEdit.id !== '' && editCatVm.catInEdit.id !== editCatVm.cat.id) {
-                    editCatVm.editCat = {};
-                }
-            });
+            $scope.$watch('editCatVm.catInEdit.id', watchCatInEdit);
+        }
+
+        function watchCatInEdit () {
+            if (editCatVm.catInEdit.id !== '' && editCatVm.catInEdit.id !== editCatVm.cat.id) {
+                editCatVm.editCat = {};
+            }
         }
 
         function isInEditMode() {
@@ -64,32 +66,36 @@
         }
 
         function saveEdit () {
-            var name = editCatVm.editCat.name;
-            resourceService.edit('categories', editCatVm.editCat).then(
-                function (response) {
-                    clearEditData();
-                    editCatVm.addSuccess({ msg: "Category '{0}' successfully updated".format(name) });
-                },
-                function (err) {
-                    editCatVm.addError({ msg: err.data.message });
-                }
-            );
+            resourceService
+                .edit('categories', editCatVm.editCat)
+                .then(editSuccess, editErrow);
+        }
+
+        function editSuccess(response) {
+            editCatVm.addSuccess({ msg: "Category '{0}' successfully updated".format(editCatVm.editCat.name) });
+            clearEditData();
+        }
+
+        function editErrow(err) {
+            editCatVm.addError({ msg: err.data.message });
         }
 
         function deleteCat() {
-            var name = editCatVm.cat.name;
-            modalService.newModal('confirmDelete', 'common', { name: editCatVm.cat.name, id: editCatVm.cat.id }, 'sm',
-                function (result) {
-                    resourceService.remove('categories', editCatVm.cat.id).then(
-                        function (response) {
-                            editCatVm.addSuccess({ msg: "Category '{0}' successfully deleted".format(name) });
-                        },
-                        function (err) {
-                            editCatVm.addError({ msg: err.data.message });
-                        }
-                    );
-                }
-            );
+            modalService.newModal('confirmDelete', 'common', { name: editCatVm.cat.name, id: editCatVm.cat.id }, 'sm', modalResult);
+        }
+
+        function modalResult(result) {
+            resourceService
+                .remove('categories', editCatVm.cat.id)
+                .then(deleteSuccess, deleteError);
+        }
+
+        function deleteSuccess(response) {
+            editCatVm.addSuccess({ msg: "Category '{0}' successfully deleted".format(editCatVm.cat.name) });
+        }
+
+        function deleteError(err) {
+            editCatVm.addError({ msg: err.data.message });
         }
     }
 

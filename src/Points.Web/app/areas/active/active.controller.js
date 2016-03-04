@@ -18,17 +18,20 @@
         activate();
 
         function activate() {
-            filterService.subscribe($scope, 'ataskFilter', function () {
-                activeVm.taskFilter = filterService.getATaskFilter();
-            });
+            filterService.subscribe($scope, 'ataskFilter', getActiveTaskFilter);
+            resourceService.get('activetasks', getActiveTasks);
+        }
 
-            resourceService.get('activetasks', function (data) {
-                activeVm.tasks = data;
-                if (data.length === 0) {
-                    activeVm.addWarning('No active tasks found');
-                    activeVm.noItems = true;
-                }
-            });
+        function getActiveTaskFilter() {
+            activeVm.taskFilter = filterService.getATaskFilter();
+        }
+
+        function getActiveTasks(data) {
+            activeVm.tasks = data;
+            if (data.length === 0) {
+                activeVm.addWarning('No active tasks found');
+                activeVm.noItems = true;
+            }
         }
     }
 })();

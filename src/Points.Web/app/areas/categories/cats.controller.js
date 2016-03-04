@@ -14,24 +14,27 @@
         catsVm.cats = [];
         catsVm.catInEdit = { id: '' };
         catsVm.catFilter = filterService.getCatFilter();
-        catsVm.loadCats = loadCats;
+        catsVm.refreshCats = refreshCats;
 
         activate();
 
         function activate() {
-            filterService.subscribe($scope, 'catFilter', function catFilterChanged() {
-                catsVm.catFilter = filterService.getCatFilter();
-            });
-
-            resourceService.get('categories', function (data) {
-                catsVm.cats = data;
-                if (data.length === 0) {
-                    catsVm.addWarning('No categories found');
-                }
-            });
+            filterService.subscribe($scope, 'catFilter', getCatFilter);
+            resourceService.get('categories', getCats);
         }
 
-        function loadCats () {
+        function getCatFilter() {
+            catsVm.catFilter = filterService.getCatFilter();
+        }
+
+        function getCats(data) {
+            catsVm.cats = data;
+            if (data.length === 0) {
+                catsVm.addWarning('No categories found');
+            }
+        }
+
+        function refreshCats () {
             resourceService.get('categories');
         }
     }

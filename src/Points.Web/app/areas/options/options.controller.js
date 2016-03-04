@@ -26,19 +26,23 @@
         activate();
 
         function activate() {
-            resourceService.get('users/data', function (data) {
-                optionsVm.days = data.days;
-                optionsVm.hours = data.hours;
-                optionsVm.hoursPrior = data.hoursPrior;
-                dataLoaded = true;
-                initData();
-            });
+            resourceService.get('users/data', getUserData);
 
-            resourceService.get('users', function (data) {
-                optionsVm.originalUser = data[0];
-                userLoaded = true;
-                initData();
-            });
+            resourceService.get('users', getUsers);
+        }
+
+        function getUserData(data) {
+            optionsVm.days = data.days;
+            optionsVm.hours = data.hours;
+            optionsVm.hoursPrior = data.hoursPrior;
+            dataLoaded = true;
+            initData();
+        }
+
+        function getUsers(data) {
+            optionsVm.originalUser = data[0];
+            userLoaded = true;
+            initData();
         }
 
         function initData () {
@@ -76,15 +80,19 @@
                 var convertedTime = datetimeService.convertToUtc(optionsVm.days.indexOf(user.weekStartDay), user.weekStartHour.id);
                 user.weekStartHour = optionsVm.hours[convertedTime.hour];
                 user.weekStartDay = optionsVm.days[convertedTime.day];
-                resourceService.edit('users', user).then(
-                    function () {
-                        resourceService.get('users');
-                        optionsVm.addSuccess('Options successfully updated');
-                    },
-                    function (err) {
-                        optionsVm.addError(err.data.message);
-                    });
+                resourceService
+                    .edit('users', user)
+                    .then(editSuccess, editError);
             }
+        }
+
+        function editSuccess(response) {
+            resourceService.get('users');
+            optionsVm.addSuccess('Options successfully updated');
+        }
+
+        function editError(err) {
+            optionsVm.addError(err.data.message);
         }
     }
 })();

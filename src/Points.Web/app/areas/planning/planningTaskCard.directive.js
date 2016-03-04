@@ -54,29 +54,31 @@
                     data: angular.copy(pCardVm.task)
                 }
             });
-            modalInstance.result.then(
-                function (result) {
-                    if (result) {
-                        pCardVm.addSuccess({ msg: "Task '{0}' successfully updated".format(result.name) });
-                    }
-                }
-            );
+            modalInstance.result.then(editModalResult);
+        }
+
+        function editModalResult(result) {
+            if (result) {
+                pCardVm.addSuccess({ msg: "Task '{0}' successfully updated".format(result.name) });
+            }
         }
 
         function deletePlanningTask() {
-            var name = pCardVm.task.name;
-            modalService.newModal('confirmDelete', 'common', { name: pCardVm.task.name, id: pCardVm.task.id }, 'sm',
-                function (result) {
-                    resourceService.remove('planningtasks', pCardVm.task.id).then(
-                        function (response) {
-                            pCardVm.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
-                        },
-                        function (err) {
-                            pCardVm.addError({ msg: err.data.message });
-                        }
-                    );
-                }
-            );
+            modalService.newModal('confirmDelete', 'common', { name: pCardVm.task.name, id: pCardVm.task.id }, 'sm', deleteModalResult);
+        }
+
+        function deleteModalResult(result) {
+            resourceService
+                .remove('planningtasks', pCardVm.task.id)
+                .then(deleteSuccess, deleteError);
+        }
+
+        function deleteSuccess(response) {
+            pCardVm.addSuccess({ msg: "Task '{0}' successfully deleted".format(pCardVm.task.name) });
+        }
+
+        function deleteError(err) {
+            pCardVm.addError({ msg: err.data.message });
         }
     }
 

@@ -59,14 +59,17 @@
 
         function check () {
             aCardVm.task.timesCompleted += 1;
-            resourceService.edit('activetasks', aCardVm.task).then(
-                function (response) {
-                    aCardVm.addSuccess({ msg: 'Task successfully checked' });
-                },
-                function (err) {
-                    aCardVm.addError({ msg: err.data.message });
-                }
-            );
+            resourceService
+                .edit('activetasks', aCardVm.task)
+                .then(checkSuccess, checkError);
+        }
+
+        function checkSuccess (response) {
+            aCardVm.addSuccess({ msg: 'Task successfully checked' });
+        }
+
+        function checkError(err) {
+            aCardVm.addError({ msg: err.data.message });
         }
 
         function uncheck() {
@@ -80,21 +83,21 @@
                     data: { name: aCardVm.task.name, id: aCardVm.task.id }
                 }
             });
-            modalInstance.result.then(
-                function (result) {
-                    if (result) {
-                        aCardVm.task.timesCompleted -= 1;
-                        resourceService.edit('activetasks', aCardVm.task).then(
-                            function (response) {
-                                aCardVm.addSuccess({ msg: 'Task successfully unchecked' });
-                            },
-                            function (err) {
-                                $saCardVmcope.addError({ msg: err.data.message });
-                            }
-                        );
+            modalInstance.result.then(uncheckSuccess);
+        }
+
+        function uncheckSuccess(result) {
+            if (result) {
+                aCardVm.task.timesCompleted -= 1;
+                resourceService.edit('activetasks', aCardVm.task).then(
+                    function (response) {
+                        aCardVm.addSuccess({ msg: 'Task successfully unchecked' });
+                    },
+                    function (err) {
+                        $saCardVmcope.addError({ msg: err.data.message });
                     }
-                }
-            );
+                );
+            }
         }
     }
 

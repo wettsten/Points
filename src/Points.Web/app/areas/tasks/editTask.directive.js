@@ -43,15 +43,18 @@
         activate();
 
         function activate() { 
-            $scope.$watch('taskInEdit.id', function () {
-                if (editTaskVm.taskInEdit.id !== '' && editTaskVm.taskInEdit.id !== editTaskVm.task.id) {
-                    editTaskVm.editTask = {};
-                }
-            });
-            
-            resourceService.get('categories', function (data) {
-                editTaskVm.cats = data;
-            });
+            $scope.$watch('taskInEdit.id', watchTaskInEdit);
+            resourceService.get('categories', getCategories);
+        }
+
+        function watchTaskInEdit() {
+            if (editTaskVm.taskInEdit.id !== '' && editTaskVm.taskInEdit.id !== editTaskVm.task.id) {
+                editTaskVm.editTask = {};
+            }
+        }
+
+        function getCategories(data) {
+            editTaskVm.cats = data;
         }
 
         function isInEditMode () {
@@ -69,32 +72,36 @@
         }
 
         function saveEdit () {
-            var name = editTaskVm.editTask.name;
-            resourceService.edit('tasks', editTaskVm.editTask).then(
-                function (response) {
-                    clearEditData();
-                    editTaskVm.addSuccess({ msg: "Task '{0}' successfully updated".format(name) });
-                },
-                function (err) {
-                    editTaskVm.addError({ msg: err.data.message });
-                }
-            );
+            resourceService
+                .edit('tasks', editTaskVm.editTask)
+                .then(editSuccess, editError);
+        }
+
+        function editSuccess(response) {
+            editTaskVm.addSuccess({ msg: "Task '{0}' successfully updated".format(editTaskVm.editTask.name) });
+            clearEditData();
+        }
+
+        function editError(err) {
+            editTaskVm.addError({ msg: err.data.message });
         }
 
         function deleteTask () {
-            var name = editTaskVm.task.name;
-            modalService.newModal('confirmDelete', 'common', { name: editTaskVm.task.name, id: editTaskVm.task.id }, 'sm',
-                function (result) {
-                    resourceService.remove('tasks', editTaskVm.task.id).then(
-                        function (response) {
-                            editTaskVm.addSuccess({ msg: "Task '{0}' successfully deleted".format(name) });
-                        },
-                        function (err) {
-                            editTaskVm.addError({ msg: err.data.message });
-                        }
-                    );
-                }
-            );
+            modalService.newModal('confirmDelete', 'common', { name: editTaskVm.task.name, id: editTaskVm.task.id }, 'sm', deleteModalResult);
+        }
+
+        function deleteModalResult(result) {
+            resourceService
+                .remove('tasks', editTaskVm.task.id)
+                .then(deleteSuccess, deleteError);
+        }
+
+        function deleteSuccess(response) {
+            editTaskVm.addSuccess({ msg: "Task '{0}' successfully deleted".format(editTaskVm.task.name) });
+        }
+
+        function deleteError(err) {
+            editTaskVm.addError({ msg: err.data.message });
         }
     }
 

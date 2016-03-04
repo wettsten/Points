@@ -26,9 +26,11 @@
         activate();
 
         function activate() {
-            resourceService.get('enums', function (data) {
-                editPlanVm.enums = data;
-            });
+            resourceService.get('enums', getEnums);
+        }
+
+        function getEnums(data) {
+            editPlanVm.enums = data;
         }
 
         function showAddDuration () {
@@ -46,14 +48,17 @@
         }
 
         function confirm() {
-            resourceService.edit('planningtasks', editPlanVm.task).then(
-                function (response) {
-                    $uibModalInstance.close(editPlanVm.task);
-                },
-                function (err) {
-                    editPlanVm.addError(err.data.message);
-                }
-            );
+            resourceService
+                .edit('planningtasks', editPlanVm.task)
+                .then(editSuccess, editError);
+        }
+
+        function editSuccess(response) {
+            $uibModalInstance.close(editPlanVm.task);
+        }
+
+        function editError(err) {
+            editPlanVm.addError(err.data.message);
         }
 
         function cancel () {

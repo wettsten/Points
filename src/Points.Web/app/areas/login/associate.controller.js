@@ -25,22 +25,25 @@
         function activate() { }
 
         function registerExternal() {
-            authService.registerExternal(associateVm.registerData).then(
-                function (response) {
-                    associateVm.savedSuccessfully = true;
-                    associateVm.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
-                    $timeout(function () {
-                        $location.path('/options');
-                    }, 2000);
-                },
-                function (response) {
-                    var errors = [];
-                    for (var key in response.modelState) {
-                        errors.push(response.modelState[key]);
-                    }
-                    associateVm.message = "Failed to register user due to:" + errors.join(' ');
-                }
-            );
-        };
+            authService
+                .registerExternal(associateVm.registerData)
+                .then(registerSuccess, registerError);
+        }
+
+        function registerSuccess(response) {
+            associateVm.savedSuccessfully = true;
+            associateVm.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
+            $timeout(function () {
+                $location.path('/options');
+            }, 2000);
+        }
+
+        function registerError(err) {
+            var errors = [];
+            for (var key in err.modelState) {
+                errors.push(err.modelState[key]);
+            }
+            associateVm.message = "Failed to register user due to:" + errors.join(' ');
+        }
     }
 })();

@@ -81,13 +81,10 @@
         }
 
         function updateLinks(type, action) {
-            angular.forEach(links, function (link) {
-                if (link.type === type && link.action === action) {
-                    angular.forEach(link.links, function (linked) {
-                        retrieve(linked);
-                    });
-                }
-            });
+            var filteredLinks = _.where(links, { type: type, action: action });
+            for (var link in filteredLinks) {
+                retrieve(link);
+            }
         }
 
         function get (type, callback) {

@@ -15,29 +15,35 @@
         tasksVm.tasks = [];
         tasksVm.taskInEdit = { id: '' };
         tasksVm.taskFilter = filterService.getTaskFilter();
-        tasksVm.loadTasks = loadTasks;
+        tasksVm.refreshTasks = refreshTasks;
 
         activate();
 
         function activate() {
-            filterService.subscribe($scope, 'taskFilter', function () {
-                tasksVm.taskFilter = filterService.getTaskFilter();
-            });
+            filterService.subscribe($scope, 'taskFilter', getTaskFilter);
 
-            resourceService.get('tasks', function (data) {
-                tasksVm.tasks = data;
-                if (data.length === 0) {
-                    tasksVm.addWarning('No tasks found');
-                    resourceService.get('categories', function (data2) {
-                        if (data2.length === 0) {
-                            tasksVm.noItems = true;
-                        }
-                    });
-                }
-            });
+            resourceService.get('tasks', getTasks);
         }
 
-        function loadTasks () {
+        function getTaskFilter() {
+            tasksVm.taskFilter = filterService.getTaskFilter();
+        }
+
+        function getTasks(data) {
+            tasksVm.tasks = data;
+            if (data.length === 0) {
+                tasksVm.addWarning('No tasks found');
+                resourceService.get('categories', checkCategories);
+            }
+        }
+
+        function checkCategories(data) {
+            if (data.length === 0) {
+                tasksVm.noItems = true;
+            }
+        }
+
+        function refreshTasks () {
             resourceService.get('tasks');
         }
     }

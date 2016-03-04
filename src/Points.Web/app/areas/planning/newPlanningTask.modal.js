@@ -40,14 +40,18 @@
         activate();
 
         function activate() {
-            resourceService.get('availabletasks', function (data) {
-                newPlanVm.cats = data;
-                resetDropdowns();
-            });
-            resourceService.get('enums', function (data) {
-                newPlanVm.enums = data;
-                resetDropdowns();
-            });
+            resourceService.get('availabletasks', getAvailableTasks);
+            resourceService.get('enums', getEnums);
+        }
+
+        function getAvailableTasks(data) {
+            newPlanVm.cats = data;
+            resetDropdowns();
+        }
+
+        function getEnums(data) {
+            newPlanVm.enums = data;
+            resetDropdowns();
         }
 
         function resetDropdowns () {
@@ -77,14 +81,17 @@
 
         function confirm () {
             newPlanVm.addTaskData.name = newPlanVm.addTaskData.task.name;
-            resourceService.add('planningtasks', newPlanVm.addTaskData).then(
-                function (response) {
-                    $uibModalInstance.close(newPlanVm.addTaskData);
-                },
-                function (err) {
-                    newPlanVm.addError(err.data.message);
-                }
-            );
+            resourceService
+                .add('planningtasks', newPlanVm.addTaskData)
+                .then(addSuccess, addError);
+        }
+
+        function addSuccess(response) {
+            $uibModalInstance.close(newPlanVm.addTaskData);
+        }
+
+        function addError(err) {
+            newPlanVm.addError(err.data.message);
         }
 
         function cancel () {

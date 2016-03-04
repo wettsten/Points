@@ -9,31 +9,10 @@
 
     function filterService($rootScope) {
         var filters = {
-            cat: {
-                name: ''
-            },
-            task: {
-                name: '',
-                category: {
-                    name: ''
-                }
-            },
-            pTask: {
-                name: '',
-                task: {
-                    category: {
-                        name: ''
-                    }
-                }
-            },
-            aTask: {
-                name: '',
-                task: {
-                    category: {
-                        name: ''
-                    }
-                }
-            }
+            cat: { name: '' },
+            task: { name: '', category: { name: '' } },
+            pTask: { name: '', task: { category: { name: '' } } },
+            aTask: { name: '', task: { category: { name: '' } } }
         };
 
         var service = {

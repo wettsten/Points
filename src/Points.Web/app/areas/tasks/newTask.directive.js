@@ -38,10 +38,12 @@
         activate();
 
         function activate() {
-            resourceService.get('categories', function (data) {
-                newTaskVm.cats = data;
-                clearAddData();
-            });
+            resourceService.get('categories', getCategories);
+        }
+
+        function getCategories(data) {
+            newTaskVm.cats = data;
+            clearAddData();
         }
 
         function clearAddData () {
@@ -51,16 +53,18 @@
         }
 
         function addTask () {
-            resourceService.add('tasks', newTaskVm.addTaskData).then(
-                function (response) {
-                    var name = newTaskVm.addTaskData.name;
-                    clearAddData();
-                    newTaskVm.addSuccess({ msg: "Task '{0}' successfully added".format(name) });
-                },
-                function (err) {
-                    newTaskVm.addError({ msg: err.data.message });
-                }
-            );
+            resourceService
+                .add('tasks', newTaskVm.addTaskData)
+                .then(addSuccess, addError);
+        }
+
+        function addSuccess(response) {
+            newTaskVm.addSuccess({ msg: "Task '{0}' successfully added".format(newTaskVm.addTaskData.name) });
+            clearAddData();
+        }
+
+        function addError(err) {
+            newTaskVm.addError({ msg: err.data.message });
         }
     }
 

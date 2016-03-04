@@ -104,7 +104,6 @@
     <Content Include="app\services\filter.service.js" />
     <Content Include="app\services\modal.service.js" />
     <Content Include="scripts\format.js" />
-    <Content Include="app\app.Debug.js" />
     <Content Include="app\areas\status\activeStatus.js" />
     <Content Include="app\areas\status\planningStatus.js" />
     <Content Include="scripts\hash.js" />
@@ -168,12 +167,6 @@
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\authComplete.js" />
     <Content Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="app\app.Release.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="app\app.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -43,16 +43,18 @@
         }
 
         function addCat () {
-            resourceService.add('categories', newCatVm.addCatData).then(
-                function (response) {
-                    var name = newCatVm.addCatData.name;
-                    clearAddData();
-                    newCatVm.addSuccess({ msg: "Category '{0}' successfully added".format(name) });
-                },
-                function (err) {
-                    newCatVm.addError({ msg: err.data.message });
-                }
-            );
+            resourceService
+                .add('categories', newCatVm.addCatData)
+                .then(addSuccess, addError);
+        }
+
+        function addSuccess(response) {
+            newCatVm.addSuccess({ msg: "Category '{0}' successfully added".format(newCatVm.addCatData.name) });
+            clearAddData();
+        }
+
+        function addError(err) {
+            newCatVm.addError({ msg: err.data.message });
         }
     }
 

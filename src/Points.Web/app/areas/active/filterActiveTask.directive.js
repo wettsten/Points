@@ -35,9 +35,11 @@
         activate();
 
         function activate() {
-            resourceService.get('activetotals', function (data) {
-                filterVm.cats = data.categories;
-            });
+            resourceService.get('activetotals', getActiveTotals);
+        }
+
+        function getActiveTotals(data) {
+            filterVm.cats = data.categories;
         }
 
         function search () {

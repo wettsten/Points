@@ -38,21 +38,25 @@
         activate();
 
         function activate() {
-            resourceService.get('activetotals', function (data) {
-                aTotalsVm.totals = data;
-                angular.forEach(aTotalsVm.totals.categories, function (cat) {
-                    cat.hideTasks = true;
-                    calculateItemClass(cat);
-                    angular.forEach(cat.tasks, function (task) {
-                        calculateItemClass(task);
-                    });
-                });
-                calculateTotalClass();
-            });
-            resourceService.get('users', function (data) {
-                aTotalsVm.user = data[0];
-                calculateTotalClass();
-            });
+            resourceService.get('activetotals', getActiveTotals);
+            resourceService.get('users', getUsers);
+        }
+
+        function getActiveTotals(data) {
+            aTotalsVm.totals = data;
+            for (var cat in aTotalsVm.totals.categories) {
+                cat.hideTasks = true;
+                calculateItemClass(cat);
+                for (var task in cat.tasks) {
+                    calculateItemClass(task);
+                }
+            }
+            calculateTotalClass();
+        }
+
+        function getUsers(data) {
+            aTotalsVm.user = data[0];
+            calculateTotalClass();
         }
 
         function calculateTotalClass () {
@@ -84,9 +88,9 @@
 
         function toggleCats () {
             aTotalsVm.hideCats = !aTotalsVm.hideCats;
-            angular.forEach(aTotalsVm.totals.categories, function (cat) {
+            for (var cat in aTotalsVm.totals.categories) {
                 cat.hideTasks = true;
-            });
+            }
         }
 
         function toggleTasks (cat) {

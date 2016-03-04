@@ -58,16 +58,19 @@
                 else {
                     //Obtain access token and redirect to active week
                     var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
-                    authService.obtainAccessToken(externalData).then(
-                        function (response) {
-                            $location.path('/active');
-                        },
-                        function (err) {
-                            $scope.message = err.error_description;
-                        }
-                    );
+                    authService
+                        .obtainAccessToken(externalData)
+                        .then(obtainTokenSuccess, obtainTokenError);
                 }
             });
+        }
+
+        function obtainTokenSuccess(response) {
+            $location.path('/active');
+        }
+
+        function obtainTokenError(err) {
+            $scope.message = err.error_description;
         }
     }
 

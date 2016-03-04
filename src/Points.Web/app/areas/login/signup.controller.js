@@ -25,32 +25,35 @@
         function activate() { }
 
         function signUp() {
-            authService.saveRegistration(signupVm.registration).then(
-                function (response) {
-                    if (response.status === 202) {
-                        signupVm.savedSuccessfully = true;
-                        signupVm.message = "User has been registered successfully, you will be redicted to Login page in 2 seconds.";
-                        $timeout(function () {
-                            $location.path('/login');
-                        }, 2000);
-                    } else {
-                        signupVm.savedSuccessfully = true;
-                        signupVm.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
-                        $timeout(function () {
-                            $location.path('/options');
-                        }, 2000);
-                    }
-                },
-                function (response) {
-                    var errors = [];
-                    for (var key in response.data.modelState) {
-                        for (var i = 0; i < response.data.modelState[key].length; i++) {
-                            errors.push(response.data.modelState[key][i]);
-                        }
-                    }
-                    signupVm.message = "Failed to register user due to: " + errors.join(' ');
+            authService
+                .saveRegistration(signupVm.registration)
+                .then(saveSuccess, saveError);
+        }
+
+        function saveSuccess(response) {
+            signupVm.savedSuccessfully = true;
+            if (response.status === 202) {
+                signupVm.message = "User has been registered successfully, you will be redicted to Login page in 2 seconds.";
+                $timeout(function () {
+                    $location.path('/login');
+                }, 2000);
+            } else {
+                signupVm.savedSuccessfully = true;
+                signupVm.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
+                $timeout(function () {
+                    $location.path('/options');
+                }, 2000);
+            }
+        }
+
+        function saveError(err) {
+            var errors = [];
+            for (var key in err.data.modelState) {
+                for (var i = 0; i < err.data.modelState[key].length; i++) {
+                    errors.push(err.data.modelState[key][i]);
                 }
-            );
-        };
+            }
+            signupVm.message = "Failed to register user due to: " + errors.join(' ');
+        }
     }
 })();
