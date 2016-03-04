@@ -1,0 +1,44 @@
+﻿<div>
+    <table class="table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th style="width:20px"></th>
+                <th>Name</th>
+                <th style="width:15%">Success</th>
+                <th style="width:15%">Target Points</th>
+                <th style="width:15%">Total Points</th>
+                <th style="width:15%">Base Points</th>
+                <th style="width:15%">Bonus Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-class="aTotalsVm.totalClass" ng-click="aTotalsVm.toggleCats()">
+                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !aTotalsVm.hideCats, 'glyphicon-chevron-right': aTotalsVm.hideCats}"></i></td>
+                <td><b>Total</b></td>
+                <td><b>{{aTotalsVm.isSuccess}}</b></td>
+                <td><b>{{aTotalsVm.user.activeTargetPoints}}</b></td>
+                <td><b>{{aTotalsVm.totals.totalPoints | number:2}}</b></td>
+                <td><b>{{aTotalsVm.totals.taskPoints}}</b></td>
+                <td><b>{{aTotalsVm.totals.bonusPoints | number:2}}</b></td>
+            </tr>
+            <tr ng-class="cat.class" ng-repeat-start="cat in aTotalsVm.totals.categories" ng-hide="aTotalsVm.hideCats" ng-click="aTotalsVm.toggleTasks(cat)">
+                <td><i class="glyphicon" ng-class="{'glyphicon-chevron-down': !cat.hideTasks, 'glyphicon-chevron-right': cat.hideTasks}"></i></td>
+                <td>{{cat.name}}</td>
+                <td>{{cat.isCompleted}}</td>
+                <td>{{cat.targetPoints}}</td>
+                <td>{{cat.totalPoints | number:2}}</td>
+                <td>{{cat.taskPoints}}</td>
+                <td>{{cat.bonusPoints | number:2}}</td>
+            </tr>
+            <tr ng-repeat-end ng-class="task.class" ng-repeat="task in cat.tasks" ng-hide="cat.hideTasks">
+                <td></td>
+                <td>{{task.name}}</td>
+                <td>{{task.isCompleted}}</td>
+                <td>{{task.targetPoints}}</td>
+                <td>{{task.totalPoints | number:2}}</td>
+                <td>{{task.taskPoints}}</td>
+                <td>{{task.bonusPoints | number:2}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

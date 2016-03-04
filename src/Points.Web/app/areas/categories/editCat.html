@@ -1,0 +1,29 @@
+﻿<tr>
+    <td ng-hide="true">
+        {{ editCatVm.cat.id }}
+    </td>
+    <td>
+        <span ng-hide="editCatVm.isInEditMode()">
+            {{ editCatVm.cat.name }}
+        </span>
+        <input type="text" class="form-control" ng-show="editCatVm.isInEditMode()" ng-model="editCatVm.editCat.name">
+    </td>
+    <td class="buttons-td">
+        <div ng-hide="editCatVm.isInEditMode()">
+            <button type="button" class="btn btn-info" ng-click="editCatVm.startEdit()" title="Edit">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="editCatVm.delete()" title="Delete">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div ng-show="editCatVm.isInEditMode()">
+            <button type="button" class="btn btn-success" ng-disabled="!editCatVm.editCat.name" ng-click="editCatVm.saveEdit()" title="Save edit">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-danger" ng-click="editCatVm.clearEditData()" title="Cancel edit">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+        </div>
+    </td>
+</tr>

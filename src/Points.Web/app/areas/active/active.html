@@ -1,0 +1,25 @@
+﻿<div class="row">
+    <div class="row">
+        <h1>Active Week</h1>
+        <hr/>
+    </div>
+
+    <div class="row">
+        <div alert-box></div>
+    </div>
+
+    <div class="row" ng-show="activeVm.noItems">
+        <div help-no-items show-categories show-tasks show-planning></div>
+    </div>
+
+    <div class="row" ng-hide="activeVm.noItems">
+        <div active-task-totals></div>
+        <div filter-active-task></div>
+    </div>
+
+    <div class="row" ng-hide="activeVm.noItems">
+        <div class="col-md-3" ng-repeat="task in activeVm.tasks | filter:activeVm.taskFilter">
+            <div active-task-card the-task="task" add-success="addSuccess(msg)" add-error="addError(msg)"></div>
+        </div>
+    </div>
+</div>

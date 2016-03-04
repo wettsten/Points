@@ -1,0 +1,94 @@
+﻿<div class="row">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
+        <div class="row">
+            <h1>User Options</h1>
+            <hr />
+        </div>
+        <div class="row">
+            <div alert-box></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <form role="form">
+            <div class="row myrow form-group">
+                <div class="col-md-8">
+                    <span>Email (required for notifications):</span>
+                    <input type="email" class="form-control" ng-model="optionsVm.user.email" />
+                </div>
+                <div class="col-md-4">
+                    <span>Target points per week:</span>
+                    <input type="number" class="form-control" ng-model="optionsVm.user.targetPoints" min="0" />
+                </div>
+            </div>
+            <span>Notifications:</span>
+            <div class="row myrow form-group">
+                <div class="col-md-4">
+                    <span>Week starting*:</span>
+                    <select class="form-control" ng-model="optionsVm.user.notifyWeekStarting" ng-options="option.name for option in optionsVm.hoursPrior track by option.id">
+                        {{ optionsVm.user.notifyWeekStarting.name }}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <span>Week ending*:</span>
+                    <select class="form-control" ng-model="optionsVm.user.notifyWeekEnding" ng-options="option.name for option in optionsVm.hoursPrior track by option.id">
+                        {{ optionsVm.user.notifyWeekEnding.name }}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" ng-model="optionsVm.user.weekSummaryEmail"> Week recap email*</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row myrow form-group">
+                <div class="col-md-4">
+                    <span>Week starts on:</span>
+                    <select class="form-control" ng-model="optionsVm.user.weekStartDay" ng-options="option for option in optionsVm.days">
+                        {{ optionsVm.user.weekStartDay }}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" ng-model="optionsVm.user.weekStartHour" ng-options="option.name for option in optionsVm.hours track by option.id">
+                        {{ optionsVm.user.weekStartHour.name }}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <span>Category bonus*:</span>
+                    <input type="number" class="form-control" ng-model="optionsVm.user.categoryBonus" min="0" ng-disabled="!optionsVm.user.enableAdvancedFeatures" />
+                </div>
+            </div>
+            <div class="row myrow form-group">
+                <div class="col-md-4">
+                    <span>Task multiplier*:</span>
+                    <input type="number" class="form-control" ng-model="optionsVm.user.taskMultiplier" min="1" ng-disabled="!optionsVm.user.enableAdvancedFeatures" />
+                </div>
+                <div class="col-md-4">
+                    <span>Bonus point multiplier*:</span>
+                    <input type="number" class="form-control" ng-model="optionsVm.user.bonusPointMultiplier" min="1" ng-disabled="!optionsVm.user.enableAdvancedFeatures" />
+                </div>
+                <div class="col-md-4">
+                    <span>Duration bonus points per hour*:</span>
+                    <input type="number" class="form-control" ng-model="optionsVm.user.durationBonusPointsPerHour" min="0" ng-disabled="!optionsVm.user.enableAdvancedFeatures" />
+                </div>
+            </div>
+            <div class="row myrow form-group">
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success" ng-disabled="optionsVm.areNoChanges()" ng-click="optionsVm.saveChanges()" title="Save changes">
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-danger" ng-disabled="optionsVm.areNoChanges()" ng-click="optionsVm.cancelChanges()" title="Cancel changes">
+                        <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <div class="checkbox">
+                        <label><input type="checkbox" ng-model="optionsVm.user.enableAdvancedFeatures" ng-disabled="true"> Enable advanced features</label>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <span>* This feature has not yet been implemented</span>
+        </form>
+    </div>
+    <div class="col-md-2">&nbsp;</div>
+</div>

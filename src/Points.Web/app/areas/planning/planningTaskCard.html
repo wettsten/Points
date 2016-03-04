@@ -1,0 +1,24 @@
+﻿<div>
+    <div collapse-panel init-open="true" header-title="pCardVm.task.name + ' (' + pCardVm.task.task.category.name + ')'" header-class="'panel-info'">
+        <div basic-panel header-title="'Duration'">
+            <span><b>Type:</b> <i>{{pCardVm.task.duration.type.name}}</i><br /></span>
+            <span ng-hide="pCardVm.task.duration.type.name === 'None'"><b>Value:</b> <i>{{pCardVm.task.duration.value}}</i><br /></span>
+            <span ng-hide="pCardVm.task.duration.type.name === 'None'"><b>Unit:</b> <i>{{pCardVm.task.duration.unit.name}}</i></span>
+        </div><br />
+        <div basic-panel header-title="'Frequency'">
+            <span><b>Type:</b> <i>{{pCardVm.task.frequency.type.name}}</i><br /></span>
+            <span ng-hide="pCardVm.task.frequency.type.name === 'Once'"><b>Value:</b> <i>{{pCardVm.task.frequency.value}}</i><br /></span>
+            <span ng-hide="pCardVm.task.frequency.type.name === 'Once'"><b>Unit:</b> <i>{{pCardVm.task.frequency.unit.name}}</i></span>
+        </div><br />
+        <div basic-panel header-title="'Edit/Delete'">
+            <div class="text-center">
+                <button type="button" class="btn btn-info" ng-click="pCardVm.startEdit()" title="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger" ng-click="pCardVm.delete()" title="Delete">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

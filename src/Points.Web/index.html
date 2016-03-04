@@ -1,40 +1,39 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="PointsApp">
+<html ng-app="checkpoint">
 <head>
 
     <meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
     <title>checkPoint!</title>
     <!--<link href="content/css/bootstrap.spacelab.min.css" rel="stylesheet" />-->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
     <!--<link href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css" rel="stylesheet" />-->
     <link href="content/css/site.css" rel="stylesheet" />
     <link href="content/css/loading-bar.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="content/css/bootstrap-social.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-controller="indexController">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="indexController as indexVm">
         <div class="container">
             <div class="navbar-header">
-                <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                <button class="btn btn-success navbar-toggle" ng-click="indexVm.navbarExpanded = !indexVm.navbarExpanded">
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </button>
                 <a class="navbar-brand" href="#">checkPoint!</a>
             </div>
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-hide="!authentication.isAuth"><a>Welcome {{authentication.userName}}</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/active">Active Week</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/planning">Planning</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/cats">Categories</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/tasks">Tasks</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/options">Options</a></li>
-                    <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a>Welcome {{indexVm.authentication.userName}}</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/active">Active Week</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/planning">Planning</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/cats">Categories</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/tasks">Tasks</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="#/options">Options</a></li>
+                    <li ng-hide="!indexVm.authentication.isAuth"><a href="" ng-click="indexVm.logOut()">Logout</a></li>
+                    <li ng-hide="indexVm.authentication.isAuth"> <a href="#/login">Login</a></li>
+                    <li ng-hide="indexVm.authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -63,64 +62,66 @@
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="//underscorejs.org/underscore-min.js"></script>
 
-    <script src="app/hash.js?v=2"></script>
-    <script src="app/format.js?v=2"></script>
+    <script src="scripts/hash.js?v=1"></script>
+    <script src="scripts/format.js?v=1"></script>
     <!-- Load app main script -->
-    <script src="app/app.js?v=2"></script>
+    <script src="app/checkpoint.module.js?v=1"></script>
+    <script src="app/checkpoint.config.js?v=1"></script>
+    <script src="app/checkpoint.constants.js?v=1"></script>
+    <script src="app/checkpoint.run.js?v=1"></script>
 
     <!-- Load services -->
-    <script src="app/services/authInterceptorService.js?v=2"></script>
-    <script src="app/services/resourceService.js?v=2"></script>
-    <script src="app/services/authService.js?v=2"></script>
-    <script src="app/services/authDataService.js?v=2"></script>
-    <script src="app/services/modalService.js?v=2"></script>
-    <!-- Load filters -->
-    <!-- Load factories -->
-    <script src="app/factories/filterFactory.js?v=2"></script>
+    <script src="app/services/auth.service.js?v=1"></script>
+    <script src="app/services/authData.service.js?v=1"></script>
+    <script src="app/services/authInterceptor.service.js?v=1"></script>
+    <script src="app/services/datetime.service.js?v=1"></script>
+    <script src="app/services/filter.service.js?v=1"></script>
+    <script src="app/services/modal.service.js?v=1"></script>
+    <script src="app/services/resource.service.js?v=1"></script>
+    <script src="app/services/resourceCache.service.js?v=1"></script>
+    <script src="app/services/resourceSubscription.service.js?v=1"></script>
     <!-- Load active -->
-    <script src="app/areas/active/activeController.js?v=2"></script>
-    <script src="app/areas/active/activeTaskCard.js?v=2"></script>
-    <script src="app/areas/active/activeTaskTotals.js?v=2"></script>
-    <script src="app/areas/active/filterActiveTask.js?v=2"></script>
+    <script src="app/areas/active/active.controller.js?v=1"></script>
+    <script src="app/areas/active/activeTaskCard.directive.js?v=1"></script>
+    <script src="app/areas/active/activeTaskTotals.directive.js?v=1"></script>
+    <script src="app/areas/active/confirmUncheck.modal.js?v=1"></script>
+    <script src="app/areas/active/filterActiveTask.directive.js?v=1"></script>
     <!-- Load categories -->
-    <script src="app/areas/categories/catsController.js?v=2"></script>
-    <script src="app/areas/categories/newCat.js?v=2"></script>
-    <script src="app/areas/categories/editCat.js?v=2"></script>
-    <script src="app/areas/categories/filterCat.js?v=2"></script>
+    <script src="app/areas/categories/cats.controller.js?v=1"></script>
+    <script src="app/areas/categories/editCat.directive.js?v=1"></script>
+    <script src="app/areas/categories/filterCat.directive.js?v=1"></script>
+    <script src="app/areas/categories/newCat.directive.js?v=1"></script>
+    <!-- Load common -->
+    <script src="app/areas/common/alertBox.directive.js?v=1"></script>
+    <script src="app/areas/common/basicPanel.directive.js?v=1"></script>
+    <script src="app/areas/common/collapsePanel.directive.js?v=1"></script>
+    <script src="app/areas/common/confirmDelete.modal.js?v=1"></script>
+    <script src="app/areas/common/helpNoItems.directive.js?v=1"></script>
     <!-- Load home -->
-    <script src="app/areas/home/indexController.js?v=2"></script>
-    <script src="app/areas/home/homeController.js?v=2"></script>
+    <script src="app/areas/home/home.controller.js?v=1"></script>
+    <script src="app/areas/home/index.controller.js?v=1"></script>
     <!-- Load login -->
-    <script src="app/areas/login/loginController.js?v=2"></script>
-    <script src="app/areas/login/signupController.js?v=2"></script>
-    <script src="app/areas/login/associateController.js?v=2"></script>
+    <script src="app/areas/login/associate.controller.js?v=1"></script>
+    <script src="app/areas/login/login.controller.js?v=1"></script>
+    <script src="app/areas/login/signup.controller.js?v=1"></script>
+    <script src="app/areas/login/socialLogin.directive.js?v=1"></script>
     <!-- Load options -->
-    <script src="app/areas/options/optionsController.js?v=2"></script>
+    <script src="app/areas/options/options.controller.js?v=1"></script>
     <!-- Load planning -->
-    <script src="app/areas/planning/planningController.js?v=2"></script>
-    <script src="app/areas/planning/newPlanningTaskModal.js?v=2"></script>
-    <script src="app/areas/planning/planningTaskCard.js?v=2"></script>
-    <script src="app/areas/planning/editPlanningTaskModal.js?v=2"></script>
-    <script src="app/areas/planning/planningTaskTotals.js?v=2"></script>
-    <script src="app/areas/planning/filterPlanningTask.js?v=2"></script>
+    <script src="app/areas/planning/editPlanningTask.modal.js?v=1"></script>
+    <script src="app/areas/planning/filterPlanningTask.directive.js?v=1"></script>
+    <script src="app/areas/planning/newPlanningTask.modal.js?v=1"></script>
+    <script src="app/areas/planning/planning.controller.js?v=1"></script>
+    <script src="app/areas/planning/planningTaskCard.directive.js?v=1"></script>
+    <script src="app/areas/planning/planningTaskTotals.directive.js?v=1"></script>
     <!-- Load status -->
-    <script src="app/areas/status/planningStatus.js?v=2"></script>
-    <script src="app/areas/status/activeStatus.js?v=2"></script>
+    <!--<script src="app/areas/status/planningStatus.js?v=1"></script>
+    <script src="app/areas/status/activeStatus.js?v=1"></script>-->
     <!-- Load tasks -->
-    <script src="app/areas/tasks/tasksController.js?v=2"></script>
-    <script src="app/areas/tasks/newTask.js?v=2"></script>
-    <script src="app/areas/tasks/editTask.js?v=2"></script>
-    <script src="app/areas/tasks/filterTask.js?v=2"></script>
-    <!-- Load custom directives -->
-    <script src="app/directives/imgButton.js?v=2"></script>
-    <script src="app/directives/collapsePanel.js?v=2"></script>
-    <script src="app/directives/basicPanel.js?v=2"></script>
-    <script src="app/directives/alertBox.js?v=2"></script>
-    <script src="app/directives/socialLogin.js?v=2"></script>
-    <script src="app/directives/helpNoItems.js?v=2"></script>
-    <!-- Load custom templates -->
-    <script src="app/controllers/confirmDeleteModal.js?v=2"></script>
-    <script src="app/controllers/confirmUncheckModal.js?v=2"></script>
+    <script src="app/areas/tasks/editTask.directive.js?v=1"></script>
+    <script src="app/areas/tasks/filterTask.directive.js?v=1"></script>
+    <script src="app/areas/tasks/newTask.directive.js?v=1"></script>
+    <script src="app/areas/tasks/tasks.controller.js?v=1"></script>
 
 </body>
 </html>

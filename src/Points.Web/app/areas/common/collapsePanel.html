@@ -1,0 +1,7 @@
+﻿<div class="panel" ng-class="cpVm.panelClass">
+    <div class="panel-heading" ng-click="cpVm.isOpen = !cpVm.isOpen" style="cursor: pointer">
+        {{cpVm.headerTitle}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': cpVm.isOpen, 'glyphicon-chevron-down': !cpVm.isOpen}"></i>
+    </div>
+    <div class="panel-body" ng-show="cpVm.isOpen" ng-transclude>
+    </div>
+</div>

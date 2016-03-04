@@ -1,0 +1,21 @@
+﻿<form role="form">
+    <div class="row">
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+        <div class="col-md-4 form-group">
+            <h2 class="form-login-heading">Sign up</h2><br />
+            <input type="text" class="form-control" placeholder="Username" ng-model="signupVm.registration.userName" required autofocus><br />
+            <input type="password" class="form-control" placeholder="Password" ng-model="signupVm.registration.password" required><br />
+            <input type="password" class="form-control" placeholder="Confirm Password" ng-model="signupVm.registration.confirmPassword" required><br />
+            <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="signupVm.signUp()">Submit</button><br />
+            <div ng-hide="signupVm.message == ''" ng-class="(signupVm.savedSuccessfully) ? 'alert alert-success' : 'alert alert-danger'">
+                {{signupVm.message}}
+            </div>
+        </div>
+        <div class="col-md-4" social-login></div>
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+    </div>
+</form>

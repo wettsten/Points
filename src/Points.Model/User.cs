@@ -7,7 +7,6 @@ namespace Points.Model
 {
     public class User : ViewObject
     {
-        [Required]
         public string Email { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek WeekStartDay { get; set; }

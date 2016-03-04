@@ -1,0 +1,42 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">New Planning Task</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div alert-box></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Category</p>
+                <select class="form-control" ng-model="newPlanVm.addTaskData.cat" ng-options="option.name for option in newPlanVm.cats" ng-change="newPlanVm.filterTasks()"></select>
+            </div>
+            <div class="col-md-3">
+                <p>Task</p>
+                <select class="form-control" ng-model="newPlanVm.addTaskData.task" ng-options="option.name for option in newPlanVm.addTaskData.cat.tasks"></select>
+            </div>
+            <div class="col-md-3">
+                <p>Duration</p>
+                <select class="form-control" ng-model="newPlanVm.addTaskData.duration.type" ng-options="option.name for option in newPlanVm.enums.dTypes"></select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="newPlanVm.addTaskData.duration.value" ng-show="newPlanVm.showAddDuration()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="newPlanVm.addTaskData.duration.unit" ng-show="newPlanVm.showAddDuration()" ng-options="option.name for option in newPlanVm.enums.dUnits"></select>
+                <div>&nbsp;</div>
+            </div>
+            <div class="col-md-3">
+                <p>Frequency</p>
+                <select class="form-control" ng-model="newPlanVm.addTaskData.frequency.type" ng-options="option.name for option in newPlanVm.enums.fTypes"></select>
+                <div>&nbsp;</div>
+                <input type="number" class="form-control" placeholder="Value" ng-model="newPlanVm.addTaskData.frequency.value" ng-show="newPlanVm.showAddFrequency()" min="1" />
+                <div>&nbsp;</div>
+                <select class="form-control" ng-model="newPlanVm.addTaskData.frequency.unit" ng-show="newPlanVm.showAddFrequency()" ng-options="option.name for option in newPlanVm.enums.fUnits"></select>
+                <div>&nbsp;</div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" type="button" ng-disabled="!newPlanVm.addTaskData.task.id || !newPlanVm.addTaskData.cat.id" ng-click="newPlanVm.confirm()">Save</button>
+        <button class="btn btn-danger" type="button" ng-click="newPlanVm.cancel()">Cancel</button>
+    </div>
+</div>

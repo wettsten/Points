@@ -1,0 +1,20 @@
+﻿<form role="form">
+    <div class="row">
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+        <div class="col-md-4">
+            <h2 class="form-login-heading">Login</h2><br/>
+            <input type="text" class="form-control" placeholder="Username" ng-model="loginVm.loginData.userName" required autofocus><br />
+            <input type="password" class="form-control" placeholder="Password" ng-model="loginVm.loginData.password" required><br />
+            <button class="btn btn-md btn-info btn-block" type="submit" ng-click="loginVm.login()">Login</button><br />
+            <div ng-hide="loginVm.message == ''" class="alert alert-danger">
+                {{loginVm.message}}
+            </div>
+        </div>
+        <div class="col-md-4" social-login></div>
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+    </div>
+</form>
