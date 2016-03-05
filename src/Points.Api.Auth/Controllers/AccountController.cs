@@ -53,7 +53,7 @@ namespace Points.Api.Auth.Controllers
              }
 
             var client = new HttpClient();
-            var uri = new Uri($"{Request.RequestUri.Scheme}://{Request.RequestUri.Host}/auth/token");
+            var uri = new Uri(string.Format("{0}://{1}/auth/token", Request.RequestUri.Scheme, Request.RequestUri.Host));
             var content = new FormUrlEncodedContent(new []
             {
                 new KeyValuePair<string, string>("grant_type", "password"),

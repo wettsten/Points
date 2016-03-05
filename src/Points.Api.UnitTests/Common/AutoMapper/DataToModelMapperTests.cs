@@ -50,18 +50,18 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _cat = new Data.Category
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "catName"
             };
             _task = new Data.Task
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "taskName",
                 CategoryId = _cat.Id
             };
             _pTask = new Data.PlanningTask
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "pTaskName",
                 TaskId = _task.Id,
                 Duration = _duration,
@@ -69,7 +69,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _aTask = new Data.ActiveTask
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "aTaskName",
                 TaskId = _task.Id,
                 Duration = _duration,
@@ -79,7 +79,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _arcTask = new Data.ArchivedTask
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "arcTaskName",
                 TaskId = _task.Id,
                 Duration = _duration,
@@ -90,14 +90,14 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _job = new Data.Job
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "jobName",
                 Processor = "jobProcessor",
                 Trigger = DateTime.UtcNow
             };
             _user = new Data.User
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "userName",
                 Email = "a@a",
                 TargetPoints = 10,
@@ -124,7 +124,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
         {
             var obj = new Data.RavenObject
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "name"
             };
 
@@ -305,7 +305,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job1",
                     UserId = _user.Id,
                     Trigger = DateTime.UtcNow,
@@ -313,7 +313,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job2",
                     UserId = _user.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(1),
@@ -321,7 +321,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job3",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(2),
@@ -329,7 +329,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job4",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(3),
@@ -352,7 +352,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job1",
                     UserId = _user.Id,
                     Trigger = DateTime.UtcNow,
@@ -360,7 +360,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job3",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(2),
@@ -368,7 +368,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job4",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(3),
@@ -391,7 +391,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job2",
                     UserId = _user.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(1),
@@ -399,7 +399,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job3",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(2),
@@ -407,7 +407,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job4",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(3),
@@ -430,7 +430,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job3",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(2),
@@ -438,7 +438,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
                 },
                 new Data.Job
                 {
-                    Id = Guid.NewGuid().ToString("D"),
+                    Id = Guido.New(),
                     Name = "job4",
                     UserId = _task.Id,
                     Trigger = DateTime.UtcNow.AddMinutes(3),

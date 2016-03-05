@@ -89,6 +89,8 @@
     <Compile Include="Common\AutoMapper\DataToModelMapperTests.cs" />
     <Compile Include="Common\Extensions\SpacifyExtensionTests.cs" />
     <Compile Include="Common\Factories\MapFactoryTests.cs" />
+    <Compile Include="Common\Processors\RequestProcessorTests.cs" />
+    <Compile Include="Guido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

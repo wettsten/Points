@@ -47,18 +47,18 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _cat = new Model.Category
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "catName"
             };
             _task = new Model.Task
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "taskName",
                 Category = _cat
             };
             _pTask = new Model.PlanningTask
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "pTaskName",
                 Task = _task,
                 Duration = _duration,
@@ -66,7 +66,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _aTask = new Model.ActiveTask
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "aTaskName",
                 Task = _task,
                 Duration = _duration,
@@ -76,7 +76,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _arcTask = new Model.ArchivedTask
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "arcTaskName",
                 Task = _task,
                 Duration = _duration,
@@ -87,14 +87,14 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             };
             _job = new Model.Job
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "jobName",
                 Processor = "jobProcessor",
                 Trigger = DateTime.UtcNow
             };
             _user = new Model.User
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "userName",
                 Email = "a@a",
                 TargetPoints = 10,
@@ -117,7 +117,7 @@ namespace Points.Api.UnitTests.Common.AutoMapper
         {
             var obj = new Model.ViewObject()
             {
-                Id = Guid.NewGuid().ToString("D"),
+                Id = Guido.New(),
                 Name = "name"
             };
 
