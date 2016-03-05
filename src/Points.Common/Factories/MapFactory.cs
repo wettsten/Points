@@ -42,7 +42,7 @@ namespace Points.Common.Factories
             return _mapper
                 .ConfigurationProvider
                 .GetAllTypeMaps()
-                .Single(map => map.SourceType == sourceType)
+                .SingleOrDefault(map => map.SourceType == sourceType)?
                 .DestinationType;
         }
     }
