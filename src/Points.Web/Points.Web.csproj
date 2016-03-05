@@ -199,7 +199,6 @@
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="BeforeBuild">
-    <Copy SourceFiles="app\app.$(Configuration).js" DestinationFiles="app\app.js" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
