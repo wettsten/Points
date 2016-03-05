@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using Points.Common.EnumExtensions;
+using Points.Common.Extensions;
 using Points.DataAccess.Readers;
 
 namespace Points.Common.AutoMapper

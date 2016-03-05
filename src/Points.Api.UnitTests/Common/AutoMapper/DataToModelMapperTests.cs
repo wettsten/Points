@@ -4,7 +4,7 @@ using AutoMapper;
 using AutoMoq.Helpers;
 using NUnit.Framework;
 using Points.Common.AutoMapper;
-using Points.Common.EnumExtensions;
+using Points.Common.Extensions;
 using Shouldly;
 using Points.DataAccess.Readers;
 
