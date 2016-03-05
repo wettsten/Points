@@ -15,11 +15,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using AutoMapper;
-using Points.Common.AutoMapper;
 using Points.Common.Validators;
-using Points.Scheduler;
 using Points.Scheduler.Processors;
 using StructureMap;
 using StructureMap.Graph;

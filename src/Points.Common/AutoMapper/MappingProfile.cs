@@ -10,6 +10,9 @@ namespace Points.Common.AutoMapper
     {
         private readonly IDataReader _dataReader;
 
+        // For unit testing
+        public MappingProfile() { }
+
         public MappingProfile(IDataReader dataReader)
         {
             _dataReader = dataReader;
