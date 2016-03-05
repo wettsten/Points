@@ -90,6 +90,11 @@
     <Compile Include="Common\Extensions\SpacifyExtensionTests.cs" />
     <Compile Include="Common\Factories\MapFactoryTests.cs" />
     <Compile Include="Common\Processors\RequestProcessorTests.cs" />
+    <Compile Include="Common\Validators\PlanningTaskValidatorTests.cs" />
+    <Compile Include="Common\Validators\TaskValidatorTests.cs" />
+    <Compile Include="Common\Validators\RavenObjectValidatorTester.cs" />
+    <Compile Include="Common\Validators\CategoryValidatorTests.cs" />
+    <Compile Include="Common\Validators\RavenObjectValidatorTests.cs" />
     <Compile Include="Guido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

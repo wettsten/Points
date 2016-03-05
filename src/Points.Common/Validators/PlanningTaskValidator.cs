@@ -8,7 +8,7 @@ namespace Points.Common.Validators
 {
     public class PlanningTaskValidator : RavenObjectValidator, IObjectValidator
     {
-        public PlanningTaskValidator(DataReader dataReader) : base(dataReader) { }
+        public PlanningTaskValidator(IDataReader dataReader) : base(dataReader) { }
 
         public Type SupportsType => typeof(PlanningTask);
 
