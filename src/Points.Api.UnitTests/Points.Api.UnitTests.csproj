@@ -97,6 +97,8 @@
     <Compile Include="Common\Validators\RavenObjectValidatorTests.cs" />
     <Compile Include="Guido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scheduler\Jobs\StartWeekJobTests.cs" />
+    <Compile Include="Scheduler\Jobs\EndWeekJobTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -106,7 +108,7 @@
     <Content Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scheduler\" />
+    <Folder Include="Scheduler\Processors\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Points.Api.Resources\Points.Api.Resources.csproj">

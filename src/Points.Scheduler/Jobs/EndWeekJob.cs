@@ -29,7 +29,6 @@ namespace Points.Scheduler.Jobs
                 var archiveTask = new ArchivedTask();
                 archiveTask.Copy(task);
                 archiveTask.Id = string.Empty;
-                archiveTask.Name = task.Name;
                 archiveTask.DateEnded = DateTime.UtcNow;
                 _dataWriter.Add(archiveTask);
                 _dataWriter.Delete<ActiveTask>(task.Id);
