@@ -42,5 +42,31 @@ namespace Points.Api.Resources.Controllers
         {
             return Delete(id);
         }
+
+        [Route("totals")]
+        public IHttpActionResult GetPlanningTotalsForUser()
+        {
+            var tasks = GetForUser();
+            if (tasks.IsOk())
+            {
+                var content = tasks.GetContent<PlanningTask>();
+                var cats = content
+                    .GroupBy(i => i.Task.Category.Id, task => task)
+                    .Select(i => new
+                    {
+                        Id = i.Key,
+                        Name = i.First().Task.Category.Name,
+                        Points = i.Count(),
+                        Tasks = i.OrderBy(j => j.Name)
+                    })
+                    .OrderBy(i => i.Name);
+                return Ok(new
+                {
+                    Points = cats.Sum(i => i.Points),
+                    Categories = cats
+                });
+            }
+            return tasks;
+        }
     }
 }

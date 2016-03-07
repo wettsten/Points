@@ -26,7 +26,7 @@
         activate();
 
         function activate() {
-            resourceService.get('enums', getEnums);
+            resourceService.get('users/enums', getEnums);
         }
 
         function getEnums(data) {

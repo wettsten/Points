@@ -23,7 +23,7 @@
             filterService.subscribe($scope, 'ptaskFilter', getPTaskFilter);
 
             resourceService.get('planningtasks', getPlanningTasks);
-            resourceService.get('availabletasks', getAvailableTasks);
+            resourceService.get('tasks/available', getAvailableTasks);
         }
 
         function getPTaskFilter() {
@@ -34,7 +34,7 @@
             planningVm.tasks = data;
             if (data.length === 0) {
                 planningVm.addWarning('No planning tasks found');
-                resourceService.get('availabletasks', checkAvailableTasks);
+                resourceService.get('tasks/available', checkAvailableTasks);
             } else {
                 setupCats();
             }

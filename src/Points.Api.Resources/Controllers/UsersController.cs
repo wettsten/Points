@@ -83,7 +83,19 @@ namespace Points.Api.Resources.Controllers
                 HoursPrior = GetHoursPrior()
             });
         }
-        
+
+        [Route("enums")]
+        public IHttpActionResult GetEnums()
+        {
+            return Ok(new
+            {
+                dTypes = _requestProcessor.GetEnums("DurationType"),
+                dUnits = _requestProcessor.GetEnums("DurationUnit"),
+                fTypes = _requestProcessor.GetEnums("FrequencyType"),
+                fUnits = _requestProcessor.GetEnums("FrequencyUnit")
+            });
+        }
+
         private IEnumerable<object> GetHours()
         {
             var dt = new DateTime(2000, 1, 1, 0, 0, 0);

@@ -147,13 +147,9 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="App_Start\StructuremapWebApi.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\ActiveTotalsController.cs" />
     <Compile Include="Controllers\ArchivedTasksController.cs" />
-    <Compile Include="Controllers\EnumsController.cs" />
-    <Compile Include="Controllers\PlanningTotalsController.cs" />
     <Compile Include="Controllers\PlanningTasksController.cs" />
     <Compile Include="Controllers\ActiveTasksController.cs" />
-    <Compile Include="Controllers\AvailableTasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />

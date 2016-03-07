@@ -35,7 +35,7 @@
         activate();
 
         function activate() {
-            resourceService.get('planningtotals', getPlanningTotals);
+            resourceService.get('planningtasks/totals', getPlanningTotals);
         }
 
         function getPlanningTotals(data) {

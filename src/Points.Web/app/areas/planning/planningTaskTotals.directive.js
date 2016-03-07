@@ -37,18 +37,14 @@
         activate();
 
         function activate() {
-            resourceService.get('planningtotals', getPlanningTotals);
+            resourceService.get('planningtasks/totals', getPlanningTotals);
             resourceService.get('users', getUsers);
         }
 
         function getPlanningTotals(data) {
             pTotalsVm.totals = data;
             for (var cat in pTotalsVm.totals.categories) {
-                cat.hideTasks = true;
-                cat.filter = false;
-                for (var task in cat.tasks) {
-                    task.filter = false;
-                }
+                pTotalsVm.totals.categories[cat].hideTasks = true;
             }
             calculateTotalClass();
         }
@@ -76,7 +72,7 @@
         function toggleCats () {
             pTotalsVm.hideCats = !pTotalsVm.hideCats;
             for (var cat in pTotalsVm.totals.categories) {
-                cat.hideTasks = true;
+                pTotalsVm.totals.categories[cat].hideTasks = true;
             }
         }
 
