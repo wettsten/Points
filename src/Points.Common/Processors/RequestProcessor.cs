@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Points.Common.EnumExtensions;
+using Points.Common.Extensions;
 using Points.Common.Factories;
 using Points.Model;
 using Points.DataAccess.Readers;

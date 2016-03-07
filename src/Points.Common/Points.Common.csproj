@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=4.0.0.315, Culture=neutral, processorArchitecture=MSIL">
@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="AutoMapper\MappingProfile.cs" />
     <Compile Include="DependencyManagement\CommonRegistry.cs" />
-    <Compile Include="EnumExtensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Factories\IMapFactory.cs" />
     <Compile Include="Factories\IObjectValidatorFactory.cs" />
     <Compile Include="Factories\ObjectValidatorFactory.cs" />

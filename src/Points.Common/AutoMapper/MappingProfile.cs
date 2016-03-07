@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using Points.Common.EnumExtensions;
+using Points.Common.Extensions;
 using Points.DataAccess.Readers;
 
 namespace Points.Common.AutoMapper
@@ -9,6 +9,9 @@ namespace Points.Common.AutoMapper
     public class MappingProfile : Profile
     {
         private readonly IDataReader _dataReader;
+
+        // For unit testing
+        public MappingProfile() { }
 
         public MappingProfile(IDataReader dataReader)
         {

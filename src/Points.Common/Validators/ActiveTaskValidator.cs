@@ -7,7 +7,7 @@ namespace Points.Common.Validators
 {
     public class ActiveTaskValidator : RavenObjectValidator, IObjectValidator
     {
-        public ActiveTaskValidator(DataReader dataReader) : base(dataReader) { }
+        public ActiveTaskValidator(IDataReader dataReader) : base(dataReader) { }
 
         public Type SupportsType => typeof(ActiveTask);
 

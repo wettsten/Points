@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Points.Data;
-using Points.DataAccess;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
 using Points.Scheduler.Processors;
@@ -32,19 +30,17 @@ namespace Points.Scheduler.Jobs
                 var activeTask = new ActiveTask();
                 activeTask.Copy(task);
                 activeTask.Id = string.Empty;
-                activeTask.Name = _dataReader.Get<Task>(task.TaskId)?.Name;
                 activeTask.DateStarted = DateTime.UtcNow;
                 _dataWriter.Add(activeTask);
             }
             if (tasks.Any())
             {
                 _jobManager.ScheduleEndJob(context.UserId);
+                var user = _dataReader.Get<User>(context.UserId);
+                user.ActiveTargetPoints = user.TargetPoints;
+                _dataWriter.Edit(user);
             }
             _jobManager.ScheduleStartJob(context.UserId);
-
-            var user = _dataReader.Get<User>(context.UserId);
-            user.ActiveTargetPoints = user.TargetPoints;
-            _dataWriter.Edit(user);
         }
     }
 }

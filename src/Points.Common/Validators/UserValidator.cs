@@ -7,7 +7,7 @@ namespace Points.Common.Validators
 {
     public class UserValidator : RavenObjectValidator, IObjectValidator
     {
-        public UserValidator(DataReader dataReader) : base(dataReader) { }
+        public UserValidator(IDataReader dataReader) : base(dataReader) { }
 
         public Type SupportsType => typeof(User);
 

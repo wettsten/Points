@@ -9,7 +9,7 @@ namespace Points.Common.Validators
 {
     public class CategoryValidator : RavenObjectValidator, IObjectValidator
     {
-        public CategoryValidator(DataReader dataReader) : base(dataReader) { }
+        public CategoryValidator(IDataReader dataReader) : base(dataReader) { }
 
         public Type SupportsType => typeof(Category);
 

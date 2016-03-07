@@ -7,7 +7,7 @@ namespace Points.Common.Validators
 {
     public class ArchivedTaskValidator : RavenObjectValidator, IObjectValidator
     {
-        public ArchivedTaskValidator(DataReader dataReader) : base(dataReader) { }
+        public ArchivedTaskValidator(IDataReader dataReader) : base(dataReader) { }
 
         public Type SupportsType => typeof(ArchivedTask);
 

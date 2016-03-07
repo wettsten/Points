@@ -2,16 +2,15 @@
 using System.IO;
 using System.Linq;
 using Points.Data;
-using Points.DataAccess;
 using Points.DataAccess.Readers;
 
 namespace Points.Common.Validators
 {
     public abstract class RavenObjectValidator
     {
-        protected readonly DataReader DataReader;
+        protected readonly IDataReader DataReader;
 
-        protected RavenObjectValidator(DataReader dataReader)
+        protected RavenObjectValidator(IDataReader dataReader)
         {
             DataReader = dataReader;
         }
