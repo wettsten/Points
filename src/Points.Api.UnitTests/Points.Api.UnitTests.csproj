@@ -99,6 +99,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scheduler\Jobs\StartWeekJobTests.cs" />
     <Compile Include="Scheduler\Jobs\EndWeekJobTests.cs" />
+    <Compile Include="Scheduler\Processors\JobManagerTests.cs" />
+    <Compile Include="Scheduler\Processors\SchedulerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -107,9 +109,7 @@
   <ItemGroup>
     <Content Include="License.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scheduler\Processors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Points.Api.Resources\Points.Api.Resources.csproj">
       <Project>{69bc6280-cf91-409c-81bf-28b95417acbf}</Project>

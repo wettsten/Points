@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Points.Data;
+﻿using Points.Data;
 
 namespace Points.Scheduler
 {

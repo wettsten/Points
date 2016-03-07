@@ -25,8 +25,7 @@ namespace Points.Scheduler.Processors
             var user = _dataReader.Get<User>(userId);
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
-                .Where(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase))
-                .FirstOrDefault(i => i.Trigger > DateTime.UtcNow);
+                .FirstOrDefault(i => i.Processor.Equals(typeof (StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase));
             if (startJob == null)
             {
                 startJob = new Job
@@ -47,13 +46,12 @@ namespace Points.Scheduler.Processors
                 if (endJob == null)
                 {
                     startJob.Trigger = FindNextOccurrence(DateTime.UtcNow, user.WeekStartDay, user.WeekStartHour);
-                    _dataWriter.Edit(startJob);
                 }
                 else
                 {
                     startJob.Trigger = FindNextOccurrence(endJob.Trigger, user.WeekStartDay, user.WeekStartHour);
-                    _dataWriter.Edit(startJob);
                 }
+                _dataWriter.Edit(startJob);
             }
         }
 
@@ -62,18 +60,21 @@ namespace Points.Scheduler.Processors
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase));
-            var endJob = new Job
+            if (startJob != null)
             {
-                Id = string.Empty,
-                Name = Guid.NewGuid().ToString("N"),
-                Processor = typeof(EndWeekJob).Name,
-                UserId = userId,
-                Trigger = startJob.Trigger.AddDays(7)
-            };
-            _dataWriter.Add(endJob);
+                var endJob = new Job
+                {
+                    Id = string.Empty,
+                    Name = Guid.NewGuid().ToString("N"),
+                    Processor = typeof(EndWeekJob).Name,
+                    UserId = userId,
+                    Trigger = startJob.Trigger.AddDays(7)
+                };
+                _dataWriter.Add(endJob);
+            }
         }
 
-        private DateTime FindNextOccurrence(DateTime start, DayOfWeek day, int hour)
+        internal DateTime FindNextOccurrence(DateTime start, DayOfWeek day, int hour)
         {
             int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
             if (daysToAdd == 0 && start.Hour > hour)

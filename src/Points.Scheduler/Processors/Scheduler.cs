@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using Points.Data;
-using Points.DataAccess;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
 using Points.Scheduler.Factories;
@@ -33,37 +32,25 @@ namespace Points.Scheduler.Processors
             _hourTimer.Change(ts, TimeSpan.FromHours(1));
         }
 
-        private void HourTick(object t)
+        internal void HourTick(object t)
         {
-            try
-            {
-                var jobQ = _dataReader
+            var jobQ = _dataReader
                 .GetAll<Job>()
                 .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
                 .OrderBy(i => i.Trigger);
-                foreach (var job in jobQ)
-                {
-                    var iJob = _jobFactory.GetJobProcessor(job.Processor);
-                    for (int i = 0; i < 2; i++)
-                    {
-                        try
-                        {
-                            iJob.Process(job);
-                            _dataWriter.Delete<Job>(job.Id);
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            // maybe update job to show an error?
-                        }
-                    }
-                }
-            }
-            catch (InvalidOperationException)
+            foreach (var job in jobQ)
             {
-                
+                var iJob = _jobFactory.GetJobProcessor(job.Processor);
+                try
+                {
+                    iJob.Process(job);
+                }
+                catch (Exception ex)
+                {
+                    // maybe update job to show an error?
+                }
+                _dataWriter.Delete<Job>(job.Id);
             }
-            
         }
     }
 }
