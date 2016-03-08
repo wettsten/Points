@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMoq.Helpers;
 using Moq;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace Points.Api.UnitTests.Common.Processors
                 new Data.RavenObject { Id = Guido.New(), Name = "name2", UserId = Guido.New() },
                 new Data.RavenObject { Id = Guido.New(), Name = "name3", UserId = _userId }
             };
-
+            
             Mocked<IMapFactory>().Setup(r => r.GetDestinationType(typeof(Model.ViewObject))).Returns(typeof(Data.RavenObject));
             Mocked<IDataReader>().Setup(r => r.GetAll(typeof (Data.RavenObject))).Returns(_dataObjects);
             Mocked<IMapFactory>().Setup(r => r.MapToViewObject(It.IsAny<Data.RavenObject>())).Returns(new Model.ViewObject());
@@ -48,14 +49,20 @@ namespace Points.Api.UnitTests.Common.Processors
         public void GetEnumsValidReturnResults([Values("DurationType","DurationUnit","FrequencyType","FrequencyUnit")]string type)
         {
             var result = Subject.GetEnums(type);
-            result.Count.ShouldBeGreaterThan(0);
+            result.Count().ShouldBeGreaterThan(0);
         }
 
         [Test]
-        public void GetEnumsInValidReturnEmptyList()
+        public void GetEnumsInvalidReturnEmptyList()
         {
             var result = Subject.GetEnums("");
-            result.Count.ShouldBe(0);
+            result.Count().ShouldBe(0);
         }
+
+        //[Test]
+        //public void GetPlanningTotals()
+        //{
+        //    var totals = Subject.GetPlanningTotals(_userId);
+        //}
     }
 }

@@ -64,22 +64,18 @@ namespace Points.Common.Processors
             return objs.Select(i => (TView)_mapFactory.MapToViewObject(i)).ToList();
         }
 
-        public IList<dynamic> GetEnums(string enumType)
+        public IEnumerable<ViewObject> GetEnums(string enumType)
         {
-            var output = new List<object>();
             var eType = Type.GetType("Points.Data." + enumType + ", Points.Data");
             if (eType != null)
             {
-                foreach (var item in Enum.GetValues(eType))
+                return Enum.GetValues(eType).Cast<object>().Select(i => new ViewObject
                 {
-                    output.Add(new
-                    {
-                        Id = item.ToString(),
-                        Name = item.Spacify()
-                    });
-                }
+                    Id = i.ToString(),
+                    Name = i.Spacify()
+                });
             }
-            return output;
+            return new List<ViewObject>();
         }
 
         public dynamic GetPlanningTotals(string userId)
