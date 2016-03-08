@@ -37,11 +37,11 @@
         function authExternalProvider (provider) {
             var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
 
-            var externalProviderUrl = cpSettings.apiServiceBaseUri + "api/Account/ExternalLogin?provider=" + provider
-                                                                        + "&response_type=token&client_id=" + cpSettings.clientId
-                                                                        + "&redirect_uri=" + redirectUri;
+            var externalProviderUrl = cpSettings.apiServiceBaseUri + 'api/Account/ExternalLogin?provider=' + provider
+                                                                        + '&response_type=token&client_id=' + cpSettings.clientId
+                                                                        + '&redirect_uri=' + redirectUri;
             window.$windowScope = $scope;
-            var oauthWindow = window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
+            var oauthWindow = window.open(externalProviderUrl, 'Authenticate Account', 'location=0,status=0,width=600,height=750');
         }
 
         function authCompletedCB (fragment) {

@@ -32,9 +32,9 @@
         var hniVm = this;
 
         hniVm.show = {
-            categories: (typeof hniVm.showCategories === "undefined") ? false : (hniVm.showCategories === false) ? false : true,
-            tasks: (typeof hniVm.showTasks === "undefined") ? false : (hniVm.showTasks === false) ? false : true,
-            planning: (typeof hniVm.showPlanning === "undefined") ? false : (hniVm.showPlanning === false) ? false : true
+            categories: (typeof hniVm.showCategories === 'undefined') ? false : (hniVm.showCategories === false) ? false : true,
+            tasks: (typeof hniVm.showTasks === 'undefined') ? false : (hniVm.showTasks === false) ? false : true,
+            planning: (typeof hniVm.showPlanning === 'undefined') ? false : (hniVm.showPlanning === false) ? false : true
         };
 
         activate();

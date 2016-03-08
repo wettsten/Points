@@ -48,7 +48,7 @@
         };
 
         function login (loginData) {
-            var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+            var data = 'grant_type=password&username=' + loginData.userName + '&password=' + loginData.password;
 
             var deferred = $q.defer();
 
@@ -75,8 +75,8 @@
             localStorageService.remove('authorizationData');
 
             authDataService.authentication.isAuth = false;
-            authDataService.authentication.userName = "";
-            authDataService.authentication.userId = "";
+            authDataService.authentication.userName = '';
+            authDataService.authentication.userId = '';
         };
 
         function fillAuthData () {

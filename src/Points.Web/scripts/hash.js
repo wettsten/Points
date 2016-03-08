@@ -124,7 +124,7 @@ Sha1.ROTL = function (x, n) {
 Sha1.toHexStr = function (n) {
     // note can't use toString(16) as it is implementation-dependant,
     // and in IE returns signed numbers when used on full words
-    var s = "", v;
+    var s = '', v;
     for (var i = 7; i >= 0; i--) { v = (n >>> (i * 4)) & 0xf; s += v.toString(16); }
     return s;
 };
