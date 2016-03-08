@@ -40,44 +40,18 @@ namespace Points.Api.Resources.Controllers
         [Route("totals")]
         public IHttpActionResult GetActiveTotalsForUser()
         {
-            var tasks = GetForUser();
-            if (tasks.IsOk())
+            try
             {
-                var content = tasks.GetContent<ActiveTask>();
-                var cats = content
-                    .GroupBy(i => i.Task.Category.Id, task => task)
-                    .Select(i => new
-                    {
-                        Id = i.Key,
-                        Name = i.First().Task.Category.Name,
-                        IsCompleted = i.All(j => j.IsCompleted),
-                        TargetPoints = i.Count(),
-                        TaskPoints = i.Count(j => j.IsCompleted),
-                        BonusPoints = i.Sum(j => j.BonusPoints),
-                        TotalPoints = i.Count(j => j.IsCompleted) + i.Sum(j => j.BonusPoints),
-                        Tasks = i.Select(j => new
-                        {
-                            j.Id,
-                            j.Name,
-                            j.IsCompleted,
-                            TargetPoints = 1,
-                            TaskPoints = j.IsCompleted ? 1 : 0,
-                            j.BonusPoints,
-                            TotalPoints = (j.IsCompleted ? 1 : 0) + j.BonusPoints
-                        }).OrderBy(j => j.Name)
-                    })
-                    .OrderBy(i => i.Name);
-                return Ok(new
-                {
-                    IsCompleted = cats.All(i => i.IsCompleted),
-                    TargetPoints = cats.Sum(i => i.TargetPoints),
-                    TaskPoints = cats.Sum(i => i.TaskPoints),
-                    BonusPoints = cats.Sum(i => i.BonusPoints),
-                    TotalPoints = cats.Sum(i => i.TotalPoints),
-                    Categories = cats
-                });
+                return Ok(_requestProcessor.GetActiveTotals(GetUserIdFromToken()));
             }
-            return tasks;
+            catch (InvalidOperationException ide)
+            {
+                return BadRequest(ide.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

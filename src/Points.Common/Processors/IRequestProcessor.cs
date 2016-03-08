@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Points.Model;
 
 namespace Points.Common.Processors
@@ -11,5 +10,7 @@ namespace Points.Common.Processors
         void DeleteData<TView>(TView data, string userId) where TView : ViewObject;
         IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject;
         IList<object> GetEnums(string enumType);
+        dynamic GetPlanningTotals(string userId);
+        dynamic GetActiveTotals(string userId);
     }
 }

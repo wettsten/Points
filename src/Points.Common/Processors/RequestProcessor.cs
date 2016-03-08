@@ -6,7 +6,6 @@ using Points.Common.Factories;
 using Points.Model;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
-using StructureMap;
 
 namespace Points.Common.Processors
 {
@@ -15,15 +14,13 @@ namespace Points.Common.Processors
         private readonly IDataReader _dataReader;
         private readonly IDataWriter _dataWriter;
         private readonly IObjectValidatorFactory _objectValidatorFactory;
-        private readonly IContainer _container;
         private readonly IMapFactory _mapFactory;
 
-        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IContainer container, IMapFactory mapFactory)
+        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IMapFactory mapFactory)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _objectValidatorFactory = objectValidatorFactory;
-            _container = container;
             _mapFactory = mapFactory;
         }
 
@@ -67,7 +64,7 @@ namespace Points.Common.Processors
             return objs.Select(i => (TView)_mapFactory.MapToViewObject(i)).ToList();
         }
 
-        public IList<object> GetEnums(string enumType)
+        public IList<dynamic> GetEnums(string enumType)
         {
             var output = new List<object>();
             var eType = Type.GetType("Points.Data." + enumType + ", Points.Data");
@@ -83,6 +80,63 @@ namespace Points.Common.Processors
                 }
             }
             return output;
+        }
+
+        public dynamic GetPlanningTotals(string userId)
+        {
+            var tasks = GetListForUser<PlanningTask>(userId);
+            var cats = tasks
+                .GroupBy(i => i.Task.Category.Id, task => task)
+                .Select(i => new
+                {
+                    Id = i.Key,
+                    Name = i.First().Task.Category.Name,
+                    Points = i.Count(),
+                    Tasks = i.OrderBy(j => j.Name)
+                })
+                .OrderBy(i => i.Name);
+            return new
+            {
+                Points = cats.Sum(i => i.Points),
+                Categories = cats
+            };
+        }
+
+        public dynamic GetActiveTotals(string userId)
+        {
+            var tasks = GetListForUser<ActiveTask>(userId);
+            var cats = tasks
+                .GroupBy(i => i.Task.Category.Id, task => task)
+                .Select(i => new
+                {
+                    Id = i.Key,
+                    Name = i.First().Task.Category.Name,
+                    IsCompleted = i.All(j => j.IsCompleted),
+                    TargetPoints = i.Count(),
+                    TaskPoints = i.Count(j => j.IsCompleted),
+                    BonusPoints = i.Sum(j => j.BonusPoints),
+                    TotalPoints = i.Count(j => j.IsCompleted) + i.Sum(j => j.BonusPoints),
+                    Tasks = i.Select(j => new
+                    {
+                        j.Id,
+                        j.Name,
+                        j.IsCompleted,
+                        TargetPoints = 1,
+                        TaskPoints = j.IsCompleted ? 1 : 0,
+                        j.BonusPoints,
+                        TotalPoints = (j.IsCompleted ? 1 : 0) + j.BonusPoints
+                    }).OrderBy(j => j.Name)
+                })
+                .OrderBy(i => i.Name);
+            return new
+            {
+                IsCompleted = cats.All(i => i.IsCompleted),
+                TargetPoints = cats.Sum(i => i.TargetPoints),
+                TaskPoints = cats.Sum(i => i.TaskPoints),
+                BonusPoints = cats.Sum(i => i.BonusPoints),
+                TotalPoints = cats.Sum(i => i.TotalPoints),
+                Categories = cats
+            };
         }
     }
 }
