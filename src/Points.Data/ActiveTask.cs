@@ -38,7 +38,7 @@ namespace Points.Data
 
         public DateTime DateStarted { get; set; }
 
-        public override void Copy(RavenObject obj)
+        public override void Copy(DataBase obj)
         {
             base.Copy(obj);
             var task = obj as ActiveTask;

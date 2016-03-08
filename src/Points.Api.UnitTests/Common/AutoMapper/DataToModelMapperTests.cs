@@ -122,13 +122,13 @@ namespace Points.Api.UnitTests.Common.AutoMapper
         [Test]
         public void RavenObjectToViewObject()
         {
-            var obj = new Data.RavenObject
+            var obj = new Data.DataBase
             {
                 Id = Guido.New(),
                 Name = "name"
             };
 
-            var model = _mapper.Map<Data.RavenObject, Model.ViewObject>(obj);
+            var model = _mapper.Map<Data.DataBase, Model.ModelBase>(obj);
 
             model.ShouldSatisfyAllConditions(
                 () => model.Id.ShouldBe(obj.Id),

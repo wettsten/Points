@@ -24,17 +24,17 @@ namespace Points.Api.UnitTests.Common.Factories
         [Test]
         public void TestMapToRavenObjectDoesNotThrow()
         {
-            Assert.DoesNotThrow(() => _sut.MapToRavenObject(new Model.ViewObject()));
+            Assert.DoesNotThrow(() => _sut.MapToRavenObject(new Model.ModelBase()));
         }
 
         [Test]
         public void TestMapToViewObjectDoesNotThrow()
         {
-            Assert.DoesNotThrow(() => _sut.MapToViewObject(new Data.RavenObject()));
+            Assert.DoesNotThrow(() => _sut.MapToViewObject(new Data.DataBase()));
         }
 
         [Test]
-        [TestCase(typeof(Data.RavenObject), typeof(Model.ViewObject))]
+        [TestCase(typeof(Data.DataBase), typeof(Model.ModelBase))]
         [TestCase(typeof(Data.Category), typeof(Model.Category))]
         [TestCase(typeof(Data.Task), typeof(Model.Task))]
         [TestCase(typeof(Data.PlanningTask), typeof(Model.PlanningTask))]
@@ -44,7 +44,7 @@ namespace Points.Api.UnitTests.Common.Factories
         [TestCase(typeof(Data.User), typeof(Model.User))]
         [TestCase(typeof(Data.Duration), typeof(Model.Duration))]
         [TestCase(typeof(Data.Frequency), typeof(Model.Frequency))]
-        [TestCase(typeof(Model.ViewObject), typeof(Data.RavenObject))]
+        [TestCase(typeof(Model.ModelBase), typeof(Data.DataBase))]
         [TestCase(typeof(Model.Category), typeof(Data.Category))]
         [TestCase(typeof(Model.Task), typeof(Data.Task))]
         [TestCase(typeof(Model.PlanningTask), typeof(Data.PlanningTask))]

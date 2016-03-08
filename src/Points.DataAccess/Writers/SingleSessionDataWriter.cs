@@ -12,7 +12,7 @@ namespace Points.DataAccess.Writers
             _store = store;
         }
 
-        public void Add<TN>(TN obj) where TN : RavenObject
+        public void Add<TN>(TN obj) where TN : DataBase
         {
             using (var session = _store.OpenSession())
             {
@@ -22,7 +22,7 @@ namespace Points.DataAccess.Writers
             }
         }
 
-        public void Edit<TN>(TN obj) where TN : RavenObject
+        public void Edit<TN>(TN obj) where TN : DataBase
         {
             using (var session = _store.OpenSession())
             {
@@ -32,7 +32,7 @@ namespace Points.DataAccess.Writers
             }
         }
 
-        public void Delete<TD>(string id) where TD : RavenObject
+        public void Delete<TD>(string id) where TD : DataBase
         {
             using (var session = _store.OpenSession())
             {

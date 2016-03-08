@@ -8,7 +8,7 @@ using Points.Model;
 
 namespace Points.Api.Resources.Controllers
 {
-    public abstract class ResourceController<TView> : ApiController where TView : ViewObject, new()
+    public abstract class ResourceController<TView> : ApiController where TView : ModelBase, new()
     {
         protected readonly IRequestProcessor _requestProcessor;
 

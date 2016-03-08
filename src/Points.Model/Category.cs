@@ -1,7 +1,7 @@
 ﻿
 namespace Points.Model
 {
-    public class Category : ViewObject
+    public class Category : ModelBase
     {
     }
 }

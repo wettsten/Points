@@ -21,7 +21,7 @@ namespace Points.Common.AutoMapper
         protected override void Configure()
         {
             // View to Raven
-            CreateMap<Model.ViewObject, Data.RavenObject>()
+            CreateMap<Model.ModelBase, Data.DataBase>()
                 .ForMember(t => t.UserId, o => o.Ignore());
             CreateMap<Model.Duration, Data.Duration>()
                 .ForMember(t => t.Type, o => o.MapFrom(s => (Data.DurationType)Enum.Parse(typeof(Data.DurationType), s.Type.Id)))
@@ -45,13 +45,13 @@ namespace Points.Common.AutoMapper
             CreateMap<Model.Job, Data.Job>();
 
             // Raven to View
-            CreateMap<Data.RavenObject, Model.ViewObject>();
+            CreateMap<Data.DataBase, Model.ModelBase>();
             CreateMap<Data.Duration, Model.Duration>()
-                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ViewObject {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
-                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.ViewObject { Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
+                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ModelBase {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.ModelBase { Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
             CreateMap<Data.Frequency, Model.Frequency>()
-                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ViewObject { Id = s.Type.ToString(), Name = s.Type.Spacify()}))
-                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.ViewObject { Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
+                .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ModelBase { Id = s.Type.ToString(), Name = s.Type.Spacify()}))
+                .ForMember(t => t.Unit, o => o.MapFrom(s => new Model.ModelBase { Id = s.Unit.ToString(), Name = s.Unit.Spacify()}));
             CreateMap<Data.Category, Model.Category>();
             CreateMap<Data.Task, Model.Task>()
                 .ForMember(t => t.Category, o => o.MapFrom(s => _dataReader.Get<Data.Category>(s.CategoryId)));

@@ -24,7 +24,7 @@ namespace Points.Common.Processors
             _mapFactory = mapFactory;
         }
 
-        public void AddData<TView>(TView data, string userId) where TView : ViewObject
+        public void AddData<TView>(TView data, string userId) where TView : ModelBase
         {
             // map to RavenObject
             var ravenObj = _mapFactory.MapToRavenObject(data);
@@ -34,7 +34,7 @@ namespace Points.Common.Processors
             _dataWriter.Add(ravenObj);
         }
 
-        public void EditData<TView>(TView data, string userId) where TView : ViewObject
+        public void EditData<TView>(TView data, string userId) where TView : ModelBase
         {
             // map to RavenObject
             var ravenObj = _mapFactory.MapToRavenObject(data);
@@ -44,7 +44,7 @@ namespace Points.Common.Processors
             _dataWriter.Edit(ravenObj);
         }
 
-        public void DeleteData<TView>(TView data, string userId) where TView : ViewObject
+        public void DeleteData<TView>(TView data, string userId) where TView : ModelBase
         {
             // map to RavenObject
             var ravenObj = _mapFactory.MapToRavenObject(data);
@@ -54,7 +54,7 @@ namespace Points.Common.Processors
             _dataWriter.Delete(ravenObj);
         }
 
-        public IList<TView> GetListForUser<TView>(string userId) where TView : ViewObject
+        public IList<TView> GetListForUser<TView>(string userId) where TView : ModelBase
         {
             var ravenType = _mapFactory.GetDestinationType(typeof (TView));
             var objs = _dataReader
@@ -64,18 +64,18 @@ namespace Points.Common.Processors
             return objs.Select(i => (TView)_mapFactory.MapToViewObject(i)).ToList();
         }
 
-        public IEnumerable<ViewObject> GetEnums(string enumType)
+        public IEnumerable<ModelBase> GetEnums(string enumType)
         {
             var eType = Type.GetType("Points.Data." + enumType + ", Points.Data");
             if (eType != null)
             {
-                return Enum.GetValues(eType).Cast<object>().Select(i => new ViewObject
+                return Enum.GetValues(eType).Cast<object>().Select(i => new ModelBase
                 {
                     Id = i.ToString(),
                     Name = i.Spacify()
                 });
             }
-            return new List<ViewObject>();
+            return new List<ModelBase>();
         }
 
         public dynamic GetPlanningTotals(string userId)

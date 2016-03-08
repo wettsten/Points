@@ -2,7 +2,7 @@
 
 namespace Points.Data
 {
-    public class User : RavenObject
+    public class User : DataBase
     {
         public string Email { get; set; }
         public DayOfWeek WeekStartDay { get; set; }
@@ -18,7 +18,7 @@ namespace Points.Data
         public int BonusPointMultiplier { get; set; }
         public decimal DurationBonusPointsPerHour { get; set; }
 
-        public override void Copy(RavenObject obj)
+        public override void Copy(DataBase obj)
         {
             base.Copy(obj);
             var user = obj as User;

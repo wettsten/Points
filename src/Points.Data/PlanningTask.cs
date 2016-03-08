@@ -2,7 +2,7 @@
 
 namespace Points.Data
 {
-    public class PlanningTask : RavenObject
+    public class PlanningTask : DataBase
     {
         public string TaskId { get; set; }
         public Duration Duration { get; set; }
@@ -21,7 +21,7 @@ namespace Points.Data
             }
         }
 
-        public override void Copy(RavenObject obj)
+        public override void Copy(DataBase obj)
         {
             base.Copy(obj);
             var task = obj as PlanningTask;

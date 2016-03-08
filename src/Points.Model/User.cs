@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Points.Model
 {
-    public class User : ViewObject
+    public class User : ModelBase
     {
         public string Email { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]

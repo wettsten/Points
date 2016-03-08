@@ -6,8 +6,8 @@ namespace Points.Common.Factories
 {
     public interface IMapFactory
     {
-        RavenObject MapToRavenObject<TView>(TView obj) where TView : ViewObject;
-        ViewObject MapToViewObject<TRaven>(TRaven obj) where TRaven : RavenObject;
+        DataBase MapToRavenObject<TView>(TView obj) where TView : ModelBase;
+        ModelBase MapToViewObject<TRaven>(TRaven obj) where TRaven : DataBase;
 
         Type GetDestinationType(Type sourceType);
     }
