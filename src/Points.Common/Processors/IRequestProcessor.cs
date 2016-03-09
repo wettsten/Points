@@ -10,7 +10,7 @@ namespace Points.Common.Processors
         void DeleteData<TView>(TView data, string userId) where TView : ModelBase;
         IList<TView> GetListForUser<TView>(string userId) where TView : ModelBase;
         IEnumerable<ModelBase> GetEnums(string enumType);
-        dynamic GetPlanningTotals(string userId);
-        dynamic GetActiveTotals(string userId);
+        PlanningTotal GetPlanningTotals(string userId);
+        ActiveTotal GetActiveTotals(string userId);
     }
 }

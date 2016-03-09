@@ -78,32 +78,38 @@ namespace Points.Common.Processors
             return new List<ModelBase>();
         }
 
-        public dynamic GetPlanningTotals(string userId)
+        public PlanningTotal GetPlanningTotals(string userId)
         {
             var tasks = GetListForUser<PlanningTask>(userId);
             var cats = tasks
                 .GroupBy(i => i.Task.Category.Id, task => task)
-                .Select(i => new
+                .Select(i => new PlanningTotalCategory
                 {
                     Id = i.Key,
                     Name = i.First().Task.Category.Name,
                     Points = i.Count(),
-                    Tasks = i.OrderBy(j => j.Name)
+                    Tasks = i.Select(j => new PlanningTotalTask
+                        {
+                            Id = j.Id,
+                            Name = j.Name,
+                            Points = 1,
+                            BonusPointValue = j.BonusPointValue
+                        }).OrderBy(j => j.Name)
                 })
                 .OrderBy(i => i.Name);
-            return new
+            return new PlanningTotal
             {
                 Points = cats.Sum(i => i.Points),
                 Categories = cats
             };
         }
 
-        public dynamic GetActiveTotals(string userId)
+        public ActiveTotal GetActiveTotals(string userId)
         {
             var tasks = GetListForUser<ActiveTask>(userId);
             var cats = tasks
                 .GroupBy(i => i.Task.Category.Id, task => task)
-                .Select(i => new
+                .Select(i => new ActiveTotalCategory
                 {
                     Id = i.Key,
                     Name = i.First().Task.Category.Name,
@@ -112,19 +118,19 @@ namespace Points.Common.Processors
                     TaskPoints = i.Count(j => j.IsCompleted),
                     BonusPoints = i.Sum(j => j.BonusPoints),
                     TotalPoints = i.Count(j => j.IsCompleted) + i.Sum(j => j.BonusPoints),
-                    Tasks = i.Select(j => new
+                    Tasks = i.Select(j => new ActiveTotalTask
                     {
-                        j.Id,
-                        j.Name,
-                        j.IsCompleted,
+                        Id = j.Id,
+                        Name = j.Name,
+                        IsCompleted = j.IsCompleted,
                         TargetPoints = 1,
                         TaskPoints = j.IsCompleted ? 1 : 0,
-                        j.BonusPoints,
+                        BonusPoints = j.BonusPoints,
                         TotalPoints = (j.IsCompleted ? 1 : 0) + j.BonusPoints
                     }).OrderBy(j => j.Name)
                 })
                 .OrderBy(i => i.Name);
-            return new
+            return new ActiveTotal
             {
                 IsCompleted = cats.All(i => i.IsCompleted),
                 TargetPoints = cats.Sum(i => i.TargetPoints),

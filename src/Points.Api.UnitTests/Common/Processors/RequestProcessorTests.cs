@@ -58,11 +58,5 @@ namespace Points.Api.UnitTests.Common.Processors
             var result = Subject.GetEnums("");
             result.Count().ShouldBe(0);
         }
-
-        //[Test]
-        //public void GetPlanningTotals()
-        //{
-        //    var totals = Subject.GetPlanningTotals(_userId);
-        //}
     }
 }
