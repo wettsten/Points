@@ -20,7 +20,7 @@ namespace Points.Common.AutoMapper
 
         protected override void Configure()
         {
-            // View to Raven
+            // Model to Data
             CreateMap<Model.ModelBase, Data.DataBase>()
                 .ForMember(t => t.UserId, o => o.Ignore());
             CreateMap<Model.Duration, Data.Duration>()
@@ -34,17 +34,15 @@ namespace Points.Common.AutoMapper
                 .ForMember(t => t.CategoryId, o => o.MapFrom(s => s.Category.Id));
             CreateMap<Model.PlanningTask, Data.PlanningTask>()
                 .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
-            CreateMap<Model.ActiveTask, Data.ActiveTask>()
-                .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
-            CreateMap<Model.ArchivedTask, Data.ArchivedTask>()
-                .ForMember(t => t.TaskId, o => o.MapFrom(s => s.Task.Id));
+            CreateMap<Model.ActiveTask, Data.ActiveTask>();
+            CreateMap<Model.ArchivedTask, Data.ArchivedTask>();
             CreateMap<Model.User, Data.User>()
                 .ForMember(t => t.WeekStartHour, o => o.MapFrom(s => s.WeekStartHour.Id))
                 .ForMember(t => t.NotifyWeekStarting, o => o.MapFrom(s => s.NotifyWeekStarting.Id))
                 .ForMember(t => t.NotifyWeekEnding, o => o.MapFrom(s => s.NotifyWeekEnding.Id));
             CreateMap<Model.Job, Data.Job>();
 
-            // Raven to View
+            // Data to Model
             CreateMap<Data.DataBase, Model.ModelBase>();
             CreateMap<Data.Duration, Model.Duration>()
                 .ForMember(t => t.Type, o => o.MapFrom(s => new Model.ModelBase {Id = s.Type.ToString(), Name = s.Type.Spacify()}))
@@ -57,10 +55,8 @@ namespace Points.Common.AutoMapper
                 .ForMember(t => t.Category, o => o.MapFrom(s => _dataReader.Get<Data.Category>(s.CategoryId)));
             CreateMap<Data.PlanningTask, Model.PlanningTask>()
                 .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
-            CreateMap<Data.ActiveTask, Model.ActiveTask>()
-                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
-            CreateMap<Data.ArchivedTask, Model.ArchivedTask>()
-                .ForMember(t => t.Task, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId)));
+            CreateMap<Data.ActiveTask, Model.ActiveTask>();
+            CreateMap<Data.ArchivedTask, Model.ArchivedTask>();
             CreateMap<Data.User, Model.User>()
                 .ForMember(t => t.PlanningEndTime, o => o.MapFrom(s => GetPlanningEndTime(s)))
                 .ForMember(t => t.ActiveStartTime, o => o.MapFrom(s => GetActiveStartTime(s)))
@@ -68,6 +64,18 @@ namespace Points.Common.AutoMapper
                 .ForMember(t => t.NotifyWeekStarting, o => o.MapFrom(s => Model.SimpleInt.FromId(s.NotifyWeekStarting)))
                 .ForMember(t => t.NotifyWeekEnding, o => o.MapFrom(s => Model.SimpleInt.FromId(s.NotifyWeekEnding)));
             CreateMap<Data.Job, Model.Job>();
+
+            // other maps
+            CreateMap<Data.PlanningTask, Data.ActiveTask>()
+                .ForMember(t => t.TaskName, o => o.MapFrom(s => _dataReader.Get<Data.Task>(s.TaskId).Name))
+                .ForMember(t => t.CategoryName, o => o.MapFrom(s => _dataReader.Get<Data.Category>(_dataReader.Get<Data.Task>(s.TaskId).CategoryId).Name));
+            CreateMap<Model.PlanningTask, Model.ActiveTask>()
+                .ForMember(t => t.TaskName, o => o.MapFrom(s => s.Task.Name))
+                .ForMember(t => t.CategoryName, o => o.MapFrom(s => s.Task.Category.Name));
+            CreateMap<Data.ActiveTask, Data.ArchivedTask>()
+                .ForMember(t => t.DateEnded, o => o.Ignore());
+            CreateMap<Model.ActiveTask, Model.ArchivedTask>()
+                .ForMember(t => t.DateEnded, o => o.Ignore());
         }
 
         private DateTime? GetPlanningEndTime(Data.User user)

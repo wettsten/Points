@@ -18,22 +18,14 @@ namespace Points.Common.Factories
         public DataBase MapToRavenObject<TView>(TView obj) where TView : ModelBase
         {
             var sourceType = obj.GetType();
-            var destinationType = _mapper
-                .ConfigurationProvider
-                .GetAllTypeMaps()
-                .Single(map => map.SourceType == sourceType)
-                .DestinationType;
+            var destinationType = GetDestinationType(sourceType);
             return (DataBase)_mapper.Map(obj, sourceType, destinationType);
         }
 
         public ModelBase MapToViewObject<TRaven>(TRaven obj) where TRaven : DataBase
         {
             var sourceType = obj.GetType();
-            var destinationType = _mapper
-                .ConfigurationProvider
-                .GetAllTypeMaps()
-                .Single(map => map.SourceType == sourceType)
-                .DestinationType;
+            var destinationType = GetDestinationType(sourceType);
             return (ModelBase)_mapper.Map(obj, sourceType, destinationType);
         }
 
@@ -42,6 +34,7 @@ namespace Points.Common.Factories
             return _mapper
                 .ConfigurationProvider
                 .GetAllTypeMaps()
+                .Where(map => map.SourceType.Name.Equals(map.DestinationType.Name) || (map.SourceType.Name.EndsWith("Base") && map.DestinationType.Name.EndsWith("Base")))
                 .SingleOrDefault(map => map.SourceType == sourceType)?
                 .DestinationType;
         }

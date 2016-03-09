@@ -68,7 +68,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 Id = Guido.New(),
                 Name = "aTaskName",
-                Task = _task,
+                TaskName = _task.Name,
+                CategoryName = _cat.Name,
                 Duration = _duration,
                 Frequency = _frequency,
                 DateStarted = DateTime.UtcNow,
@@ -78,7 +79,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 Id = Guido.New(),
                 Name = "arcTaskName",
-                Task = _task,
+                TaskName = _task.Name,
+                CategoryName = _cat.Name,
                 Duration = _duration,
                 Frequency = _frequency,
                 DateStarted = DateTime.UtcNow,
@@ -196,7 +198,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             data.ShouldSatisfyAllConditions(
                 () => data.Id.ShouldBe(_aTask.Id),
                 () => data.Name.ShouldBe(_aTask.Name),
-                () => data.TaskId.ShouldBe(_task.Id),
+                () => data.TaskName.ShouldBe(_task.Name),
+                () => data.CategoryName.ShouldBe(_cat.Name),
                 () => data.DateStarted.ShouldBe(_aTask.DateStarted),
                 () => data.TimesCompleted.ShouldBe(_aTask.TimesCompleted),
                 () => data.Duration.Type.ToString().ShouldBe(_duration.Type.Id),
@@ -215,7 +218,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             data.ShouldSatisfyAllConditions(
                 () => data.Id.ShouldBe(_arcTask.Id),
                 () => data.Name.ShouldBe(_arcTask.Name),
-                () => data.TaskId.ShouldBe(_task.Id),
+                () => data.TaskName.ShouldBe(_task.Name),
+                () => data.CategoryName.ShouldBe(_cat.Name),
                 () => data.DateStarted.ShouldBe(_arcTask.DateStarted),
                 () => data.TimesCompleted.ShouldBe(_arcTask.TimesCompleted),
                 () => data.DateEnded.ShouldBe(_arcTask.DateEnded),

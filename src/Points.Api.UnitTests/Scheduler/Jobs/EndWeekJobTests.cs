@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoMapper;
 using AutoMoq.Helpers;
 using Moq;
 using NUnit.Framework;
@@ -49,7 +50,8 @@ namespace Points.Api.UnitTests.Scheduler.Jobs
                         Value = 2,
                         Unit = FrequencyUnit.Times
                     },
-                    TaskId = Guido.New(),
+                    TaskName = "task",
+                    CategoryName = "cat",
                     TimesCompleted = 3
                 },
                 new ActiveTask { UserId = Guido.New() }
@@ -81,33 +83,6 @@ namespace Points.Api.UnitTests.Scheduler.Jobs
 
             Mocked<ISingleSessionDataWriter>().Verify(r => r.Add(It.IsAny<ArchivedTask>()), Times.Never());
             Mocked<ISingleSessionDataWriter>().Verify(r => r.Delete<ActiveTask>(It.IsAny<string>()), Times.Never());
-        }
-
-        [Test]
-        public void ValuesAreCopied()
-        {
-            ArchivedTask arcTask = null;
-            Mocked<ISingleSessionDataWriter>()
-                .Setup(r => r.Add(It.IsAny<ArchivedTask>()))
-                .Callback<ArchivedTask>(r => arcTask = r);
-
-            Subject.Process(_context);
-
-            arcTask.ShouldSatisfyAllConditions(
-                () => arcTask.Id.ShouldBeEmpty(),
-                () => arcTask.Name.ShouldBe(_activeTasks[1].Name),
-                () => arcTask.UserId.ShouldBe(_activeTasks[1].UserId),
-                () => arcTask.DateStarted.ShouldBe(_activeTasks[1].DateStarted),
-                () => arcTask.TaskId.ShouldBe(_activeTasks[1].TaskId),
-                () => arcTask.TimesCompleted.ShouldBe(_activeTasks[1].TimesCompleted),
-                () => arcTask.Duration.Type.ShouldBe(_activeTasks[1].Duration.Type),
-                () => arcTask.Duration.Value.ShouldBe(_activeTasks[1].Duration.Value),
-                () => arcTask.Duration.Unit.ShouldBe(_activeTasks[1].Duration.Unit),
-                () => arcTask.Frequency.Type.ShouldBe(_activeTasks[1].Frequency.Type),
-                () => arcTask.Frequency.Value.ShouldBe(_activeTasks[1].Frequency.Value),
-                () => arcTask.Frequency.Unit.ShouldBe(_activeTasks[1].Frequency.Unit),
-                () => arcTask.DateEnded.ShouldBeGreaterThan(DateTime.UtcNow.AddSeconds(-1)),
-                () => arcTask.DateEnded.ShouldBeLessThan(DateTime.UtcNow));
         }
     }
 }

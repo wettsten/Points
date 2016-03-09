@@ -108,11 +108,10 @@ namespace Points.Common.Processors
         {
             var tasks = GetListForUser<ActiveTask>(userId);
             var cats = tasks
-                .GroupBy(i => i.Task.Category.Id, task => task)
+                .GroupBy(i => i.CategoryName, task => task)
                 .Select(i => new ActiveTotalCategory
                 {
-                    Id = i.Key,
-                    Name = i.First().Task.Category.Name,
+                    Name = i.Key,
                     IsCompleted = i.All(j => j.IsCompleted),
                     TargetPoints = i.Count(),
                     TaskPoints = i.Count(j => j.IsCompleted),
@@ -120,7 +119,6 @@ namespace Points.Common.Processors
                     TotalPoints = i.Count(j => j.IsCompleted) + i.Sum(j => j.BonusPoints),
                     Tasks = i.Select(j => new ActiveTotalTask
                     {
-                        Id = j.Id,
                         Name = j.Name,
                         IsCompleted = j.IsCompleted,
                         TargetPoints = 1,

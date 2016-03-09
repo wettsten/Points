@@ -143,32 +143,6 @@ namespace Points.Api.UnitTests.Scheduler.Jobs
         }
 
         [Test]
-        public void ValuesAreCopied()
-        {
-            ActiveTask actTask = null;
-            Mocked<ISingleSessionDataWriter>()
-                .Setup(r => r.Add(It.IsAny<ActiveTask>()))
-                .Callback<ActiveTask>(r => actTask = r);
-
-            Subject.Process(_context);
-
-            actTask.ShouldSatisfyAllConditions(
-                () => actTask.Id.ShouldBeEmpty(),
-                () => actTask.Name.ShouldBe(_planningTasks[1].Name),
-                () => actTask.UserId.ShouldBe(_planningTasks[1].UserId),
-                () => actTask.TaskId.ShouldBe(_planningTasks[1].TaskId),
-                () => actTask.TimesCompleted.ShouldBe(0),
-                () => actTask.Duration.Type.ShouldBe(_planningTasks[1].Duration.Type),
-                () => actTask.Duration.Value.ShouldBe(_planningTasks[1].Duration.Value),
-                () => actTask.Duration.Unit.ShouldBe(_planningTasks[1].Duration.Unit),
-                () => actTask.Frequency.Type.ShouldBe(_planningTasks[1].Frequency.Type),
-                () => actTask.Frequency.Value.ShouldBe(_planningTasks[1].Frequency.Value),
-                () => actTask.Frequency.Unit.ShouldBe(_planningTasks[1].Frequency.Unit),
-                () => actTask.DateStarted.ShouldBeGreaterThan(DateTime.UtcNow.AddSeconds(-1)),
-                () => actTask.DateStarted.ShouldBeLessThan(DateTime.UtcNow));
-        }
-
-        [Test]
         public void UserIsEdited()
         {
             User editUser = null;

@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AutoMapper\OtherMapperTests.cs" />
     <Compile Include="Common\AutoMapper\ModelToDataMapperTests.cs" />
     <Compile Include="Common\AutoMapper\DataToModelMapperTests.cs" />
     <Compile Include="Common\Extensions\SpacifyExtensionTests.cs" />

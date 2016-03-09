@@ -17,7 +17,6 @@ namespace Points.Api.UnitTests.Common.Processors
     {
         private readonly string _userId = Guido.New();
         private List<Data.ActiveTask> _tasks;
-        private Dictionary<string, string> _catIds = new Dictionary<string, string>();
 
         [TestFixtureSetUp]
         public void Setup()
@@ -39,7 +38,7 @@ namespace Points.Api.UnitTests.Common.Processors
                 new Data.ActiveTask
                 {
                     Id = Guido.New(),
-                    Name = "task3|cat3",
+                    Name = "task3",
                     UserId = _userId,
                     Duration = new Data.Duration
                     {
@@ -53,14 +52,15 @@ namespace Points.Api.UnitTests.Common.Processors
                         Value = 10,
                         Unit = Data.FrequencyUnit.Times
                     },
-                    TaskId = Guido.New(),
+                    TaskName = "task3",
+                    CategoryName = "cat3",
                     DateStarted = DateTime.UtcNow.AddDays(-4),
                     TimesCompleted = 8
                 },
                 new Data.ActiveTask
                 {
                     Id = Guido.New(),
-                    Name = "task2|cat1",
+                    Name = "task2",
                     UserId = _userId,
                     Duration = new Data.Duration
                     {
@@ -74,14 +74,15 @@ namespace Points.Api.UnitTests.Common.Processors
                         Value = 4,
                         Unit = Data.FrequencyUnit.Times
                     },
-                    TaskId = Guido.New(),
+                    TaskName = "task2",
+                    CategoryName = "cat1",
                     DateStarted = DateTime.UtcNow.AddDays(-4),
                     TimesCompleted = 2
                 },
                 new Data.ActiveTask
                 {
                     Id = Guido.New(),
-                    Name = "task4|cat2",
+                    Name = "task4",
                     UserId = _userId,
                     Duration = new Data.Duration
                     {
@@ -95,14 +96,15 @@ namespace Points.Api.UnitTests.Common.Processors
                         Value = 8,
                         Unit = Data.FrequencyUnit.Times
                     },
-                    TaskId = Guido.New(),
+                    TaskName = "task4",
+                    CategoryName = "cat2",
                     DateStarted = DateTime.UtcNow.AddDays(-4),
                     TimesCompleted = 9
                 },
                 new Data.ActiveTask
                 {
                     Id = Guido.New(),
-                    Name = "task1|cat1",
+                    Name = "task1",
                     UserId = _userId,
                     Duration = new Data.Duration
                     {
@@ -116,7 +118,8 @@ namespace Points.Api.UnitTests.Common.Processors
                         Value = 5,
                         Unit = Data.FrequencyUnit.Times
                     },
-                    TaskId = Guido.New(),
+                    TaskName = "task1",
+                    CategoryName = "cat1",
                     DateStarted = DateTime.UtcNow.AddDays(-4),
                     TimesCompleted = 6
                 }
@@ -125,15 +128,6 @@ namespace Points.Api.UnitTests.Common.Processors
 
         private Model.ActiveTask MapToModelTask(Data.ActiveTask task)
         {
-            string catId = Guido.New();
-            if (!_catIds.ContainsKey(task.Name.Split('|')[1]))
-            {
-                _catIds.Add(task.Name.Split('|')[1], catId);
-            }
-            else
-            {
-                catId = _catIds[task.Name.Split('|')[1]];
-            }
             return new Model.ActiveTask
             {
                 Id = task.Id,
@@ -166,16 +160,8 @@ namespace Points.Api.UnitTests.Common.Processors
                         Name = task.Frequency.Unit.Spacify()
                     }
                 },
-                Task = new Model.Task
-                {
-                    Id = task.TaskId,
-                    Name = task.Name.Split('|')[0],
-                    Category = new Model.Category
-                    {
-                        Id = catId,
-                        Name = task.Name.Split('|')[1]
-                    }
-                },
+                TaskName = task.TaskName,
+                CategoryName = task.CategoryName,
                 BonusPointValue = task.BonusPointValue,
                 DateStarted = task.DateStarted,
                 TimesCompleted = task.TimesCompleted,
