@@ -17,27 +17,41 @@ namespace Points.Api.Resources.Controllers
         [SetterProperty]
         public ILog Logger { get; set; }
 
+        protected string GetResource => $"Get {typeof (TView).Name} for user {GetUserIdFromToken()}. ";
+        protected string AddResource => $"Add {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+        protected string EditResource => $"Edit {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+        protected string DeleteResource => $"Delete {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+
         protected IHttpActionResult GetForUser()
         {
             string userid = GetUserIdFromToken();
-            Logger.InfoFormat("Getting resource type {0} for user {1}", typeof(TView).Name, userid);
+            Logger.Info(GetResource);
             if (string.IsNullOrWhiteSpace(userid))
             {
-                Logger.Warn("Missing user id");
+                Logger.Warn(GetResource + "model state errors: Missing user id");
                 return BadRequest("User id is required");
             }
-            var objs = RequestProcessor.GetListForUser<TView>(userid);
-            return Ok(objs.OrderBy(i => i.Name));
+            try
+            {
+                var objs = RequestProcessor.GetListForUser<TView>(userid);
+                Logger.InfoFormat(GetResource + "count: {0}", objs.Count);
+                return Ok(objs.OrderBy(i => i.Name));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(GetResource + "unknown error", ex);
+                return InternalServerError(ex);
+            }
         }
 
         protected IHttpActionResult Add(TView obj)
         {
             string userid = GetUserIdFromToken();
-            Logger.InfoFormat("Add resource type {0} for user {1}", typeof(TView).Name, userid);
+            Logger.Info(AddResource);
             if (!ModelState.IsValid)
             {
                 string errors = GetModelStateErrors();
-                Logger.WarnFormat("Add model state errors: {0}", errors);
+                Logger.WarnFormat(AddResource + "model state errors: {0}", errors);
                 return BadRequest(errors);
             }
             try
@@ -48,12 +62,12 @@ namespace Points.Api.Resources.Controllers
             }
             catch(InvalidDataException ide)
             {
-                Logger.Error("Add validation error", ide);
+                Logger.Error(AddResource + "validation error", ide);
                 return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
-                Logger.Error("Add unknown error", ex);
+                Logger.Error(AddResource + "unknown error", ex);
                 return InternalServerError(ex);
             }
         }
@@ -61,11 +75,11 @@ namespace Points.Api.Resources.Controllers
         protected IHttpActionResult Edit(TView obj)
         {
             string userid = GetUserIdFromToken();
-            Logger.InfoFormat("Edit resource type {0} for user {1}", typeof(TView).Name, userid);
+            Logger.Info(EditResource);
             if (!ModelState.IsValid)
             {
                 string errors = GetModelStateErrors();
-                Logger.WarnFormat("Edit model state errors: {0}", errors);
+                Logger.WarnFormat(EditResource + "model state errors: {0}", errors);
                 return BadRequest(errors);
             }
             try
@@ -75,12 +89,12 @@ namespace Points.Api.Resources.Controllers
             }
             catch (InvalidDataException ide)
             {
-                Logger.Error("Edit validation error", ide);
+                Logger.Error(EditResource + "validation error", ide);
                 return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
-                Logger.Error("Edit unknown error", ex);
+                Logger.Error(EditResource + "unknown error", ex);
                 return InternalServerError(ex);
             }
         }
@@ -88,10 +102,10 @@ namespace Points.Api.Resources.Controllers
         protected IHttpActionResult Delete(string id)
         {
             string userid = GetUserIdFromToken();
-            Logger.InfoFormat("Delete resource type {0} for user {1}", typeof(TView).Name, userid);
+            Logger.Info(DeleteResource);
             if (string.IsNullOrWhiteSpace(id))
             {
-                Logger.Warn("Missing user id");
+                Logger.WarnFormat(DeleteResource + "model state errors: Missing user id");
                 return BadRequest("Id is required");
             }
             try
@@ -101,12 +115,12 @@ namespace Points.Api.Resources.Controllers
             }
             catch (InvalidDataException ide)
             {
-                Logger.Error("Delete validation error", ide);
+                Logger.Error(DeleteResource + "validation error", ide);
                 return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
-                Logger.Error("Delete unknown error", ex);
+                Logger.Error(DeleteResource + "unknown error", ex);
                 return InternalServerError(ex);
             }
         }
@@ -115,15 +129,6 @@ namespace Points.Api.Resources.Controllers
         {
             var errors = ModelState.Where(i => i.Value.Errors.Count > 0).SelectMany(i => i.Value.Errors).Select(i => i.ErrorMessage);
             return string.Join("\r\n", errors);
-        }
-
-        protected string GetUserIdFromHeaders()
-        {
-            if (!Request.Headers.Contains("UserId"))
-            {
-                return string.Empty;
-            }
-            return Request.Headers.GetValues("UserId").FirstOrDefault();
         }
 
         protected string GetUserNameFromToken()

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 using Points.Scheduler.Jobs;
 using Points.Scheduler.Processors;
@@ -31,6 +30,7 @@ namespace Points.Api.Resources.Controllers
                 var user = usr.GetContent<User>().FirstOrDefault();
                 if (user == null)
                 {
+                    Logger.InfoFormat("User does not exist. Create new one for id {0}", GetUserIdFromToken());
                     var now = DateTime.UtcNow.AddDays(1).AddHours(1);
                     user = new User
                     {
@@ -76,6 +76,7 @@ namespace Points.Api.Resources.Controllers
         [HttpGet]
         public IHttpActionResult GetData()
         {
+            Logger.InfoFormat("Get UserData for user {0} ", GetUserIdFromToken());
             return Ok(new
             {
                 Days = Enum.GetNames(typeof(DayOfWeek)),
@@ -87,6 +88,7 @@ namespace Points.Api.Resources.Controllers
         [Route("enums")]
         public IHttpActionResult GetEnums()
         {
+            Logger.InfoFormat("Get Enums for user {0}", GetUserIdFromToken());
             return Ok(new
             {
                 dTypes = RequestProcessor.GetEnums("DurationType"),

@@ -43,16 +43,15 @@ namespace Points.Api.Resources.Controllers
         [Route("totals")]
         public IHttpActionResult GetPlanningTotalsForUser()
         {
+            string userid = GetUserIdFromToken();
             try
             {
-                return Ok(RequestProcessor.GetPlanningTotals(GetUserIdFromToken()));
-            }
-            catch (InvalidOperationException ide)
-            {
-                return BadRequest(ide.Message);
+                Logger.InfoFormat("Get PlanningTotals for user {0}. ", userid);
+                return Ok(RequestProcessor.GetPlanningTotals(userid));
             }
             catch (Exception ex)
             {
+                Logger.Error($"Get PlanningTotals for user {userid}. unknown error", ex);
                 return InternalServerError(ex);
             }
         }

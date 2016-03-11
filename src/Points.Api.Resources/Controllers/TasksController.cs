@@ -41,11 +41,14 @@ namespace Points.Api.Resources.Controllers
         [Route("available")]
         public IHttpActionResult GetAvailableTasksForUser()
         {
+            string userid = GetUserIdFromToken();
+            Logger.InfoFormat("Get AvailableTask for user {0}. ", userid);
             var tasks = GetForUser();
             if (tasks.IsOk())
             {
+                //TODO get these into request processor and test
                 var inUseTasks = RequestProcessor
-                    .GetListForUser<PlanningTask>(GetUserIdFromToken())
+                    .GetListForUser<PlanningTask>(userid)
                     .Select(i => i.Task.Id);
                 var content = tasks.GetContent<Task>();
                 var cats = content
