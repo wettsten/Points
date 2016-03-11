@@ -46,7 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActiveTask.cs" />
+    <Compile Include="ActiveTotalBase.cs" />
     <Compile Include="ArchivedTask.cs" />
+    <Compile Include="ActiveTotal.cs" />
+    <Compile Include="ActiveTotalCategory.cs" />
+    <Compile Include="ActiveTotalTask.cs" />
+    <Compile Include="PlanningTotalBase.cs" />
+    <Compile Include="PlanningTotalTask.cs" />
+    <Compile Include="PlanningTotalCategory.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Duration.cs" />
     <Compile Include="Frequency.cs" />
@@ -54,9 +61,10 @@
     <Compile Include="PlanningTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleInt.cs" />
+    <Compile Include="PlanningTotal.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="ViewObject.cs" />
+    <Compile Include="ModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

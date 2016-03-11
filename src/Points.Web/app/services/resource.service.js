@@ -23,37 +23,37 @@
                 type: 'planningtasks',
                 action: 'add',
                 links: [
-                    'availabletasks',
-                    'planningtotals'
+                    'tasks/available',
+                    'planningtasks/totals'
                 ]
             },
             {
                 type: 'planningtasks',
                 action: 'delete',
                 links: [
-                    'availabletasks',
-                    'planningtotals'
+                    'tasks/available',
+                    'planningtasks/totals'
                 ]
             },
             {
                 type: 'tasks',
                 action: 'add',
                 links: [
-                    'availabletasks'
+                    'tasks/available'
                 ]
             },
             {
                 type: 'tasks',
                 action: 'delete',
                 links: [
-                    'availabletasks'
+                    'tasks/available'
                 ]
             },
             {
                 type: 'activetasks',
                 action: 'edit',
                 links: [
-                    'activetotals'
+                    'activetasks/totals'
                 ]
             }
         ];
@@ -83,7 +83,7 @@
         function updateLinks(type, action) {
             var filteredLinks = _.where(links, { type: type, action: action });
             for (var link in filteredLinks) {
-                retrieve(link);
+                retrieve(filteredLinks[link]);
             }
         }
 
@@ -122,7 +122,7 @@
             retrieve('users');
             retrieve('categories');
             retrieve('tasks');
-            retrieve('availabletasks');
+            retrieve('tasks/available');
             retrieve('planningtasks');
             retrieve('activetasks');
         }

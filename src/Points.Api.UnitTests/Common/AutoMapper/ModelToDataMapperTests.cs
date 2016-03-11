@@ -35,15 +35,15 @@ namespace Points.Api.UnitTests.Common.AutoMapper
         {
             _duration = new Model.Duration
             {
-                Type = new Model.ViewObject { Id = "AtLeast" },
+                Type = new Model.ModelBase { Id = "AtLeast" },
                 Value = 1,
-                Unit = new Model.ViewObject { Id = "Hours" }
+                Unit = new Model.ModelBase { Id = "Hours" }
             };
             _frequency = new Model.Frequency
             {
-                Type = new Model.ViewObject { Id = "AtLeast" },
+                Type = new Model.ModelBase { Id = "AtLeast" },
                 Value = 1,
-                Unit = new Model.ViewObject { Id = "Times" }
+                Unit = new Model.ModelBase { Id = "Times" }
             };
             _cat = new Model.Category
             {
@@ -68,7 +68,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 Id = Guido.New(),
                 Name = "aTaskName",
-                Task = _task,
+                TaskName = _task.Name,
+                CategoryName = _cat.Name,
                 Duration = _duration,
                 Frequency = _frequency,
                 DateStarted = DateTime.UtcNow,
@@ -78,7 +79,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 Id = Guido.New(),
                 Name = "arcTaskName",
-                Task = _task,
+                TaskName = _task.Name,
+                CategoryName = _cat.Name,
                 Duration = _duration,
                 Frequency = _frequency,
                 DateStarted = DateTime.UtcNow,
@@ -115,13 +117,13 @@ namespace Points.Api.UnitTests.Common.AutoMapper
         [Test]
         public void ViewObjectToRavenObject()
         {
-            var obj = new Model.ViewObject()
+            var obj = new Model.ModelBase()
             {
                 Id = Guido.New(),
                 Name = "name"
             };
 
-            var data = _mapper.Map<Model.ViewObject, Data.RavenObject>(obj);
+            var data = _mapper.Map<Model.ModelBase, Data.DataBase>(obj);
 
             data.ShouldSatisfyAllConditions(
                 () => data.Id.ShouldBe(obj.Id),
@@ -196,7 +198,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             data.ShouldSatisfyAllConditions(
                 () => data.Id.ShouldBe(_aTask.Id),
                 () => data.Name.ShouldBe(_aTask.Name),
-                () => data.TaskId.ShouldBe(_task.Id),
+                () => data.TaskName.ShouldBe(_task.Name),
+                () => data.CategoryName.ShouldBe(_cat.Name),
                 () => data.DateStarted.ShouldBe(_aTask.DateStarted),
                 () => data.TimesCompleted.ShouldBe(_aTask.TimesCompleted),
                 () => data.Duration.Type.ToString().ShouldBe(_duration.Type.Id),
@@ -215,7 +218,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             data.ShouldSatisfyAllConditions(
                 () => data.Id.ShouldBe(_arcTask.Id),
                 () => data.Name.ShouldBe(_arcTask.Name),
-                () => data.TaskId.ShouldBe(_task.Id),
+                () => data.TaskName.ShouldBe(_task.Name),
+                () => data.CategoryName.ShouldBe(_cat.Name),
                 () => data.DateStarted.ShouldBe(_arcTask.DateStarted),
                 () => data.TimesCompleted.ShouldBe(_arcTask.TimesCompleted),
                 () => data.DateEnded.ShouldBe(_arcTask.DateEnded),

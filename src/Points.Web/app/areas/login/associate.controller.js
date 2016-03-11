@@ -12,7 +12,7 @@
         var associateVm = this;
 
         associateVm.savedSuccessfully = false;
-        associateVm.message = "";
+        associateVm.message = '';
         associateVm.registerData = {
             userName: authDataService.externalAuthData.userName,
             provider: authDataService.externalAuthData.provider,
@@ -32,7 +32,7 @@
 
         function registerSuccess(response) {
             associateVm.savedSuccessfully = true;
-            associateVm.message = "User has been registered successfully, you will be redicted to User Options page in 2 seconds.";
+            associateVm.message = 'User has been registered successfully, you will be redicted to User Options page in 2 seconds.';
             $timeout(function () {
                 $location.path('/options');
             }, 2000);
@@ -43,7 +43,7 @@
             for (var key in err.modelState) {
                 errors.push(err.modelState[key]);
             }
-            associateVm.message = "Failed to register user due to:" + errors.join(' ');
+            associateVm.message = 'Failed to register user due to:' + errors.join(' ');
         }
     }
 })();

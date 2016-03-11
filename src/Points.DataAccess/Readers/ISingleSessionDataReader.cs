@@ -5,7 +5,7 @@ namespace Points.DataAccess.Readers
 {
     public interface ISingleSessionDataReader
     {
-        TS Get<TS>(string id) where TS : RavenObject;
-        IList<TA> GetAll<TA>() where TA : RavenObject;
+        TS Get<TS>(string id) where TS : DataBase;
+        IList<TA> GetAll<TA>() where TA : DataBase;
     }
 }

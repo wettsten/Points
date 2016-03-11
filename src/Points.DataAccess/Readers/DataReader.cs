@@ -15,19 +15,19 @@ namespace Points.DataAccess.Readers
             _session = session;
         }
 
-        public TS Get<TS>(string id) where TS : RavenObject
+        public TS Get<TS>(string id) where TS : DataBase
         {
             return _session.Load<TS>(id);
         }
 
-        public IList<TA> GetAll<TA>() where TA : RavenObject
+        public IList<TA> GetAll<TA>() where TA : DataBase
         {
             return _session.Query<TA>().ToList();
         }
 
-        public IList<RavenObject> GetAll(Type objType)
+        public IList<DataBase> GetAll(Type objType)
         {
-            return _session.Query<object>(objType.Name).ToList().ConvertAll(i => i as RavenObject);
+            return _session.Query<object>(objType.Name).ToList().ConvertAll(i => i as DataBase);
         }
     }
 }

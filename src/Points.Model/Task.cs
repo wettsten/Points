@@ -2,7 +2,7 @@
 
 namespace Points.Model
 {
-    public class Task : ViewObject
+    public class Task : ModelBase
     {
         [Required]
         public Category Category { get; set; }

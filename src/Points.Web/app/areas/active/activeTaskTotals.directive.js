@@ -38,17 +38,17 @@
         activate();
 
         function activate() {
-            resourceService.get('activetotals', getActiveTotals);
+            resourceService.get('activetasks/totals', getActiveTotals);
             resourceService.get('users', getUsers);
         }
 
         function getActiveTotals(data) {
             aTotalsVm.totals = data;
             for (var cat in aTotalsVm.totals.categories) {
-                cat.hideTasks = true;
-                calculateItemClass(cat);
-                for (var task in cat.tasks) {
-                    calculateItemClass(task);
+                aTotalsVm.totals.categories[cat].hideTasks = true;
+                calculateItemClass(aTotalsVm.totals.categories[cat]);
+                for (var task in aTotalsVm.totals.categories[cat].tasks) {
+                    calculateItemClass(aTotalsVm.totals.categories[cat].tasks[task]);
                 }
             }
             calculateTotalClass();
@@ -89,7 +89,7 @@
         function toggleCats () {
             aTotalsVm.hideCats = !aTotalsVm.hideCats;
             for (var cat in aTotalsVm.totals.categories) {
-                cat.hideTasks = true;
+                aTotalsVm.totals.categories[cat].hideTasks = true;
             }
         }
 

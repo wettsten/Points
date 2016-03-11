@@ -2,7 +2,7 @@
 
 namespace Points.Model
 {
-    public class PlanningTask : ViewObject
+    public class PlanningTask : ModelBase
     {
         [Required]
         public Task Task { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AutoMapper;
 using Points.Data;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
@@ -12,12 +13,14 @@ namespace Points.Scheduler.Jobs
         private readonly ISingleSessionDataReader _dataReader;
         private readonly ISingleSessionDataWriter _dataWriter;
         private readonly IJobManager _jobManager;
+        private readonly IMapper _mapper;
 
-        public StartWeekJob(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter, IJobManager jobManager)
+        public StartWeekJob(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter, IJobManager jobManager, IMapper mapper)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _jobManager = jobManager;
+            _mapper = mapper;
         }
 
         public void Process(Job context)
@@ -28,7 +31,7 @@ namespace Points.Scheduler.Jobs
             foreach (var task in tasks)
             {
                 var activeTask = new ActiveTask();
-                activeTask.Copy(task);
+                _mapper.Map(task, activeTask);
                 activeTask.Id = string.Empty;
                 activeTask.DateStarted = DateTime.UtcNow;
                 _dataWriter.Add(activeTask);

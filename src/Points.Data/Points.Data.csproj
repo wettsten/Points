@@ -57,7 +57,7 @@
     <Compile Include="Job.cs" />
     <Compile Include="PlanningTask.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="RavenObject.cs" />
+    <Compile Include="DataBase.cs" />
     <Compile Include="ActiveTask.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />

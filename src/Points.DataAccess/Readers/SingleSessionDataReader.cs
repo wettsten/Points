@@ -14,7 +14,7 @@ namespace Points.DataAccess.Readers
             _store = store;
         }
 
-        public TS Get<TS>(string id) where TS : RavenObject
+        public TS Get<TS>(string id) where TS : DataBase
         {
             using (var session = _store.OpenSession())
             {
@@ -22,7 +22,7 @@ namespace Points.DataAccess.Readers
             }
         }
 
-        public IList<TA> GetAll<TA>() where TA : RavenObject
+        public IList<TA> GetAll<TA>() where TA : DataBase
         {
             using (var session = _store.OpenSession())
             {

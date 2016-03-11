@@ -71,7 +71,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 Id = Guido.New(),
                 Name = "aTaskName",
-                TaskId = _task.Id,
+                TaskName = _task.Name,
+                CategoryName = _cat.Name,
                 Duration = _duration,
                 Frequency = _frequency,
                 DateStarted = DateTime.UtcNow,
@@ -81,7 +82,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             {
                 Id = Guido.New(),
                 Name = "arcTaskName",
-                TaskId = _task.Id,
+                TaskName = _task.Name,
+                CategoryName = _cat.Name,
                 Duration = _duration,
                 Frequency = _frequency,
                 DateStarted = DateTime.UtcNow,
@@ -122,13 +124,13 @@ namespace Points.Api.UnitTests.Common.AutoMapper
         [Test]
         public void RavenObjectToViewObject()
         {
-            var obj = new Data.RavenObject
+            var obj = new Data.DataBase
             {
                 Id = Guido.New(),
                 Name = "name"
             };
 
-            var model = _mapper.Map<Data.RavenObject, Model.ViewObject>(obj);
+            var model = _mapper.Map<Data.DataBase, Model.ModelBase>(obj);
 
             model.ShouldSatisfyAllConditions(
                 () => model.Id.ShouldBe(obj.Id),
@@ -215,10 +217,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             model.ShouldSatisfyAllConditions(
                 () => model.Id.ShouldBe(_aTask.Id),
                 () => model.Name.ShouldBe(_aTask.Name),
-                () => model.Task.Id.ShouldBe(_task.Id),
-                () => model.Task.Name.ShouldBe(_task.Name),
-                () => model.Task.Category.Id.ShouldBe(_cat.Id),
-                () => model.Task.Category.Name.ShouldBe(_cat.Name),
+                () => model.TaskName.ShouldBe(_task.Name),
+                () => model.CategoryName.ShouldBe(_cat.Name),
                 () => model.DateStarted.ShouldBe(_aTask.DateStarted),
                 () => model.TimesCompleted.ShouldBe(_aTask.TimesCompleted),
                 () => model.Duration.Type.Id.ShouldBe(_duration.Type.ToString()),
@@ -241,10 +241,8 @@ namespace Points.Api.UnitTests.Common.AutoMapper
             model.ShouldSatisfyAllConditions(
                 () => model.Id.ShouldBe(_arcTask.Id),
                 () => model.Name.ShouldBe(_arcTask.Name),
-                () => model.Task.Id.ShouldBe(_task.Id),
-                () => model.Task.Name.ShouldBe(_task.Name),
-                () => model.Task.Category.Id.ShouldBe(_cat.Id),
-                () => model.Task.Category.Name.ShouldBe(_cat.Name),
+                () => model.TaskName.ShouldBe(_task.Name),
+                () => model.CategoryName.ShouldBe(_cat.Name),
                 () => model.DateStarted.ShouldBe(_arcTask.DateStarted),
                 () => model.TimesCompleted.ShouldBe(_arcTask.TimesCompleted),
                 () => model.DateEnded.ShouldBe(_arcTask.DateEnded),

@@ -1,8 +1,8 @@
 ﻿namespace Points.Data
 {
-    public class Category : RavenObject
+    public class Category : DataBase
     {
-        public override void Copy(RavenObject obj)
+        public override void Copy(DataBase obj)
         {
             base.Copy(obj);
             var cat = obj as Category;

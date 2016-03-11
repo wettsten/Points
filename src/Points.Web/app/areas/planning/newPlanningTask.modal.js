@@ -40,8 +40,8 @@
         activate();
 
         function activate() {
-            resourceService.get('availabletasks', getAvailableTasks);
-            resourceService.get('enums', getEnums);
+            resourceService.get('tasks/available', getAvailableTasks);
+            resourceService.get('users/enums', getEnums);
         }
 
         function getAvailableTasks(data) {

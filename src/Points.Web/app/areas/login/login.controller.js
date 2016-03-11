@@ -12,10 +12,10 @@
         var loginVm = this;
 
         loginVm.loginData = {
-            userName: "",
-            password: ""
+            userName: '',
+            password: ''
         };
-        loginVm.message = "";
+        loginVm.message = '';
         loginVm.login = login;
 
         activate();

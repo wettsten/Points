@@ -35,7 +35,7 @@
         activate();
 
         function activate() {
-            resourceService.get('activetotals', getActiveTotals);
+            resourceService.get('activetasks/totals', getActiveTotals);
         }
 
         function getActiveTotals(data) {

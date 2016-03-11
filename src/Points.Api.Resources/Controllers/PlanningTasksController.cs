@@ -42,5 +42,22 @@ namespace Points.Api.Resources.Controllers
         {
             return Delete(id);
         }
+
+        [Route("totals")]
+        public IHttpActionResult GetPlanningTotalsForUser()
+        {
+            try
+            {
+                return Ok(_requestProcessor.GetPlanningTotals(GetUserIdFromToken()));
+            }
+            catch (InvalidOperationException ide)
+            {
+                return BadRequest(ide.Message);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

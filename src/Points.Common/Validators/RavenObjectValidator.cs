@@ -15,9 +15,9 @@ namespace Points.Common.Validators
             DataReader = dataReader;
         }
 
-        protected void ValidateAdd<T>(object data) where T : RavenObject
+        protected void ValidateAdd<T>(object data) where T : DataBase
         {
-            var obj = data as RavenObject;
+            var obj = data as DataBase;
             var objs = DataReader.GetAll<T>();
             if (objs
                 .Where(i => i.Name.Equals(obj.Name, StringComparison.InvariantCultureIgnoreCase))
@@ -35,9 +35,9 @@ namespace Points.Common.Validators
             }
         }
 
-        protected void ValidateEdit<T>(object data) where T : RavenObject
+        protected void ValidateEdit<T>(object data) where T : DataBase
         {
-            var obj = data as RavenObject;
+            var obj = data as DataBase;
             var objs = DataReader.GetAll<T>();
             if (objs
                 .Where(i => i.Name.Equals(obj.Name, StringComparison.InvariantCultureIgnoreCase))
@@ -56,9 +56,9 @@ namespace Points.Common.Validators
             }
         }
 
-        protected void ValidateDelete<T>(object data) where T : RavenObject
+        protected void ValidateDelete<T>(object data) where T : DataBase
         {
-            var obj = data as RavenObject;
+            var obj = data as DataBase;
             var res = DataReader.Get<T>(obj.Id);
             if (res == null)
             {

@@ -13,21 +13,21 @@ namespace Points.DataAccess.Writers
             _session = session;
         }
 
-        public void Add<TN>(TN obj) where TN : RavenObject
+        public void Add<TN>(TN obj) where TN : DataBase
         {
             _session.Store(obj);
             _session.SaveChanges();
             //var id = session.Advanced.GetDocumentId(obj);
         }
 
-        public void Edit<TN>(TN obj) where TN : RavenObject
+        public void Edit<TN>(TN obj) where TN : DataBase
         {
             var existingObj = _session.Load<TN>(obj.Id);
             existingObj.Copy(obj);
             _session.SaveChanges();
         }
 
-        public void Delete<TD>(TD obj) where TD : RavenObject
+        public void Delete<TD>(TD obj) where TD : DataBase
         {
             var existingObj = _session.Load<object>(obj.Id);
             if (existingObj != null && existingObj.GetType() == obj.GetType())

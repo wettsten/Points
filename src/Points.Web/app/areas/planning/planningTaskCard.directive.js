@@ -38,7 +38,7 @@
         activate();
 
         function activate() {
-            resourceService.get('enums', function (data) {
+            resourceService.get('users/enums', function (data) {
                 pCardVm.enums = data;
             });
         }

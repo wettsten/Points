@@ -9,21 +9,21 @@ namespace Points.Api.UnitTests.Common.Validators
     {
         public RavenObjectValidatorTester(IDataReader dataReader) : base(dataReader) { }
 
-        public Type SupportsType => typeof(RavenObject);
+        public Type SupportsType => typeof(DataBase);
 
         public void ValidateAdd(object data)
         {
-            ValidateAdd<RavenObject>(data);
+            ValidateAdd<DataBase>(data);
         }
 
         public void ValidateEdit(object data)
         {
-            ValidateEdit<RavenObject>(data);
+            ValidateEdit<DataBase>(data);
         }
 
         public void ValidateDelete(object data)
         {
-            ValidateDelete<RavenObject>(data);
+            ValidateDelete<DataBase>(data);
         }
     }
 }

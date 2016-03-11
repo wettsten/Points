@@ -6,7 +6,7 @@ namespace Points.Data
     {
         public DateTime DateEnded { get; set; }
 
-        public override void Copy(RavenObject obj)
+        public override void Copy(DataBase obj)
         {
             base.Copy(obj);
             var task = obj as ArchivedTask;
