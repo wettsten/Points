@@ -17,7 +17,7 @@ namespace Points.Api.Resources.Controllers
     {
         private readonly IJobManager _jobProcessor;
 
-        public UsersController(IRequestProcessor requestProcessor, IJobManager jobProcessor) : base(requestProcessor)
+        public UsersController(IJobManager jobProcessor)
         {
             _jobProcessor = jobProcessor;
         }
@@ -50,7 +50,7 @@ namespace Points.Api.Resources.Controllers
                         BonusPointMultiplier = 1,
                         DurationBonusPointsPerHour = 0
                     };
-                    _requestProcessor.AddData(user, user.Id);
+                    RequestProcessor.AddData(user, user.Id);
                     usr = GetForUser();
                 }
                 EnsureStartJobForUser(user.Id);
@@ -89,10 +89,10 @@ namespace Points.Api.Resources.Controllers
         {
             return Ok(new
             {
-                dTypes = _requestProcessor.GetEnums("DurationType"),
-                dUnits = _requestProcessor.GetEnums("DurationUnit"),
-                fTypes = _requestProcessor.GetEnums("FrequencyType"),
-                fUnits = _requestProcessor.GetEnums("FrequencyUnit")
+                dTypes = RequestProcessor.GetEnums("DurationType"),
+                dUnits = RequestProcessor.GetEnums("DurationUnit"),
+                fTypes = RequestProcessor.GetEnums("FrequencyType"),
+                fUnits = RequestProcessor.GetEnums("FrequencyUnit")
             });
         }
 
@@ -135,7 +135,7 @@ namespace Points.Api.Resources.Controllers
 
         private void EnsureStartJobForUser(string userId)
         {
-            if (!_requestProcessor
+            if (!RequestProcessor
                 .GetListForUser<Job>(userId)
                 .Any(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase)))
             {
