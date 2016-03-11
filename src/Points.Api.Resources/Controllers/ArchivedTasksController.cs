@@ -8,9 +8,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/archivedtasks")]
     public class ArchivedTasksController : ResourceController<ArchivedTask>
     {
-        public ArchivedTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        { }
-
         [Route("")]
         public IHttpActionResult GetArchivedTasksForUser()
         {

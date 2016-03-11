@@ -10,9 +10,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/tasks")]
     public class TasksController : ResourceController<Task>
     {
-        public TasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        { }
-
         [Route("")]
         public IHttpActionResult GetTasksForUser()
         {
@@ -47,7 +44,7 @@ namespace Points.Api.Resources.Controllers
             var tasks = GetForUser();
             if (tasks.IsOk())
             {
-                var inUseTasks = _requestProcessor
+                var inUseTasks = RequestProcessor
                     .GetListForUser<PlanningTask>(GetUserIdFromToken())
                     .Select(i => i.Task.Id);
                 var content = tasks.GetContent<Task>();

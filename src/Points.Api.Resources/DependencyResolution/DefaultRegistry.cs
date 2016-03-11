@@ -15,6 +15,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using log4net;
 using Points.Common.Validators;
 using Points.Scheduler.Processors;
 using StructureMap;
@@ -36,6 +37,7 @@ namespace Points.Api.Resources.DependencyResolution
                     scan.AssemblyContainingType<IObjectValidator>();
                     scan.AssemblyContainingType<IScheduler>();
                 });
+            For<ILog>().Use(LogManager.GetLogger("ResourceLogger"));
         }
     }
 }

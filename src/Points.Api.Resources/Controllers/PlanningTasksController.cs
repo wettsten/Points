@@ -12,9 +12,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/planningtasks")]
     public class PlanningTasksController : ResourceController<PlanningTask>
     {
-        public PlanningTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        { }
-
         [Route("")]
         public IHttpActionResult GetPlanningTasksForUser()
         {
@@ -48,7 +45,7 @@ namespace Points.Api.Resources.Controllers
         {
             try
             {
-                return Ok(_requestProcessor.GetPlanningTotals(GetUserIdFromToken()));
+                return Ok(RequestProcessor.GetPlanningTotals(GetUserIdFromToken()));
             }
             catch (InvalidOperationException ide)
             {

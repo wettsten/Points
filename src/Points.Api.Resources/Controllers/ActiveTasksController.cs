@@ -11,8 +11,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/activetasks")]
     public class ActiveTasksController : ResourceController<ActiveTask>
     {
-        public ActiveTasksController(IRequestProcessor requestProcessor) : base(requestProcessor) { }
-
         [Route("")]
         public IHttpActionResult GetActiveTasksForUser()
         {
@@ -42,7 +40,7 @@ namespace Points.Api.Resources.Controllers
         {
             try
             {
-                return Ok(_requestProcessor.GetActiveTotals(GetUserIdFromToken()));
+                return Ok(RequestProcessor.GetActiveTotals(GetUserIdFromToken()));
             }
             catch (InvalidOperationException ide)
             {

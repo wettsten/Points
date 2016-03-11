@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using log4net;
 using Points.Data;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
@@ -15,17 +16,20 @@ namespace Points.Scheduler.Processors
         private readonly ISingleSessionDataWriter _dataWriter;
         private readonly IJobFactory _jobFactory;
         private readonly Timer _hourTimer;
+        private readonly ILog _logger;
 
-        public Scheduler(ISingleSessionDataReader dataReader, IJobFactory jobFactory, ISingleSessionDataWriter dataWriter)
+        public Scheduler(ISingleSessionDataReader dataReader, IJobFactory jobFactory, ISingleSessionDataWriter dataWriter, ILog logger)
         {
             _dataReader = dataReader;
             _jobFactory = jobFactory;
             _dataWriter = dataWriter;
+            _logger = logger;
             _hourTimer = new Timer(HourTick);
         }
 
         public void Start()
         {
+            _logger.Info("Scheduler starting up");
             HourTick(null);
             var now = DateTime.UtcNow.AddHours(1);
             var ts = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0) - DateTime.UtcNow;
@@ -34,12 +38,17 @@ namespace Points.Scheduler.Processors
 
         internal void HourTick(object t)
         {
+            _logger.Info("Scheduler processing jobs");
             var jobQ = _dataReader
                 .GetAll<Job>()
                 .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
                 .OrderBy(i => i.Trigger);
+
+            _logger.DebugFormat("Scheduler found {0} jobs to process", jobQ.Count());
+
             foreach (var job in jobQ)
             {
+                _logger.DebugFormat("Scheduler processing job {0}", job.Id);
                 var iJob = _jobFactory.GetJobProcessor(job.Processor);
                 try
                 {
@@ -47,10 +56,12 @@ namespace Points.Scheduler.Processors
                 }
                 catch (Exception ex)
                 {
-                    // maybe update job to show an error?
+                    _logger.Error($"Scheduler error processing job: {job.Id}", ex);
                 }
                 _dataWriter.Delete<Job>(job.Id);
             }
+
+            _logger.Debug("Scheduler finished processing jobs");
         }
     }
 }

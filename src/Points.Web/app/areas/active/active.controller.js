@@ -13,7 +13,7 @@
 
         activeVm.noItems = false;
         activeVm.tasks = [];
-        activeVm.taskFilter = filterService.getPTaskFilter();
+        activeVm.taskFilter = filterService.getATaskFilter();
 
         activate();
 
