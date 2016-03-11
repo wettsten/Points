@@ -47,7 +47,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 Logger.InfoFormat("Get PlanningTotals for user {0}. ", userid);
-                return Ok(RequestProcessor.GetPlanningTotals(userid));
+                return Ok(ReadProcessor.GetPlanningTotals(userid));
             }
             catch (Exception ex)
             {

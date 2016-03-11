@@ -1,7 +1,5 @@
-﻿using System.Linq;
+﻿using System;
 using System.Web.Http;
-using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers
@@ -42,28 +40,16 @@ namespace Points.Api.Resources.Controllers
         public IHttpActionResult GetAvailableTasksForUser()
         {
             string userid = GetUserIdFromToken();
-            Logger.InfoFormat("Get AvailableTask for user {0}. ", userid);
-            var tasks = GetForUser();
-            if (tasks.IsOk())
+            try
             {
-                //TODO get these into request processor and test
-                var inUseTasks = RequestProcessor
-                    .GetListForUser<PlanningTask>(userid)
-                    .Select(i => i.Task.Id);
-                var content = tasks.GetContent<Task>();
-                var cats = content
-                    .Where(i => !inUseTasks.Contains(i.Id))
-                    .GroupBy(i => i.Category.Id, task => task)
-                    .Select(i => new
-                    {
-                        Id = i.Key,
-                        Name = i.First().Category.Name,
-                        Tasks = i.OrderBy(j => j.Name)
-                    })
-                    .OrderBy(i => i.Name);
-                return Ok(cats);
+                Logger.InfoFormat("Get AvailableTask for user {0}. ", userid);
+                return Ok(ReadProcessor.GetAvailableTasks(userid));
             }
-            return tasks;
+            catch (Exception ex)
+            {
+                Logger.Error($"Get AvailableTask for user {userid}. unknown error", ex);
+                return InternalServerError(ex);
+            }
         }
     }
 }

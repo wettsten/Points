@@ -9,52 +9,18 @@ using Points.DataAccess.Writers;
 
 namespace Points.Common.Processors
 {
-    public class RequestProcessor : IRequestProcessor
+    public class ReadProcessor : IReadProcessor
     {
         private readonly IDataReader _dataReader;
-        private readonly IDataWriter _dataWriter;
-        private readonly IObjectValidatorFactory _objectValidatorFactory;
         private readonly IMapFactory _mapFactory;
 
-        public RequestProcessor(IDataReader dataReader, IDataWriter dataWriter, IObjectValidatorFactory objectValidatorFactory, IMapFactory mapFactory)
+        public ReadProcessor(IDataReader dataReader, IMapFactory mapFactory)
         {
             _dataReader = dataReader;
-            _dataWriter = dataWriter;
-            _objectValidatorFactory = objectValidatorFactory;
             _mapFactory = mapFactory;
         }
 
-        public void AddData<TView>(TView data, string userId) where TView : ModelBase
-        {
-            // map to RavenObject
-            var ravenObj = _mapFactory.MapToRavenObject(data);
-            ravenObj.UserId = userId;
-            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
-            validator?.ValidateAdd(ravenObj);
-            _dataWriter.Add(ravenObj);
-        }
-
-        public void EditData<TView>(TView data, string userId) where TView : ModelBase
-        {
-            // map to RavenObject
-            var ravenObj = _mapFactory.MapToRavenObject(data);
-            ravenObj.UserId = userId;
-            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
-            validator?.ValidateEdit(ravenObj);
-            _dataWriter.Edit(ravenObj);
-        }
-
-        public void DeleteData<TView>(TView data, string userId) where TView : ModelBase
-        {
-            // map to RavenObject
-            var ravenObj = _mapFactory.MapToRavenObject(data);
-            ravenObj.UserId = userId;
-            var validator = _objectValidatorFactory.Get(ravenObj.GetType());
-            validator?.ValidateDelete(ravenObj);
-            _dataWriter.Delete(ravenObj);
-        }
-
-        public IList<TView> GetListForUser<TView>(string userId) where TView : ModelBase
+        public IEnumerable<TView> GetListForUser<TView>(string userId) where TView : ModelBase
         {
             var ravenType = _mapFactory.GetDestinationType(typeof (TView));
             var objs = _dataReader
@@ -137,6 +103,24 @@ namespace Points.Common.Processors
                 TotalPoints = cats.Sum(i => i.TotalPoints),
                 Categories = cats
             };
+        }
+
+        public IEnumerable<AvailableCategory> GetAvailableTasks(string userId)
+        {
+            var tasks = GetListForUser<Task>(userId);
+            var inUseTasks = GetListForUser<PlanningTask>(userId)
+                    .Select(i => i.Task.Id);
+            var cats = tasks
+                .Where(i => !inUseTasks.Contains(i.Id))
+                .GroupBy(i => i.Category.Id, task => task)
+                .Select(i => new AvailableCategory
+                {
+                    Id = i.Key,
+                    Name = i.First().Category.Name,
+                    Tasks = i.OrderBy(j => j.Name)
+                })
+                .OrderBy(i => i.Name);
+            return cats;
         }
     }
 }

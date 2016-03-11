@@ -13,7 +13,9 @@ namespace Points.Api.Resources.Controllers
     public abstract class ResourceController<TView> : ApiController where TView : ModelBase, new()
     {
         [SetterProperty]
-        public IRequestProcessor RequestProcessor { get; set; }
+        public IWriteProcessor WriteProcessor { get; set; }
+        [SetterProperty]
+        public IReadProcessor ReadProcessor { get; set; }
         [SetterProperty]
         public ILog Logger { get; set; }
 
@@ -26,15 +28,10 @@ namespace Points.Api.Resources.Controllers
         {
             string userid = GetUserIdFromToken();
             Logger.Info(GetResource);
-            if (string.IsNullOrWhiteSpace(userid))
-            {
-                Logger.Warn(GetResource + "model state errors: Missing user id");
-                return BadRequest("User id is required");
-            }
             try
             {
-                var objs = RequestProcessor.GetListForUser<TView>(userid);
-                Logger.InfoFormat(GetResource + "count: {0}", objs.Count);
+                var objs = ReadProcessor.GetListForUser<TView>(userid);
+                Logger.InfoFormat(GetResource + "count: {0}", objs.Count());
                 return Ok(objs.OrderBy(i => i.Name));
             }
             catch (Exception ex)
@@ -57,7 +54,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 obj.Id = string.Empty;
-                RequestProcessor.AddData(obj, userid);
+                WriteProcessor.AddData(obj, userid);
                 return Ok();
             }
             catch(InvalidDataException ide)
@@ -84,7 +81,7 @@ namespace Points.Api.Resources.Controllers
             }
             try
             {
-                RequestProcessor.EditData(obj, userid);
+                WriteProcessor.EditData(obj, userid);
                 return Ok();
             }
             catch (InvalidDataException ide)
@@ -105,12 +102,12 @@ namespace Points.Api.Resources.Controllers
             Logger.Info(DeleteResource);
             if (string.IsNullOrWhiteSpace(id))
             {
-                Logger.WarnFormat(DeleteResource + "model state errors: Missing user id");
+                Logger.WarnFormat(DeleteResource + "model state errors: Missing object id");
                 return BadRequest("Id is required");
             }
             try
             {
-                RequestProcessor.DeleteData(new TView { Id = id }, userid);
+                WriteProcessor.DeleteData(new TView { Id = id }, userid);
                 return Ok();
             }
             catch (InvalidDataException ide)

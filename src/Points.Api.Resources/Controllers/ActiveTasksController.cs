@@ -43,7 +43,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 Logger.InfoFormat("Get ActiveTotals for user {0}. ", userid);
-                return Ok(RequestProcessor.GetActiveTotals(userid));
+                return Ok(ReadProcessor.GetActiveTotals(userid));
             }
             catch (Exception ex)
             {
