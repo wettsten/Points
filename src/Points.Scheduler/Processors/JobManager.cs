@@ -12,13 +12,12 @@ namespace Points.Scheduler.Processors
     {
         private readonly ISingleSessionDataReader _dataReader;
         private readonly ISingleSessionDataWriter _dataWriter;
-        private readonly ILog _logger;
+        private readonly ILog _logger = LogManager.GetLogger("Scheduler");
 
-        public JobManager(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter, ILog logger)
+        public JobManager(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
-            _logger = logger;
         }
 
         public void ScheduleStartJob(string userId)

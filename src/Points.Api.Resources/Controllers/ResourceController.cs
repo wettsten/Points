@@ -16,13 +16,13 @@ namespace Points.Api.Resources.Controllers
         public IWriteProcessor WriteProcessor { get; set; }
         [SetterProperty]
         public IReadProcessor ReadProcessor { get; set; }
-        [SetterProperty]
-        public ILog Logger { get; set; }
 
-        protected string GetResource => $"Get {typeof (TView).Name} for user {GetUserIdFromToken()}. ";
-        protected string AddResource => $"Add {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
-        protected string EditResource => $"Edit {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
-        protected string DeleteResource => $"Delete {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+        public ILog Logger => LogManager.GetLogger("Resource Api");
+
+        private string GetResource => $"Get {typeof (TView).Name} for user {GetUserIdFromToken()}. ";
+        private string AddResource => $"Add {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+        private string EditResource => $"Edit {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+        private string DeleteResource => $"Delete {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
 
         protected IHttpActionResult GetForUser()
         {

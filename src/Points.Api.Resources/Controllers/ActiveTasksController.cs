@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Http;
 using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers

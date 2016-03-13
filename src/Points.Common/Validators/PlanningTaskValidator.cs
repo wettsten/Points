@@ -1,42 +1,46 @@
 using System;
 using System.IO;
 using Points.Data;
-using Points.DataAccess;
-using Points.DataAccess.Readers;
 
 namespace Points.Common.Validators
 {
     public class PlanningTaskValidator : RavenObjectValidator, IObjectValidator
     {
-        public PlanningTaskValidator(IDataReader dataReader) : base(dataReader) { }
-
         public Type SupportsType => typeof(PlanningTask);
 
         public void ValidateAdd(object data)
         {
+            Logger.DebugFormat("Validating Add PlanningTask");
             ValidateAdd<PlanningTask>(data);
             var obj = data as PlanningTask;
             var task = DataReader.Get<Task>(obj.TaskId);
             if (task == null)
             {
-                throw new InvalidDataException("Task is invalid");
+                Logger.Error("Validating Add PlanningTask error: Task does not exist");
+                throw new InvalidDataException("Task does not exist");
             }
+            Logger.DebugFormat("Validating Add PlanningTask Ok");
         }
 
         public void ValidateEdit(object data)
         {
+            Logger.DebugFormat("Validating Edit PlanningTask");
             ValidateEdit<PlanningTask>(data);
             var obj = data as PlanningTask;
             var task = DataReader.Get<Task>(obj.TaskId);
             if (task == null)
             {
-                throw new InvalidDataException("Task is invalid");
+                Logger.Error("Validating Edit PlanningTask error: Task does not exist");
+                throw new InvalidDataException("Task does not exist");
             }
+            Logger.DebugFormat("Validating Edit PlanningTask Ok");
         }
 
         public void ValidateDelete(object data)
         {
+            Logger.DebugFormat("Validating Delete PlanningTask");
             ValidateDelete<PlanningTask>(data);
+            Logger.DebugFormat("Validating Delete PlanningTask Ok");
         }
     }
 }

@@ -15,15 +15,14 @@ namespace Points.Scheduler.Jobs
         private readonly ISingleSessionDataWriter _dataWriter;
         private readonly IJobManager _jobManager;
         private readonly IMapper _mapper;
-        private readonly ILog _logger;
+        private readonly ILog _logger = LogManager.GetLogger("Scheduler");
 
-        public StartWeekJob(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter, IJobManager jobManager, IMapper mapper, ILog logger)
+        public StartWeekJob(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter, IJobManager jobManager, IMapper mapper)
         {
             _dataReader = dataReader;
             _dataWriter = dataWriter;
             _jobManager = jobManager;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public void Process(Job context)

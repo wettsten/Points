@@ -16,14 +16,13 @@ namespace Points.Scheduler.Processors
         private readonly ISingleSessionDataWriter _dataWriter;
         private readonly IJobFactory _jobFactory;
         private readonly Timer _hourTimer;
-        private readonly ILog _logger;
+        private readonly ILog _logger = LogManager.GetLogger("Scheduler");
 
-        public Scheduler(ISingleSessionDataReader dataReader, IJobFactory jobFactory, ISingleSessionDataWriter dataWriter, ILog logger)
+        public Scheduler(ISingleSessionDataReader dataReader, IJobFactory jobFactory, ISingleSessionDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _jobFactory = jobFactory;
             _dataWriter = dataWriter;
-            _logger = logger;
             _hourTimer = new Timer(HourTick);
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers

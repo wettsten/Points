@@ -5,7 +5,6 @@ using Points.Common.Extensions;
 using Points.Common.Factories;
 using Points.Model;
 using Points.DataAccess.Readers;
-using Points.DataAccess.Writers;
 
 namespace Points.Common.Processors
 {
