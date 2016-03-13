@@ -77,7 +77,10 @@
         }
 
         function retrieve(type) {
-            retrieveWithRetry(type, 0);
+            $http.get(serviceBase + 'api/' + type).then(function (results) {
+                resourceCacheService.setCache(type, results.data);
+                resourceSubscriptionService.callCallbacks(type, results.data);
+            });
         }
 
         function updateLinks(type, action) {
@@ -99,7 +102,7 @@
 
         function add (type,data) {
             return $http.post(serviceBase + 'api/' + type, data).then(function () {
-                retrieve(type);
+                retrieveWithRetry(type, 0);
                 updateLinks(type, 'add');
             });
         }
@@ -125,6 +128,8 @@
             retrieve('tasks/available');
             retrieve('planningtasks');
             retrieve('activetasks');
+            retrieve('users/enums');
+            retrieve('users/data');
         }
     }
 })();
