@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using log4net;
+using NLog;
 using Points.Data;
 using Points.DataAccess.Readers;
 using StructureMap.Attributes;
@@ -12,11 +12,11 @@ namespace Points.Common.Validators
     {
         [SetterProperty]
         public IDataReader DataReader { get; set; }
-        public ILog Logger => LogManager.GetLogger("Common Validation");
+        public ILogger Logger => LogManager.GetLogger("Common Validation");
 
         protected void ValidateAdd<T>(object data) where T : DataBase
         {
-            Logger.DebugFormat("Validating Add base object");
+            Logger.Debug("Validating Add base object");
             var obj = data as DataBase;
             var objs = DataReader.GetAll<T>();
             if (objs
@@ -35,7 +35,7 @@ namespace Points.Common.Validators
                     throw new InvalidDataException("User id does not exist");
                 }
             }
-            Logger.DebugFormat("Validating Add base object Ok");
+            Logger.Debug("Validating Add base object Ok");
         }
 
         protected void ValidateEdit<T>(object data) where T : DataBase

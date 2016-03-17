@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using log4net;
+using NLog;
 using Points.Data;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
@@ -12,7 +12,7 @@ namespace Points.Scheduler.Processors
     {
         private readonly ISingleSessionDataReader _dataReader;
         private readonly ISingleSessionDataWriter _dataWriter;
-        private readonly ILog _logger = LogManager.GetLogger("Scheduler");
+        private readonly ILogger _logger = LogManager.GetLogger("Scheduler");
 
         public JobManager(ISingleSessionDataReader dataReader, ISingleSessionDataWriter dataWriter)
         {
@@ -22,7 +22,7 @@ namespace Points.Scheduler.Processors
 
         public void ScheduleStartJob(string userId)
         {
-            _logger.InfoFormat("Scheduling start job for {0}", userId);
+            _logger.Info("Scheduling start job for {0}", userId);
             var user = _dataReader.Get<User>(userId);
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(user.Id, StringComparison.InvariantCultureIgnoreCase))
@@ -64,7 +64,7 @@ namespace Points.Scheduler.Processors
 
         public void ScheduleEndJob(string userId)
         {
-            _logger.InfoFormat("Scheduling end job for {0}", userId);
+            _logger.Info("Scheduling end job for {0}", userId);
             var startJob = _dataReader.GetAll<Job>()
                 .Where(i => i.UserId.Equals(userId, StringComparison.InvariantCultureIgnoreCase))
                 .FirstOrDefault(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase));

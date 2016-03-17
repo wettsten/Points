@@ -42,12 +42,12 @@ namespace Points.Api.Resources.Controllers
             string userid = GetUserIdFromToken();
             try
             {
-                Logger.InfoFormat("Get PlanningTotals for user {0}. ", userid);
+                Logger.Info("Get PlanningTotals for user {0}. ", userid);
                 return Ok(ReadProcessor.GetPlanningTotals(userid));
             }
             catch (Exception ex)
             {
-                Logger.Error($"Get PlanningTotals for user {userid}. unknown error", ex);
+                Logger.Error(ex, "Get PlanningTotals for user {0}. unknown error", userid);
                 return InternalServerError(ex);
             }
         }

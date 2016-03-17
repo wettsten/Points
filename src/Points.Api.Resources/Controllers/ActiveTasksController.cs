@@ -41,12 +41,12 @@ namespace Points.Api.Resources.Controllers
             string userid = GetUserIdFromToken();
             try
             {
-                Logger.InfoFormat("Get ActiveTotals for user {0}. ", userid);
+                Logger.Info("Get ActiveTotals for user {0}. ", userid);
                 return Ok(ReadProcessor.GetActiveTotals(userid));
             }
             catch (Exception ex)
             {
-                Logger.Error($"Get ActiveTotals for user {userid}. unknown error", ex);
+                Logger.Error(ex, "Get ActiveTotals for user {0}. unknown error", userid);
                 return InternalServerError(ex);
             }
         }

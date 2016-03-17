@@ -42,12 +42,12 @@ namespace Points.Api.Resources.Controllers
             string userid = GetUserIdFromToken();
             try
             {
-                Logger.InfoFormat("Get AvailableTask for user {0}. ", userid);
+                Logger.Info("Get AvailableTask for user {0}. ", userid);
                 return Ok(ReadProcessor.GetAvailableTasks(userid));
             }
             catch (Exception ex)
             {
-                Logger.Error($"Get AvailableTask for user {userid}. unknown error", ex);
+                Logger.Error(ex, "Get AvailableTask for user {0}. unknown error", userid);
                 return InternalServerError(ex);
             }
         }

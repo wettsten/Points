@@ -10,7 +10,7 @@ namespace Points.Common.Validators
 
         public void ValidateAdd(object data)
         {
-            Logger.DebugFormat("Validating Add PlanningTask");
+            Logger.Debug("Validating Add PlanningTask");
             ValidateAdd<PlanningTask>(data);
             var obj = data as PlanningTask;
             var task = DataReader.Get<Task>(obj.TaskId);
@@ -19,12 +19,12 @@ namespace Points.Common.Validators
                 Logger.Error("Validating Add PlanningTask error: Task does not exist");
                 throw new InvalidDataException("Task does not exist");
             }
-            Logger.DebugFormat("Validating Add PlanningTask Ok");
+            Logger.Debug("Validating Add PlanningTask Ok");
         }
 
         public void ValidateEdit(object data)
         {
-            Logger.DebugFormat("Validating Edit PlanningTask");
+            Logger.Debug("Validating Edit PlanningTask");
             ValidateEdit<PlanningTask>(data);
             var obj = data as PlanningTask;
             var task = DataReader.Get<Task>(obj.TaskId);
@@ -33,14 +33,14 @@ namespace Points.Common.Validators
                 Logger.Error("Validating Edit PlanningTask error: Task does not exist");
                 throw new InvalidDataException("Task does not exist");
             }
-            Logger.DebugFormat("Validating Edit PlanningTask Ok");
+            Logger.Debug("Validating Edit PlanningTask Ok");
         }
 
         public void ValidateDelete(object data)
         {
-            Logger.DebugFormat("Validating Delete PlanningTask");
+            Logger.Debug("Validating Delete PlanningTask");
             ValidateDelete<PlanningTask>(data);
-            Logger.DebugFormat("Validating Delete PlanningTask Ok");
+            Logger.Debug("Validating Delete PlanningTask Ok");
         }
     }
 }

@@ -9,23 +9,23 @@ namespace Points.Common.Validators
 
         public void ValidateAdd(object data)
         {
-            Logger.DebugFormat("Validating Add User");
+            Logger.Debug("Validating Add User");
             ValidateAdd<User>(data);
-            Logger.DebugFormat("Validating Add User Ok");
+            Logger.Debug("Validating Add User Ok");
         }
 
         public void ValidateEdit(object data)
         {
-            Logger.DebugFormat("Validating Edit User");
+            Logger.Debug("Validating Edit User");
             ValidateEdit<User>(data);
-            Logger.DebugFormat("Validating Edit User Ok");
+            Logger.Debug("Validating Edit User Ok");
         }
 
         public void ValidateDelete(object data)
         {
-            Logger.DebugFormat("Validating Delete User");
+            Logger.Debug("Validating Delete User");
             ValidateDelete<User>(data);
-            Logger.DebugFormat("Validating Delete User Ok");
+            Logger.Debug("Validating Delete User Ok");
         }
     }
 }

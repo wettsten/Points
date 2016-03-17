@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using log4net;
+using NLog;
 using Points.Data;
 using Points.Model;
 
@@ -10,7 +10,7 @@ namespace Points.Common.Factories
     public class MapFactory : IMapFactory
     {
         private readonly IMapper _mapper;
-        private readonly ILog _logger = LogManager.GetLogger("Common Mapping");
+        private readonly ILogger _logger = LogManager.GetLogger("Common Mapping");
 
         public MapFactory(IMapper mapper)
         {
@@ -21,7 +21,7 @@ namespace Points.Common.Factories
         {
             var sourceType = obj.GetType();
             var destinationType = GetDestinationType(sourceType);
-            _logger.DebugFormat("Mapping Model to Data source type {0} to destination type {1}", sourceType.FullName, destinationType.FullName);
+            _logger.Debug("Mapping Model to Data source type {0} to destination type {1}", sourceType.FullName, destinationType.FullName);
             return (DataBase)_mapper.Map(obj, sourceType, destinationType);
         }
 
@@ -29,7 +29,7 @@ namespace Points.Common.Factories
         {
             var sourceType = obj.GetType();
             var destinationType = GetDestinationType(sourceType);
-            _logger.DebugFormat("Mapping Data to Model source type {0} to destination type {1}", sourceType.FullName, destinationType.FullName);
+            _logger.Debug("Mapping Data to Model source type {0} to destination type {1}", sourceType.FullName, destinationType.FullName);
             return (ModelBase)_mapper.Map(obj, sourceType, destinationType);
         }
 

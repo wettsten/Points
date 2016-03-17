@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
-using log4net;
+using NLog;
 using Points.Common.Processors;
 using Points.Model;
 using StructureMap.Attributes;
@@ -17,12 +17,12 @@ namespace Points.Api.Resources.Controllers
         [SetterProperty]
         public IReadProcessor ReadProcessor { get; set; }
 
-        public ILog Logger => LogManager.GetLogger("Resource Api");
+        public ILogger Logger => LogManager.GetLogger("Resource Api");
 
-        private string GetResource => $"Get {typeof (TView).Name} for user {GetUserIdFromToken()}. ";
-        private string AddResource => $"Add {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
-        private string EditResource => $"Edit {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
-        private string DeleteResource => $"Delete {typeof(TView).Name} for user {GetUserIdFromToken()}. ";
+        private string GetResource => string.Format("Get {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+        private string AddResource => string.Format("Add {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+        private string EditResource => string.Format("Edit {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+        private string DeleteResource => string.Format("Delete {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
 
         protected IHttpActionResult GetForUser()
         {
@@ -31,7 +31,7 @@ namespace Points.Api.Resources.Controllers
             try
             {
                 var objs = ReadProcessor.GetListForUser<TView>(userid);
-                Logger.InfoFormat(GetResource + "count: {0}", objs.Count());
+                Logger.Info(GetResource + "count: {0}", objs.Count());
                 return Ok(objs.OrderBy(i => i.Name));
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace Points.Api.Resources.Controllers
             if (!ModelState.IsValid)
             {
                 string errors = GetModelStateErrors();
-                Logger.WarnFormat(AddResource + "model state errors: {0}", errors);
+                Logger.Warn(AddResource + "model state errors: {0}", errors);
                 return BadRequest(errors);
             }
             try
@@ -76,7 +76,7 @@ namespace Points.Api.Resources.Controllers
             if (!ModelState.IsValid)
             {
                 string errors = GetModelStateErrors();
-                Logger.WarnFormat(EditResource + "model state errors: {0}", errors);
+                Logger.Warn(EditResource + "model state errors: {0}", errors);
                 return BadRequest(errors);
             }
             try
@@ -102,7 +102,7 @@ namespace Points.Api.Resources.Controllers
             Logger.Info(DeleteResource);
             if (string.IsNullOrWhiteSpace(id))
             {
-                Logger.WarnFormat(DeleteResource + "model state errors: Missing object id");
+                Logger.Warn(DeleteResource + "model state errors: Missing object id");
                 return BadRequest("Id is required");
             }
             try

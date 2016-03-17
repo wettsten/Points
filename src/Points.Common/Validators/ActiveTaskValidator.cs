@@ -9,23 +9,23 @@ namespace Points.Common.Validators
 
         public void ValidateAdd(object data)
         {
-            Logger.DebugFormat("Validating Add ActiveTask");
+            Logger.Debug("Validating Add ActiveTask");
             ValidateAdd<ActiveTask>(data);
-            Logger.DebugFormat("Validating Add ActiveTask Ok");
+            Logger.Debug("Validating Add ActiveTask Ok");
         }
 
         public void ValidateEdit(object data)
         {
-            Logger.DebugFormat("Validating Edit ActiveTask");
+            Logger.Debug("Validating Edit ActiveTask");
             ValidateEdit<ActiveTask>(data);
-            Logger.DebugFormat("Validating Edit ActiveTask Ok");
+            Logger.Debug("Validating Edit ActiveTask Ok");
         }
 
         public void ValidateDelete(object data)
         {
-            Logger.DebugFormat("Validating Delete ActiveTask");
+            Logger.Debug("Validating Delete ActiveTask");
             ValidateDelete<ActiveTask>(data);
-            Logger.DebugFormat("Validating Delete ActiveTask Ok");
+            Logger.Debug("Validating Delete ActiveTask Ok");
         }
     }
 }
