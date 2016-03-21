@@ -10,5 +10,6 @@ namespace Points.Common.Processors
         PlanningTotal GetPlanningTotals(string userId);
         ActiveTotal GetActiveTotals(string userId);
         IEnumerable<AvailableCategory> GetAvailableTasks(string userId);
+        int GetDocumentCount();
     }
 }

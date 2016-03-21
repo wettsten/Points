@@ -121,5 +121,10 @@ namespace Points.Common.Processors
                 .OrderBy(i => i.Name);
             return cats;
         }
+
+        public int GetDocumentCount()
+        {
+            return _dataReader.GetDocumentCount();
+        }
     }
 }

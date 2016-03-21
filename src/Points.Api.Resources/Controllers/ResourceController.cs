@@ -36,7 +36,7 @@ namespace Points.Api.Resources.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error(GetResource + "unknown error", ex);
+                Logger.Error(ex, GetResource + "unknown error");
                 return InternalServerError(ex);
             }
         }
@@ -64,7 +64,7 @@ namespace Points.Api.Resources.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error(AddResource + "unknown error", ex);
+                Logger.Error(ex, AddResource + "unknown error");
                 return InternalServerError(ex);
             }
         }
@@ -91,7 +91,7 @@ namespace Points.Api.Resources.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error(EditResource + "unknown error", ex);
+                Logger.Error(ex, EditResource + "unknown error");
                 return InternalServerError(ex);
             }
         }
@@ -117,7 +117,7 @@ namespace Points.Api.Resources.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Error(DeleteResource + "unknown error", ex);
+                Logger.Error(ex, DeleteResource + "unknown error");
                 return InternalServerError(ex);
             }
         }

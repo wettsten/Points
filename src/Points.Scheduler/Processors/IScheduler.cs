@@ -2,6 +2,6 @@
 {
     public interface IScheduler
     {
-        void Start();
+        void Start(string keepAliveUrl);
     }
 }

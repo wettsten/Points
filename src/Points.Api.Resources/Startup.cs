@@ -1,10 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Web.Hosting;
+using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Points.Api.Resources;
 using Points.Api.Resources.DependencyResolution;
-using Points.Scheduler;
 using Points.Scheduler.Processors;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -27,7 +27,7 @@ namespace Points.Api.Resources
             config.DependencyResolver = new StructureMapWebApiDependencyResolver(container);
 
             var scheduler = container.GetInstance<IScheduler>();
-            scheduler.Start();
+            scheduler.Start(string.Format("http://{0}/resources/api/health", HostingEnvironment.ApplicationHost.GetSiteName()));
         }
 
         private void ConfigureOAuth(IAppBuilder app)
