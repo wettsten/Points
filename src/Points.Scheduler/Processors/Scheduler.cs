@@ -33,9 +33,9 @@ namespace Points.Scheduler.Processors
             _hourTimer = new Timer(HourTick);
             _logger.Info("Scheduler starting up");
             HourTick(null);
-            var now = DateTime.UtcNow.AddMinutes(1);
-            var ts = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0) - DateTime.UtcNow;
-            _hourTimer.Change(ts, TimeSpan.FromMinutes(1));
+            var now = DateTime.UtcNow;
+            var ts = new DateTime(now.Year, now.Month, now.Day, now.Hour + 1, 0, 0) - DateTime.UtcNow;
+            _hourTimer.Change(ts, TimeSpan.FromHours(1));
         }
 
         internal void HourTick(object t)
