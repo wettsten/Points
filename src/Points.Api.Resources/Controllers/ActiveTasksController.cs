@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Http;
 using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers
@@ -11,8 +10,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/activetasks")]
     public class ActiveTasksController : ResourceController<ActiveTask>
     {
-        public ActiveTasksController(IRequestProcessor requestProcessor) : base(requestProcessor) { }
-
         [Route("")]
         public IHttpActionResult GetActiveTasksForUser()
         {
@@ -29,6 +26,7 @@ namespace Points.Api.Resources.Controllers
                 var aTask = tasks.GetContent<ActiveTask>().FirstOrDefault(t => t.Id.Equals(task.Id, StringComparison.InvariantCultureIgnoreCase));
                 if (aTask == null)
                 {
+                    Logger.Warn("Active task does not exist, cannot edit");
                     return BadRequest("Task does not exist");
                 }
                 aTask.TimesCompleted = task.TimesCompleted;
@@ -40,16 +38,15 @@ namespace Points.Api.Resources.Controllers
         [Route("totals")]
         public IHttpActionResult GetActiveTotalsForUser()
         {
+            string userid = GetUserIdFromToken();
             try
             {
-                return Ok(_requestProcessor.GetActiveTotals(GetUserIdFromToken()));
-            }
-            catch (InvalidOperationException ide)
-            {
-                return BadRequest(ide.Message);
+                Logger.Info("Get ActiveTotals for user {0}. ", userid);
+                return Ok(ReadProcessor.GetActiveTotals(userid));
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, "Get ActiveTotals for user {0}. unknown error", userid);
                 return InternalServerError(ex);
             }
         }

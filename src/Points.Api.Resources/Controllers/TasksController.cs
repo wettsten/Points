@@ -1,7 +1,5 @@
-﻿using System.Linq;
+﻿using System;
 using System.Web.Http;
-using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers
@@ -10,9 +8,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/tasks")]
     public class TasksController : ResourceController<Task>
     {
-        public TasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        { }
-
         [Route("")]
         public IHttpActionResult GetTasksForUser()
         {
@@ -44,26 +39,17 @@ namespace Points.Api.Resources.Controllers
         [Route("available")]
         public IHttpActionResult GetAvailableTasksForUser()
         {
-            var tasks = GetForUser();
-            if (tasks.IsOk())
+            string userid = GetUserIdFromToken();
+            try
             {
-                var inUseTasks = _requestProcessor
-                    .GetListForUser<PlanningTask>(GetUserIdFromToken())
-                    .Select(i => i.Task.Id);
-                var content = tasks.GetContent<Task>();
-                var cats = content
-                    .Where(i => !inUseTasks.Contains(i.Id))
-                    .GroupBy(i => i.Category.Id, task => task)
-                    .Select(i => new
-                    {
-                        Id = i.Key,
-                        Name = i.First().Category.Name,
-                        Tasks = i.OrderBy(j => j.Name)
-                    })
-                    .OrderBy(i => i.Name);
-                return Ok(cats);
+                Logger.Info("Get AvailableTask for user {0}. ", userid);
+                return Ok(ReadProcessor.GetAvailableTasks(userid));
             }
-            return tasks;
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Get AvailableTask for user {0}. unknown error", userid);
+                return InternalServerError(ex);
+            }
         }
     }
 }

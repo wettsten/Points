@@ -11,7 +11,7 @@ using Shouldly;
 namespace Points.Api.UnitTests.Common.Processors
 {
     [TestFixture]
-    public class RequestProcessorTests : AutoMoqTestFixture<RequestProcessor>
+    public class ReadProcessorTests : AutoMoqTestFixture<ReadProcessor>
     {
         private readonly string _userId = Guido.New();
         private List<Data.DataBase> _dataObjects;
@@ -35,14 +35,14 @@ namespace Points.Api.UnitTests.Common.Processors
         public void GetListForUserWithOwnedObjectsFiltersByUserIdReturnsTwo()
         {
             var results = Subject.GetListForUser<Model.ModelBase>(_userId);
-            results.Count.ShouldBe(2);
+            results.Count().ShouldBe(2);
         }
 
         [Test]
         public void GetListForUserWithoutOwnedObjectsFiltersByUserIdReturnsEmptyList()
         {
             var results = Subject.GetListForUser<Model.ModelBase>(Guido.New());
-            results.Count.ShouldBe(0);
+            results.Count().ShouldBe(0);
         }
 
         [Test]

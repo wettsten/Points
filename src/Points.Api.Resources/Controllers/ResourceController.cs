@@ -3,91 +3,121 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Web.Http;
+using NLog;
 using Points.Common.Processors;
 using Points.Model;
+using StructureMap.Attributes;
 
 namespace Points.Api.Resources.Controllers
 {
     public abstract class ResourceController<TView> : ApiController where TView : ModelBase, new()
     {
-        protected readonly IRequestProcessor _requestProcessor;
+        [SetterProperty]
+        public IWriteProcessor WriteProcessor { get; set; }
+        [SetterProperty]
+        public IReadProcessor ReadProcessor { get; set; }
 
-        protected ResourceController(IRequestProcessor requestProcessor)
-        {
-            _requestProcessor = requestProcessor;
-        }
-        
+        public ILogger Logger => LogManager.GetLogger("Resource Api");
+
+        private string GetResource => string.Format("Get {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+        private string AddResource => string.Format("Add {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+        private string EditResource => string.Format("Edit {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+        private string DeleteResource => string.Format("Delete {0} for user {1}. ", typeof(TView).Name, GetUserIdFromToken());
+
         protected IHttpActionResult GetForUser()
         {
             string userid = GetUserIdFromToken();
-            if (string.IsNullOrWhiteSpace(userid))
+            Logger.Info(GetResource);
+            try
             {
-                return BadRequest("User id is required");
+                var objs = ReadProcessor.GetListForUser<TView>(userid);
+                Logger.Info(GetResource + "count: {0}", objs.Count());
+                return Ok(objs.OrderBy(i => i.Name));
             }
-            var objs = _requestProcessor.GetListForUser<TView>(userid);
-            return Ok(objs.OrderBy(i => i.Name));
+            catch (Exception ex)
+            {
+                Logger.Error(ex, GetResource + "unknown error");
+                return InternalServerError(ex);
+            }
         }
 
         protected IHttpActionResult Add(TView obj)
         {
+            string userid = GetUserIdFromToken();
+            Logger.Info(AddResource);
             if (!ModelState.IsValid)
             {
-                return BadRequest(GetModelStateErrors());
+                string errors = GetModelStateErrors();
+                Logger.Warn(AddResource + "model state errors: {0}", errors);
+                return BadRequest(errors);
             }
             try
             {
                 obj.Id = string.Empty;
-                _requestProcessor.AddData(obj, GetUserIdFromToken());
+                WriteProcessor.AddData(obj, userid);
                 return Ok();
             }
             catch(InvalidDataException ide)
             {
+                Logger.Error(AddResource + "validation error", ide);
                 return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, AddResource + "unknown error");
                 return InternalServerError(ex);
             }
         }
         
         protected IHttpActionResult Edit(TView obj)
         {
+            string userid = GetUserIdFromToken();
+            Logger.Info(EditResource);
             if (!ModelState.IsValid)
             {
-                return BadRequest(GetModelStateErrors());
+                string errors = GetModelStateErrors();
+                Logger.Warn(EditResource + "model state errors: {0}", errors);
+                return BadRequest(errors);
             }
             try
             {
-                _requestProcessor.EditData(obj, GetUserIdFromToken());
+                WriteProcessor.EditData(obj, userid);
                 return Ok();
             }
             catch (InvalidDataException ide)
             {
+                Logger.Error(EditResource + "validation error", ide);
                 return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, EditResource + "unknown error");
                 return InternalServerError(ex);
             }
         }
         
         protected IHttpActionResult Delete(string id)
         {
+            string userid = GetUserIdFromToken();
+            Logger.Info(DeleteResource);
             if (string.IsNullOrWhiteSpace(id))
             {
+                Logger.Warn(DeleteResource + "model state errors: Missing object id");
                 return BadRequest("Id is required");
             }
             try
             {
-                _requestProcessor.DeleteData(new TView { Id = id }, GetUserIdFromToken());
+                WriteProcessor.DeleteData(new TView { Id = id }, userid);
                 return Ok();
             }
             catch (InvalidDataException ide)
             {
+                Logger.Error(DeleteResource + "validation error", ide);
                 return BadRequest(ide.Message);
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, DeleteResource + "unknown error");
                 return InternalServerError(ex);
             }
         }
@@ -96,15 +126,6 @@ namespace Points.Api.Resources.Controllers
         {
             var errors = ModelState.Where(i => i.Value.Errors.Count > 0).SelectMany(i => i.Value.Errors).Select(i => i.ErrorMessage);
             return string.Join("\r\n", errors);
-        }
-
-        protected string GetUserIdFromHeaders()
-        {
-            if (!Request.Headers.Contains("UserId"))
-            {
-                return string.Empty;
-            }
-            return Request.Headers.GetValues("UserId").FirstOrDefault();
         }
 
         protected string GetUserNameFromToken()

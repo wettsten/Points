@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers
@@ -8,9 +7,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/categories")]
     public class CategoriesController : ResourceController<Category>
     {
-        public CategoriesController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        {}
-
         [Route("")]
         public IHttpActionResult GetCategoriesForUser()
         {

@@ -1,7 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
+using NLog;
 using Points.Data;
 using Points.DataAccess.Readers;
 using Points.DataAccess.Writers;
@@ -14,32 +15,45 @@ namespace Points.Scheduler.Processors
         private readonly ISingleSessionDataReader _dataReader;
         private readonly ISingleSessionDataWriter _dataWriter;
         private readonly IJobFactory _jobFactory;
-        private readonly Timer _hourTimer;
+        private Timer _hourTimer;
+        private string _keepAliveUrl;
+        private readonly ILogger _logger = LogManager.GetLogger("Scheduler");
 
         public Scheduler(ISingleSessionDataReader dataReader, IJobFactory jobFactory, ISingleSessionDataWriter dataWriter)
         {
             _dataReader = dataReader;
             _jobFactory = jobFactory;
             _dataWriter = dataWriter;
-            _hourTimer = new Timer(HourTick);
         }
 
-        public void Start()
+        public void Start(string keepAliveUrl)
         {
+            _keepAliveUrl = keepAliveUrl;
+            _logger.Info("Keep Alive Url: " + _keepAliveUrl);
+            _hourTimer = new Timer(HourTick);
+            _logger.Info("Scheduler starting up");
             HourTick(null);
-            var now = DateTime.UtcNow.AddHours(1);
-            var ts = new DateTime(now.Year, now.Month, now.Day, now.Hour, 0, 0) - DateTime.UtcNow;
+            var now = DateTime.UtcNow;
+            var ts = new DateTime(now.Year, now.Month, now.Day, now.Hour + 1, 0, 0) - DateTime.UtcNow;
             _hourTimer.Change(ts, TimeSpan.FromHours(1));
         }
 
         internal void HourTick(object t)
         {
+            _logger.Info("Scheduler processing jobs");
+
+            KeepAlive();
+
             var jobQ = _dataReader
                 .GetAll<Job>()
                 .Where(i => i.Trigger < DateTime.UtcNow.AddMinutes(1))
                 .OrderBy(i => i.Trigger);
+
+            _logger.Debug("Scheduler found {0} jobs to process", jobQ.Count());
+
             foreach (var job in jobQ)
             {
+                _logger.Debug("Scheduler processing job {0}", job.Id);
                 var iJob = _jobFactory.GetJobProcessor(job.Processor);
                 try
                 {
@@ -47,10 +61,19 @@ namespace Points.Scheduler.Processors
                 }
                 catch (Exception ex)
                 {
-                    // maybe update job to show an error?
+                    _logger.Error(ex, "Scheduler error processing job: {0}", job.Id);
                 }
                 _dataWriter.Delete<Job>(job.Id);
             }
+
+            _logger.Debug("Scheduler finished processing jobs");
+        }
+
+        internal async void KeepAlive()
+        {
+            var client = new HttpClient();
+            var uri = new Uri(_keepAliveUrl);
+            var response = await client.GetAsync(uri);
         }
     }
 }

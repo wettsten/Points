@@ -40,7 +40,7 @@ namespace Points.DataAccess.Writers
                 if (existingObj != null)
                 {
                     // object exists
-                    session.Delete(id);
+                    session.Delete(existingObj);
                     session.SaveChanges();
                 }
             }

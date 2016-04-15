@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
-using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 
 namespace Points.Api.Resources.Controllers
@@ -12,9 +8,6 @@ namespace Points.Api.Resources.Controllers
     [RoutePrefix("api/planningtasks")]
     public class PlanningTasksController : ResourceController<PlanningTask>
     {
-        public PlanningTasksController(IRequestProcessor requestProcessor) : base(requestProcessor)
-        { }
-
         [Route("")]
         public IHttpActionResult GetPlanningTasksForUser()
         {
@@ -46,16 +39,15 @@ namespace Points.Api.Resources.Controllers
         [Route("totals")]
         public IHttpActionResult GetPlanningTotalsForUser()
         {
+            string userid = GetUserIdFromToken();
             try
             {
-                return Ok(_requestProcessor.GetPlanningTotals(GetUserIdFromToken()));
-            }
-            catch (InvalidOperationException ide)
-            {
-                return BadRequest(ide.Message);
+                Logger.Info("Get PlanningTotals for user {0}. ", userid);
+                return Ok(ReadProcessor.GetPlanningTotals(userid));
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, "Get PlanningTotals for user {0}. unknown error", userid);
                 return InternalServerError(ex);
             }
         }

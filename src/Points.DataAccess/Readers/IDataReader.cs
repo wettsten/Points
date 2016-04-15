@@ -9,5 +9,6 @@ namespace Points.DataAccess.Readers
         TS Get<TS>(string id) where TS : DataBase;
         IList<TA> GetAll<TA>() where TA : DataBase;
         IList<DataBase> GetAll(Type objType);
+        int GetDocumentCount();
     }
 }

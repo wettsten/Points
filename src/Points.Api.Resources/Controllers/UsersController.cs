@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Points.Api.Resources.Extensions;
-using Points.Common.Processors;
 using Points.Model;
 using Points.Scheduler.Jobs;
 using Points.Scheduler.Processors;
@@ -17,7 +16,7 @@ namespace Points.Api.Resources.Controllers
     {
         private readonly IJobManager _jobProcessor;
 
-        public UsersController(IRequestProcessor requestProcessor, IJobManager jobProcessor) : base(requestProcessor)
+        public UsersController(IJobManager jobProcessor)
         {
             _jobProcessor = jobProcessor;
         }
@@ -31,6 +30,7 @@ namespace Points.Api.Resources.Controllers
                 var user = usr.GetContent<User>().FirstOrDefault();
                 if (user == null)
                 {
+                    Logger.Info("User does not exist. Create new one for id {0}", GetUserIdFromToken());
                     var now = DateTime.UtcNow.AddDays(1).AddHours(1);
                     user = new User
                     {
@@ -50,7 +50,7 @@ namespace Points.Api.Resources.Controllers
                         BonusPointMultiplier = 1,
                         DurationBonusPointsPerHour = 0
                     };
-                    _requestProcessor.AddData(user, user.Id);
+                    WriteProcessor.AddData(user, user.Id);
                     usr = GetForUser();
                 }
                 EnsureStartJobForUser(user.Id);
@@ -76,6 +76,7 @@ namespace Points.Api.Resources.Controllers
         [HttpGet]
         public IHttpActionResult GetData()
         {
+            Logger.Info("Get UserData for user {0} ", GetUserIdFromToken());
             return Ok(new
             {
                 Days = Enum.GetNames(typeof(DayOfWeek)),
@@ -87,12 +88,13 @@ namespace Points.Api.Resources.Controllers
         [Route("enums")]
         public IHttpActionResult GetEnums()
         {
+            Logger.Info("Get Enums for user {0}", GetUserIdFromToken());
             return Ok(new
             {
-                dTypes = _requestProcessor.GetEnums("DurationType"),
-                dUnits = _requestProcessor.GetEnums("DurationUnit"),
-                fTypes = _requestProcessor.GetEnums("FrequencyType"),
-                fUnits = _requestProcessor.GetEnums("FrequencyUnit")
+                dTypes = ReadProcessor.GetEnums("DurationType"),
+                dUnits = ReadProcessor.GetEnums("DurationUnit"),
+                fTypes = ReadProcessor.GetEnums("FrequencyType"),
+                fUnits = ReadProcessor.GetEnums("FrequencyUnit")
             });
         }
 
@@ -135,7 +137,7 @@ namespace Points.Api.Resources.Controllers
 
         private void EnsureStartJobForUser(string userId)
         {
-            if (!_requestProcessor
+            if (!ReadProcessor
                 .GetListForUser<Job>(userId)
                 .Any(i => i.Processor.Equals(typeof(StartWeekJob).Name, StringComparison.InvariantCultureIgnoreCase)))
             {

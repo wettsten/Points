@@ -45,11 +45,7 @@
         function search () {
             filterService.setATaskFilter({
                 name: filterVm.filter.text,
-                task: {
-                    category: {
-                        name: filterVm.filter.cat ? filterVm.filter.cat.name : ''
-                    }
-                }
+                categoryName: filterVm.filter.cat ? filterVm.filter.cat.name : ''
             });
         }
 

@@ -51,6 +51,7 @@
     <Compile Include="ActiveTotal.cs" />
     <Compile Include="ActiveTotalCategory.cs" />
     <Compile Include="ActiveTotalTask.cs" />
+    <Compile Include="AvailableCategory.cs" />
     <Compile Include="PlanningTotalBase.cs" />
     <Compile Include="PlanningTotalTask.cs" />
     <Compile Include="PlanningTotalCategory.cs" />

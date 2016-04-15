@@ -1,14 +1,11 @@
 ﻿using System;
 using Points.Common.Validators;
 using Points.Data;
-using Points.DataAccess.Readers;
 
 namespace Points.Api.UnitTests.Common.Validators
 {
     public class RavenObjectValidatorTester : RavenObjectValidator, IObjectValidator
     {
-        public RavenObjectValidatorTester(IDataReader dataReader) : base(dataReader) { }
-
         public Type SupportsType => typeof(DataBase);
 
         public void ValidateAdd(object data)

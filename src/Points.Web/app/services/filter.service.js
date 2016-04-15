@@ -12,7 +12,7 @@
             cat: { name: '' },
             task: { name: '', category: { name: '' } },
             pTask: { name: '', task: { category: { name: '' } } },
-            aTask: { name: '', task: { category: { name: '' } } }
+            aTask: { name: '', categoryName: '' }
         };
 
         var service = {

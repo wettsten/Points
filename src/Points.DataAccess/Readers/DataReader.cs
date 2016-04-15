@@ -29,5 +29,10 @@ namespace Points.DataAccess.Readers
         {
             return _session.Query<object>(objType.Name).ToList().ConvertAll(i => i as DataBase);
         }
+
+        public int GetDocumentCount()
+        {
+            return _session.Query<object>().Count();
+        }
     }
 }

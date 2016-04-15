@@ -13,7 +13,7 @@ using Shouldly;
 namespace Points.Api.UnitTests.Common.Processors
 {
     [TestFixture]
-    public class GetActiveTotalsTests : AutoMoqTestFixture<RequestProcessor>
+    public class GetActiveTotalsTests : AutoMoqTestFixture<ReadProcessor>
     {
         private readonly string _userId = Guido.New();
         private List<Data.ActiveTask> _tasks;
